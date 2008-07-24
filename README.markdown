@@ -48,10 +48,10 @@ Minitutorial
 Note: Check http://ninjakitten.us/activerecord for a more detailed tutorial, suitable for less experienced coders (pics!)
 
 To create a model there are 2 steps.
-#1 Create the table in your database
-#2 Create a model class named as the singularized version of your table name (people -> person)
+* **1** Create the table in your database
+* **2** Create a model class named as the singularized version of your table name (people -> person)
 
-Example:
+**Example:**
 Let's say I created a table called 'people' with 3 columns.
  - id as the primary key
  - firstName as varchar(255)
@@ -83,14 +83,15 @@ If you wish to send patches you can email them to fjolnir@gmail.com
 
 When writing patches please keep in mind the existing coding style
 Here's most of it:
-- (id)aMethod:(int)argument
-{
-  int myVar = 123;
-  if(myVar != 123)
-    NSLog(@"impossible!");
-  else
-  {
-    NSLog(@"Very possible..");
-    // More lines of code!
-  }
-}
+
+	- (id)aMethod:(int)argument
+	{
+	  int myVar = 123;
+	  if(myVar != 123)
+	    NSLog(@"impossible!");
+	  else
+	  {
+	    NSLog(@"Very possible..");
+	    // More lines of code!
+	  }
+	}
