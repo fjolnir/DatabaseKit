@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>pattern</key>
+		<string>move</string>
+		<key>replacement</key>
+		<string>moves</string>
+		<key>type</key>
+		<string>irregular</string>
+	</dict>
+	<dict>
+		<key>pattern</key>
+		<string>sex</string>
+		<key>replacement</key>
+		<string>sexes</string>
+		<key>type</key>
+		<string>irregular</string>
+	</dict>
+	<dict>
+		<key>pattern</key>
+		<string>child</string>
+		<key>replacement</key>
+		<string>children</string>
+		<key>type</key>
+		<string>irregular</string>
+	</dict>
+	<dict>
+		<key>pattern</key>
+		<string>man</string>
+		<key>replacement</key>
+		<string>men</string>
+		<key>type</key>
+		<string>irregular</string>
+	</dict>
+	<dict>
+		<key>pattern</key>
+		<string>person</string>
+		<key>replacement</key>
+		<string>people</string>
+		<key>type</key>
+		<string>irregular</string>
+	</dict>
+</array>
+</plist>

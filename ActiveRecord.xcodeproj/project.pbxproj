@@ -1,0 +1,914 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
+		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		F80750C80E22BFAC006504CC /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BC0E22BFAC006504CC /* plurals.plist */; };
+		F80750C90E22BFAC006504CC /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BE0E22BFAC006504CC /* irregulars.plist */; };
+		F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80750C00E22BFAC006504CC /* InfoPlist.strings */; };
+		F80750CB0E22BFAC006504CC /* inflections.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C20E22BFAC006504CC /* inflections.plist */; };
+		F80750CC0E22BFAC006504CC /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C40E22BFAC006504CC /* singulars.plist */; };
+		F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C60E22BFAC006504CC /* uncountables.plist */; };
+		F834BE060E2A7A4200191322 /* chartables.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BDFB0E2A7A4200191322 /* chartables.c */; };
+		F834BE070E2A7A4200191322 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = F834BDFC0E2A7A4200191322 /* config.h */; };
+		F834BE080E2A7A4200191322 /* get.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BDFD0E2A7A4200191322 /* get.c */; };
+		F834BE090E2A7A4200191322 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = F834BDFE0E2A7A4200191322 /* internal.h */; };
+		F834BE0A0E2A7A4200191322 /* maketables.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BDFF0E2A7A4200191322 /* maketables.c */; };
+		F834BE0B0E2A7A4200191322 /* pcre.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BE000E2A7A4200191322 /* pcre.c */; };
+		F834BE0C0E2A7A4200191322 /* pcre.h in Headers */ = {isa = PBXBuildFile; fileRef = F834BE010E2A7A4200191322 /* pcre.h */; };
+		F834BE0D0E2A7A4200191322 /* study.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BE020E2A7A4200191322 /* study.c */; };
+		F834BE0E0E2A7A4200191322 /* AGRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = F834BE040E2A7A4200191322 /* AGRegex.h */; };
+		F834BE0F0E2A7A4200191322 /* AGRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = F834BE050E2A7A4200191322 /* AGRegex.m */; };
+		F87B10430E06F6D500580499 /* AGRegexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10340E06F6D500580499 /* AGRegexTest.m */; };
+		F87B10440E06F6D500580499 /* ARBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10360E06F6D500580499 /* ARBaseTest.m */; };
+		F87B10450E06F6D500580499 /* ARInflectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10380E06F6D500580499 /* ARInflectorTest.m */; };
+		F87B10460E06F6D500580499 /* ARMySQLConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B103A0E06F6D500580499 /* ARMySQLConnectionTest.m */; };
+		F87B10470E06F6D500580499 /* ARSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */; };
+		F87B104A0E06F6D500580499 /* SenTestCase+Fixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */; };
+		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
+		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
+		F87B108F0E06F7FF00580499 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
+		F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E80E17A9F30075AFFF /* my_alloc.h */; };
+		F8D301F30E17A9F30075AFFF /* my_list.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E90E17A9F30075AFFF /* my_list.h */; };
+		F8D301F40E17A9F30075AFFF /* mysql.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EA0E17A9F30075AFFF /* mysql.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8D301F50E17A9F30075AFFF /* mysql_com.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EB0E17A9F30075AFFF /* mysql_com.h */; };
+		F8D301F60E17A9F30075AFFF /* mysql_embed.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EC0E17A9F30075AFFF /* mysql_embed.h */; };
+		F8D301F70E17A9F30075AFFF /* mysql_time.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301ED0E17A9F30075AFFF /* mysql_time.h */; };
+		F8D301F80E17A9F30075AFFF /* mysql_version.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EE0E17A9F30075AFFF /* mysql_version.h */; };
+		F8D301F90E17A9F30075AFFF /* typelib.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EF0E17A9F30075AFFF /* typelib.h */; };
+		F8D301FD0E17AA0B0075AFFF /* libmysqlclient_r.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */; };
+		F8DA530F0E058F10002C3ADB /* ActiveRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* ActiveRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
+		F8DA53110E058F10002C3ADB /* ARBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53120E058F10002C3ADB /* ARBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */; };
+		F8DA53130E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */; };
+		F8DA53140E058F10002C3ADB /* ARBase.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E70E058F10002C3ADB /* ARBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53150E058F10002C3ADB /* ARBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* ARBase.m */; };
+		F8DA53160E058F10002C3ADB /* ARBasePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53170E058F10002C3ADB /* ARConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EB0E058F10002C3ADB /* ARConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53180E058F10002C3ADB /* ARMySQLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53190E058F10002C3ADB /* ARMySQLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52ED0E058F10002C3ADB /* ARMySQLConnection.m */; };
+		F8DA531A0E058F10002C3ADB /* ARMySQLField.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA531B0E058F10002C3ADB /* ARMySQLField.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52EF0E058F10002C3ADB /* ARMySQLField.m */; };
+		F8DA531C0E058F10002C3ADB /* ARSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA531D0E058F10002C3ADB /* ARSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F10E058F10002C3ADB /* ARSQLiteConnection.m */; };
+		F8DA53200E058F10002C3ADB /* ARRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F60E058F10002C3ADB /* ARRelationship.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53210E058F10002C3ADB /* ARRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F70E058F10002C3ADB /* ARRelationship.m */; };
+		F8DA53220E058F10002C3ADB /* ARRelationshipBelongsTo.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F80E058F10002C3ADB /* ARRelationshipBelongsTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53230E058F10002C3ADB /* ARRelationshipBelongsTo.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F90E058F10002C3ADB /* ARRelationshipBelongsTo.m */; };
+		F8DA53240E058F10002C3ADB /* ARRelationshipColumn.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52FA0E058F10002C3ADB /* ARRelationshipColumn.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53250E058F10002C3ADB /* ARRelationshipColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52FB0E058F10002C3ADB /* ARRelationshipColumn.m */; };
+		F8DA53260E058F10002C3ADB /* ARRelationshipHABTM.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52FC0E058F10002C3ADB /* ARRelationshipHABTM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53270E058F10002C3ADB /* ARRelationshipHABTM.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52FD0E058F10002C3ADB /* ARRelationshipHABTM.m */; };
+		F8DA53280E058F10002C3ADB /* ARRelationshipHasMany.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52FE0E058F10002C3ADB /* ARRelationshipHasMany.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53290E058F10002C3ADB /* ARRelationshipHasMany.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52FF0E058F10002C3ADB /* ARRelationshipHasMany.m */; };
+		F8DA532A0E058F10002C3ADB /* ARRelationshipHasManyThrough.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53000E058F10002C3ADB /* ARRelationshipHasManyThrough.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA532B0E058F10002C3ADB /* ARRelationshipHasManyThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53010E058F10002C3ADB /* ARRelationshipHasManyThrough.m */; };
+		F8DA532C0E058F10002C3ADB /* ARRelationshipHasOne.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53020E058F10002C3ADB /* ARRelationshipHasOne.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA532D0E058F10002C3ADB /* ARRelationshipHasOne.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53030E058F10002C3ADB /* ARRelationshipHasOne.m */; };
+		F8DA532E0E058F10002C3ADB /* ARInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53050E058F10002C3ADB /* ARInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA532F0E058F10002C3ADB /* ARInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53060E058F10002C3ADB /* ARInflector.m */; };
+		F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53310E058F10002C3ADB /* NSArray+ARAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */; };
+		F8DA53320E058F10002C3ADB /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53090E058F10002C3ADB /* NSData-Base64Extensions.h */; };
+		F8DA53330E058F10002C3ADB /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530A0E058F10002C3ADB /* NSData-Base64Extensions.m */; };
+		F8DA53340E058F10002C3ADB /* NSString+Inflections.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53350E058F10002C3ADB /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530C0E058F10002C3ADB /* NSString+Inflections.m */; };
+		F8DA53360E058F10002C3ADB /* NSString-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530D0E058F10002C3ADB /* NSString-Base64Extensions.h */; };
+		F8DA53370E058F10002C3ADB /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F87B102D0E06F6BD00580499 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = ActiveRecord;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveRecord_Prefix.pch; sourceTree = "<group>"; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ActiveRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		F80750BD0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/plurals.plist; sourceTree = "<group>"; };
+		F80750BF0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/irregulars.plist; sourceTree = "<group>"; };
+		F80750C10E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F80750C30E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/inflections.plist; sourceTree = "<group>"; };
+		F80750C50E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/singulars.plist; sourceTree = "<group>"; };
+		F80750C70E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/uncountables.plist; sourceTree = "<group>"; };
+		F834BDFB0E2A7A4200191322 /* chartables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chartables.c; sourceTree = "<group>"; };
+		F834BDFC0E2A7A4200191322 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		F834BDFD0E2A7A4200191322 /* get.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get.c; sourceTree = "<group>"; };
+		F834BDFE0E2A7A4200191322 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
+		F834BDFF0E2A7A4200191322 /* maketables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = maketables.c; sourceTree = "<group>"; };
+		F834BE000E2A7A4200191322 /* pcre.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcre.c; sourceTree = "<group>"; };
+		F834BE010E2A7A4200191322 /* pcre.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcre.h; sourceTree = "<group>"; };
+		F834BE020E2A7A4200191322 /* study.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = study.c; sourceTree = "<group>"; };
+		F834BE040E2A7A4200191322 /* AGRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGRegex.h; sourceTree = "<group>"; };
+		F834BE050E2A7A4200191322 /* AGRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGRegex.m; sourceTree = "<group>"; };
+		F87B10280E06F6B400580499 /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87B10290E06F6B400580499 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
+		F87B10330E06F6D500580499 /* AGRegexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGRegexTest.h; sourceTree = "<group>"; };
+		F87B10340E06F6D500580499 /* AGRegexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGRegexTest.m; sourceTree = "<group>"; };
+		F87B10350E06F6D500580499 /* ARBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseTest.h; sourceTree = "<group>"; };
+		F87B10360E06F6D500580499 /* ARBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseTest.m; sourceTree = "<group>"; };
+		F87B10370E06F6D500580499 /* ARInflectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARInflectorTest.h; sourceTree = "<group>"; };
+		F87B10380E06F6D500580499 /* ARInflectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARInflectorTest.m; sourceTree = "<group>"; };
+		F87B10390E06F6D500580499 /* ARMySQLConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLConnectionTest.h; sourceTree = "<group>"; };
+		F87B103A0E06F6D500580499 /* ARMySQLConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLConnectionTest.m; sourceTree = "<group>"; };
+		F87B103B0E06F6D500580499 /* ARSQLiteConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSQLiteConnectionTest.h; sourceTree = "<group>"; };
+		F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSQLiteConnectionTest.m; sourceTree = "<group>"; };
+		F87B103F0E06F6D500580499 /* SenTestCase+Fixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+Fixtures.h"; sourceTree = "<group>"; };
+		F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+Fixtures.m"; sourceTree = "<group>"; };
+		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		F882A3D90E070C6700C375FB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F888E86D0E2A419D00353924 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; wrapsLines = 1; };
+		F8D301E80E17A9F30075AFFF /* my_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_alloc.h; sourceTree = "<group>"; };
+		F8D301E90E17A9F30075AFFF /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
+		F8D301EA0E17A9F30075AFFF /* mysql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql.h; sourceTree = "<group>"; };
+		F8D301EB0E17A9F30075AFFF /* mysql_com.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_com.h; sourceTree = "<group>"; };
+		F8D301EC0E17A9F30075AFFF /* mysql_embed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_embed.h; sourceTree = "<group>"; };
+		F8D301ED0E17A9F30075AFFF /* mysql_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_time.h; sourceTree = "<group>"; };
+		F8D301EE0E17A9F30075AFFF /* mysql_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_version.h; sourceTree = "<group>"; };
+		F8D301EF0E17A9F30075AFFF /* typelib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typelib.h; sourceTree = "<group>"; };
+		F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmysqlclient_r.a; sourceTree = "<group>"; };
+		F8DA52E20E058F10002C3ADB /* ActiveRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveRecord.h; sourceTree = "<group>"; };
+		F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ARBase+CustomSelectors.m"; sourceTree = "<group>"; };
+		F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ARBase+Finders.h"; sourceTree = "<group>"; };
+		F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ARBase+Finders.m"; sourceTree = "<group>"; };
+		F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ARBase+KeyAndSelectorParsers.m"; sourceTree = "<group>"; };
+		F8DA52E70E058F10002C3ADB /* ARBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBase.h; sourceTree = "<group>"; };
+		F8DA52E80E058F10002C3ADB /* ARBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBase.m; sourceTree = "<group>"; };
+		F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBasePrivate.h; sourceTree = "<group>"; };
+		F8DA52EB0E058F10002C3ADB /* ARConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARConnection.h; sourceTree = "<group>"; };
+		F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLConnection.h; sourceTree = "<group>"; };
+		F8DA52ED0E058F10002C3ADB /* ARMySQLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLConnection.m; sourceTree = "<group>"; };
+		F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLField.h; sourceTree = "<group>"; };
+		F8DA52EF0E058F10002C3ADB /* ARMySQLField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLField.m; sourceTree = "<group>"; };
+		F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSQLiteConnection.h; sourceTree = "<group>"; };
+		F8DA52F10E058F10002C3ADB /* ARSQLiteConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSQLiteConnection.m; sourceTree = "<group>"; };
+		F8DA52F60E058F10002C3ADB /* ARRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationship.h; sourceTree = "<group>"; };
+		F8DA52F70E058F10002C3ADB /* ARRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationship.m; sourceTree = "<group>"; };
+		F8DA52F80E058F10002C3ADB /* ARRelationshipBelongsTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipBelongsTo.h; sourceTree = "<group>"; };
+		F8DA52F90E058F10002C3ADB /* ARRelationshipBelongsTo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipBelongsTo.m; sourceTree = "<group>"; };
+		F8DA52FA0E058F10002C3ADB /* ARRelationshipColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipColumn.h; sourceTree = "<group>"; };
+		F8DA52FB0E058F10002C3ADB /* ARRelationshipColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipColumn.m; sourceTree = "<group>"; };
+		F8DA52FC0E058F10002C3ADB /* ARRelationshipHABTM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipHABTM.h; sourceTree = "<group>"; };
+		F8DA52FD0E058F10002C3ADB /* ARRelationshipHABTM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipHABTM.m; sourceTree = "<group>"; };
+		F8DA52FE0E058F10002C3ADB /* ARRelationshipHasMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipHasMany.h; sourceTree = "<group>"; };
+		F8DA52FF0E058F10002C3ADB /* ARRelationshipHasMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipHasMany.m; sourceTree = "<group>"; };
+		F8DA53000E058F10002C3ADB /* ARRelationshipHasManyThrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipHasManyThrough.h; sourceTree = "<group>"; };
+		F8DA53010E058F10002C3ADB /* ARRelationshipHasManyThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipHasManyThrough.m; sourceTree = "<group>"; };
+		F8DA53020E058F10002C3ADB /* ARRelationshipHasOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRelationshipHasOne.h; sourceTree = "<group>"; };
+		F8DA53030E058F10002C3ADB /* ARRelationshipHasOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRelationshipHasOne.m; sourceTree = "<group>"; };
+		F8DA53050E058F10002C3ADB /* ARInflector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARInflector.h; sourceTree = "<group>"; };
+		F8DA53060E058F10002C3ADB /* ARInflector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARInflector.m; sourceTree = "<group>"; };
+		F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ARAdditions.h"; sourceTree = "<group>"; };
+		F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ARAdditions.m"; sourceTree = "<group>"; };
+		F8DA53090E058F10002C3ADB /* NSData-Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-Base64Extensions.h"; sourceTree = "<group>"; };
+		F8DA530A0E058F10002C3ADB /* NSData-Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-Base64Extensions.m"; sourceTree = "<group>"; };
+		F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
+		F8DA530C0E058F10002C3ADB /* NSString+Inflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
+		F8DA530D0E058F10002C3ADB /* NSString-Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString-Base64Extensions.h"; sourceTree = "<group>"; };
+		F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString-Base64Extensions.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D301FD0E17AA0B0075AFFF /* libmysqlclient_r.a in Frameworks */,
+				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+				F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */,
+				F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87B10250E06F6B400580499 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87B108F0E06F7FF00580499 /* ActiveRecord.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */,
+				F87B10280E06F6B400580499 /* Unit Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* ActiveRecord */ = {
+			isa = PBXGroup;
+			children = (
+				F8DA52E10E058F10002C3ADB /* Source */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+				F87B10290E06F6B400580499 /* Unit Tests-Info.plist */,
+				F87B10320E06F6D500580499 /* Unit tests */,
+				F888E86D0E2A419D00353924 /* README */,
+			);
+			name = ActiveRecord;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F8D301E60E17A9F30075AFFF /* MySQL Libraries */,
+				F882A3E10E070C7100C375FB /* iPhone libraries */,
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F80750BA0E22BFA3006504CC /* Inflections */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F87B106A0E06F74C00580499 /* libsqlite3.dylib */,
+				F87B106D0E06F76300580499 /* libcrypto.dylib */,
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				D2F7E79907B2D74100F64583 /* CoreData.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F834BDF90E2A7A4200191322 /* AGRegex */,
+				32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		F80750BA0E22BFA3006504CC /* Inflections */ = {
+			isa = PBXGroup;
+			children = (
+				F80750BC0E22BFAC006504CC /* plurals.plist */,
+				F80750BE0E22BFAC006504CC /* irregulars.plist */,
+				F80750C00E22BFAC006504CC /* InfoPlist.strings */,
+				F80750C20E22BFAC006504CC /* inflections.plist */,
+				F80750C40E22BFAC006504CC /* singulars.plist */,
+				F80750C60E22BFAC006504CC /* uncountables.plist */,
+			);
+			name = Inflections;
+			sourceTree = "<group>";
+		};
+		F834BDF90E2A7A4200191322 /* AGRegex */ = {
+			isa = PBXGroup;
+			children = (
+				F834BDFA0E2A7A4200191322 /* pcre-4.3 */,
+				F834BE030E2A7A4200191322 /* Source */,
+			);
+			name = AGRegex;
+			path = Source/AGRegex;
+			sourceTree = "<group>";
+		};
+		F834BDFA0E2A7A4200191322 /* pcre-4.3 */ = {
+			isa = PBXGroup;
+			children = (
+				F834BDFB0E2A7A4200191322 /* chartables.c */,
+				F834BDFC0E2A7A4200191322 /* config.h */,
+				F834BDFD0E2A7A4200191322 /* get.c */,
+				F834BDFE0E2A7A4200191322 /* internal.h */,
+				F834BDFF0E2A7A4200191322 /* maketables.c */,
+				F834BE000E2A7A4200191322 /* pcre.c */,
+				F834BE010E2A7A4200191322 /* pcre.h */,
+				F834BE020E2A7A4200191322 /* study.c */,
+			);
+			path = "pcre-4.3";
+			sourceTree = "<group>";
+		};
+		F834BE030E2A7A4200191322 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				F834BE040E2A7A4200191322 /* AGRegex.h */,
+				F834BE050E2A7A4200191322 /* AGRegex.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		F87B10320E06F6D500580499 /* Unit tests */ = {
+			isa = PBXGroup;
+			children = (
+				F87B10330E06F6D500580499 /* AGRegexTest.h */,
+				F87B10340E06F6D500580499 /* AGRegexTest.m */,
+				F87B10350E06F6D500580499 /* ARBaseTest.h */,
+				F87B10360E06F6D500580499 /* ARBaseTest.m */,
+				F87B10370E06F6D500580499 /* ARInflectorTest.h */,
+				F87B10380E06F6D500580499 /* ARInflectorTest.m */,
+				F87B10390E06F6D500580499 /* ARMySQLConnectionTest.h */,
+				F87B103A0E06F6D500580499 /* ARMySQLConnectionTest.m */,
+				F87B103B0E06F6D500580499 /* ARSQLiteConnectionTest.h */,
+				F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */,
+				F87B103F0E06F6D500580499 /* SenTestCase+Fixtures.h */,
+				F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */,
+			);
+			path = "Unit tests";
+			sourceTree = "<group>";
+		};
+		F882A3E10E070C7100C375FB /* iPhone libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F882A3D90E070C6700C375FB /* libsqlite3.dylib */,
+			);
+			name = "iPhone libraries";
+			sourceTree = "<group>";
+		};
+		F8D301E60E17A9F30075AFFF /* MySQL Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F8D301E70E17A9F30075AFFF /* include */,
+				F8D301F00E17A9F30075AFFF /* lib */,
+			);
+			path = "MySQL Libraries";
+			sourceTree = "<group>";
+		};
+		F8D301E70E17A9F30075AFFF /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F8D301E80E17A9F30075AFFF /* my_alloc.h */,
+				F8D301E90E17A9F30075AFFF /* my_list.h */,
+				F8D301EA0E17A9F30075AFFF /* mysql.h */,
+				F8D301EB0E17A9F30075AFFF /* mysql_com.h */,
+				F8D301EC0E17A9F30075AFFF /* mysql_embed.h */,
+				F8D301ED0E17A9F30075AFFF /* mysql_time.h */,
+				F8D301EE0E17A9F30075AFFF /* mysql_version.h */,
+				F8D301EF0E17A9F30075AFFF /* typelib.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F8D301F00E17A9F30075AFFF /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		F8DA52E10E058F10002C3ADB /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				F8DA52E20E058F10002C3ADB /* ActiveRecord.h */,
+				F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */,
+				F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */,
+				F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */,
+				F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */,
+				F8DA52E70E058F10002C3ADB /* ARBase.h */,
+				F8DA52E80E058F10002C3ADB /* ARBase.m */,
+				F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */,
+				F8DA52EA0E058F10002C3ADB /* Connections */,
+				F8DA52F50E058F10002C3ADB /* Relationships */,
+				F8DA53040E058F10002C3ADB /* Utilities */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		F8DA52EA0E058F10002C3ADB /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				F8DA52EB0E058F10002C3ADB /* ARConnection.h */,
+				F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */,
+				F8DA52ED0E058F10002C3ADB /* ARMySQLConnection.m */,
+				F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */,
+				F8DA52EF0E058F10002C3ADB /* ARMySQLField.m */,
+				F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */,
+				F8DA52F10E058F10002C3ADB /* ARSQLiteConnection.m */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
+		F8DA52F50E058F10002C3ADB /* Relationships */ = {
+			isa = PBXGroup;
+			children = (
+				F8DA52F60E058F10002C3ADB /* ARRelationship.h */,
+				F8DA52F70E058F10002C3ADB /* ARRelationship.m */,
+				F8DA52F80E058F10002C3ADB /* ARRelationshipBelongsTo.h */,
+				F8DA52F90E058F10002C3ADB /* ARRelationshipBelongsTo.m */,
+				F8DA52FA0E058F10002C3ADB /* ARRelationshipColumn.h */,
+				F8DA52FB0E058F10002C3ADB /* ARRelationshipColumn.m */,
+				F8DA52FC0E058F10002C3ADB /* ARRelationshipHABTM.h */,
+				F8DA52FD0E058F10002C3ADB /* ARRelationshipHABTM.m */,
+				F8DA52FE0E058F10002C3ADB /* ARRelationshipHasMany.h */,
+				F8DA52FF0E058F10002C3ADB /* ARRelationshipHasMany.m */,
+				F8DA53000E058F10002C3ADB /* ARRelationshipHasManyThrough.h */,
+				F8DA53010E058F10002C3ADB /* ARRelationshipHasManyThrough.m */,
+				F8DA53020E058F10002C3ADB /* ARRelationshipHasOne.h */,
+				F8DA53030E058F10002C3ADB /* ARRelationshipHasOne.m */,
+			);
+			path = Relationships;
+			sourceTree = "<group>";
+		};
+		F8DA53040E058F10002C3ADB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F8DA53050E058F10002C3ADB /* ARInflector.h */,
+				F8DA53060E058F10002C3ADB /* ARInflector.m */,
+				F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */,
+				F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */,
+				F8DA53090E058F10002C3ADB /* NSData-Base64Extensions.h */,
+				F8DA530A0E058F10002C3ADB /* NSData-Base64Extensions.m */,
+				F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */,
+				F8DA530C0E058F10002C3ADB /* NSString+Inflections.m */,
+				F8DA530D0E058F10002C3ADB /* NSString-Base64Extensions.h */,
+				F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8DA530F0E058F10002C3ADB /* ActiveRecord.h in Headers */,
+				F8DA53110E058F10002C3ADB /* ARBase+Finders.h in Headers */,
+				F8DA53140E058F10002C3ADB /* ARBase.h in Headers */,
+				F8DA53160E058F10002C3ADB /* ARBasePrivate.h in Headers */,
+				F8DA53170E058F10002C3ADB /* ARConnection.h in Headers */,
+				F8DA53180E058F10002C3ADB /* ARMySQLConnection.h in Headers */,
+				F8DA531A0E058F10002C3ADB /* ARMySQLField.h in Headers */,
+				F8DA531C0E058F10002C3ADB /* ARSQLiteConnection.h in Headers */,
+				F8DA53200E058F10002C3ADB /* ARRelationship.h in Headers */,
+				F8DA53220E058F10002C3ADB /* ARRelationshipBelongsTo.h in Headers */,
+				F8DA53240E058F10002C3ADB /* ARRelationshipColumn.h in Headers */,
+				F8DA53260E058F10002C3ADB /* ARRelationshipHABTM.h in Headers */,
+				F8DA53280E058F10002C3ADB /* ARRelationshipHasMany.h in Headers */,
+				F8DA532A0E058F10002C3ADB /* ARRelationshipHasManyThrough.h in Headers */,
+				F8DA532C0E058F10002C3ADB /* ARRelationshipHasOne.h in Headers */,
+				F8DA532E0E058F10002C3ADB /* ARInflector.h in Headers */,
+				F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */,
+				F8DA53320E058F10002C3ADB /* NSData-Base64Extensions.h in Headers */,
+				F8DA53340E058F10002C3ADB /* NSString+Inflections.h in Headers */,
+				F8DA53360E058F10002C3ADB /* NSString-Base64Extensions.h in Headers */,
+				F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */,
+				F8D301F30E17A9F30075AFFF /* my_list.h in Headers */,
+				F8D301F40E17A9F30075AFFF /* mysql.h in Headers */,
+				F8D301F50E17A9F30075AFFF /* mysql_com.h in Headers */,
+				F8D301F60E17A9F30075AFFF /* mysql_embed.h in Headers */,
+				F8D301F70E17A9F30075AFFF /* mysql_time.h in Headers */,
+				F8D301F80E17A9F30075AFFF /* mysql_version.h in Headers */,
+				F8D301F90E17A9F30075AFFF /* typelib.h in Headers */,
+				F834BE070E2A7A4200191322 /* config.h in Headers */,
+				F834BE090E2A7A4200191322 /* internal.h in Headers */,
+				F834BE0C0E2A7A4200191322 /* pcre.h in Headers */,
+				F834BE0E0E2A7A4200191322 /* AGRegex.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* ActiveRecord */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "ActiveRecord" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+				F888E8670E2A412D00353924 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ActiveRecord;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = ActiveRecord;
+			productReference = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F87B10270E06F6B400580499 /* Unit Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F87B102C0E06F6B500580499 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
+			buildPhases = (
+				F80750910E22BE15006504CC /* ShellScript */,
+				F87B10230E06F6B400580499 /* Resources */,
+				F87B10240E06F6B400580499 /* Sources */,
+				F87B10250E06F6B400580499 /* Frameworks */,
+				F87B10260E06F6B400580499 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F87B102E0E06F6BD00580499 /* PBXTargetDependency */,
+			);
+			name = "Unit Tests";
+			productName = "Unit Tests";
+			productReference = F87B10280E06F6B400580499 /* Unit Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ActiveRecord" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* ActiveRecord */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* ActiveRecord */,
+				F87B10270E06F6B400580499 /* Unit Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
+				F80750C80E22BFAC006504CC /* plurals.plist in Resources */,
+				F80750C90E22BFAC006504CC /* irregulars.plist in Resources */,
+				F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */,
+				F80750CB0E22BFAC006504CC /* inflections.plist in Resources */,
+				F80750CC0E22BFAC006504CC /* singulars.plist in Resources */,
+				F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87B10230E06F6B400580499 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F80750910E22BE15006504CC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "require \"fileutils\"\n\ntestDir = \"#{ENV['SRCROOT']}/Unit tests/\"\n\nFileUtils.rm(testDir+'simpleDatabase.db') if File.exist?(testDir+'simpleDatabase.db')\nFileUtils.cp(testDir+'cleanDatabase.db', testDir+'simpleDatabase.db')";
+		};
+		F87B10260E06F6B400580499 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		F888E8670E2A412D00353924 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/bin/env ruby";
+			shellScript = "require \"fileutils\"\n\nputs \"Creating iPhone header dir\"\n\nheaderDir = \"#{ENV['BUILD_DIR']}/#{ENV['BUILD_STYLE']}/ActiveRecord.framework/Headers/.\"\nresultDir = \"#{ENV['SRCROOT']}/iPhone Headers/ActiveRecord/\"\n\nFileUtils.mkdir_p resultDir\nFileUtils.cp_r(headerDir, resultDir, :remove_destination => true)\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */,
+				F8DA53120E058F10002C3ADB /* ARBase+Finders.m in Sources */,
+				F8DA53130E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m in Sources */,
+				F8DA53150E058F10002C3ADB /* ARBase.m in Sources */,
+				F8DA53190E058F10002C3ADB /* ARMySQLConnection.m in Sources */,
+				F8DA531B0E058F10002C3ADB /* ARMySQLField.m in Sources */,
+				F8DA531D0E058F10002C3ADB /* ARSQLiteConnection.m in Sources */,
+				F8DA53210E058F10002C3ADB /* ARRelationship.m in Sources */,
+				F8DA53230E058F10002C3ADB /* ARRelationshipBelongsTo.m in Sources */,
+				F8DA53250E058F10002C3ADB /* ARRelationshipColumn.m in Sources */,
+				F8DA53270E058F10002C3ADB /* ARRelationshipHABTM.m in Sources */,
+				F8DA53290E058F10002C3ADB /* ARRelationshipHasMany.m in Sources */,
+				F8DA532B0E058F10002C3ADB /* ARRelationshipHasManyThrough.m in Sources */,
+				F8DA532D0E058F10002C3ADB /* ARRelationshipHasOne.m in Sources */,
+				F8DA532F0E058F10002C3ADB /* ARInflector.m in Sources */,
+				F8DA53310E058F10002C3ADB /* NSArray+ARAdditions.m in Sources */,
+				F8DA53330E058F10002C3ADB /* NSData-Base64Extensions.m in Sources */,
+				F8DA53350E058F10002C3ADB /* NSString+Inflections.m in Sources */,
+				F8DA53370E058F10002C3ADB /* NSString-Base64Extensions.m in Sources */,
+				F834BE060E2A7A4200191322 /* chartables.c in Sources */,
+				F834BE080E2A7A4200191322 /* get.c in Sources */,
+				F834BE0A0E2A7A4200191322 /* maketables.c in Sources */,
+				F834BE0B0E2A7A4200191322 /* pcre.c in Sources */,
+				F834BE0D0E2A7A4200191322 /* study.c in Sources */,
+				F834BE0F0E2A7A4200191322 /* AGRegex.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87B10240E06F6B400580499 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87B10430E06F6D500580499 /* AGRegexTest.m in Sources */,
+				F87B10440E06F6D500580499 /* ARBaseTest.m in Sources */,
+				F87B10450E06F6D500580499 /* ARInflectorTest.m in Sources */,
+				F87B10460E06F6D500580499 /* ARMySQLConnectionTest.m in Sources */,
+				F87B10470E06F6D500580499 /* ARSQLiteConnectionTest.m in Sources */,
+				F87B104A0E06F6D500580499 /* SenTestCase+Fixtures.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F87B102E0E06F6BD00580499 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DC2EF4F0486A6940098B216 /* ActiveRecord */;
+			targetProxy = F87B102D0E06F6BD00580499 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1667FE841158C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F80750BC0E22BFAC006504CC /* plurals.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750BD0E22BFAC006504CC /* English */,
+			);
+			name = plurals.plist;
+			sourceTree = "<group>";
+		};
+		F80750BE0E22BFAC006504CC /* irregulars.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750BF0E22BFAC006504CC /* English */,
+			);
+			name = irregulars.plist;
+			sourceTree = "<group>";
+		};
+		F80750C00E22BFAC006504CC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750C10E22BFAC006504CC /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F80750C20E22BFAC006504CC /* inflections.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750C30E22BFAC006504CC /* English */,
+			);
+			name = inflections.plist;
+			sourceTree = "<group>";
+		};
+		F80750C40E22BFAC006504CC /* singulars.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750C50E22BFAC006504CC /* English */,
+			);
+			name = singulars.plist;
+			sourceTree = "<group>";
+		};
+		F80750C60E22BFAC006504CC /* uncountables.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F80750C70E22BFAC006504CC /* English */,
+			);
+			name = uncountables.plist;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91AE08733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ActiveRecord_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/MySQL Libraries/include\"/**",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MySQL Libraries/lib\"",
+				);
+				PRODUCT_NAME = ActiveRecord;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		1DEB91AF08733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ActiveRecord_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MySQL Libraries/lib\"",
+				);
+				PRODUCT_NAME = ActiveRecord;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		F87B102A0E06F6B500580499 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ActiveRecord_prefix.pch;
+				INFOPLIST_FILE = "Unit Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Unit Tests";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		F87B102B0E06F6B500580499 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Unit Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Unit Tests";
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "ActiveRecord" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91AE08733DA50010E9CD /* Debug */,
+				1DEB91AF08733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ActiveRecord" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F87B102C0E06F6B500580499 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F87B102A0E06F6B500580499 /* Debug */,
+				F87B102B0E06F6B500580499 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

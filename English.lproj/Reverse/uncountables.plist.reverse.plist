@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>equipment</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>information</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>rice</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>money</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>species</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>series</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>fish</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>sheep</string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>$</string>
+	  <key>replacement</key>
+	  <string>s</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>s$</string>
+	  <key>replacement</key>
+	  <string>s</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(ax|test)is$</string>
+	  <key>replacement</key>
+	  <string>$1es</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(octop|vir)us$</string>
+	  <key>replacement</key>
+	  <string>$1i</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(alias|status)$</string>
+	  <key>replacement</key>
+	  <string>$1es</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(bu)s$</string>
+	  <key>replacement</key>
+	  <string>$1ses</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(buffal|tomat)o$</string>
+	  <key>replacement</key>
+	  <string>$1oes</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>([ti])um$</string>
+	  <key>replacement</key>
+	  <string>$1a</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>sis$</string>
+	  <key>replacement</key>
+	  <string>ses</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(?:([^f])fe|([lr])f)$</string>
+	  <key>replacement</key>
+	  <string>$1$2ves</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(hive)$</string>
+	  <key>replacement</key>
+	  <string>$1s</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>([^aeiouy]|qu)y$</string>
+	  <key>replacement</key>
+	  <string>$1ies</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(x|ch|ss|sh)$</string>
+	  <key>replacement</key>
+	  <string>$1es</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(matr|vert|ind)ix|ex$</string>
+	  <key>replacement</key>
+	  <string>$1ices</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>([m|l])ouse$</string>
+	  <key>replacement</key>
+	  <string>$1ice</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>^(ox)$</string>
+	  <key>replacement</key>
+	  <string>$1en</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>plural</string>
+	  <key>pattern</key>
+	  <string>(quiz)$</string>
+	  <key>replacement</key>
+	  <string>$1zes</string>
+	</dict>
+
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>s$</string>
+		<key>replacement</key>
+	  <string></string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(n)ews$</string>
+	  <key>replacement</key>
+	  <string>$1ews</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>([ti])a$</string>
+	  <key>replacement</key>
+	  <string>$1um</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$</string>
+	  <key>replacement</key>
+	  <string>$1\2sis</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(^analy)ses$</string>
+	  <key>replacement</key>
+	  <string>$1sis</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>([^f])ves$</string>
+	  <key>replacement</key>
+	  <string>$1fe</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(hive)s$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(tive)s$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>([lr])ves$</string>
+	  <key>replacement</key>
+	  <string>$1f</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>([^aeiouy]|qu)ies$</string>
+	  <key>replacement</key>
+	  <string>$1y</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(s)eries$</string>
+	  <key>replacement</key>
+	  <string>$1eries</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(m)ovies$</string>
+	  <key>replacement</key>
+	  <string>$1ovie</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(x|ch|ss|sh)es$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>([m|l])ice$</string>
+	  <key>replacement</key>
+	  <string>$1ouse</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(bus)es$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(o)es$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(shoe)s$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(cris|ax|test)es$</string>
+	  <key>replacement</key>
+	  <string>$1is</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(octop|vir)i$</string>
+	  <key>replacement</key>
+	  <string>$1us</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(alias|status)es$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>^(ox)en</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(vert|ind)ices$</string>
+	  <key>replacement</key>
+	  <string>$1ex</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(matr)ices$</string>
+	  <key>replacement</key>
+	  <string>$1ix</string>
+	</dict>
+	
+	<dict>
+	  <key>type</key>
+	  <string>singular</string>
+	  <key>pattern</key>
+	  <string>(quiz)zes$</string>
+	  <key>replacement</key>
+	  <string>$1</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>irregular</string>
+		<key>pattern</key>
+	  <string>person</string>
+	  <key>replacement</key>
+	  <string>people</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>irregular</string>
+		<key>pattern</key>
+	  <string>man</string>
+	  <key>replacement</key>
+	  <string>men</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>irregular</string>
+		<key>pattern</key>
+	  <string>child</string>
+	  <key>replacement</key>
+	  <string>children</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>irregular</string>
+		<key>pattern</key>
+	  <string>sex</string>
+	  <key>replacement</key>
+	  <string>sexes</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>irregular</string>
+		<key>pattern</key>
+	  <string>move</string>
+	  <key>replacement</key>
+	  <string>moves</string>
+	</dict>
+
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>equipment</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>information</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>rice</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>money</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>species</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>series</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>fish</string>
+	</dict>
+	<dict>
+	  <key>type</key>
+	  <string>uncountable</string>
+		<key>pattern</key>
+	  <string>sheep</string>
+	</dict>
+</array>
+</plist>
