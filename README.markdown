@@ -1,5 +1,3 @@
-
-=====================
  ActiveRecord ReadMe
 =====================
 
@@ -28,20 +26,20 @@ Features:
 Using on iPhone:
 ====================
 Building for iPhone is rather simple.
--Step 1:
+* **Step 1:**
  * Check out the latest code
  * Build for mac os x
 This will create a directory called 'iPhone Headers' which contains all the headers you need (Add it to your project's header search path)
 
--Step 2:
-Then go ahead and add the "Source" directory to your project/target.
+* **Step 2:**
+Go ahead and add the "Source" directory to your project/target.
 
--Step 3:
+* **Step 3:**
 Add the Inflection files to your project's "Resources" group. The Inflection files are:
-* irregulars.plist
-* plurals.plist
-* singulars.plist
-* uncountables.plist
+	* irregulars.plist
+	* plurals.plist
+	* singulars.plist
+	* uncountables.plist
 
 Now you should be able to use ActiveRecord just like you would on a mac (Except without MySQL support).
 
