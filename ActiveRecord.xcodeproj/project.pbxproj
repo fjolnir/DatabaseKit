@@ -394,12 +394,12 @@
 			isa = PBXGroup;
 			children = (
 				F8DA52E20E058F10002C3ADB /* ActiveRecord.h */,
+				F8DA52E70E058F10002C3ADB /* ARBase.h */,
+				F8DA52E80E058F10002C3ADB /* ARBase.m */,
 				F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */,
 				F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */,
 				F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */,
 				F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */,
-				F8DA52E70E058F10002C3ADB /* ARBase.h */,
-				F8DA52E80E058F10002C3ADB /* ARBase.m */,
 				F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */,
 				F8DA52EA0E058F10002C3ADB /* Connections */,
 				F8DA52F50E058F10002C3ADB /* Relationships */,
@@ -448,12 +448,12 @@
 			children = (
 				F8DA53050E058F10002C3ADB /* ARInflector.h */,
 				F8DA53060E058F10002C3ADB /* ARInflector.m */,
+				F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */,
+				F8DA530C0E058F10002C3ADB /* NSString+Inflections.m */,
 				F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */,
 				F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */,
 				F8DA53090E058F10002C3ADB /* NSData-Base64Extensions.h */,
 				F8DA530A0E058F10002C3ADB /* NSData-Base64Extensions.m */,
-				F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */,
-				F8DA530C0E058F10002C3ADB /* NSString+Inflections.m */,
 				F8DA530D0E058F10002C3ADB /* NSString-Base64Extensions.h */,
 				F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */,
 			);

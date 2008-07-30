@@ -13,6 +13,7 @@
 
 static BOOL enableCache  = NO;
 static BOOL delayWriting = NO;
+static ARNamingStyle namingStyle = ARRailsNamingStyle;
 
 // Relationships
 //  Stored as dictionaries containing arrays of relationships
@@ -115,6 +116,17 @@ static NSString *classPrefix = nil;
 	[addCache removeAllObjects];
 	[removeCache removeAllObjects];
 	[writeCache removeAllObjects];
+}
+
+#pragma mark -
+#pragma mark Naming style
++ (ARNamingStyle)namingStyle
+{
+	return namingStyle;
+}
++ (void)setNamingStyle:(ARNamingStyle)style
+{
+	namingStyle = style;
 }
 
 #pragma mark -
@@ -320,7 +332,10 @@ static NSString *classPrefix = nil;
                             options:0
                               range:NSMakeRange(0, [ret length])];
   }
-  return [[ret stringByDecapitalizingFirstLetter] pluralizedString];
+  ret = (NSMutableString *)[[ret stringByDecapitalizingFirstLetter] pluralizedString];
+	if([[self class] namingStyle] == ARRailsNamingStyle)
+		return [ret underscoredString];
+	return ret;
 }
 + (NSString *)joinTableNameForModel:(Class)firstModel and:(Class)secondModel
 {

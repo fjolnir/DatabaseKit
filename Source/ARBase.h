@@ -51,6 +51,17 @@ typedef enum {
   ARFindAll   = -2
 } ARFindSpecification;
 
+/*! 
+ * @enum ARNamingStyle
+ * Indicates how ActiveRecord will name it's tables
+ * ObjC style: manyModels
+ * Rails style: many_models
+ */
+typedef enum {
+  ARObjCNamingStyle  = 1,
+  ARRailsNamingStyle = 2
+} ARNamingStyle;
+
 /*!
  * The base class for the ActiveRecord implementation\n
  * All models are subclasses of ARBase\n
@@ -117,6 +128,11 @@ typedef enum {
  * Does nothing if delayWriting is NO
  */
 - (void)save;
+
+/*! Returns the naming style (See docs for ARNamingStyle for more info) */
++ (ARNamingStyle)namingStyle;
+/*! Sets the current naming style (See docs for ARNamingStyle for more info) */
++ (void)setNamingStyle:(ARNamingStyle)style;
 
 /*! Returns the table name of the record based on the class name by converting it to lowercase, pluralizing it and removing the class prefix if one is set. */
 + (NSString *)tableName;

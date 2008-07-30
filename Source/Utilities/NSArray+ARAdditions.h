@@ -5,8 +5,8 @@
 //  Created by Fjölnir Ásgeirsson on 11/23/07.
 //  Copyright 2007 ninja kitten. All rights reserved.
 //
-#ifndef _NSARRAY+ARADDITIONS_H_
-#define _NSARRAY+ARADDITIONS_H_
+#ifndef _NSARRAY_ARADDITIONS_H_
+#define _NSARRAY_ARADDITIONS_H_
 
 #import <Foundation/Foundation.h>
 

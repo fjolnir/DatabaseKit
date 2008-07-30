@@ -9,3 +9,6 @@ build/*
 # osx noise
 .DS_Store
 profile
+
+iPhone Headers/*
+Unit tests/simpleDatabase.db

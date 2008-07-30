@@ -45,8 +45,6 @@ Now you should be able to use ActiveRecord just like you would on a mac (Except 
 
 Minitutorial
 =============
-Note: Check http://ninjakitten.us/activerecord for a more detailed tutorial, suitable for less experienced coders (pics!)
-
 To create a model there are 2 steps.
 * **1** Create the table in your database
 * **2** Create a model class named as the singularized version of your table name (people -> person)

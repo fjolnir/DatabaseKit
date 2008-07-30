@@ -30,8 +30,8 @@
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#ifndef _NSSTRING+INFLECTIONS_H_ 
-#define _NSSTRING+INFLECTIONS_H_ 
+#ifndef _NSSTRING_INFLECTIONS_H_ 
+#define _NSSTRING_INFLECTIONS_H_
 
 #import <Foundation/Foundation.h>
 
@@ -45,5 +45,8 @@
 - (NSString *)stringByCapitalizingFirstLetter;
 /*! Returns a copy of the string with the first letter cdeapitalized */
 - (NSString *)stringByDecapitalizingFirstLetter;
+
+- (NSString *)underscoredString;
+- (NSString *)camelizedString;
 @end
 #endif /* _NSSTRING+INFLECTIONS_H_ */
