@@ -46,7 +46,9 @@
 /*! Returns a copy of the string with the first letter cdeapitalized */
 - (NSString *)stringByDecapitalizingFirstLetter;
 
+/*! Converts a camelized string to a underscored one aString -> a_string */
 - (NSString *)underscoredString;
+/*! Converts an underscored string to a cameilzed one a_string -> aString */
 - (NSString *)camelizedString;
 @end
 #endif /* _NSSTRING+INFLECTIONS_H_ */

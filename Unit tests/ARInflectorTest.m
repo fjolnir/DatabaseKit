@@ -48,4 +48,13 @@
   STAssertTrue([[@"mothers" singularizedString] isEqualToString:@"mother"], @"mothers should become mother");
   STAssertTrue([[@"equipment" singularizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
+
+- (void)testUnderscoring
+{
+	STAssertEqualObjects([@"MyCamelizedString" underscoredString], @"my_camelized_string", @"underscore test failed");
+}
+- (void)testCamelizing
+{
+	STAssertEqualObjects([@"my_underscored_string" camelizedString], @"myUnderscoredString", @"camelize test failed");
+}
 @end

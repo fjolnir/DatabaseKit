@@ -61,13 +61,22 @@
 }
 - (NSString *)camelizedString
 {
-	AGRegex *regex = [AGRegex regexWithPattern:@"_([a-z])" options:AGRegexCaseInsensitive | AGRegexExtended];
+	NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
+	NSMutableString *ret = [NSMutableString stringWithString:[parts objectAtIndex:0]];
+	[parts removeObjectAtIndex:0];
+	for(NSString *part in parts)
+	{
+		[ret appendString:[part stringByCapitalizingFirstLetter]];
+	}
+	[parts release];
+	return ret;
+	/*AGRegex *regex = [AGRegex regexWithPattern:@"_([a-z])" options:AGRegexCaseInsensitive | AGRegexExtended];
 	NSMutableString *ret = [self mutableCopy];
 	for(AGRegexMatch *match in [regex findAllInString:ret])
 	{
-		[ret replaceCharactersInRange:[match range] withString:[[match groupAtIndex:0] capitalizedString]];
+		[ret replaceCharactersInRange:[match range] withString:[[match group] capitalizedString]];
 	}
-	return [ret autorelease];
+	return [ret autorelease];*/
 }
 @end
 /* @endcond */
