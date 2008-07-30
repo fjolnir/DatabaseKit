@@ -70,13 +70,6 @@
 	}
 	[parts release];
 	return ret;
-	/*AGRegex *regex = [AGRegex regexWithPattern:@"_([a-z])" options:AGRegexCaseInsensitive | AGRegexExtended];
-	NSMutableString *ret = [self mutableCopy];
-	for(AGRegexMatch *match in [regex findAllInString:ret])
-	{
-		[ret replaceCharactersInRange:[match range] withString:[[match group] capitalizedString]];
-	}
-	return [ret autorelease];*/
 }
 @end
 /* @endcond */
