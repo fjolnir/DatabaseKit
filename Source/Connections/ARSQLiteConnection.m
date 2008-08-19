@@ -63,9 +63,6 @@
 #pragma mark SQL Eecuting
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
 {
-  // Apply substitutions (if any)
-  NSMutableString *mutableSQL = [sql mutableCopy];
-
   // Prepare the query
   sqlite3_stmt *queryByteCode;
   queryByteCode = [self prepareQuerySQL:sql];
@@ -125,7 +122,6 @@
   }
   
   [self finalizeQuery:queryByteCode];
-  [mutableSQL release];
   return rowArray;
 }
 
