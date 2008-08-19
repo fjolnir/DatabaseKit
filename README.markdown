@@ -61,6 +61,7 @@ Then we'd create the following class definition:
 
 And to prevent the compiler from complaining when we call custom accessors we also create a category
 to suppress 'method missing' warnings. Like so:
+
 	@interface Person (Accessors)
 	- firstName;
 	- setFirstName:(id)value;
@@ -69,9 +70,11 @@ to suppress 'method missing' warnings. Like so:
 	@end
 
 and that's it. Now we can get people like so:
+
 	NSArray *people = [Person find:ARFindAll];
 
 and if we want the name of the second person we could:
+
 	Person *person = [people objectAtIndex:1];
 	NSLog(@"%@ %@", [person firstName], [person lastName]);
 
