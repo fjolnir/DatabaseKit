@@ -129,7 +129,7 @@ static NSString *classPrefix = nil;
 	}
 	@catch(NSException *e)
 	{
-    ARDebugLog(@"Error deleting record with id %d, exception: %@", self.databaseId, e);
+    ARLog(@"Error deleting record with id %d, exception: %@", self.databaseId, e);
 	}
 	return NO;
 }
