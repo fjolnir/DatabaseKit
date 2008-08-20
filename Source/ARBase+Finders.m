@@ -19,6 +19,7 @@
 {
   return [self find:idOrSpecification
              filter:nil 
+							 join:nil
               order:nil
               limit:0
          connection:connection];
@@ -26,22 +27,28 @@
 
 + (NSArray *)find:(ARFindSpecification)idOrSpecification 
            filter:(NSString *)whereSQL 
+						 join:(NSString *)joinSQL
             order:(NSString *)orderSQL
             limit:(NSUInteger)limit
 {
   return [self find:idOrSpecification
              filter:whereSQL 
+							 join:joinSQL
               order:orderSQL
               limit:limit
          connection:[self defaultConnection]];
 }
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
            filter:(NSString *)whereSQL 
+						 join:(NSString *)joinSQL
             order:(NSString *)orderSQL 
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection
 {
   NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
+	if(joinSQL)
+		[query appendFormat:@" %@", joinSQL];
+	
   switch(idOrSpecification)
   {
     case ARFindFirst:

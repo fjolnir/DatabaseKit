@@ -53,8 +53,9 @@
  * @param limit The maximum number of records to retrieve
  */
 + (NSArray *)find:(ARFindSpecification)idOrSpecification 
-           filter:(NSString *)whereSQL 
-            order:(NSString *)orderSQL
+           filter:(NSString *)whereSQL
+						 join:(NSString *)joinSQL
+          order:(NSString *)orderSQL
             limit:(NSUInteger)limit;
 /*! Finds a record based on the find specification, filter and limit using the specified connection. 
  * @param idOrSpecification The find specification
@@ -64,8 +65,9 @@
  * @param connection The connection to use for the record. (Pass nil to use the default connection)
  */
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
-           filter:(NSString *)whereSQL 
-            order:(NSString *)orderSQL 
+           filter:(NSString *)whereSQL
+						 join:(NSString *)joinSQL
+            order:(NSString *)orderSQL
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection;
 
