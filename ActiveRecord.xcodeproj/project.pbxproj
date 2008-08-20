@@ -331,6 +331,13 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		F83BC4D60E5C4C6E00E474B8 /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bindings;
+			sourceTree = "<group>";
+		};
 		F87B10320E06F6D500580499 /* Unit tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +408,7 @@
 				F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */,
 				F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */,
 				F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */,
+				F83BC4D60E5C4C6E00E474B8 /* Bindings */,
 				F8DA52EA0E058F10002C3ADB /* Connections */,
 				F8DA52F50E058F10002C3ADB /* Relationships */,
 				F8DA53040E058F10002C3ADB /* Utilities */,
@@ -806,6 +814,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DENABLE_AR_DEBUG";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};
@@ -819,6 +828,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};
