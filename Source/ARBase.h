@@ -129,8 +129,9 @@ typedef enum {
  */
 - (void)save;
 
-/*! Deletes a record from the database
- * Deletes instantly regardless of wether delayWriting is set to YES
+/*! Deletes a record from the database\n
+ * Deletes instantly regardless of wether delayWriting is set to YES\n
+ * If the record is successfully deleted the model object is released
  */
 - (BOOL)destroy;
 
