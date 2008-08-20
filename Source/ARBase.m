@@ -118,6 +118,22 @@ static NSString *classPrefix = nil;
 	[writeCache removeAllObjects];
 }
 
+- (BOOL)destroy
+{
+	@try
+	{
+		[self.connection executeSQL:[NSString stringWithFormat:@"DELETE FROM %@ WHERE id = :id", [[self class] tableName]]
+									substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:self.databaseId] forKey:@"id"]];
+		[self autorelease];
+		return YES;
+	}
+	@catch(NSException *e)
+	{
+    ARDebugLog(@"Error deleting record with id %d, exception: %@", self.databaseId, e);
+	}
+	return NO;
+}
+
 #pragma mark -
 #pragma mark Naming style
 + (ARNamingStyle)namingStyle

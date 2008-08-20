@@ -129,6 +129,11 @@ typedef enum {
  */
 - (void)save;
 
+/*! Deletes a record from the database
+ * Deletes instantly regardless of wether delayWriting is set to YES
+ */
+- (BOOL)destroy;
+
 /*! Returns the naming style (See docs for ARNamingStyle for more info) */
 + (ARNamingStyle)namingStyle;
 /*! Sets the current naming style (See docs for ARNamingStyle for more info) */

@@ -32,6 +32,15 @@
 	STAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
 
 }
+- (void)testDestroy
+{
+	TEModel *model = [TEModel createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Deletee", @"name",
+                                                  @"This won't exist for long", @"info", nil]];
+	NSUInteger theId = model.databaseId;
+	STAssertTrue([model destroy], @"Couldn't delete record");
+	NSArray *result = [TEModel find:theId];
+	STAssertEquals([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
+}
 - (void)testFindFirst
 {
   TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
