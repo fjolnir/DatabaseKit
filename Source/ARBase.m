@@ -186,7 +186,6 @@ static NSString *classPrefix = nil;
   return [self createWithAttributes:attributes connection:[ARBase defaultConnection]];
 }
 
-
 #pragma mark -
 #pragma mark Entry retrieving
 - (id)initWithId:(NSUInteger)id
@@ -290,22 +289,16 @@ static NSString *classPrefix = nil;
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
 	if([ARBase delayWriting] && !ignoreCache)
-	{
 		[addCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record"]];
-		return;
-	}
-  ARRelationship *relationship = [self relationshipForKey:key];
-  [relationship addRecord:record forKey:key];
+	else
+		[[self relationshipForKey:key] addRecord:record forKey:key];
 }
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
 	if([ARBase delayWriting] && !ignoreCache)
-	{
 		[removeCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record"]];
-		return;
-	}
-  ARRelationship *relationship = [self relationshipForKey:key];
-  [relationship removeRecord:record forKey:key];
+	else
+		[[self relationshipForKey:key] removeRecord:record forKey:key];
 }
 
 #pragma mark -
@@ -350,7 +343,7 @@ static NSString *classPrefix = nil;
 {
   return [self.connection beginTransaction];
 }
-- (BOOL)endTransaction;
+- (BOOL)endTransaction
 {
   return [self.connection endTransaction];
 }
