@@ -54,17 +54,14 @@ Let's say I created a table called 'people' with 3 columns.
  - lastName  as varchar(255)
 Then we'd create the following class definition:
 
-@interface Person : ARBase
-@end
+	@interface Person : ARBase
+	@end
 
-And to prevent the compiler from complaining when we call custom accessors we also create a category
-to suppress 'method missing' warnings. Like so:
+And to prevent the compiler from complaining when we call custom accessors we also create properties
+to suppress 'method missing' warnings. So the class definition will look like:
 
-	@interface Person (Accessors)
-	- firstName;
-	- setFirstName:(id)value;
-	- lastName;
-	- setLastName:(id)value;
+	@interface Person : ARBase
+		@property(readwrite, assign) NSString *firstName, *lastName
 	@end
 
 and that's it. Now we can get people like so:
@@ -74,7 +71,7 @@ and that's it. Now we can get people like so:
 and if we want the name of the second person we could:
 
 	Person *person = [people objectAtIndex:1];
-	NSLog(@"%@ %@", [person firstName], [person lastName]);
+	NSLog(@"%@ %@", person.firstName, person.lastName);
 
 Contributing:
 =============
