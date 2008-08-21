@@ -1,7 +1,7 @@
 # xcode noise
 build/*
 *.pbxuser
-*.move1v3
+*.mode1v3
 
 # old skool
 .svn
