@@ -63,8 +63,14 @@ to suppress 'method missing' warnings. So the class definition will look like:
 	@interface Person : ARBase
 		@property(readwrite, assign) NSString *firstName, *lastName
 	@end
+	
+and the implementation:
 
-and that's it. Now we can get people like so:
+	@implementation Person
+		@dynamic firstName, lastName
+	@end
+
+That's it. Now we can get people like so:
 
 	NSArray *people = [Person find:ARFindAll];
 
