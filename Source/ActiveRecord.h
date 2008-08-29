@@ -50,4 +50,10 @@
 #import <ActiveRecord/ARRelationshipHABTM.h>
 #import <ActiveRecord/ARRelationshipColumn.h>
 
+#import <ActiveRecord/ARBaseArrayInterface.h>
+
+#if (TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR)
+#	import "NSObject+iPhoneHacks.h"
+#endif
+
 #endif /* _ACTIVERECORD_H_ */
