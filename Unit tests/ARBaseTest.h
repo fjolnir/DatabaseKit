@@ -9,13 +9,6 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import <ActiveRecord/ActiveRecord.h>
 
-@implementation ARBase (PrefixSetter)
-+ (void)load
-{
-  [self setClassPrefix:@"TE"]; // TE stands for test fyi
-}
-@end
-
 @class TEAnimal;
 @class TEPerson;
 

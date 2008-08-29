@@ -12,6 +12,13 @@
 #import <ActiveRecord/ActiveRecord.h>
 #import "SenTestCase+Fixtures.h"
 
+@implementation ARBase (PrefixSetter)
++ (void)load
+{
+  [self setClassPrefix:@"TE"]; // TE stands for test fyi
+}
+@end
+
 @implementation ARBaseTest
 - (void)setUp
 {
