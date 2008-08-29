@@ -15,6 +15,9 @@
 		F80750CB0E22BFAC006504CC /* inflections.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C20E22BFAC006504CC /* inflections.plist */; };
 		F80750CC0E22BFAC006504CC /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C40E22BFAC006504CC /* singulars.plist */; };
 		F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C60E22BFAC006504CC /* uncountables.plist */; };
+		F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */; };
+		F81CC1E70E609E32004CA13A /* ARBaseArrayInterfaceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */; };
 		F834BE060E2A7A4200191322 /* chartables.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BDFB0E2A7A4200191322 /* chartables.c */; };
 		F834BE070E2A7A4200191322 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = F834BDFC0E2A7A4200191322 /* config.h */; };
 		F834BE080E2A7A4200191322 /* get.c in Sources */ = {isa = PBXBuildFile; fileRef = F834BDFD0E2A7A4200191322 /* get.c */; };
@@ -34,6 +37,8 @@
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F87B108F0E06F7FF00580499 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
+		F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; };
+		F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */; };
 		F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E80E17A9F30075AFFF /* my_alloc.h */; };
 		F8D301F30E17A9F30075AFFF /* my_list.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E90E17A9F30075AFFF /* my_list.h */; };
 		F8D301F40E17A9F30075AFFF /* mysql.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EA0E17A9F30075AFFF /* mysql.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -110,6 +115,10 @@
 		F80750C50E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/singulars.plist; sourceTree = "<group>"; };
 		F80750C70E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/uncountables.plist; sourceTree = "<group>"; };
 		F807FA730E3A6B0D00AB3808 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterface.h; sourceTree = "<group>"; };
+		F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterface.m; sourceTree = "<group>"; };
+		F81CC1E50E609E32004CA13A /* ARBaseArrayInterfaceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterfaceTest.h; sourceTree = "<group>"; };
+		F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterfaceTest.m; sourceTree = "<group>"; };
 		F834BDFB0E2A7A4200191322 /* chartables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chartables.c; sourceTree = "<group>"; };
 		F834BDFC0E2A7A4200191322 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		F834BDFD0E2A7A4200191322 /* get.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get.c; sourceTree = "<group>"; };
@@ -136,6 +145,8 @@
 		F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SenTestCase+Fixtures.m"; sourceTree = "<group>"; };
 		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
+		F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		F882A3D90E070C6700C375FB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F8D301E80E17A9F30075AFFF /* my_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_alloc.h; sourceTree = "<group>"; };
 		F8D301E90E17A9F30075AFFF /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
@@ -334,6 +345,8 @@
 		F83BC4D60E5C4C6E00E474B8 /* Bindings */ = {
 			isa = PBXGroup;
 			children = (
+				F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */,
+				F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */,
 			);
 			path = Bindings;
 			sourceTree = "<group>";
@@ -345,6 +358,8 @@
 				F87B10340E06F6D500580499 /* AGRegexTest.m */,
 				F87B10350E06F6D500580499 /* ARBaseTest.h */,
 				F87B10360E06F6D500580499 /* ARBaseTest.m */,
+				F81CC1E50E609E32004CA13A /* ARBaseArrayInterfaceTest.h */,
+				F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */,
 				F87B10370E06F6D500580499 /* ARInflectorTest.h */,
 				F87B10380E06F6D500580499 /* ARInflectorTest.m */,
 				F87B10390E06F6D500580499 /* ARMySQLConnectionTest.h */,
@@ -355,6 +370,15 @@
 				F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */,
 			);
 			path = "Unit tests";
+			sourceTree = "<group>";
+		};
+		F87CDB270E65EF140054FA45 /* iPhone Hacks */ = {
+			isa = PBXGroup;
+			children = (
+				F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */,
+				F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */,
+			);
+			path = "iPhone Hacks";
 			sourceTree = "<group>";
 		};
 		F882A3E10E070C7100C375FB /* iPhone libraries */ = {
@@ -464,6 +488,7 @@
 				F8DA530A0E058F10002C3ADB /* NSData-Base64Extensions.m */,
 				F8DA530D0E058F10002C3ADB /* NSString-Base64Extensions.h */,
 				F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */,
+				F87CDB270E65EF140054FA45 /* iPhone Hacks */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -507,6 +532,8 @@
 				F834BE090E2A7A4200191322 /* internal.h in Headers */,
 				F834BE0C0E2A7A4200191322 /* pcre.h in Headers */,
 				F834BE0E0E2A7A4200191322 /* AGRegex.h in Headers */,
+				F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */,
+				F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +695,8 @@
 				F834BE0B0E2A7A4200191322 /* pcre.c in Sources */,
 				F834BE0D0E2A7A4200191322 /* study.c in Sources */,
 				F834BE0F0E2A7A4200191322 /* AGRegex.m in Sources */,
+				F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */,
+				F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +710,7 @@
 				F87B10460E06F6D500580499 /* ARMySQLConnectionTest.m in Sources */,
 				F87B10470E06F6D500580499 /* ARSQLiteConnectionTest.m in Sources */,
 				F87B104A0E06F6D500580499 /* SenTestCase+Fixtures.m in Sources */,
+				F81CC1E70E609E32004CA13A /* ARBaseArrayInterfaceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
