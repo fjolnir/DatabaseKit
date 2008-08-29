@@ -269,7 +269,8 @@ static NSString *classPrefix = nil;
 		[readCache setObject:value forKey:key]; 
 	
   ARRelationship *relationship = [self relationshipForKey:key];
-  [relationship sendRecord:value forKey:key];
+	if(relationship)
+		[relationship sendRecord:value forKey:key];
 }
 - (void)setObject:(id)obj forKey:(NSString *)key
 {
@@ -278,7 +279,7 @@ static NSString *classPrefix = nil;
 	else
 		[self sendValue:obj forKey:key];
 }
-- (id)objectForKey:(NSString *)key
+- (id)valueForKey:(NSString *)key
 {
   return [self retrieveValueForKey:key];
 }
@@ -321,7 +322,9 @@ static NSString *classPrefix = nil;
 #pragma mark Database interface
 - (NSArray *)columns
 {
-  return [self.connection columnsForTable:[[self class] tableName]];
+	if(!columnCache)
+		columnCache = [[self.connection columnsForTable:[[self class] tableName]] retain];
+	return columnCache;
 }
 + (NSString *)idColumnForModel:(Class)modelClass
 {

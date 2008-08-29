@@ -80,6 +80,7 @@ typedef enum {
 	NSMutableDictionary *writeCache;
 	NSMutableArray *addCache;
 	NSMutableArray *removeCache;
+	NSArray *columnCache;
 }
 @property(readwrite, retain) id<ARConnection> connection;
 @property(readwrite, retain) NSMutableArray *relationships;
@@ -169,7 +170,7 @@ typedef enum {
  * Retrieves a value from the database\n
  * Same as retrieveValueForKey:
  * @param key A valid key, can refer to either a column or a relationship
- */- (id)objectForKey:(NSString *)key;
+ */- (id)valueForKey:(NSString *)key;
 /*! 
  * Retrieves a value from the database\n
  * Caching has not been implemented for this method.
