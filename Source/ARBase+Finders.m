@@ -75,7 +75,8 @@
   switch(idOrSpecification)
   {
     case ARFindFirst:
-      [query appendString:@" LIMIT 1"];
+			if(limit == 0)
+				[query appendString:@" LIMIT 1"];
       break;
     case ARFindAll:
       break;
@@ -88,7 +89,7 @@
     if(whereSQL != nil)
       [query appendFormat:@" WHERE %@", whereSQL];
     if(orderSQL != nil)
-      [query appendFormat:@" ORDER %@", orderSQL];
+      [query appendFormat:@" ORDER BY %@", orderSQL];
   }
   else
   {
@@ -112,5 +113,17 @@
 + (NSArray *)findAll
 {
   return [self find:ARFindAll];
+}
+
++ (id)first
+{
+	return [self find:ARFindFirst];
+}
++ (id)last
+{
+	NSArray *ret = [Person find:ARFindFirst filter:nil join:nilorder:@"id DESC" limit:1];
+	if(ret && [ret count] > 0)
+		return [ret objectAtIndex:0];
+	return nil;
 }
 @end

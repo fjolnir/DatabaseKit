@@ -88,5 +88,9 @@
 
 /*! Finds all of the model's records */
 + (NSArray *)findAll;
+/*! Finds the first record */
++ (id)first;
+/*! Finds the last record */
++ (id)last;
 @end
 #endif /* _ARBASEFINDERS_H_ */
