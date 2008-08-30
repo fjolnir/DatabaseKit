@@ -32,7 +32,7 @@ Building for iPhone is rather simple.
 This will create a directory called 'iPhone Headers' which contains all the headers you need (Add it to your project's header search path)
 
 * **Step 2:**
- * Unzip the project template located in the activerecord directory and copy it to /Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application
+ * Copy the iPhone project template ("Active Record Application") /Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Application
 
 * **Step 3:**
  * Create a new project using the template in the same directory as your checkout
