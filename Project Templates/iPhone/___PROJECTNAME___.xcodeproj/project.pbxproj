@@ -39,6 +39,8 @@
 		F834BFA50E2A7F4C00191322 /* NSArray+ARAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F834BF890E2A7F4C00191322 /* NSArray+ARAdditions.m */; };
 		F834BFA70E2A7F4C00191322 /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = F834BF8D0E2A7F4C00191322 /* NSString+Inflections.m */; };
 		F834BFAD0E2A7FB300191322 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F834BFAC0E2A7FB300191322 /* libsqlite3.dylib */; };
+		F8B47A9B0E68C5A2003BFD7D /* ARBaseArrayInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B47A9A0E68C5A2003BFD7D /* ARBaseArrayInterface.m */; };
+		F8B47A9F0E68C5D2003BFD7D /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B47A9E0E68C5D2003BFD7D /* NSObject+iPhoneHacks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +100,10 @@
 		F834BF8C0E2A7F4C00191322 /* NSString+Inflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Inflections.h"; path = "../activerecord-read-only/Source/Utilities/NSString+Inflections.h"; sourceTree = SOURCE_ROOT; };
 		F834BF8D0E2A7F4C00191322 /* NSString+Inflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Inflections.m"; path = "../activerecord-read-only/Source/Utilities/NSString+Inflections.m"; sourceTree = SOURCE_ROOT; };
 		F834BFAC0E2A7FB300191322 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		F8B47A990E68C5A2003BFD7D /* ARBaseArrayInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARBaseArrayInterface.h; path = "../activerecord-read-only/Source/Bindings/ARBaseArrayInterface.h"; sourceTree = SOURCE_ROOT; };
+		F8B47A9A0E68C5A2003BFD7D /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARBaseArrayInterface.m; path = "../activerecord-read-only/Source/Bindings/ARBaseArrayInterface.m"; sourceTree = SOURCE_ROOT; };
+		F8B47A9D0E68C5D2003BFD7D /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+iPhoneHacks.h"; path = "../activerecord-read-only/Source/Utilities/iPhone Hacks/NSObject+iPhoneHacks.h"; sourceTree = SOURCE_ROOT; };
+		F8B47A9E0E68C5D2003BFD7D /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+iPhoneHacks.m"; path = "../activerecord-read-only/Source/Utilities/iPhone Hacks/NSObject+iPhoneHacks.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +204,7 @@
 				F834BF6B0E2A7F4C00191322 /* ARBase.h */,
 				F834BF6C0E2A7F4C00191322 /* ARBase.m */,
 				F834BF6D0E2A7F4C00191322 /* ARBasePrivate.h */,
+				F8B47A980E68C5A2003BFD7D /* Bindings */,
 				F834BF6E0E2A7F4C00191322 /* Connections */,
 				F834BF760E2A7F4C00191322 /* Relationships */,
 				F834BF850E2A7F4C00191322 /* Utilities */,
@@ -278,6 +285,7 @@
 		F834BF850E2A7F4C00191322 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F8B47A9C0E68C5D2003BFD7D /* iPhone Hacks */,
 				F834BF860E2A7F4C00191322 /* ARInflector.h */,
 				F834BF870E2A7F4C00191322 /* ARInflector.m */,
 				F834BF880E2A7F4C00191322 /* NSArray+ARAdditions.h */,
@@ -287,6 +295,26 @@
 			);
 			name = Utilities;
 			path = "../activerecord-read-only/Source/Utilities";
+			sourceTree = SOURCE_ROOT;
+		};
+		F8B47A980E68C5A2003BFD7D /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				F8B47A990E68C5A2003BFD7D /* ARBaseArrayInterface.h */,
+				F8B47A9A0E68C5A2003BFD7D /* ARBaseArrayInterface.m */,
+			);
+			name = Bindings;
+			path = "../activerecord-read-only/Source/Bindings";
+			sourceTree = SOURCE_ROOT;
+		};
+		F8B47A9C0E68C5D2003BFD7D /* iPhone Hacks */ = {
+			isa = PBXGroup;
+			children = (
+				F8B47A9D0E68C5D2003BFD7D /* NSObject+iPhoneHacks.h */,
+				F8B47A9E0E68C5D2003BFD7D /* NSObject+iPhoneHacks.m */,
+			);
+			name = "iPhone Hacks";
+			path = "../activerecord-read-only/Source/Utilities/iPhone Hacks";
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -369,6 +397,8 @@
 				F834BFA40E2A7F4C00191322 /* ARInflector.m in Sources */,
 				F834BFA50E2A7F4C00191322 /* NSArray+ARAdditions.m in Sources */,
 				F834BFA70E2A7F4C00191322 /* NSString+Inflections.m in Sources */,
+				F8B47A9B0E68C5A2003BFD7D /* ARBaseArrayInterface.m in Sources */,
+				F8B47A9F0E68C5D2003BFD7D /* NSObject+iPhoneHacks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
