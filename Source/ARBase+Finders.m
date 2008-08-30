@@ -45,6 +45,29 @@
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection
 {
+	NSArray *ids = [self findIds:idOrSpecification
+												filter:whereSQL 
+													join:joinSQL
+												 order:orderSQL
+												 limit:limit
+										connection:[self defaultConnection]];
+  
+  NSMutableArray *models = [NSMutableArray array];
+  for(NSDictionary *match in ids)
+  {
+    NSUInteger id = [[match objectForKey:@"id"] unsignedIntValue];
+    [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
+  }
+  return models;
+}
+
++ (NSArray *)findIds:(ARFindSpecification)idOrSpecification
+							filter:(NSString *)whereSQL 
+								join:(NSString *)joinSQL
+							 order:(NSString *)orderSQL 
+							 limit:(NSUInteger)limit
+					connection:(id<ARConnection>)aConnection
+{
   NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
 	if(joinSQL)
 		[query appendFormat:@" %@", joinSQL];
@@ -80,15 +103,9 @@
   NSArray *matches = [aConnection executeSQL:query
                                substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
                                               [NSNumber numberWithInteger:idOrSpecification], @"id", nil]];
-  
-  NSMutableArray *models = [NSMutableArray array];
-  for(NSDictionary *match in matches)
-  {
-    NSUInteger id = [[match objectForKey:@"id"] unsignedIntValue];
-    [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
-  }
-  return models;
+  return matches;
 }
+
 
 #pragma mark -
 #pragma mark convenience accessors

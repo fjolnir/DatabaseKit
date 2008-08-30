@@ -70,7 +70,23 @@
             order:(NSString *)orderSQL
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection;
+/*! Finds ids of records matching the find specification, filter and limit using the specified connection.\n
+ * You generally won't need to use this method, but it can be useful in cases where you just want to know for example\n
+ * The number of records matching.
+ * @param idOrSpecification The find specification
+ * @param whereSQL A valid SQL WHERE statement (omitting the actual "WHERE")
+ * @param orderSQL A valud SQL ORDER statement (omitting the actual "ORDER BY")
+ * @param limit The maximum number of records to retrieve
+ * @param connection The connection to use for the record. (Pass nil to use the default connection)
+ */
++ (NSArray *)findIds:(ARFindSpecification)idOrSpecification
+							filter:(NSString *)whereSQL 
+								join:(NSString *)joinSQL
+							 order:(NSString *)orderSQL 
+							 limit:(NSUInteger)limit
+					connection:(id<ARConnection>)aConnection;
 
+/*! Finds all of the model's records */
 + (NSArray *)findAll;
 @end
 #endif /* _ARBASEFINDERS_H_ */
