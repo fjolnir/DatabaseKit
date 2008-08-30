@@ -401,6 +401,8 @@ static NSString *classPrefix = nil;
 	[readCache release];
 	[addCache release];
 	[removeCache release];
+	if(columnCache)
+		[columnCache release];
   
   [super dealloc];
 }
