@@ -37,7 +37,6 @@
 
 	STAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
 	STAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
-
 }
 - (void)testDestroy
 {

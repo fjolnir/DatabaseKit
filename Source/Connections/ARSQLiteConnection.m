@@ -63,6 +63,7 @@
 #pragma mark SQL Eecuting
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
 {
+	//ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   // Prepare the query
   sqlite3_stmt *queryByteCode;
   queryByteCode = [self prepareQuerySQL:sql];

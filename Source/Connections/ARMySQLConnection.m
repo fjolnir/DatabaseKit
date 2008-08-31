@@ -86,6 +86,7 @@
 #pragma mark Database access
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
 {
+	//ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   sql = [self applySubstitutions:substitutions onQuery:sql];
   int status = mysql_query(mySQLConnection, [sql UTF8String]);
   if(status == 0)
