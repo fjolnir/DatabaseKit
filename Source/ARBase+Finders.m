@@ -121,7 +121,7 @@
 }
 + (id)last
 {
-	NSArray *ret = [Person find:ARFindFirst filter:nil join:nilorder:@"id DESC" limit:1];
+	NSArray *ret = [self find:ARFindFirst filter:nil join:nil order:@"id DESC" limit:1];
 	if(ret && [ret count] > 0)
 		return [ret objectAtIndex:0];
 	return nil;
