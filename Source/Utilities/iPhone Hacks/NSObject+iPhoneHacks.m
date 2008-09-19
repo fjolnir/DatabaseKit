@@ -9,8 +9,8 @@
 #if (TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR)
 #import "NSObject+iPhoneHacks.h"
 
-@implementation NSObject_iPhoneHacks
-+ (NSString *)classname
+@implementation NSObject (iPhoneHacks)
++ (NSString *)className
 {
 	return NSStringFromClass(self);
 }
