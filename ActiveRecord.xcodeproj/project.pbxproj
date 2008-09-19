@@ -37,7 +37,7 @@
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F87B108F0E06F7FF00580499 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
-		F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; };
+		F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */; };
 		F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E80E17A9F30075AFFF /* my_alloc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8D301F30E17A9F30075AFFF /* my_list.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E90E17A9F30075AFFF /* my_list.h */; settings = {ATTRIBUTES = (Public, ); }; };
