@@ -11,6 +11,7 @@
 
 @implementation ARBaseArrayInterface
 @synthesize queryInfo;
+
 #pragma mark -
 #pragma mark Creation
 + (id)find:(ARFindSpecification)idOrSpecification 
