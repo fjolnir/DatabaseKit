@@ -102,12 +102,12 @@
       MYSQL_ROW row;
       while(row = mysql_fetch_row(result))
       {
-        unsigned long *lenghths = mysql_fetch_lengths(result);
+        unsigned long *lengths = mysql_fetch_lengths(result);
         NSMutableDictionary *rowDict = [NSMutableDictionary dictionaryWithCapacity:numFields];
         for(int columnIndex = 0; columnIndex < numFields; ++columnIndex)
         {
           ARMySQLField *field = [fields objectAtIndex:columnIndex];
-          id value = [field objectForData:row[columnIndex] length:lenghths[columnIndex]];
+          id value = [field objectForData:row[columnIndex] length:lengths[columnIndex]];
           [rowDict setObject:value 
                       forKey:field.name];
         }
@@ -123,14 +123,13 @@
         [NSException raise:@"MySQL error" format:@"Data should have been returned but wasn't!"];
 			else
 				lastInsertId = mysql_insert_id(mySQLConnection);
-
 			// If not, it was an INSERT query and no info should be returned
       return nil;
     }
   }
-  else
-    return nil;
-
+	else
+		
+	NSLog(@"err: %@", [self lastErrorMessage]);
   return nil;
 }
 - (BOOL)closeConnection
