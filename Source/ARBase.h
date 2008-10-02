@@ -96,8 +96,16 @@ typedef enum {
  */
 + (id)createWithAttributes:(NSDictionary *)attributes;
 
-// Init
+/*! Creates a reference to the record corresponding to id\n
+ * Note: Does not check if the record exists
+ * @param id The id of the record to retrieve
+ */
 - (id)initWithId:(NSUInteger)id;
+/*! Creates a reference to the record corresponding to id\n
+ * Note: Does not check if the record exists
+ * @param aConnection the connection to use
+ * @param id The id of the record to retrieve
+ */
 - (id)initWithConnection:(id<ARConnection>)aConnection id:(NSUInteger)id;
 
 
