@@ -20,6 +20,7 @@ INSERT INTO `people` VALUES(2,'god','steve wozniak',1);
 INSERT INTO `people` VALUES(3,'co-god','steve jobs',0);
 CREATE TABLE `animals`(`id` int(11) NOT NULL auto_increment, `species` varchar(255) DEFAULT NULL, `nickname` varchar(255) DEFAULT NULL, `modelId` int(11) DEFAULT NULL, PRIMARY KEY  (`id`)) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 INSERT INTO `animals` VALUES(1,'cat','awesome',1);
+INSERT INTO `animals` VALUES(2,'dog','lame',1)
 CREATE TABLE animals_people(`animalId` int(11), `personId` int(11));
 INSERT INTO `animals_people` VALUES(1,3);
 CREATE TABLE `animals`(`id` int(11) NOT NULL auto_increment, `species` varchar(255) DEFAULT NULL, `nickname` varchar(255) DEFAULT NULL, `modelId` int(11) DEFAULT NULL, PRIMARY KEY  (`id`)) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
