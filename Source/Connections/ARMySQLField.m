@@ -94,7 +94,7 @@
       [object setCalendarFormat:@"%Y-%m-%d %H:%M:%S"];
       break;
     case FIELD_TYPE_DATE:
-      object = [NSCalendarDate dateWithString:[NSString stringWithCString:data] calendarFormat:@"%Y-%m-%d"];
+      object = [NSCalendarDate dateWithString:[NSString stringWithUTF8String:data] calendarFormat:@"%Y-%m-%d"];
       [object setCalendarFormat:@"%Y-%m-%d"];
       break;
     case FIELD_TYPE_TIME:
@@ -102,11 +102,11 @@
       object = [NSString stringWithUTF8String:data];
       break;
     case FIELD_TYPE_DATETIME:
-      object = [NSCalendarDate dateWithString:[NSString stringWithCString:data] calendarFormat:@"%Y-%m-%d %H:%M:%S"];
+      object = [NSCalendarDate dateWithString:[NSString stringWithUTF8String:data] calendarFormat:@"%Y-%m-%d %H:%M:%S"];
       [object setCalendarFormat:@"%Y-%m-%d %H:%M:%S"];
       break;
     case FIELD_TYPE_YEAR:
-      object = [NSCalendarDate dateWithString:[NSString stringWithCString:data] calendarFormat:@"%Y"];
+      object = [NSCalendarDate dateWithString:[NSString stringWithUTF8String:data] calendarFormat:@"%Y"];
       [object setCalendarFormat:@"%Y"];
       break;
     case FIELD_TYPE_VAR_STRING:
@@ -117,9 +117,10 @@
     case FIELD_TYPE_BLOB:
     case FIELD_TYPE_MEDIUM_BLOB:
     case FIELD_TYPE_LONG_BLOB:
-      object = [NSData dataWithBytes:data length:length];
       if(!(self.flags & BINARY_FLAG)) // It is TEXT and NOT BLOB...
         object = [[[NSString alloc] initWithData:object encoding:NSUTF8StringEncoding] autorelease];
+			else
+				object = [NSData dataWithBytes:data length:length];
       break;
     case FIELD_TYPE_SET:
       object = [NSString stringWithUTF8String:data];
