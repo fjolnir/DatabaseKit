@@ -80,7 +80,7 @@
 		if(!sub)
 			continue;
 		if([sub isMemberOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
-			sqlite3_bind_text(queryByteCode, i, [sub UTF8String], [sub length], SQLITE_TRANSIENT);
+			sqlite3_bind_text(queryByteCode, i, [sub UTF8String], -1, SQLITE_TRANSIENT);
 		else if([sub isMemberOfClass:[NSData class]])
 			sqlite3_bind_blob(queryByteCode, i, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
 		else if([[sub className] isEqualToString:@"NSCFNumber"])
