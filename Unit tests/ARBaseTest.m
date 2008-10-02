@@ -59,7 +59,8 @@
   TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
   [first beginTransaction];
   NSString *newName = @"NOT THE SAME NAME!";
-  [first setName:newName];
+  //[first setName:newName];
+	first.name = @"NOT THE SAME NAME!";
   [first endTransaction];
 	STAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
@@ -145,7 +146,7 @@
 @end
 
 @implementation TEModel
-@dynamic name;
+@dynamic name, info;
 + (void)initialize
 {
   [[self relationships] addObject:[ARRelationshipHasMany relationshipWithName:@"people"]];
@@ -156,6 +157,7 @@
 @end
 
 @implementation TEPerson
+@dynamic userName, realName;
 + (void)initialize
 {
   [[self relationships] addObject:[ARRelationshipBelongsTo relationshipWithName:@"model"]];
