@@ -15,13 +15,9 @@
 @interface TEModel : ARBase {
   
 }
-@property(readwrite, retain) NSString *name;
+@property(readwrite, retain) NSString *name, *info;
 @end
 @interface TEModel (Accessors)
-/*- (NSString *)name;
-- (void)setName:(NSString *)name;*/
-- (NSString *)info;
-- (void)setInfo:(NSString *)info;
 - (NSArray *)people;
 - (void)setPeople:(NSArray *)people;
 - (void)addPerson:(TEPerson *)person;
@@ -33,10 +29,9 @@
 @interface TEPerson : ARBase {
   
 }
+@property(readwrite, assign) NSString *userName, *realName;
 @end
 @interface TEPerson (Accessors)
-- (NSString *)realName;
-- (NSString *)userName;
 - (NSArray *)animals;
 - (TEModel *)model;
 - (NSArray *)belgians;
