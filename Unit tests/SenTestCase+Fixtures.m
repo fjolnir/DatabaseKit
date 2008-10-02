@@ -52,7 +52,7 @@
 									range:NSMakeRange(0, [fixturePath length])];
    NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath];
   ARMySQLConnection *connection = [ARMySQLConnection openConnectionWithInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-																			 @"localhost", @"host",
+																			 @"127.0.0.1", @"host",
 																			 @"activerecord", @"user",
 																			 @"123", @"password",
 																			 @"activerecord_test", @"database",
