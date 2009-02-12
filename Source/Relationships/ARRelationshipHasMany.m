@@ -105,7 +105,7 @@
   if(![self respondsToKey:key supportsAdding:&supportsAdding] || !supportsAdding)
     return;
   [record sendValue:[NSNumber numberWithUnsignedInt:0]
-             forKey:[[self class] idColumn]];
+             forKey:[[self.record class] idColumn]];
 }
 
 #pragma mark Accessors
