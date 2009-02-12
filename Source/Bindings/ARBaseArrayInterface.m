@@ -96,7 +96,7 @@
 											filter:[queryInfo objectForKey:@"whereSQL"]
 												join:[queryInfo objectForKey:@"joinSQL"]
 											 order:[queryInfo objectForKey:@"orderSQL"]
-											 limit:[queryInfo objectForKey:@"limit"]
+											 limit:[[queryInfo objectForKey:@"limit"] intValue]
 									connection:[queryInfo objectForKey:@"connection"]];
 }
 - (NSArray *)allObjects
