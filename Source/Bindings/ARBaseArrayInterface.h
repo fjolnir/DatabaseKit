@@ -33,7 +33,6 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ARBASE_ARRAYINTERFACE_H_
 #define _ARBASE_ARRAYINTERFACE_H_
-#import <Cocoa/Cocoa.h>
 #import <ActiveRecord/ARBase.h>
 
 /*!
