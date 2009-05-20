@@ -51,7 +51,7 @@
   ARBase *record;
 }
 @property(readwrite, retain) NSString *name, *className;
-@property(readwrite, retain) ARBase *record;
+@property(readwrite, assign) ARBase *record;
 
 /*!
  * Creates a relationship with a given name using the passed class
