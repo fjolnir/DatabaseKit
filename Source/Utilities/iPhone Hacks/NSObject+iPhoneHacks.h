@@ -7,7 +7,7 @@
 //
 
 
-#if (TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR)
+#if (TARGET_OS_IPHONE)
 @interface NSObject (iPhoneHacks)
 + (NSString *)className;
 - (NSString *)className;

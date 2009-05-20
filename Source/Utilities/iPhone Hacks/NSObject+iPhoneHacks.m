@@ -6,7 +6,7 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
-#if (TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR)
+#if (TARGET_OS_IPHONE)
 #import "NSObject+iPhoneHacks.h"
 
 @implementation NSObject (iPhoneHacks)
