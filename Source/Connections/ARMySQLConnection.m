@@ -209,8 +209,9 @@
     return @"NULL";
   NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
   char *buffer = calloc(sizeof(char), ([stringData length] * 2) + 1);
-  unsigned int bufferLength = mysql_real_escape_string(mySQLConnection, buffer, [stringData bytes], [stringData length]);
-  NSString *preparedString = [NSString stringWithCString:buffer length:bufferLength];
+  //unsigned int bufferLength = mysql_real_escape_string(mySQLConnection, buffer, [stringData bytes], [stringData length]);
+  //NSString *preparedString = [NSString stringWithCString:buffer length:bufferLength];
+  NSString *preparedString = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
   free(buffer);
   return preparedString;
 }
@@ -219,8 +220,9 @@
   if(!data)
     return @"NULL";
   char *buffer = calloc(sizeof(char), ([data length] * 2) + 1);
-  unsigned long bufferLength = mysql_hex_string(buffer, [data bytes], [data length]);
-  NSString *preparedString = [NSString stringWithCString:buffer length:bufferLength];
+  //unsigned long bufferLength = mysql_hex_string(buffer, [data bytes], [data length]);
+  //NSString *preparedString = [NSString stringWithCString:buffer length:bufferLength];
+  NSString *preparedString = [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
   free(buffer);
   return preparedString;
 }
