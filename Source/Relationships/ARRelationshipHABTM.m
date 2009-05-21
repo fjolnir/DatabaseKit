@@ -50,8 +50,17 @@
     return nil;
   }
 	NSString *joinTableName = [[self.record class] joinTableNameForModel:[self.record class] and:partnerClass];
-	NSMutableString *idQuery = [NSMutableString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@=:our_id",
-											 [[self.record class] idColumnForModel:partnerClass], joinTableName, [[self.record class] idColumn]];
+	
+	NSMutableString *idQuery = [NSMutableString stringWithFormat:@"SELECT %@ FROM %@ INNER JOIN %@ ON %@.id = %@.%@ WHERE %@=:our_id",
+								[[self.record class] idColumnForModel:partnerClass], 
+								[partnerClass tableName], 
+								joinTableName, 
+								[partnerClass tableName],
+								joinTableName,
+								[[self.record class] idColumnForModel:partnerClass],
+								[[self.record class] idColumn]];
+	
+	
 	if(whereSQL)
 		[idQuery appendFormat:@" AND %@", whereSQL];
 	if(orderSQL)
