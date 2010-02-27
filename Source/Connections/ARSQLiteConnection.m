@@ -84,7 +84,7 @@
 		else if([sub isMemberOfClass:[NSData class]])
 			sqlite3_bind_blob(queryByteCode, i, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
 		else if([[sub className] isEqualToString:@"NSCFNumber"])
-			sqlite3_bind_int(queryByteCode, i, [sub intValue]);
+			sqlite3_bind_double(queryByteCode, i, [sub doubleValue]);
 		else if([sub isMemberOfClass:[NSNull class]])
 			sqlite3_bind_null(queryByteCode, i);
 		else
