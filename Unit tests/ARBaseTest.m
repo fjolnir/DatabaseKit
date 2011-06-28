@@ -10,7 +10,7 @@
 
 #import "ARBaseTest.h"
 #import <ActiveRecord/ActiveRecord.h>
-#import "SenTestCase+Fixtures.h"
+#import "GHTestCase+Fixtures.h"
 
 @implementation ARBase (PrefixSetter)
 + (void)load

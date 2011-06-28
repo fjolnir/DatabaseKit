@@ -6,7 +6,7 @@
 //  Copyright 2008 ninja kitten. All rights reserved.
 //
 
-#import "SenTestCase+Fixtures.h"
+#import "GHTestCase+Fixtures.h"
 #import <ActiveRecord/ActiveRecord.h>
 
 @implementation GHTestCase (Fixtures)

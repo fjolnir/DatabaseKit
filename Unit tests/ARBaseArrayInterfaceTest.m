@@ -8,7 +8,7 @@
 
 #import "ARBaseArrayInterfaceTest.h"
 #import <ActiveRecord/ActiveRecord.h>
-#import "SenTestCase+Fixtures.h"
+#import "GHTestCase+Fixtures.h"
 #import "ARBaseTest.h"
 
 @interface TEModelArrayInterface : ARBaseArrayInterface

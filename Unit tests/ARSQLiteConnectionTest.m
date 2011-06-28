@@ -8,7 +8,7 @@
 
 #import "ARSQLiteConnectionTest.h"
 #import <ActiveRecord/ActiveRecord.h>
-#import "SenTestCase+Fixtures.h"
+#import "GHTestCase+Fixtures.h"
 
 @implementation ARSQLiteConnectionTest
 - (void)setUp
