@@ -30,6 +30,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
       enablesOpenGLESFrameCapture = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C7CAF2F113BA1A7300013E21"
+            BuildableName = "Unit Tests.app"
+            BlueprintName = "Unit Tests"
+            ReferencedContainer = "container:ActiveRecord.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -38,6 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C7CAF2F113BA1A7300013E21"
+            BuildableName = "Unit Tests.app"
+            BlueprintName = "Unit Tests"
+            ReferencedContainer = "container:ActiveRecord.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

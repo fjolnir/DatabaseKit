@@ -6,7 +6,7 @@
 //  Copyright 2007 ninja kitten. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <GHUnit/GHUnit.h>
 
 @class ARMySQLConnection;
 

@@ -19,12 +19,12 @@
 
 - (void)tearDown
 {
-  STAssertTrue([connection closeConnection], @"Couldn't close connection");
+  GHAssertTrue([connection closeConnection], @"Couldn't close connection");
 }
 
 - (void)testConnection
 {
-  STAssertNotNil(connection, @"connection should not be nil");
+  GHAssertNotNil(connection, @"connection should not be nil");
 }
 - (void)testFetchColumns
 {
@@ -33,7 +33,7 @@
   NSArray *columnsFixture = [NSArray arrayWithObjects:@"id", @"bar", @"baz", @"integer", nil];
   for(NSString *fixture in columnsFixture)
   {
-    STAssertTrue([columnsFromDb containsObject:fixture],
+    GHAssertTrue([columnsFromDb containsObject:fixture],
                  @"Columns didn't contain: %@", fixture);
   }
 }
@@ -41,12 +41,12 @@
 {
   NSString *query = @"SELECT * FROM foo" ;
   NSArray *result = [connection executeSQL:query substitutions:nil];
-  STAssertTrue([result count] == 2, @"foo should have 2 rows");
+  GHAssertTrue([result count] == 2, @"foo should have 2 rows");
   NSArray *columns = [[result objectAtIndex:0] allKeys];
   NSArray *expectedColumns = [NSArray arrayWithObjects:@"id", @"bar", @"baz", @"integer", nil];
   for(NSString *fixture in expectedColumns)
   {
-    STAssertTrue([columns containsObject:fixture],
+    GHAssertTrue([columns containsObject:fixture],
                  @"Columns didn't contain: %@", fixture);
   }
 }

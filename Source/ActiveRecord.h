@@ -38,9 +38,6 @@
 
 #import <ActiveRecord/ARConnection.h>
 #import <ActiveRecord/ARSQLiteConnection.h>
-#if (TARGET_OS_MAC && !TARGET_OS_IPHONE)
-#	import <ActiveRecord/ARMySQLConnection.h>
-#endif
 
 #import <ActiveRecord/ARRelationship.h>
 #import <ActiveRecord/ARRelationshipHasMany.h>

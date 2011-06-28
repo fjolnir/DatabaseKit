@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <SenTestingKit/SenTestingKit.h>
+#import <GHUnit/GHUnit.h>
 
 @class ARSQLiteConnection;
-@class ARMySQLConnection;
+//@class ARMySQLConnection;
 
 // Sets the sqlite database up with fixtures
-@interface SenTestCase (Fixtures)
+@interface GHTestCase (Fixtures)
 - (ARSQLiteConnection *)setUpSQLiteFixtures;
-- (ARMySQLConnection *)setUpMySQLFixtures;
+//- (ARMySQLConnection *)setUpMySQLFixtures;
 @end

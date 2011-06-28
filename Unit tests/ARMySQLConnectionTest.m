@@ -26,7 +26,7 @@
   NSArray *result = [self.connection executeSQL:query substitutions:nil];
 	NSLog(@"%@", result);
 	
-	STAssertEqualObjects([[result objectAtIndex:0] objectForKey:@"name"], @"a name", @"Invalid name retrieved from mysql");
+	GHAssertEqualObjects([[result objectAtIndex:0] objectForKey:@"name"], @"a name", @"Invalid name retrieved from mysql");
 }
 - (void)testInsert
 {
@@ -36,6 +36,6 @@
 	// Do a select to see if it worked
 	query = @"SELECT * FROM foobar";
   result = [self.connection executeSQL:query substitutions:nil];
-	STAssertEqualObjects([[result objectAtIndex:2] objectForKey:@"name"], @"insert test", @"Invalid name retrieved from mysql after insertion");
+	GHAssertEqualObjects([[result objectAtIndex:2] objectForKey:@"name"], @"insert test", @"Invalid name retrieved from mysql after insertion");
 }
 @end

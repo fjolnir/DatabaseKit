@@ -13,11 +13,21 @@
 		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
 		C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2A513BA0A5600013E21 /* libicucore.dylib */; };
 		C7CAF2F413BA1A7300013E21 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF25413BA01A500013E21 /* Cocoa.framework */; };
-		C7CAF2FA13BA1A7300013E21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF2F813BA1A7300013E21 /* InfoPlist.strings */; };
-		C7CAF2FC13BA1A7300013E21 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF2FB13BA1A7300013E21 /* main.m */; };
-		C7CAF30013BA1A7300013E21 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF2FE13BA1A7300013E21 /* Credits.rtf */; };
-		C7CAF30313BA1A7400013E21 /* Unit_TestsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF30213BA1A7400013E21 /* Unit_TestsAppDelegate.m */; };
-		C7CAF30613BA1A7400013E21 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF30413BA1A7400013E21 /* MainMenu.xib */; };
+		C7CAF30C13BA1AE200013E21 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */; };
+		C7CAF30D13BA1AE600013E21 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2CD13BA199100013E21 /* GHUnit.framework */; };
+		C7CAF30F13BA1B5300013E21 /* GHUnit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7CAF2CD13BA199100013E21 /* GHUnit.framework */; };
+		C7CAF31E13BA1BE700013E21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31713BA1BE700013E21 /* InfoPlist.strings */; };
+		C7CAF32013BA1BE700013E21 /* Unit Tests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */; };
+		C7CAF32113BA1BE700013E21 /* Unit Tests-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */; };
+		C7CAF32213BA1C1C00013E21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31713BA1BE700013E21 /* InfoPlist.strings */; };
+		C7CAF32313BA1D1200013E21 /* ActiveRecord.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
+		C7CAF32413BA1F5A00013E21 /* ARBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10360E06F6D500580499 /* ARBaseTest.m */; };
+		C7CAF32513BA1F5D00013E21 /* ARBaseArrayInterfaceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */; };
+		C7CAF32613BA1F5F00013E21 /* ARInflectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10380E06F6D500580499 /* ARInflectorTest.m */; };
+		C7CAF32713BA1F6400013E21 /* ARSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */; };
+		C7CAF32813BA1F6800013E21 /* SenTestCase+Fixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10400E06F6D500580499 /* SenTestCase+Fixtures.m */; };
+		C7CAF32913BA200000013E21 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
+		C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
 		F80750C80E22BFAC006504CC /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BC0E22BFAC006504CC /* plurals.plist */; };
 		F80750C90E22BFAC006504CC /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BE0E22BFAC006504CC /* irregulars.plist */; };
 		F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80750C00E22BFAC006504CC /* InfoPlist.strings */; };
@@ -47,7 +57,6 @@
 		F8DA53150E058F10002C3ADB /* ARBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* ARBase.m */; };
 		F8DA53160E058F10002C3ADB /* ARBasePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53170E058F10002C3ADB /* ARConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EB0E058F10002C3ADB /* ARConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA53180E058F10002C3ADB /* ARMySQLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA531A0E058F10002C3ADB /* ARMySQLField.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA531C0E058F10002C3ADB /* ARSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA531D0E058F10002C3ADB /* ARSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F10E058F10002C3ADB /* ARSQLiteConnection.m */; };
@@ -77,6 +86,20 @@
 		F8DA53370E058F10002C3ADB /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C7CAF30E13BA1B4D00013E21 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C7CAF32313BA1D1200013E21 /* ActiveRecord.framework in CopyFiles */,
+				C7CAF30F13BA1B5300013E21 /* GHUnit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -98,14 +121,9 @@
 		C7CAF2CD13BA199100013E21 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = ../GHUnit/GHUnit.framework; sourceTree = "<group>"; };
 		C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHUnitTestMain.m; path = GHUnit/GHUnitTestMain.m; sourceTree = SOURCE_ROOT; };
 		C7CAF2F213BA1A7300013E21 /* Unit Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unit Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7CAF2F713BA1A7300013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
-		C7CAF2F913BA1A7300013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C7CAF2FB13BA1A7300013E21 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C7CAF2FD13BA1A7300013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; path = "Unit Tests-Prefix.pch"; sourceTree = "<group>"; };
-		C7CAF2FF13BA1A7300013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C7CAF30113BA1A7300013E21 /* Unit_TestsAppDelegate.h */ = {isa = PBXFileReference; path = Unit_TestsAppDelegate.h; sourceTree = "<group>"; };
-		C7CAF30213BA1A7400013E21 /* Unit_TestsAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Unit_TestsAppDelegate.m; sourceTree = "<group>"; };
-		C7CAF30513BA1A7400013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C7CAF31813BA1BE700013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Unit Tests-Info.plist"; path = "Unit tests/Unit Tests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Unit tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F80750BD0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/plurals.plist; sourceTree = "<group>"; };
 		F80750BF0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/irregulars.plist; sourceTree = "<group>"; };
@@ -123,8 +141,6 @@
 		F87B10360E06F6D500580499 /* ARBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseTest.m; sourceTree = "<group>"; };
 		F87B10370E06F6D500580499 /* ARInflectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARInflectorTest.h; sourceTree = "<group>"; };
 		F87B10380E06F6D500580499 /* ARInflectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARInflectorTest.m; sourceTree = "<group>"; };
-		F87B10390E06F6D500580499 /* ARMySQLConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLConnectionTest.h; sourceTree = "<group>"; };
-		F87B103A0E06F6D500580499 /* ARMySQLConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLConnectionTest.m; sourceTree = "<group>"; };
 		F87B103B0E06F6D500580499 /* ARSQLiteConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSQLiteConnectionTest.h; sourceTree = "<group>"; };
 		F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSQLiteConnectionTest.m; sourceTree = "<group>"; };
 		F87B103F0E06F6D500580499 /* SenTestCase+Fixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SenTestCase+Fixtures.h"; sourceTree = "<group>"; };
@@ -153,8 +169,6 @@
 		F8DA52E80E058F10002C3ADB /* ARBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBase.m; sourceTree = "<group>"; };
 		F8DA52E90E058F10002C3ADB /* ARBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBasePrivate.h; sourceTree = "<group>"; };
 		F8DA52EB0E058F10002C3ADB /* ARConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARConnection.h; sourceTree = "<group>"; };
-		F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLConnection.h; sourceTree = "<group>"; };
-		F8DA52ED0E058F10002C3ADB /* ARMySQLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLConnection.m; sourceTree = "<group>"; };
 		F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMySQLField.h; sourceTree = "<group>"; };
 		F8DA52EF0E058F10002C3ADB /* ARMySQLField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMySQLField.m; sourceTree = "<group>"; };
 		F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSQLiteConnection.h; sourceTree = "<group>"; };
@@ -201,7 +215,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7CAF32913BA200000013E21 /* libsqlite3.dylib in Frameworks */,
 				C7CAF2F413BA1A7300013E21 /* Cocoa.framework in Frameworks */,
+				C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */,
+				C7CAF30D13BA1AE600013E21 /* GHUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +244,6 @@
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
-				C7CAF2F513BA1A7300013E21 /* Unit Tests */,
 				C7CAF25113BA01A500013E21 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 				F87B10290E06F6B400580499 /* Unit Tests-Info.plist */,
@@ -317,27 +333,15 @@
 			path = "RegexKitLite-4.0";
 			sourceTree = "<group>";
 		};
-		C7CAF2F513BA1A7300013E21 /* Unit Tests */ = {
-			isa = PBXGroup;
-			children = (
-				C7CAF30113BA1A7300013E21 /* Unit_TestsAppDelegate.h */,
-				C7CAF30213BA1A7400013E21 /* Unit_TestsAppDelegate.m */,
-				C7CAF30413BA1A7400013E21 /* MainMenu.xib */,
-				C7CAF2F613BA1A7300013E21 /* Supporting Files */,
-			);
-			path = "Unit Tests";
-			sourceTree = "<group>";
-		};
 		C7CAF2F613BA1A7300013E21 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C7CAF2F713BA1A7300013E21 /* Unit Tests-Info.plist */,
-				C7CAF2F813BA1A7300013E21 /* InfoPlist.strings */,
-				C7CAF2FB13BA1A7300013E21 /* main.m */,
-				C7CAF2FD13BA1A7300013E21 /* Unit Tests-Prefix.pch */,
-				C7CAF2FE13BA1A7300013E21 /* Credits.rtf */,
+				C7CAF31713BA1BE700013E21 /* InfoPlist.strings */,
+				C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */,
+				C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			path = "../Unit Tests";
 			sourceTree = "<group>";
 		};
 		F80750BA0E22BFA3006504CC /* Inflections */ = {
@@ -365,6 +369,7 @@
 		F87B10320E06F6D500580499 /* Unit tests */ = {
 			isa = PBXGroup;
 			children = (
+				C7CAF2F613BA1A7300013E21 /* Supporting Files */,
 				C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */,
 				C7CAF2CD13BA199100013E21 /* GHUnit.framework */,
 				F87B10350E06F6D500580499 /* ARBaseTest.h */,
@@ -373,8 +378,6 @@
 				F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */,
 				F87B10370E06F6D500580499 /* ARInflectorTest.h */,
 				F87B10380E06F6D500580499 /* ARInflectorTest.m */,
-				F87B10390E06F6D500580499 /* ARMySQLConnectionTest.h */,
-				F87B103A0E06F6D500580499 /* ARMySQLConnectionTest.m */,
 				F87B103B0E06F6D500580499 /* ARSQLiteConnectionTest.h */,
 				F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */,
 				F87B103F0E06F6D500580499 /* SenTestCase+Fixtures.h */,
@@ -455,8 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				F8DA52EB0E058F10002C3ADB /* ARConnection.h */,
-				F8DA52EC0E058F10002C3ADB /* ARMySQLConnection.h */,
-				F8DA52ED0E058F10002C3ADB /* ARMySQLConnection.m */,
 				F8DA52EE0E058F10002C3ADB /* ARMySQLField.h */,
 				F8DA52EF0E058F10002C3ADB /* ARMySQLField.m */,
 				F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */,
@@ -516,7 +517,6 @@
 				F8DA53140E058F10002C3ADB /* ARBase.h in Headers */,
 				F8DA53160E058F10002C3ADB /* ARBasePrivate.h in Headers */,
 				F8DA53170E058F10002C3ADB /* ARConnection.h in Headers */,
-				F8DA53180E058F10002C3ADB /* ARMySQLConnection.h in Headers */,
 				F8DA531A0E058F10002C3ADB /* ARMySQLField.h in Headers */,
 				F8DA531C0E058F10002C3ADB /* ARSQLiteConnection.h in Headers */,
 				F8DA53200E058F10002C3ADB /* ARRelationship.h in Headers */,
@@ -542,6 +542,7 @@
 				F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */,
 				F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
+				C7CAF32113BA1BE700013E21 /* Unit Tests-Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +575,7 @@
 				C7CAF2EE13BA1A7300013E21 /* Sources */,
 				C7CAF2EF13BA1A7300013E21 /* Frameworks */,
 				C7CAF2F013BA1A7300013E21 /* Resources */,
+				C7CAF30E13BA1B4D00013E21 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -622,6 +624,8 @@
 				F80750CB0E22BFAC006504CC /* inflections.plist in Resources */,
 				F80750CC0E22BFAC006504CC /* singulars.plist in Resources */,
 				F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */,
+				C7CAF31E13BA1BE700013E21 /* InfoPlist.strings in Resources */,
+				C7CAF32013BA1BE700013E21 /* Unit Tests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,9 +633,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7CAF2FA13BA1A7300013E21 /* InfoPlist.strings in Resources */,
-				C7CAF30013BA1A7300013E21 /* Credits.rtf in Resources */,
-				C7CAF30613BA1A7400013E21 /* MainMenu.xib in Resources */,
+				C7CAF32213BA1C1C00013E21 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,8 +671,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7CAF2FC13BA1A7300013E21 /* main.m in Sources */,
-				C7CAF30313BA1A7400013E21 /* Unit_TestsAppDelegate.m in Sources */,
+				C7CAF30C13BA1AE200013E21 /* GHUnitTestMain.m in Sources */,
+				C7CAF32813BA1F6800013E21 /* SenTestCase+Fixtures.m in Sources */,
+				C7CAF32413BA1F5A00013E21 /* ARBaseTest.m in Sources */,
+				C7CAF32513BA1F5D00013E21 /* ARBaseArrayInterfaceTest.m in Sources */,
+				C7CAF32713BA1F6400013E21 /* ARSQLiteConnectionTest.m in Sources */,
+				C7CAF32613BA1F5F00013E21 /* ARInflectorTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,28 +691,13 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		C7CAF2F813BA1A7300013E21 /* InfoPlist.strings */ = {
+		C7CAF31713BA1BE700013E21 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C7CAF2F913BA1A7300013E21 /* en */,
+				C7CAF31813BA1BE700013E21 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C7CAF2FE13BA1A7300013E21 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7CAF2FF13BA1A7300013E21 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		C7CAF30413BA1A7400013E21 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7CAF30513BA1A7400013E21 /* en */,
-			);
-			name = MainMenu.xib;
+			path = "../Unit tests/en.lproj";
 			sourceTree = "<group>";
 		};
 		F80750BC0E22BFAC006504CC /* plurals.plist */ = {
@@ -844,11 +835,13 @@
 		C7CAF30813BA1A7400013E21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/GHUnit\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -862,6 +855,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -871,12 +865,14 @@
 		C7CAF30913BA1A7400013E21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/GHUnit\"",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -884,6 +880,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -918,6 +915,7 @@
 				C7CAF30913BA1A7400013E21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

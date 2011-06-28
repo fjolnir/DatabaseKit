@@ -6,10 +6,10 @@
 //  Copyright 2008 __MyCompanyName__. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <GHUnit/GHUnit.h>
 @class TEModelArrayInterface;
 
-@interface ARBaseArrayInterfaceTest : SenTestCase {
+@interface ARBaseArrayInterfaceTest : GHTestCase {
 	TEModelArrayInterface *arr;
 }
 

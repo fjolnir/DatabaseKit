@@ -6,11 +6,11 @@
 //  Copyright 2007 ninja kitten. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <GHUnit/GHUnit.h>
 
 @class ARSQLiteConnection;
 
-@interface ARSQLiteConnectionTest : SenTestCase {
+@interface ARSQLiteConnectionTest : GHTestCase {
   ARSQLiteConnection *connection;
 }
 - (void)testConnection;

@@ -56,10 +56,13 @@ static ARInflector *sharedInstance = nil;
     if([[inflection objectForKey:@"pattern"] isEqualToString:[word lowercaseString]])
       return [inflection objectForKey:@"replacement"];
   }
+  NSString *transformed;
   for(NSDictionary *inflection in self.plurals)
   {
-    word = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
-                                          withString:[inflection objectForKey:@"replacement"]];
+    transformed = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
+                                                 withString:[inflection objectForKey:@"replacement"]];
+    if(![transformed isEqualToString:word])
+      return transformed;
   }
   return word;
 }
@@ -75,10 +78,13 @@ static ARInflector *sharedInstance = nil;
     if([[inflection objectForKey:@"replacement"] isEqualToString:[word lowercaseString]])
       return [inflection objectForKey:@"pattern"];
   }
+  NSString *transformed;
   for(NSDictionary *inflection in self.singulars)
   {
-    word = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
-                                         withString:[inflection objectForKey:@"replacement"]];
+    transformed = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
+                                                 withString:[inflection objectForKey:@"replacement"]];
+    if(![transformed isEqualToString:word])
+      return transformed;
   }
   return word;
 }

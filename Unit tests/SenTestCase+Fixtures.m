@@ -9,7 +9,7 @@
 #import "SenTestCase+Fixtures.h"
 #import <ActiveRecord/ActiveRecord.h>
 
-@implementation SenTestCase (Fixtures)
+@implementation GHTestCase (Fixtures)
 - (ARSQLiteConnection *)setUpSQLiteFixtures
 {
   NSError *err = nil;
@@ -42,7 +42,7 @@
 	
 	return connection;
 }
-- (ARMySQLConnection *)setUpMySQLFixtures
+/*- (ARMySQLConnection *)setUpMySQLFixtures
 {
   NSError *err = nil;
   NSMutableString *fixturePath = [NSMutableString stringWithUTF8String:__FILE__];
@@ -58,7 +58,7 @@
 																			 @"activerecord_test", @"database",
 																			 [NSNumber numberWithInt:3306], @"port", nil]
 																	  error:&err];
-	STAssertNil(err, @"There was an error connecting to MySQL");
+	GHAssertNil(err, @"There was an error connecting to MySQL");
   if(err != nil)
     return nil;
 	
@@ -75,6 +75,6 @@
 	[ARBase setDefaultConnection:connection];
 	
 	return connection;
-}
+}*/
 
 @end

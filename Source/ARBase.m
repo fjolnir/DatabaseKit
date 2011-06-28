@@ -129,7 +129,7 @@ static NSString *classPrefix = nil;
 	{
 		[self.connection executeSQL:[NSString stringWithFormat:@"DELETE FROM %@ WHERE id = :id", [[self class] tableName]]
 									substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:self.databaseId] forKey:@"id"]];
-		[self autorelease];
+
 		return YES;
 	}
 	@catch(NSException *e)
