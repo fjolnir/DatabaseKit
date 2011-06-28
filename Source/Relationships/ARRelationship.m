@@ -22,7 +22,7 @@
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName
 {
-  if(![super init])
+  if(!(self = [super init]))
     return nil;
   
   self.name = aName;
@@ -68,10 +68,11 @@
 
 #pragma mark Accessors
 #pragma mark -
-- (NSString *)className
+/* What the hell is this?
+ - (NSString *)className
 {
   return @"";
-}
+}*/
 
 #pragma mark -
 #pragma mark Copying

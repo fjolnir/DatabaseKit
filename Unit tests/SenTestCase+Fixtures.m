@@ -24,7 +24,7 @@
 														  withString:@"sqlite_fixtures.sql"
 															 options:0
 															   range:NSMakeRange(0, [path length])];
-  NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath];
+  NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath encoding:NSUTF8StringEncoding error:nil];
 	
 	ARSQLiteConnection *connection = [ARSQLiteConnection openConnectionWithInfo:[NSDictionary dictionaryWithObject:path forKey:@"path"]
 																		  error:&err];
@@ -50,7 +50,7 @@
 							   withString:@"mysql_fixtures.sql"
 								  options:0
 									range:NSMakeRange(0, [fixturePath length])];
-   NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath];
+   NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath encoding:NSUTF8StringEncoding error:nil];
   ARMySQLConnection *connection = [ARMySQLConnection openConnectionWithInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 																			 @"127.0.0.1", @"host",
 																			 @"activerecord", @"user",

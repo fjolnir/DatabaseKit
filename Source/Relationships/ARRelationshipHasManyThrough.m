@@ -23,7 +23,7 @@
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey
 {
-	if(![super init])
+	if(!(self = [super init]))
     return nil;
   self.name = aName;
   self.className = aClassName;

@@ -34,7 +34,7 @@
 }
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err
 {
-  if(![super init])
+  if(!(self = [super init]))
     return nil;
   mySQLConnection = mysql_init(mySQLConnection);
   BOOL connected = [self connectWithHost:[info objectForKey:@"host"] 
@@ -69,10 +69,12 @@
   if(res == NULL)
   {
 	  NSLog(@"error!");
-    *err = [NSError errorWithDomain:@"database.mysql.connection" 
-                               code:ARMySQLConnectionError 
-                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                     [self lastErrorMessage], NSLocalizedDescriptionKey, nil]];
+    if(err != NULL) {
+      *err = [NSError errorWithDomain:@"database.mysql.connection" 
+                                 code:ARMySQLConnectionError 
+                             userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                       [self lastErrorMessage], NSLocalizedDescriptionKey, nil]];
+    }
     return NO;
   }
   return YES;
@@ -86,7 +88,7 @@
 #pragma mark Database access
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
 {
-	//ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
+	ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   sql = [self applySubstitutions:substitutions onQuery:sql];
   int status = mysql_query(mySQLConnection, [sql UTF8String]);
   if(status == 0)
@@ -100,7 +102,7 @@
       NSArray *fields = [ARMySQLField fieldsForResult:result];
       NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:numRows];
       MYSQL_ROW row;
-      while(row = mysql_fetch_row(result))
+      while((row = mysql_fetch_row(result)))
       {
         unsigned long *lengths = mysql_fetch_lengths(result);
         NSMutableDictionary *rowDict = [NSMutableDictionary dictionaryWithCapacity:numFields];
@@ -201,7 +203,7 @@
                                        range:NSMakeRange(0, [mutableSQL length])];
     }
   }
-  return mutableSQL;
+  return [mutableSQL autorelease];
 }
 - (NSString *)prepareString:(NSString *)string
 {

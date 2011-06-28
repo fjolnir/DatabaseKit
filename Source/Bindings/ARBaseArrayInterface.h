@@ -121,4 +121,4 @@
 /*! Invokes setValue:forKey: on each of the receiver's records using the specified value and key. */
 - (void)setValue:(id)value forKey:(NSString *)key;
 @end
-#endif _ARBASE_ARRAYINTERFACE_H_
+#endif // _ARBASE_ARRAYINTERFACE_H_

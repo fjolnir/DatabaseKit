@@ -7,7 +7,8 @@
 //
 
 #import "ARInflector.h"
-#import "AGRegex.h"
+#import "RegexKitLite.h"
+
 static ARInflector *sharedInstance = nil;
 
 @implementation ARInflector
@@ -23,7 +24,7 @@ static ARInflector *sharedInstance = nil;
 
 - (id)init
 {
-  if(![super init])
+  if(!(self = [super init]))
     return nil;
   
   // Open the list of inflections
@@ -55,16 +56,10 @@ static ARInflector *sharedInstance = nil;
     if([[inflection objectForKey:@"pattern"] isEqualToString:[word lowercaseString]])
       return [inflection objectForKey:@"replacement"];
   }
-  AGRegex *regularExpression;
   for(NSDictionary *inflection in self.plurals)
   {
-    regularExpression = [AGRegex regexWithPattern:[inflection objectForKey:@"pattern"]
-                                          options:AGRegexCaseInsensitive];
-    if([regularExpression findInString:word])
-    {
-      return [regularExpression replaceWithString:[inflection objectForKey:@"replacement"]
-                                         inString:word];
-    }
+    word = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
+                                          withString:[inflection objectForKey:@"replacement"]];
   }
   return word;
 }
@@ -80,26 +75,20 @@ static ARInflector *sharedInstance = nil;
     if([[inflection objectForKey:@"replacement"] isEqualToString:[word lowercaseString]])
       return [inflection objectForKey:@"pattern"];
   }
-  AGRegex *regularExpression;
   for(NSDictionary *inflection in self.singulars)
   {
-    regularExpression = [AGRegex regexWithPattern:[inflection objectForKey:@"pattern"]
-                                          options:AGRegexCaseInsensitive];
-    if([regularExpression findInString:word])
-    {
-      return [regularExpression replaceWithString:[inflection objectForKey:@"replacement"]
-                                         inString:word];
-    }
+    word = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
+                                         withString:[inflection objectForKey:@"replacement"]];
   }
   return word;
 }
 
 - (void)dealloc
 {
-  [self.irregulars release];
-  [self.uncountables release];
-  [self.plurals release];
-  [self.singulars release];
+  [irregulars release];
+  [uncountables release];
+  [plurals release];
+  [singulars release];
   
   [super dealloc];
 }

@@ -1,5 +1,5 @@
 //
-//  ARSQLiteConnection.m
+//  ARPGSQLConnection.m
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
@@ -8,7 +8,7 @@
 
 #define LOG_QUERIES NO
 
-#import "ARSQLiteConnection.h"
+#import "ARPGSQLConnection.h"
 #import <unistd.h>
 
 /*! @cond IGNORE */
@@ -31,43 +31,55 @@
 }
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err
 {
-  NSString *path = [info objectForKey:@"path"] ? [info objectForKey:@"path"] : @"";
-  if(![[NSFileManager defaultManager] fileExistsAtPath:path])
-  {
-    if(err != NULL) {
-      *err = [NSError errorWithDomain:@"database.sqlite.filenotfound" 
-                                 code:ARSQLiteDatabaseNotFoundErrorCode 
-                             userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                       NSLocalizedString(@"SQLite database not found", @""), NSLocalizedDescriptionKey,
-                                       path, NSFilePathErrorKey, nil]];
-    }
-    return nil;
-  }
-  // Else
-  int sqliteError = 0;
-  sqliteError = sqlite3_open([path UTF8String], &database);
-  if(sqliteError != SQLITE_OK)
-  {
-    const char *errStr = sqlite3_errmsg(database);
-    if(err != NULL) {
-      *err = [NSError errorWithDomain:@"database.sqlite.openerror" 
-                                 code:ARSQLiteDatabaseNotFoundErrorCode 
-                             userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithUTF8String:errStr], NSLocalizedDescriptionKey,
-                                     path, NSFilePathErrorKey, nil]];
-    }
-    return nil;
-  }
-  
-  
+	if(![super init])
+		return nil;
+	BOOL connected = [self connectWithArguments:info error:err];
+	if(!connected)
+		return nil;
+	
   return self;
+}
+
+- (BOOL)connectWithHost:(NSString *)host 
+                   user:(NSString *)username
+               password:(NSString *)password
+               database:(NSString *)databaseName
+                   port:(NSUInteger)port
+                  error:(NSError **)err
+{
+	return [self connectWithArguments:[NSDictionary dictionaryWithObjectsAndKeys:
+																			host, @"host", 
+																			username, @"username",
+																			password, @"password",
+																			databaseName, @"dbname",
+																			[NSString stringWithFormat:@"%d", port], @"port"]
+															error:err]; 
+
+}
+- (BOOL)connectWithArguments:(NSDictionary *)arguments error:(NSError **)err
+{
+	NSMutableString *connStr = [NSMutableString string];
+	for(NSString *key in [arguments allKeys])
+	{
+			[connStr appendFormat:@"%@=%@", key, [arguments objectForKey:key]];
+	}
+	database = PQconnectdb([connStr UTF8String]);
+	ConnStatusType status = PQstatus(database);
+	if(status == CONNECTION_BAD)
+	{
+		*err = [NSError errorWithDomain:@"database.pgsql.connection"
+															 code:ARPGSQDatabaseConnectionFailed 
+													 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                     [self lastErrorMessage], NSLocalizedDescriptionKey, nil]];
+		return NO;
+	}
+	return YES;
 }
 
 #pragma mark -
 #pragma mark SQL Eecuting
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
 {
-	//ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   // Prepare the query
   sqlite3_stmt *queryByteCode;
   queryByteCode = [self prepareQuerySQL:sql];
@@ -83,11 +95,11 @@
 		id sub = [substitutions objectForKey:key];
 		if(!sub)
 			continue;
-		if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
-			sqlite3_bind_text(queryByteCode, i, [sub UTF8String], -1, SQLITE_TRANSIENT);
+		if([sub isMemberOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
+			sqlite3_bind_text(queryByteCode, i, [sub UTF8String], [sub length], SQLITE_TRANSIENT);
 		else if([sub isMemberOfClass:[NSData class]])
 			sqlite3_bind_blob(queryByteCode, i, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
-		else if([sub isKindOfClass:[NSNumber class]])
+		else if([[sub className] isEqualToString:@"NSCFNumber"])
 			sqlite3_bind_double(queryByteCode, i, [sub doubleValue]);
 		else if([sub isMemberOfClass:[NSNull class]])
 			sqlite3_bind_null(queryByteCode, i);
@@ -135,6 +147,10 @@
   return (NSUInteger)sqlite3_last_insert_rowid(database);
 }
 
+- (NSString *)lastErrorMessage
+{
+	return [NSString stringWithFormat:@"%s", PQerrorMessage(database)];
+}
 - (NSArray *)columnsForTable:(NSString *)tableName
 {
   sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@", tableName]];
@@ -145,7 +161,10 @@
 
 - (BOOL)closeConnection
 {
-  return sqlite3_close(database) == SQLITE_OK;
+  PQfinish(database);
+	if(PQstatus(database) == CONNECTION_BAD)
+		return YES;
+	return NO;
 }
 
 #pragma mark Private
@@ -164,60 +183,21 @@
   }
   return columnNames;
 }
-- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
+- (PGresult *)prepareQuerySQL:(NSString *)query
 {
   if(LOG_QUERIES)
     ARDebugLog(@"Preparing query: %@", query);
   // Prepare the query
-  sqlite3_stmt *queryByteCode;
-  const char *tail;
-  int err = sqlite3_prepare_v2(database, 
-                            [query UTF8String], 
-                            [query lengthOfBytesUsingEncoding:NSUTF8StringEncoding], 
-                            &queryByteCode, 
-                            &tail);
-  if(err != SQLITE_OK || queryByteCode == NULL)
-  {
-    [NSException raise:@"SQLite error" 
-                format:@"Couldn't compile the query(%@), Details: %@", query, [NSString stringWithUTF8String:sqlite3_errmsg(database)]];
-    
-    return nil;
-  }
-  
-  return queryByteCode;
-}
-- (void)finalizeQuery:(sqlite3_stmt *)query
-{
-  sqlite3_finalize(query);
-}
-
-// You have to step through the *query yourself,
-- (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query
-{
-  int columnType = sqlite3_column_type(query, colIndex);
-  switch(columnType)
-  {
-    case SQLITE_INTEGER:
-      return [NSNumber numberWithInt:sqlite3_column_int(query, colIndex)];
-      break;
-    case SQLITE_FLOAT:
-      return [NSNumber numberWithDouble:sqlite3_column_double(query, colIndex)];
-      break;
-    case SQLITE_BLOB:
-      return [NSData dataWithBytes:sqlite3_column_blob(query, colIndex)
-                            length:sqlite3_column_bytes(query, colIndex)];
-      break;
-    case SQLITE_NULL:
-      return [NSNull null];
-      break;
-    case SQLITE_TEXT:
-      return [NSString stringWithUTF8String:(const char *)sqlite3_column_text(query, colIndex)];
-      break;
-    default:
-      // It really shouldn't ever come to this.
-      break;
-  }
-  return nil;
+  PGresult *query;
+	query = PQPrepare(database, "", [query UTF8String], 0, NULL);
+	ConnStatusType status = PQstatus(database);
+	if(status == CONNECTION_BAD)
+	{
+		[NSException raise:@"PGSQL error" 
+                format:@"Couldn't compile the query(%@), Details: %@", query, [self lastErrorMessage];
+		return NULL;
+	}
+	return query;
 }
 
 #pragma mark -

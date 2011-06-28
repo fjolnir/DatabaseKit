@@ -104,7 +104,7 @@
         [self.record.connection executeSQL:[NSString stringWithFormat:@"INSERT INTO %@(%@, %@) VALUES(:our_id, :their_id)",
                                            joinTableName, [[self class] idColumn], [[partner class] idColumn]]
                             substitutions:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:self.record.databaseId], @"our_id",
-                                           [NSNumber numberWithUnsignedInt:partner.databaseId], @"their_id"]];
+                                           [NSNumber numberWithUnsignedInt:partner.databaseId], @"their_id", nil]];
     }
     
 }

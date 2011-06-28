@@ -7,7 +7,7 @@
 //
 
 #import "ARBaseArrayInterface.h"
-
+#import "ARBase+Finders.h"
 
 @implementation ARBaseArrayInterface
 @synthesize queryInfo;
@@ -65,7 +65,7 @@
 }
 - (id)init
 {
-	if(![super init])
+	if(!(self = [super init]))
 		return nil;
 	self.queryInfo = [NSMutableDictionary dictionary];
 

@@ -14,13 +14,18 @@
 @synthesize connection;
 - (void)setUp
 {
+	NSLog(@"setup");
   self.connection = [super setUpMySQLFixtures];
+	NSLog(@"done");
 }
 - (void)testSelect
 {
+	NSLog(@"test select");
   NSString *query = @"SELECT * FROM foobar";
+	NSLog(@"%@", query);
   NSArray *result = [self.connection executeSQL:query substitutions:nil];
-
+	NSLog(@"%@", result);
+	
 	STAssertEqualObjects([[result objectAtIndex:0] objectForKey:@"name"], @"a name", @"Invalid name retrieved from mysql");
 }
 - (void)testInsert

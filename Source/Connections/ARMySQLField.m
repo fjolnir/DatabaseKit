@@ -18,7 +18,7 @@
   MYSQL_FIELD *aField;
   unsigned int numFields = mysql_num_fields(aResult);
   NSMutableArray *fields = [NSMutableArray arrayWithCapacity:numFields];
-  while(aField = mysql_fetch_field(aResult))
+  while((aField = mysql_fetch_field(aResult)))
   {
     [fields addObject:[self fieldWithField:aField]];
   }
@@ -31,7 +31,7 @@
 }
 - (id)initWithField:(MYSQL_FIELD *)aField
 {
-  if(![super init])
+  if(!(self = [super init]))
     return nil;
   self.field = aField;
   
@@ -118,7 +118,7 @@
     case FIELD_TYPE_MEDIUM_BLOB:
     case FIELD_TYPE_LONG_BLOB:
       if(!(self.flags & BINARY_FLAG)) // It is TEXT and NOT BLOB...
-        object = [[[NSString alloc] initWithData:object encoding:NSUTF8StringEncoding] autorelease];
+        object = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
 			else
 				object = [NSData dataWithBytes:data length:length];
       break;

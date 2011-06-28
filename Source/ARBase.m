@@ -43,6 +43,11 @@ static NSString *classPrefix = nil;
 
 	return connection;
 }
+- (void)setConnection:(id<ARConnection>)aConnection {
+  [aConnection retain];
+  [connection release];
+  connection = aConnection; 
+}
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
@@ -210,7 +215,7 @@ static NSString *classPrefix = nil;
 }
 - (id)initWithConnection:(id<ARConnection>)aConnection id:(NSUInteger)id
 {
-  if(![self init])
+  if(!(self = [self init]))
     return nil;
   
   self.connection = aConnection;
@@ -306,14 +311,14 @@ static NSString *classPrefix = nil;
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
 	if([ARBase delayWriting] && !ignoreCache)
-		[addCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record"]];
+		[addCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record", nil]];
 	else
 		[[self relationshipForKey:key] addRecord:record forKey:key];
 }
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
 	if([ARBase delayWriting] && !ignoreCache)
-		[removeCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record"]];
+		[removeCache addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", record, @"record", nil]];
 	else
 		[[self relationshipForKey:key] removeRecord:record forKey:key];
 }
@@ -394,8 +399,8 @@ static NSString *classPrefix = nil;
 #pragma mark Cleanup
 - (void)dealloc
 {
-  [self.connection release];
-  [self.relationships release];
+  [connection release];
+  [relationships release];
 	
 	[writeCache release];
 	[readCache release];

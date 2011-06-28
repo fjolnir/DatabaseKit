@@ -8,7 +8,7 @@
 
 #import "NSString+Inflections.h"
 #import "ARInflector.h"
-#import "AGRegex.h"
+#import "RegexKitLite.h"
 
 /* @cond IGNORE */
 @implementation NSString (Inflections)
@@ -52,12 +52,12 @@
 
 - (NSString *)underscoredString
 {
-	AGRegex *regex = [AGRegex regexWithPattern:@"([A-Z]+)([A-Z][a-z])" options:AGRegexExtended];
-	NSString *ret = [regex replaceWithString:@"$1_$2" inString:self];
-	regex = [AGRegex regexWithPattern:@"([a-z\\d])([A-Z])"];
-	ret = [regex replaceWithString:@"$1_$2" inString:ret];
+  NSString *underscored = [self stringByReplacingOccurrencesOfRegex:@"([A-Z]+)([A-Z][a-z])"
+                                                         withString:@"$1_$2"];
+  underscored = [underscored stringByReplacingOccurrencesOfRegex:@"([a-z\\d])([A-Z])"
+                                                      withString:@"$1_$2"];
 	
-	return [ret lowercaseString];
+	return [underscored lowercaseString];
 }
 - (NSString *)camelizedString
 {

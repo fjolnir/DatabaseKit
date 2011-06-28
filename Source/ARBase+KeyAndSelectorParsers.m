@@ -51,7 +51,6 @@
         if(outAttribute != NULL)
             *outAttribute = selector;
     }
-
     return selectorType;
 }
 - (ARRelationship *)relationshipForKey:(NSString *)key
