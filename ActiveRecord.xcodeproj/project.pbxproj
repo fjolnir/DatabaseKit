@@ -86,6 +86,16 @@
 		F8DA53370E058F10002C3ADB /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530E0E058F10002C3ADB /* NSString-Base64Extensions.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C78D762113BAA86D00AC5FB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = ActiveRecord;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		C7CAF30E13BA1B4D00013E21 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -136,7 +146,7 @@
 		F87B10380E06F6D500580499 /* ARInflectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARInflectorTest.m; sourceTree = "<group>"; };
 		F87B103B0E06F6D500580499 /* ARSQLiteConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSQLiteConnectionTest.h; sourceTree = "<group>"; };
 		F87B103C0E06F6D500580499 /* ARSQLiteConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSQLiteConnectionTest.m; sourceTree = "<group>"; };
-		F87B103F0E06F6D500580499 /* GHTestCase+Fixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "GHTestCase+Fixtures.h"; sourceTree = "<group>"; };
+		F87B103F0E06F6D500580499 /* GHTestCase+Fixtures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHTestCase+Fixtures.h"; sourceTree = "<group>"; };
 		F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHTestCase+Fixtures.m"; sourceTree = "<group>"; };
 		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
@@ -550,6 +560,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C78D762213BAA86D00AC5FB2 /* PBXTargetDependency */,
 			);
 			name = "Unit Tests";
 			productName = "Unit Tests";
@@ -651,6 +662,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C78D762213BAA86D00AC5FB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DC2EF4F0486A6940098B216 /* ActiveRecord */;
+			targetProxy = C78D762113BAA86D00AC5FB2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
