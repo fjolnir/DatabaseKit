@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		C785628113BABC6B0024052D /* cleanDatabase.db in Resources */ = {isa = PBXBuildFile; fileRef = C785628013BABC6B0024052D /* cleanDatabase.db */; };
+		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
 		C79BB92B13BA2A5400D52DB6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
 		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
@@ -118,6 +120,8 @@
 		32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveRecord_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ActiveRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = cleanDatabase.db; path = "../../../../Downloads/activerecord/Unit tests/cleanDatabase.db"; sourceTree = "<group>"; };
+		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlite_fixtures.sql; path = "../../../../Downloads/activerecord/Unit tests/sqlite_fixtures.sql"; sourceTree = "<group>"; };
 		C7CAF29613BA080A00013E21 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		C7CAF29813BA080A00013E21 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		C7CAF2A513BA0A5600013E21 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -312,8 +316,10 @@
 		C7CAF2F613BA1A7300013E21 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C785628013BABC6B0024052D /* cleanDatabase.db */,
 				C7CAF31713BA1BE700013E21 /* InfoPlist.strings */,
 				C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */,
+				C785628313BAC2510024052D /* sqlite_fixtures.sql */,
 				C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -611,6 +617,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CAF32213BA1C1C00013E21 /* InfoPlist.strings in Resources */,
+				C785628113BABC6B0024052D /* cleanDatabase.db in Resources */,
+				C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

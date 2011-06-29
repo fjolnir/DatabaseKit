@@ -13,18 +13,14 @@
 - (ARSQLiteConnection *)setUpSQLiteFixtures
 {
   NSError *err = nil;
-  NSMutableString *path = [NSMutableString stringWithUTF8String:__FILE__];
-  [path replaceOccurrencesOfString:[path lastPathComponent] 
-                        withString:@""
-                           options:0
-                             range:NSMakeRange(0, [path length])];
-  [path appendString:@"simpleDatabase.db"];
-	
+  NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
   NSString *fixturePath = [path stringByReplacingOccurrencesOfString:[path lastPathComponent] 
 														  withString:@"sqlite_fixtures.sql"
 															 options:0
 															   range:NSMakeRange(0, [path length])];
-  NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath encoding:NSUTF8StringEncoding error:nil];
+  NSString *fixtures = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sqlite_fixtures" ofType:@"sql"] 
+                                                 encoding:NSUTF8StringEncoding 
+                                                    error:nil];
 	
 	ARSQLiteConnection *connection = [ARSQLiteConnection openConnectionWithInfo:[NSDictionary dictionaryWithObject:path forKey:@"path"]
 																		  error:&err];

@@ -27,7 +27,6 @@
 	[super setUpSQLiteFixtures];
 	//[super setUpMySQLFixtures];
 	arr = [TEModelArrayInterface find:ARFindAll];
-  NSLog(@"arr");
 }
 - (void)testCount
 {
