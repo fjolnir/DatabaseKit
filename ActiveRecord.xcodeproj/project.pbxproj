@@ -152,7 +152,6 @@
 		F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		F882A3D90E070C6700C375FB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		F8CA5922113998FB0053B867 /* OCUnit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCUnit Tests-Info.plist"; sourceTree = "<group>"; };
 		F8D301E80E17A9F30075AFFF /* my_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_alloc.h; sourceTree = "<group>"; };
 		F8D301E90E17A9F30075AFFF /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
 		F8D301EA0E17A9F30075AFFF /* mysql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql.h; sourceTree = "<group>"; };
@@ -246,7 +245,6 @@
 				034768DFFF38A50411DB9C8B /* Products */,
 				F87B10320E06F6D500580499 /* Unit tests */,
 				F807FA730E3A6B0D00AB3808 /* README.markdown */,
-				F8CA5922113998FB0053B867 /* OCUnit Tests-Info.plist */,
 			);
 			name = ActiveRecord;
 			sourceTree = "<group>";
