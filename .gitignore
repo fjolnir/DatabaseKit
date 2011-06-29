@@ -2,6 +2,7 @@
 build/*
 *.pbxuser
 *.mode1v3
+ActiveRecord.xcodeproj/xcuserdata/*
 
 # old skool
 .svn
