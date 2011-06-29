@@ -139,7 +139,6 @@
 		F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterface.m; sourceTree = "<group>"; };
 		F81CC1E50E609E32004CA13A /* ARBaseArrayInterfaceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterfaceTest.h; sourceTree = "<group>"; };
 		F81CC1E60E609E32004CA13A /* ARBaseArrayInterfaceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterfaceTest.m; sourceTree = "<group>"; };
-		F87B10290E06F6B400580499 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
 		F87B10350E06F6D500580499 /* ARBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseTest.h; sourceTree = "<group>"; };
 		F87B10360E06F6D500580499 /* ARBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseTest.m; sourceTree = "<group>"; };
 		F87B10370E06F6D500580499 /* ARInflectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARInflectorTest.h; sourceTree = "<group>"; };
@@ -245,7 +244,6 @@
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				F87B10290E06F6B400580499 /* Unit Tests-Info.plist */,
 				F87B10320E06F6D500580499 /* Unit tests */,
 				F807FA730E3A6B0D00AB3808 /* README.markdown */,
 				F8CA5922113998FB0053B867 /* OCUnit Tests-Info.plist */,
