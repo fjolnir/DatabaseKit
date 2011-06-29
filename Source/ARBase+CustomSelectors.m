@@ -44,6 +44,7 @@
       [invocation setArgument:&attributeName atIndex:3];
       [invocation invoke];
     }
+    // These add records for to-many relationships
     else if(selectorType == ARAttributeSelectorAdder)
     {
       [invocation setSelector:@selector(addRecord:forKey:)];

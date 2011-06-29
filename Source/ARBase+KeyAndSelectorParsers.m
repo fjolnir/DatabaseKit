@@ -22,6 +22,7 @@
     NSScanner *scanner = [NSScanner scannerWithString:selector];
     ARAttributeSelectorType selectorType;
     NSString *type;
+  // Scan up to the first uppercase character to figure out what sort of action we're dealing with
     if([scanner scanUpToCharactersFromSet:[NSCharacterSet uppercaseLetterCharacterSet] intoString:&type])
     {
         if([type isEqualToString:@"set"])
@@ -35,6 +36,7 @@
             selectorType = ARAttributeSelectorReader;
             [scanner setScanLocation:0];
         }
+      // Prepare the attribute name for output
         if(outAttribute != NULL)
         {
           // Make the first char lowercase
