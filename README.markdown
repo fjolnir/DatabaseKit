@@ -15,7 +15,7 @@ Features:
 =========
  * Supported databases
   - SQLite 3
-  - MySQL 5.0
+  x MySQL 5.0 (Currently not maintained)
  * Supported relationships
   - Has many
   - Has one
