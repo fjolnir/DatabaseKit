@@ -347,7 +347,7 @@
 				C7AED94213C1440200C47919 /* Supporting Files */,
 			);
 			name = "iPhone Specific";
-			path = active_record;
+			path = iPhone;
 			sourceTree = "<group>";
 		};
 		C7AED94213C1440200C47919 /* Supporting Files */ = {
@@ -1082,6 +1082,7 @@
 				C7AED94513C1440200C47919 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C7CAF30713BA1A7400013E21 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
 			isa = XCConfigurationList;
