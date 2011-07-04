@@ -83,14 +83,6 @@
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */; };
-		F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E80E17A9F30075AFFF /* my_alloc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F30E17A9F30075AFFF /* my_list.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301E90E17A9F30075AFFF /* my_list.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F40E17A9F30075AFFF /* mysql.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EA0E17A9F30075AFFF /* mysql.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F50E17A9F30075AFFF /* mysql_com.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EB0E17A9F30075AFFF /* mysql_com.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F60E17A9F30075AFFF /* mysql_embed.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EC0E17A9F30075AFFF /* mysql_embed.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F70E17A9F30075AFFF /* mysql_time.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301ED0E17A9F30075AFFF /* mysql_time.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F80E17A9F30075AFFF /* mysql_version.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EE0E17A9F30075AFFF /* mysql_version.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D301F90E17A9F30075AFFF /* typelib.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D301EF0E17A9F30075AFFF /* typelib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA530F0E058F10002C3ADB /* ActiveRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* ActiveRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
 		F8DA53110E058F10002C3ADB /* ARBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -153,11 +145,11 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveRecord_Prefix.pch; sourceTree = "<group>"; };
+		32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActiveRecord_Prefix.pch; path = Mac/ActiveRecord_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ActiveRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = cleanDatabase.db; path = "../../../../Downloads/activerecord/Unit tests/cleanDatabase.db"; sourceTree = "<group>"; };
-		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlite_fixtures.sql; path = "../../../../Downloads/activerecord/Unit tests/sqlite_fixtures.sql"; sourceTree = "<group>"; };
+		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
+		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
 		C7AED93D13C1440200C47919 /* libactive_record.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libactive_record.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7AED94313C1440200C47919 /* active_record-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "active_record-Prefix.pch"; sourceTree = "<group>"; };
 		C7AED95A13C1447F00C47919 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -169,11 +161,11 @@
 		C7CAF29813BA080A00013E21 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		C7CAF2A513BA0A5600013E21 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		C7CAF2CD13BA199100013E21 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = GHUnit/GHUnit.framework; sourceTree = "<group>"; };
-		C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHUnitTestMain.m; path = "Unit tests/GHUnit/GHUnitTestMain.m"; sourceTree = SOURCE_ROOT; };
+		C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHUnitTestMain.m; path = GHUnit/GHUnitTestMain.m; sourceTree = "<group>"; };
 		C7CAF2F213BA1A7300013E21 /* Unit Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unit Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CAF31813BA1BE700013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Unit Tests-Info.plist"; path = "Unit tests/Unit Tests-Info.plist"; sourceTree = SOURCE_ROOT; };
-		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Unit tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
+		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Mac/Unit Tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F80750BD0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/plurals.plist; sourceTree = "<group>"; };
 		F80750BF0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/irregulars.plist; sourceTree = "<group>"; };
@@ -464,7 +456,7 @@
 				F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */,
 			);
 			name = "Unit tests (Mac)";
-			path = "Unit tests";
+			path = "Mac/Unit Tests";
 			sourceTree = "<group>";
 		};
 		F87CDB270E65EF140054FA45 /* iPhone Hacks */ = {
@@ -597,14 +589,6 @@
 				F8DA532E0E058F10002C3ADB /* ARInflector.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+Inflections.h in Headers */,
-				F8D301F20E17A9F30075AFFF /* my_alloc.h in Headers */,
-				F8D301F30E17A9F30075AFFF /* my_list.h in Headers */,
-				F8D301F40E17A9F30075AFFF /* mysql.h in Headers */,
-				F8D301F50E17A9F30075AFFF /* mysql_com.h in Headers */,
-				F8D301F60E17A9F30075AFFF /* mysql_embed.h in Headers */,
-				F8D301F70E17A9F30075AFFF /* mysql_time.h in Headers */,
-				F8D301F80E17A9F30075AFFF /* mysql_version.h in Headers */,
-				F8D301F90E17A9F30075AFFF /* typelib.h in Headers */,
 				F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */,
 				F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
@@ -908,16 +892,11 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ActiveRecord_Prefix.pch;
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/MySQL Libraries/include\"/**",
-				);
+				GCC_PREFIX_HEADER = Mac/ActiveRecord_Prefix.pch;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/MySQL Libraries/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActiveRecord;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -932,13 +911,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ActiveRecord_Prefix.pch;
+				GCC_PREFIX_HEADER = Mac/ActiveRecord_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/MySQL Libraries/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ActiveRecord;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1032,12 +1008,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-					"\"$(SRCROOT)/Unit Tests/GHUnit\"",
+					"\"$(SRCROOT)/Mac/Unit Tests/GHUnit\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Unit Tests/Unit Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Mac/Unit Tests/Unit Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1045,7 +1021,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
+				INFOPLIST_FILE = "Mac/Unit Tests/Unit Tests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1063,14 +1039,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-					"\"$(SRCROOT)/Unit Tests/GHUnit\"",
+					"\"$(SRCROOT)/Mac/Unit Tests/GHUnit\"",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Unit Tests/Unit Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Mac/Unit Tests/Unit Tests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
+				INFOPLIST_FILE = "Mac/Unit Tests/Unit Tests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
