@@ -14,10 +14,7 @@
 {
   NSError *err = nil;
   NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
-  NSString *fixturePath = [path stringByReplacingOccurrencesOfString:[path lastPathComponent] 
-														  withString:@"sqlite_fixtures.sql"
-															 options:0
-															   range:NSMakeRange(0, [path length])];
+
   NSString *fixtures = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sqlite_fixtures" ofType:@"sql"] 
                                                  encoding:NSUTF8StringEncoding 
                                                     error:nil];
