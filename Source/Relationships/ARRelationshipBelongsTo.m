@@ -33,15 +33,13 @@
 {
 	if(![self respondsToKey:key])
     return nil;
-  Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@", 
-                                          [[self.record class] classPrefix], [key stringByCapitalizingFirstLetter]]);
+  NSString *partnerClassName = [NSString stringWithFormat:@"%@%@", 
+                                 [[self.record class] classPrefix],
+                                 [key stringByCapitalizingFirstLetter]];
+  Class partnerClass = NSClassFromString(partnerClassName);;
   if(!partnerClass)
   {
-    [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)",
-		 key, 
-		 [NSString stringWithFormat:@"%@%@", [[self.record class] classPrefix],
-			[key capitalizedString]]
-		 ];
+    [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)", key, partnerClassName];
     return nil;
   }
   NSString *idColumn = [[self.record class] idColumnForModel:partnerClass];
