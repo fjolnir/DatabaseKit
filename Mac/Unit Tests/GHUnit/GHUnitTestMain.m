@@ -33,7 +33,7 @@
 #import <GHUnit/GHTestApp.h>
 
 // Default exception handler
-void exceptionHandler(NSException *exception) { 
+static void exceptionHandler(NSException *exception) { 
   NSLog(@"%@\n%@", [exception reason], GHUStackTraceFromException(exception));
 }
 
