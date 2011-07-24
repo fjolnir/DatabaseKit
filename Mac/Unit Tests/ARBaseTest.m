@@ -44,7 +44,7 @@
                                                   @"This won't exist for long", @"info", nil]];
 	NSUInteger theId = model.databaseId;
 	GHAssertTrue([model destroy], @"Couldn't delete record");
-	NSArray *result = [TEModel find:(ARFindSpecification)theId];
+	NSArray *result = [TEModel find:theId];
 	GHAssertEquals([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 - (void)testFindFirst
