@@ -645,9 +645,9 @@
 			productReference = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C7AED93C13C1440200C47919 /* active_record */ = {
+		C7AED93C13C1440200C47919 /* iPhone Library */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "active_record" */;
+			buildConfigurationList = C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "iPhone Library" */;
 			buildPhases = (
 				C7AED93913C1440200C47919 /* Sources */,
 				C7AED93A13C1440200C47919 /* Frameworks */,
@@ -657,7 +657,7 @@
 			);
 			dependencies = (
 			);
-			name = active_record;
+			name = "iPhone Library";
 			productName = active_record;
 			productReference = C7AED93D13C1440200C47919 /* libactive_record.a */;
 			productType = "com.apple.product-type.library.static";
@@ -703,7 +703,7 @@
 			targets = (
 				8DC2EF4F0486A6940098B216 /* ActiveRecord */,
 				C7CAF2F113BA1A7300013E21 /* Unit Tests */,
-				C7AED93C13C1440200C47919 /* active_record */,
+				C7AED93C13C1440200C47919 /* iPhone Library */,
 			);
 		};
 /* End PBXProject section */
@@ -973,7 +973,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
+				PRODUCT_NAME = active_record;
+				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -992,7 +994,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
+				PRODUCT_NAME = active_record;
+				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1075,7 +1079,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "active_record" */ = {
+		C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "iPhone Library" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7AED94413C1440200C47919 /* Debug */,
