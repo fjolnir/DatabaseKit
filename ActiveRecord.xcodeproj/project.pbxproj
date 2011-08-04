@@ -964,7 +964,7 @@
 				DSTROOT = /tmp/active_record.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "active_record/active_record-Prefix.pch";
+				GCC_PREFIX_HEADER = "iPhone/active_record-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -988,7 +988,7 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/active_record.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "active_record/active_record-Prefix.pch";
+				GCC_PREFIX_HEADER = "iPhone/active_record-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
