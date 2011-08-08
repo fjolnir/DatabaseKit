@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		C785628113BABC6B0024052D /* cleanDatabase.db in Resources */ = {isa = PBXBuildFile; fileRef = C785628013BABC6B0024052D /* cleanDatabase.db */; };
 		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
 		C79BB92B13BA2A5400D52DB6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		C7A5070D13F011BE00301981 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
+		C7A5077313F01AD600301981 /* inflections.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076913F01AD600301981 /* inflections.plist */; };
+		C7A5077413F01AD600301981 /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076B13F01AD600301981 /* irregulars.plist */; };
+		C7A5077513F01AD600301981 /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076D13F01AD600301981 /* plurals.plist */; };
+		C7A5077613F01AD600301981 /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076F13F01AD600301981 /* singulars.plist */; };
+		C7A5077713F01AD600301981 /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077113F01AD600301981 /* uncountables.plist */; };
+		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
 		C7AED94813C1441F00C47919 /* ARBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* ARBase.m */; };
 		C7AED94913C1442000C47919 /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
 		C7AED94A13C1442200C47919 /* ARBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */; };
@@ -72,12 +77,6 @@
 		C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
-		F80750C80E22BFAC006504CC /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BC0E22BFAC006504CC /* plurals.plist */; };
-		F80750C90E22BFAC006504CC /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BE0E22BFAC006504CC /* irregulars.plist */; };
-		F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80750C00E22BFAC006504CC /* InfoPlist.strings */; };
-		F80750CB0E22BFAC006504CC /* inflections.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C20E22BFAC006504CC /* inflections.plist */; };
-		F80750CC0E22BFAC006504CC /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C40E22BFAC006504CC /* singulars.plist */; };
-		F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750C60E22BFAC006504CC /* uncountables.plist */; };
 		F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
@@ -142,13 +141,18 @@
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* ActiveRecord_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActiveRecord_Prefix.pch; path = Mac/ActiveRecord_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ActiveRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
 		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
+		C7A5076A13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = inflections.plist; sourceTree = "<group>"; };
+		C7A5076C13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = irregulars.plist; sourceTree = "<group>"; };
+		C7A5076E13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = plurals.plist; sourceTree = "<group>"; };
+		C7A5077013F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = singulars.plist; sourceTree = "<group>"; };
+		C7A5077213F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = uncountables.plist; sourceTree = "<group>"; };
+		C7A5077913F01B1200301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C7AED93D13C1440200C47919 /* libactive_record.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libactive_record.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7AED94313C1440200C47919 /* active_record-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "active_record-Prefix.pch"; sourceTree = "<group>"; };
 		C7AED95A13C1447F00C47919 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -168,12 +172,6 @@
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		F80750BD0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/plurals.plist; sourceTree = "<group>"; };
-		F80750BF0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/irregulars.plist; sourceTree = "<group>"; };
-		F80750C10E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F80750C30E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/inflections.plist; sourceTree = "<group>"; };
-		F80750C50E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/singulars.plist; sourceTree = "<group>"; };
-		F80750C70E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/uncountables.plist; sourceTree = "<group>"; };
 		F807FA730E3A6B0D00AB3808 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterface.h; sourceTree = "<group>"; };
 		F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterface.m; sourceTree = "<group>"; };
@@ -382,7 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
-				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
+				C7A5077813F01B1200301981 /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -420,14 +418,14 @@
 		F80750BA0E22BFA3006504CC /* Inflections */ = {
 			isa = PBXGroup;
 			children = (
-				F80750BC0E22BFAC006504CC /* plurals.plist */,
-				F80750BE0E22BFAC006504CC /* irregulars.plist */,
-				F80750C00E22BFAC006504CC /* InfoPlist.strings */,
-				F80750C20E22BFAC006504CC /* inflections.plist */,
-				F80750C40E22BFAC006504CC /* singulars.plist */,
-				F80750C60E22BFAC006504CC /* uncountables.plist */,
+				C7A5076913F01AD600301981 /* inflections.plist */,
+				C7A5076B13F01AD600301981 /* irregulars.plist */,
+				C7A5076D13F01AD600301981 /* plurals.plist */,
+				C7A5076F13F01AD600301981 /* singulars.plist */,
+				C7A5077113F01AD600301981 /* uncountables.plist */,
 			);
 			name = Inflections;
+			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		F83BC4D60E5C4C6E00E474B8 /* Bindings */ = {
@@ -703,15 +701,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */,
-				F80750C80E22BFAC006504CC /* plurals.plist in Resources */,
-				F80750C90E22BFAC006504CC /* irregulars.plist in Resources */,
-				F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */,
-				F80750CB0E22BFAC006504CC /* inflections.plist in Resources */,
-				F80750CC0E22BFAC006504CC /* singulars.plist in Resources */,
-				F80750CD0E22BFAC006504CC /* uncountables.plist in Resources */,
 				C7CAF31E13BA1BE700013E21 /* InfoPlist.strings in Resources */,
 				C7CAF32013BA1BE700013E21 /* Unit Tests-Info.plist in Resources */,
+				C7A5077313F01AD600301981 /* inflections.plist in Resources */,
+				C7A5077413F01AD600301981 /* irregulars.plist in Resources */,
+				C7A5077513F01AD600301981 /* plurals.plist in Resources */,
+				C7A5077613F01AD600301981 /* singulars.plist in Resources */,
+				C7A5077713F01AD600301981 /* uncountables.plist in Resources */,
+				C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,10 +800,50 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
+		C7A5076913F01AD600301981 /* inflections.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C1667FE841158C02AAC07 /* English */,
+				C7A5076A13F01AD600301981 /* en */,
+			);
+			name = inflections.plist;
+			sourceTree = "<group>";
+		};
+		C7A5076B13F01AD600301981 /* irregulars.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7A5076C13F01AD600301981 /* en */,
+			);
+			name = irregulars.plist;
+			sourceTree = "<group>";
+		};
+		C7A5076D13F01AD600301981 /* plurals.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7A5076E13F01AD600301981 /* en */,
+			);
+			name = plurals.plist;
+			sourceTree = "<group>";
+		};
+		C7A5076F13F01AD600301981 /* singulars.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7A5077013F01AD600301981 /* en */,
+			);
+			name = singulars.plist;
+			sourceTree = "<group>";
+		};
+		C7A5077113F01AD600301981 /* uncountables.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7A5077213F01AD600301981 /* en */,
+			);
+			name = uncountables.plist;
+			sourceTree = "<group>";
+		};
+		C7A5077813F01B1200301981 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7A5077913F01B1200301981 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -818,54 +855,6 @@
 			);
 			name = InfoPlist.strings;
 			path = "../Unit tests/en.lproj";
-			sourceTree = "<group>";
-		};
-		F80750BC0E22BFAC006504CC /* plurals.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750BD0E22BFAC006504CC /* English */,
-			);
-			name = plurals.plist;
-			sourceTree = "<group>";
-		};
-		F80750BE0E22BFAC006504CC /* irregulars.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750BF0E22BFAC006504CC /* English */,
-			);
-			name = irregulars.plist;
-			sourceTree = "<group>";
-		};
-		F80750C00E22BFAC006504CC /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750C10E22BFAC006504CC /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F80750C20E22BFAC006504CC /* inflections.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750C30E22BFAC006504CC /* English */,
-			);
-			name = inflections.plist;
-			sourceTree = "<group>";
-		};
-		F80750C40E22BFAC006504CC /* singulars.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750C50E22BFAC006504CC /* English */,
-			);
-			name = singulars.plist;
-			sourceTree = "<group>";
-		};
-		F80750C60E22BFAC006504CC /* uncountables.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F80750C70E22BFAC006504CC /* English */,
-			);
-			name = uncountables.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
