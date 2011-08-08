@@ -31,9 +31,15 @@ To create a model there are 2 steps.
 
 **Example:**
 Let's say I created a table called 'people' with 3 columns.
- - id as the primary key
- - firstName as varchar(255)
- - lastName  as varchar(255)
+
+ * id as the primary key
+ * firstName as varchar(255)
+ * lastName  as varchar(255)
+
+And loaded it using
+
+	[ARBase setDefaultConnection:[ARSQLiteConnection openConnectionWithInfo:[NSDictionary dictionaryWithObject:<path> forKey:@"path"] error:&err];
+
 Then we'd create the following class definition:
 
 	@interface Person : ARBase
