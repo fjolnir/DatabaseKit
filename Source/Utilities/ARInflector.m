@@ -30,7 +30,7 @@ static ARInflector *sharedInstance = nil;
   // Open the list of inflections
 #if TARGET_OS_MAC
   NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-#elif TARGET_OS_IPHONE
+#elif (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
   NSBundle *bundle = [NSBundle mainBundle];
 #endif
   self.irregulars = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"irregulars" 
@@ -41,7 +41,7 @@ static ARInflector *sharedInstance = nil;
                                                                    ofType:@"plist"]];
   self.singulars = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"singulars" 
                                                                      ofType:@"plist"]];
-  
+
   return self;
 }
 - (NSString *)pluralizeWord:(NSString *)word
