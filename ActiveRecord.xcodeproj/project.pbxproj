@@ -12,6 +12,7 @@
 		C785628113BABC6B0024052D /* cleanDatabase.db in Resources */ = {isa = PBXBuildFile; fileRef = C785628013BABC6B0024052D /* cleanDatabase.db */; };
 		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
 		C79BB92B13BA2A5400D52DB6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		C7A5070D13F011BE00301981 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
 		C7AED94813C1441F00C47919 /* ARBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* ARBase.m */; };
 		C7AED94913C1442000C47919 /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
 		C7AED94A13C1442200C47919 /* ARBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */; };
@@ -30,7 +31,6 @@
 		C7AED95713C1445000C47919 /* NSArray+ARAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */; };
 		C7AED95B13C1447F00C47919 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AED95A13C1447F00C47919 /* libsqlite3.dylib */; };
 		C7AED95D13C1448F00C47919 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AED95C13C1448F00C47919 /* libicucore.dylib */; };
-		C7AED95E13C144B800C47919 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */; };
 		C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AED96413C148C700C47919 /* Base64Extensions.h */; };
 		C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
 		C7AED96913C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
@@ -51,7 +51,6 @@
 		C7AED97813C14B9300C47919 /* ARInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53050E058F10002C3ADB /* ARInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97913C14B9500C47919 /* NSString+Inflections.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530B0E058F10002C3ADB /* NSString+Inflections.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97A13C14B9600C47919 /* NSArray+ARAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7AED97B13C14BC700C47919 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; };
 		C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
 		C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
 		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
@@ -71,6 +70,8 @@
 		C7CAF32813BA1F6800013E21 /* GHTestCase+Fixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */; };
 		C7CAF32913BA200000013E21 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
+		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
+		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
 		F80750C80E22BFAC006504CC /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BC0E22BFAC006504CC /* plurals.plist */; };
 		F80750C90E22BFAC006504CC /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = F80750BE0E22BFAC006504CC /* irregulars.plist */; };
 		F80750CA0E22BFAC006504CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80750C00E22BFAC006504CC /* InfoPlist.strings */; };
@@ -81,8 +82,6 @@
 		F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
-		F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */; };
 		F8DA530F0E058F10002C3ADB /* ActiveRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* ActiveRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
 		F8DA53110E058F10002C3ADB /* ARBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -166,6 +165,8 @@
 		C7CAF31813BA1BE700013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
 		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Mac/Unit Tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
+		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F80750BD0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/plurals.plist; sourceTree = "<group>"; };
 		F80750BF0E22BFAC006504CC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = English; path = English.lproj/irregulars.plist; sourceTree = "<group>"; };
@@ -188,8 +189,6 @@
 		F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHTestCase+Fixtures.m"; sourceTree = "<group>"; };
 		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
-		F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
-		F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		F8D301E80E17A9F30075AFFF /* my_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_alloc.h; sourceTree = "<group>"; };
 		F8D301E90E17A9F30075AFFF /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
 		F8D301EA0E17A9F30075AFFF /* mysql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql.h; sourceTree = "<group>"; };
@@ -343,6 +342,8 @@
 		C7AED94113C1440200C47919 /* iPhone Specific */ = {
 			isa = PBXGroup;
 			children = (
+				C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */,
+				C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */,
 				C7AED96013C1455900C47919 /* Libraries */,
 				C7AED94213C1440200C47919 /* Supporting Files */,
 			);
@@ -459,15 +460,6 @@
 			path = "Mac/Unit Tests";
 			sourceTree = "<group>";
 		};
-		F87CDB270E65EF140054FA45 /* iPhone Hacks */ = {
-			isa = PBXGroup;
-			children = (
-				F87CDB2A0E65EF400054FA45 /* NSObject+iPhoneHacks.h */,
-				F87CDB2B0E65EF400054FA45 /* NSObject+iPhoneHacks.m */,
-			);
-			path = "iPhone Hacks";
-			sourceTree = "<group>";
-		};
 		F8D301E60E17A9F30075AFFF /* MySQL Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,7 +553,6 @@
 				F8DA53080E058F10002C3ADB /* NSArray+ARAdditions.m */,
 				C7AED96413C148C700C47919 /* Base64Extensions.h */,
 				C7AED96513C148C700C47919 /* Base64Extensions.m */,
-				F87CDB270E65EF140054FA45 /* iPhone Hacks */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -590,7 +581,6 @@
 				F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+Inflections.h in Headers */,
 				F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */,
-				F87CDB2C0E65EF400054FA45 /* NSObject+iPhoneHacks.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7CAF32113BA1BE700013E21 /* Unit Tests-Prefix.pch in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
@@ -618,8 +608,8 @@
 				C7AED97913C14B9500C47919 /* NSString+Inflections.h in Headers */,
 				C7AED96C13C14B5D00C47919 /* ARBase+Finders.h in Headers */,
 				C7AED96D13C14B6D00C47919 /* ARBasePrivate.h in Headers */,
-				C7AED97B13C14BC700C47919 /* NSObject+iPhoneHacks.h in Headers */,
 				C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */,
+				C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,7 +748,6 @@
 				F8DA53310E058F10002C3ADB /* NSArray+ARAdditions.m in Sources */,
 				F8DA53350E058F10002C3ADB /* NSString+Inflections.m in Sources */,
 				F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */,
-				F87CDB2D0E65EF410054FA45 /* NSObject+iPhoneHacks.m in Sources */,
 				C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */,
 				C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */,
 			);
@@ -768,23 +757,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */,
 				C7AED94813C1441F00C47919 /* ARBase.m in Sources */,
 				C7AED94913C1442000C47919 /* ARBase+CustomSelectors.m in Sources */,
 				C7AED94B13C1442400C47919 /* ARBase+KeyAndSelectorParsers.m in Sources */,
 				C7AED94A13C1442200C47919 /* ARBase+Finders.m in Sources */,
 				C7AED95013C1443A00C47919 /* ARRelationshipColumn.m in Sources */,
 				C7AED94F13C1443600C47919 /* ARRelationshipBelongsTo.m in Sources */,
+				C7A5070D13F011BE00301981 /* RegexKitLite.m in Sources */,
 				C7AED94E13C1443500C47919 /* ARRelationship.m in Sources */,
 				C7AED95113C1443C00C47919 /* ARRelationshipHABTM.m in Sources */,
 				C7AED95713C1445000C47919 /* NSArray+ARAdditions.m in Sources */,
 				C7AED95213C1443E00C47919 /* ARRelationshipHasMany.m in Sources */,
 				C7AED95413C1444200C47919 /* ARRelationshipHasOne.m in Sources */,
-				C7AED95613C1444F00C47919 /* NSString+Inflections.m in Sources */,
 				C7AED95313C1444000C47919 /* ARRelationshipHasManyThrough.m in Sources */,
 				C7AED95513C1444C00C47919 /* ARInflector.m in Sources */,
+				C7AED95613C1444F00C47919 /* NSString+Inflections.m in Sources */,
 				C7AED96913C148C700C47919 /* Base64Extensions.m in Sources */,
 				C7AED94D13C1442F00C47919 /* ARSQLiteConnection.m in Sources */,
-				C7AED95E13C144B800C47919 /* NSObject+iPhoneHacks.m in Sources */,
 				C7AED94C13C1442800C47919 /* ARBaseArrayInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -972,7 +962,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
 				PRODUCT_NAME = active_record;
 				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;
@@ -993,7 +983,7 @@
 				GCC_PREFIX_HEADER = "iPhone/active_record-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
 				PRODUCT_NAME = active_record;
 				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;

@@ -49,8 +49,4 @@
 
 #import <ActiveRecord/ARBaseArrayInterface.h>
 
-#if (TARGET_OS_IPHONE)
-#	import "NSObject+iPhoneHacks.h"
-#endif
-
 #endif /* _ACTIVERECORD_H_ */
