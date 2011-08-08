@@ -172,7 +172,6 @@
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		F807FA730E3A6B0D00AB3808 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterface.h; sourceTree = "<group>"; };
 		F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterface.m; sourceTree = "<group>"; };
 		F81CC1E50E609E32004CA13A /* ARBaseArrayInterfaceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBaseArrayInterfaceTest.h; sourceTree = "<group>"; };
@@ -284,7 +283,6 @@
 				C7AED94113C1440200C47919 /* iPhone Specific */,
 				034768DFFF38A50411DB9C8B /* Products */,
 				F87B10320E06F6D500580499 /* Unit tests (Mac) */,
-				F807FA730E3A6B0D00AB3808 /* README.markdown */,
 			);
 			name = ActiveRecord;
 			sourceTree = "<group>";
