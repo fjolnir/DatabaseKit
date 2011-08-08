@@ -3,7 +3,7 @@
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 11/23/07.
-//  Copyright 2007 ninja kitten. All rights reserved.
+//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #import "NSArray+ARAdditions.h"

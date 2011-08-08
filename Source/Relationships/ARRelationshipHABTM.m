@@ -3,7 +3,7 @@
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 9/12/07.
-//  Copyright 2007 ninja kitten. All rights reserved.
+//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #import "ARRelationshipHABTM.h"

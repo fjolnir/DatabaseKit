@@ -3,7 +3,7 @@
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 1.4.2008.
-//  Copyright 2008 ninja kitten. All rights reserved.
+//  Copyright 2008 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

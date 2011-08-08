@@ -9,7 +9,7 @@ But it tries to be more versatile when it comes to working with multiple connect
 
 I'm not very good at writing these things so consult the docs/tutorials/whatever for more info. (scroll down!)
 
-ActiveRecord was written by ninja kitten (http://ninjakitten.us) and is licensed with the BSD license.
+ActiveRecord was written by Fjölnir Ásgeirsson and is licensed with the BSD license.
 
 Features:
 =========
