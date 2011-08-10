@@ -265,30 +265,3 @@
   [super dealloc];
 }
 @end
-
-/* old stuff (might be useful for other databases): 
- // Apply substitutions (if any)
- // Because we supported ":key" as opposed to only "?" like sqlite does
- // We need to convert the dictionary to an array of arguments, and convert the keys to ?'s
- // in order to be able to use sqlite's built in value binding
- NSMutableString *mutableSQL = [sql mutableCopy];
- 	NSArray *orderedSubstitutions = nil;
- if(substitutions != nil)
- {
- NSLog(@"..");
- NSMutableDictionary *subsByLocation = [NSMutableDictionary dictionary];
- for(NSString *key in substitutions)
- {
- NSRange range = [sql rangeOfString:[NSString stringWithFormat:@":%@", key]];
- NSLog(@"looking for :%@ in %@ - loc: %d", key, sql, range.location);
- 
- if(range.location == NSNotFound)
- continue;
- [subsByLocation setObject:[NSNumber numberWithInt:range.location] forKey:[substitutions objectForKey:key]];
- [mutableSQL replaceCharactersInRange:range withString:@"?"];
- }
- orderedSubstitutions = [subsByLocation keysSortedByValueUsingSelector:@selector(compare:)];
- }
- NSLog(@"orderedSubstitutions=%@", orderedSubstitutions);
-
-*/
