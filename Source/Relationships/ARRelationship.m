@@ -66,14 +66,6 @@
   return;
 }
 
-#pragma mark Accessors
-#pragma mark -
-/* What the hell is this?
- - (NSString *)className
-{
-  return @"";
-}*/
-
 #pragma mark -
 #pragma mark Copying
 - (id)copyWithZone:(NSZone *)zone
