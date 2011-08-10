@@ -3,7 +3,7 @@
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 7/4/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #ifndef ActiveRecord_Debug_h

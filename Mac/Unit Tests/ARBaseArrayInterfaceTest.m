@@ -3,7 +3,7 @@
 //  ActiveRecord
 //
 //  Created by Fjölnir Ásgeirsson on 23.8.2008.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #import "ARBaseArrayInterfaceTest.h"
