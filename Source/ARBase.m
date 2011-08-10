@@ -288,6 +288,7 @@ static NSString *classPrefix = nil;
 {
   return [self retrieveValueForKey:key];
 }
+// Called by KVC when it doesn't find a property/ivar for a given key.
 - (id)valueForUndefinedKey:(NSString *)key
 {
   return [self retrieveValueForKey:key];
