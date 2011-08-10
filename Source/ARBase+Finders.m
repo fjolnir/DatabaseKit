@@ -88,16 +88,13 @@
   {
     if(whereSQL != nil)
       [query appendFormat:@" WHERE %@", whereSQL];
-    if(orderSQL != nil)
-      [query appendFormat:@" ORDER BY %@", orderSQL];
   }
-  else
-  {
-    if(whereSQL != nil)
+  else if(whereSQL != nil)
       [query appendFormat:@" AND %@", whereSQL];
-    if(orderSQL != nil)
-      [query appendFormat:@" ORDER %@", orderSQL];
-  }
+  
+  if(orderSQL != nil)
+    [query appendFormat:@" ORDER %@", orderSQL];
+  
   if(limit > 0)
     [query appendFormat:@" LIMIT %d", limit];
   
