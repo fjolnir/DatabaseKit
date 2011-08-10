@@ -52,11 +52,18 @@ typedef enum  {
  * the SQLite3 database file, sets 'err' and returns nil on error
  *
  * @param info A dictionary containing the path (key: "path")to the database (can be an in memory database)
- * @param err pretty obvious what this one does.
+ * @param err Set to an NSError object on failure.
  */
 + (id)openConnectionWithInfo:(NSDictionary *)info error:(NSError **)err;
 /*! @copydoc openConnectionWithInfo:error: */
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err;
+
+/*!
+ * Returns a ready to use sqlite "connection" to an in memory database
+ * \n
+ * Creates an empty SQLite database in memory and returns a connection to it
+ */
++ (ARSQLiteConnection *)openConnectionToInMemoryDatabase:(NSError **)err;
 
 /*!
  * Executes the given SQL string after making substitutions(optional, pass nil if none should be made).

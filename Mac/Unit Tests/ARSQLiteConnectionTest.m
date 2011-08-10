@@ -50,4 +50,20 @@
                  @"Columns didn't contain: %@", fixture);
   }
 }
+
+- (void)testInMemoryDatabase {
+  NSError *err = nil;
+  ARSQLiteConnection *inMemoryDb = [ARSQLiteConnection openConnectionToInMemoryDatabase:&err];
+  
+  GHAssertNil(err, @"An error occured while creating the database (%@)", err);
+  
+  [inMemoryDb executeSQL:@"CREATE TABLE test(\"id\" INTEGER PRIMARY KEY NOT NULL, \"aString\" varchar(255))" substitutions:nil];
+  [inMemoryDb executeSQL:@"INSERT INTO test(aString) VALUES('foobar')" substitutions:nil];
+  NSArray *fetch = [inMemoryDb executeSQL:@"SELECT * FROM test" substitutions:nil];
+  GHAssertEquals([fetch count], (NSUInteger)1, @"Row count should be 1");
+  
+  NSDictionary *row = [fetch objectAtIndex:0];
+  GHAssertEqualObjects([row objectForKey:@"id"], [NSNumber numberWithInt:1], @"ID should be 1");
+  GHAssertEqualObjects([row objectForKey:@"aString"], @"foobar", @"aString should be 'foobar'");
+}
 @end

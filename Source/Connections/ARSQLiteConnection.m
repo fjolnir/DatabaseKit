@@ -32,7 +32,7 @@
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err
 {
   NSString *path = [info objectForKey:@"path"] ? [info objectForKey:@"path"] : @"";
-  if(![[NSFileManager defaultManager] fileExistsAtPath:path])
+  if(![path isEqualToString:@":memory:"] && ![[NSFileManager defaultManager] fileExistsAtPath:path])
   {
     if(err != NULL) {
       *err = [NSError errorWithDomain:@"database.sqlite.filenotfound" 
@@ -62,6 +62,11 @@
   
   return self;
 }
+
++ (ARSQLiteConnection *)openConnectionToInMemoryDatabase:(NSError **)err {
+  return [self openConnectionWithInfo:[NSDictionary dictionaryWithObject:@":memory:" forKey:@"path"] error:err];
+}
+
 
 #pragma mark -
 #pragma mark SQL Eecuting
