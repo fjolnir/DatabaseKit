@@ -12,13 +12,8 @@
 #import "ARBaseTest.h"
 
 @interface TEModelArrayInterface : ARBaseArrayInterface
-{
-	
-}
 @end
 @implementation TEModelArrayInterface
-
-
 @end
 
 @implementation ARBaseArrayInterfaceTest
@@ -28,10 +23,12 @@
 	//[super setUpMySQLFixtures];
 	arr = [TEModelArrayInterface find:ARFindAll];
 }
+
 - (void)testCount
 {
 	GHAssertEquals([arr count], [[TEModel find:ARFindAll] count], @"array interface count should match lookup count");
 }
+
 - (void)testRetrieval
 {
 	GHAssertEquals([[arr objectAtIndex:1] databaseId], [[[TEModel find:ARFindAll] objectAtIndex:1] databaseId], @"Wrong result fetched");
@@ -41,6 +38,7 @@
 		GHAssertEqualObjects([infos objectAtIndex:i], [[[TEModel find:ARFindAll] objectAtIndex:i] info], @"valueForKey failed!");
 	}
 }
+
 - (void)testWriting
 {
 	[arr setValue:@"testing 1 2 3.." forKey:@"info"];

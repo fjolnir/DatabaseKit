@@ -25,11 +25,13 @@
 	[super setUpSQLiteFixtures];
 	//[super setUpMySQLFixtures];
 }
+
 - (void)testTableName
 {
   GHAssertTrue([@"models" isEqualToString:[TEModel tableName]],
                @"TEModel's table name shouldn't be: %@", [TEModel tableName]);
 }
+
 - (void)testCreate
 {
   TEModel *model = [TEModel createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Foobar", @"name",
@@ -38,6 +40,7 @@
 	GHAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
 	GHAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
 }
+
 - (void)testDestroy
 {
 	TEModel *model = [TEModel createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Deletee", @"name",
@@ -47,6 +50,7 @@
 	NSArray *result = [TEModel find:(ARFindSpecification)theId];
 	GHAssertEquals([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
+
 - (void)testFindFirst
 {
   TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
@@ -54,6 +58,7 @@
   GHAssertNotNil(first, @"No result for first entry!");
 	GHAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
 }
+
 - (void)testModifying
 {
   TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
@@ -64,6 +69,7 @@
   [first endTransaction];
 	GHAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
+
 - (void)testHasMany
 {
   // First test retrieving
@@ -84,6 +90,7 @@
   GHAssertTrue([[model people] count] == 1, @"model should only have one person");
   GHAssertTrue([[[model people] objectAtIndex:0] databaseId] == [aPerson databaseId], @"person id should've been %d but was %d", [aPerson databaseId], [[[model people] objectAtIndex:0] databaseId]);
 }
+
 - (void)testHasManyThrough
 {
   // First test retrieving
@@ -107,6 +114,7 @@
   [model setAnimal:anAnimal];
   GHAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%d != %d)", [[model animal] databaseId], [anAnimal databaseId]);
 }
+
 - (void)testBelongsTo
 {
   TEPerson *person = [[TEPerson find:ARFindFirst] objectAtIndex:0];
@@ -123,6 +131,7 @@
   GHAssertTrue(([[anAnimal model] databaseId] == [model databaseId]), @"model id was wrong (%d != %d)", [[anAnimal model] databaseId], [model databaseId]);
   [model setAnimal:oldAnimal];
 }
+
 - (void)testHasAndBelongsToMany
 {
   TEPerson *person = [[TEPerson find:3] objectAtIndex:0];
@@ -133,6 +142,7 @@
 	[animal addPerson:person];
 	GHAssertEquals([[[animal people] objectAtIndex:0] databaseId], (NSUInteger)[person databaseId], @"Animal had wrong person!");
 }
+
 - (void)testDelayedWriting
 {
 	[ARBase setDelayWriting:YES];

@@ -26,6 +26,7 @@
 {
   GHAssertNotNil(connection, @"connection should not be nil");
 }
+
 - (void)testFetchColumns
 {
   // Test if we fetch correct columns
@@ -37,6 +38,7 @@
                  @"Columns didn't contain: %@", fixture);
   }
 }
+
 - (void)testQuery
 {
   NSString *query = @"SELECT * FROM foo" ;

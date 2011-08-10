@@ -35,6 +35,7 @@
 	
 	return connection;
 }
+
 /*- (ARMySQLConnection *)setUpMySQLFixtures
 {
   NSError *err = nil;
@@ -69,5 +70,4 @@
 	
 	return connection;
 }*/
-
 @end

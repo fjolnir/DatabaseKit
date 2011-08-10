@@ -15,6 +15,7 @@
 {
   inflector = [ARInflector sharedInflector];
 }
+
 - (void)testPluralization
 {
   GHAssertTrue([[inflector pluralizeWord:@"guy"] isEqualToString:@"guys"], @"guy should become guys");
@@ -23,6 +24,7 @@
   GHAssertTrue([[inflector pluralizeWord:@"mother"] isEqualToString:@"mothers"], @"mother should become mothers");
   GHAssertTrue([[inflector pluralizeWord:@"equipment"] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
+
 - (void)testSingularization
 {
   GHAssertTrue([[inflector singularizeWord:@"guys"] isEqualToString:@"guy"], @"guys should become guy");
@@ -40,6 +42,7 @@
   GHAssertTrue([[@"mother" pluralizedString] isEqualToString:@"mothers"], @"mother should become mothers");
   GHAssertTrue([[@"equipment" pluralizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
+
 - (void)testSingularizationWithStringCategory
 {
   GHAssertTrue([[@"guys" singularizedString] isEqualToString:@"guy"], @"guys should become guy");
@@ -53,6 +56,7 @@
 {
 	GHAssertEqualObjects([@"MyCamelizedString" underscoredString], @"my_camelized_string", @"underscore test failed");
 }
+
 - (void)testCamelizing
 {
 	GHAssertEqualObjects([@"my_underscored_string" camelizedString], @"myUnderscoredString", @"camelize test failed");
