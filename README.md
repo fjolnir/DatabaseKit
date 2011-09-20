@@ -4,7 +4,7 @@
 About:
 ======
 ActiveRecord is an insanely easy to use database framework written in objective-c
-It's obviously "inspired" by (copying) the infamous ActiveRecord that comes with Rails(http://rubyonrails.org)
+It's obviously "inspired" by the infamous ActiveRecord that comes with Rails(http://rubyonrails.org)
 But it tries to be more versatile when it comes to working with multiple connections.
 
 ActiveRecord was written by Fjölnir Ásgeirsson and is licensed with the BSD license.
