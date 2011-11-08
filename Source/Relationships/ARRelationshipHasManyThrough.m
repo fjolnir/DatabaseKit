@@ -46,16 +46,21 @@
 }
 
 - (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit
+                    filter:(NSString *)whereSQL 
+                     order:(NSString *)orderSQL
+                     limit:(NSUInteger)limit
 {
 	if(![self respondsToKey:key])
-    return nil;
+		return nil;
 	NSMutableArray *partners = [NSMutableArray array];
+	id currentPartners;
 	for(ARBase *proxy in [self.record retrieveValueForKey:proxyKey])
 	{
-		[partners addObjectsFromArray:[proxy retrieveRecordForKey:self.name filter:whereSQL order:orderSQL limit:limit]];
+		currentPartners = [proxy retrieveRecordForKey:self.name filter:whereSQL order:orderSQL limit:limit];
+		if([currentPartners isKindOfClass:[NSArray class]])
+			[partners addObjectsFromArray:currentPartners];
+		else
+			[partners addObject:currentPartners];
 	}
 	return partners;
 }
@@ -95,7 +100,7 @@
 @end
 
 @implementation ARBase (HasManyThrough)
-- (NSArray *)HasManyThrough
+- (NSArray *)hasManyThrough
 {
   return [self relationshipsOfType:@"ARRelationshipHasManyThrough"];
 }

@@ -48,6 +48,6 @@
 @end
 
 @interface ARBase (HasManyThrough)
-- (NSArray *)HasManyThrough;
+- (NSArray *)hasManyThrough;
 @end
 #endif /* _ARRELATIONSHIPHASMANYTHROUGH_H_ */
