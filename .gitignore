@@ -4,6 +4,7 @@ build/*
 *.mode1v3
 ActiveRecord.xcodeproj/project.xcworkspace/xcuserdata/*
 xcuserdata/*
+DerivedData/*
 
 # old skool
 .svn
