@@ -38,6 +38,8 @@
 #import <ActiveRecord/ARConnection.h>
 #import <sqlite3.h>
 
+@class ARQuery;
+
 typedef enum  {
   ARSQLiteDatabaseNotFoundErrorCode = 0
 } ARSQLiteErrorCode;
@@ -79,6 +81,11 @@ typedef enum  {
  * @endcode
  */
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions;
+
+/*!
+ * Executes a query object
+ */
+- (NSArray *)executeQuery:(ARQuery *)query;
 
 /*!
  * Returns the id of the row last inserted into

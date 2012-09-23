@@ -14,40 +14,40 @@
 
 #pragma mark -
 #pragma mark Creation
-+ (id)find:(ARFindSpecification)idOrSpecification 
++ (id)find:(ARFindSpecification)idOrSpecification
 {
-  return [self find:idOrSpecification
-         connection:[ARBase defaultConnection]];
+    return [self find:idOrSpecification
+           connection:[ARBase defaultConnection]];
 }
 + (id)find:(ARFindSpecification)idOrSpecification connection:(id<ARConnection>)connection
 {
-  return [self find:idOrSpecification
-             filter:nil 
-							 join:nil
-              order:nil
-              limit:0
-         connection:connection];
+    return [self find:idOrSpecification
+               filter:nil
+                 join:nil
+                order:AROrderAscending
+                limit:0
+           connection:connection];
 }
-+ (id)find:(ARFindSpecification)idOrSpecification 
-           filter:(NSString *)whereSQL
-						 join:(NSString *)joinSQL
-						order:(NSString *)orderSQL
-            limit:(NSUInteger)limit
++ (id)find:(ARFindSpecification)idOrSpecification
+    filter:(NSString *)whereSQL
+      join:(NSString *)joinSQL
+     order:(AROrder)order
+     limit:(NSUInteger)limit
 {
 	return [self find:idOrSpecification
-						 filter:whereSQL 
-							 join:joinSQL
-							order:orderSQL
-							limit:limit 
-				 connection:[ARBase defaultConnection]];
+               filter:whereSQL
+                 join:joinSQL
+                order:order
+                limit:limit
+           connection:[ARBase defaultConnection]];
 }
 
 + (id)find:(ARFindSpecification)idOrSpecification
-           filter:(NSString *)whereSQL
-						 join:(NSString *)joinSQL
-            order:(NSString *)orderSQL
-            limit:(NSUInteger)limit
-       connection:(id<ARConnection>)aConnection
+    filter:(NSString *)whereSQL
+      join:(NSString *)joinSQL
+     order:(AROrder)order
+     limit:(NSUInteger)limit
+connection:(id<ARConnection>)aConnection
 {
 	ARBaseArrayInterface *ret = [[self alloc] init];
 	[ret.queryInfo setObject:[NSNumber numberWithInt:idOrSpecification] forKey:@"findSpecification"];
@@ -55,8 +55,8 @@
 		[ret.queryInfo setObject:whereSQL forKey:@"whereSQL"];
 	if(joinSQL)
 		[ret.queryInfo setObject:joinSQL  forKey:@"joinSQL"];
-	if(orderSQL)
-		[ret.queryInfo setObject:orderSQL forKey:@"orderSQL"];
+	if(order)
+		[ret.queryInfo setObject:[NSNumber numberWithInt:order] forKey:@"order"];
 	[ret.queryInfo setObject:[NSNumber numberWithInt:limit] forKey:@"limit"];
 	if(aConnection)
 		[ret.queryInfo setObject:aConnection forKey:@"connection"];
@@ -75,11 +75,11 @@
 #pragma mark -
 + (NSString *)modelName
 {
-  NSMutableString *ret = [[[self className] mutableCopy] autorelease];
+    NSMutableString *ret = [[[self className] mutableCopy] autorelease];
 	[ret replaceOccurrencesOfString:@"ArrayInterface"
-											 withString:@""
-													options:0
-														range:NSMakeRange(0, [ret length])];
+                         withString:@""
+                            options:0
+                              range:NSMakeRange(0, [ret length])];
 	return ret;
 }
 + (Class)modelClass
@@ -93,21 +93,21 @@
 {
 	Class modelClass = [[self class] modelClass];
 	return [modelClass findIds:[[queryInfo objectForKey:@"findSpecification"] intValue]
-											filter:[queryInfo objectForKey:@"whereSQL"]
-												join:[queryInfo objectForKey:@"joinSQL"]
-											 order:[queryInfo objectForKey:@"orderSQL"]
-											 limit:[[queryInfo objectForKey:@"limit"] intValue]
-									connection:[queryInfo objectForKey:@"connection"]];
+                        filter:[queryInfo objectForKey:@"whereSQL"]
+                          join:[queryInfo objectForKey:@"joinSQL"]
+                         order:[[queryInfo objectForKey:@"order"] intValue]
+                         limit:[[queryInfo objectForKey:@"limit"] intValue]
+                    connection:[queryInfo objectForKey:@"connection"]];
 }
 - (NSArray *)allObjects
 {
 	Class modelClass = [[self class] modelClass];
 	return (NSArray *)[modelClass find:[[queryInfo objectForKey:@"findSpecification"] intValue]
-															filter:[queryInfo objectForKey:@"whereSQL"]
-																join:[queryInfo objectForKey:@"joinSQL"]
-															 order:[queryInfo objectForKey:@"orderSQL"]
-															 limit:[[queryInfo objectForKey:@"limit"] intValue]
-													connection:[queryInfo objectForKey:@"connection"]];
+                                filter:[queryInfo objectForKey:@"whereSQL"]
+                                  join:[queryInfo objectForKey:@"joinSQL"]
+                                 order:[[queryInfo objectForKey:@"order"] intValue]
+                                 limit:[[queryInfo objectForKey:@"limit"] intValue]
+                            connection:[queryInfo objectForKey:@"connection"]];
 }
 - (id)objectAtIndex:(NSUInteger)index
 {

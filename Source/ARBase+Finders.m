@@ -8,100 +8,93 @@
 
 #import "ARBase+Finders.h"
 
-
 @implementation ARBase (Finders)
-+ (NSArray *)find:(ARFindSpecification)idOrSpecification 
++ (NSArray *)find:(ARFindSpecification)idOrSpecification
 {
-  return [self find:idOrSpecification
-         connection:[self defaultConnection]];
+    return [self find:idOrSpecification
+           connection:[self defaultConnection]];
 }
 + (NSArray *)find:(ARFindSpecification)idOrSpecification connection:(id<ARConnection>)connection
 {
-  return [self find:idOrSpecification
-             filter:nil 
-							 join:nil
-              order:nil
-              limit:0
-         connection:connection];
+    return [self find:idOrSpecification
+               filter:nil
+                 join:nil
+                order:AROrderAscending
+                limit:0
+           connection:connection];
 }
 
-+ (NSArray *)find:(ARFindSpecification)idOrSpecification 
-           filter:(NSString *)whereSQL 
-						 join:(NSString *)joinSQL
-            order:(NSString *)orderSQL
++ (NSArray *)find:(ARFindSpecification)idOrSpecification
+           filter:(id)filter
+             join:(NSString *)joinSQL
+            order:(AROrder)order
             limit:(NSUInteger)limit
 {
-  return [self find:idOrSpecification
-             filter:whereSQL 
-							 join:joinSQL
-              order:orderSQL
-              limit:limit
-         connection:[self defaultConnection]];
+    return [self find:idOrSpecification
+               filter:filter
+                 join:joinSQL
+                order:order
+                limit:limit
+           connection:[self defaultConnection]];
 }
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
-           filter:(NSString *)whereSQL 
-						 join:(NSString *)joinSQL
-            order:(NSString *)orderSQL 
+           filter:(id)filter
+             join:(NSString *)joinSQL
+            order:(AROrder)order
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection
 {
 	NSArray *ids = [self findIds:idOrSpecification
-												filter:whereSQL 
-													join:joinSQL
-												 order:orderSQL
-												 limit:limit
-										connection:[self defaultConnection]];
-  
-  NSMutableArray *models = [NSMutableArray array];
-  for(NSDictionary *match in ids)
-  {
-    NSUInteger id = [[match objectForKey:@"id"] unsignedIntValue];
-    [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
-  }
-  return models;
+                          filter:filter
+                            join:joinSQL
+                           order:order
+                           limit:limit
+                      connection:[self defaultConnection]];
+
+    NSMutableArray *models = [NSMutableArray array];
+    for(NSDictionary *match in ids)
+    {
+        NSUInteger id = [[match objectForKey:@"id"] unsignedIntValue];
+        [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
+    }
+    return models;
 }
 
 + (NSArray *)findIds:(ARFindSpecification)idOrSpecification
-							filter:(NSString *)whereSQL 
-								join:(NSString *)joinSQL
-							 order:(NSString *)orderSQL 
-							 limit:(NSUInteger)limit
-					connection:(id<ARConnection>)aConnection
+              filter:(id)filter
+                join:(NSString *)joinSQL
+               order:(AROrder)order
+               limit:(NSUInteger)limit
+          connection:(id<ARConnection>)aConnection
 {
-  NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
-	if(joinSQL)
-		[query appendFormat:@" %@", joinSQL];
-	
-  switch(idOrSpecification)
-  {
-    case ARFindFirst:
-			if(limit == 0)
-				[query appendString:@" LIMIT 1"];
-      break;
-    case ARFindAll:
-      break;
-    default:
-      [query appendString:@" WHERE id=:id"];
-      break;
-  }
-  if(idOrSpecification == ARFindFirst || idOrSpecification == ARFindAll)
-  {
-    if(whereSQL != nil)
-      [query appendFormat:@" WHERE %@", whereSQL];
-  }
-  else if(whereSQL != nil)
-      [query appendFormat:@" AND %@", whereSQL];
-  
-  if(orderSQL != nil)
-    [query appendFormat:@" ORDER %@", orderSQL];
-  
-  if(limit > 0)
-    [query appendFormat:@" LIMIT %d", limit];
-  
-  NSArray *matches = [aConnection executeSQL:query
-                               substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
-                                              [NSNumber numberWithInteger:idOrSpecification], @"id", nil]];
-  return matches;
+
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
+//	if(joinSQL)
+//		[query appendFormat:@" %@", joinSQL];
+
+    if(idOrSpecification >= 0) { // It's an actual id
+        [query appendString:@" WHERE id=:id"];
+        [params setObject:[NSNumber numberWithInteger:idOrSpecification] forKey:@"id"];
+    }
+    
+    if([filter isKindOfClass:[NSDictionary class]] || [filter isKindOfClass:[NSMapTable class]]) {
+        [query appendString:idOrSpecification >= 0 ? @" AND" : @" WHERE"];
+        NSDictionary *filterPairs = filter;
+        int i = 0;
+        for(NSString *field in [filterPairs allKeys]) {
+            [query appendFormat:@"%@ %@=:%@", i++ == 0 ? @"" : @" AND", field, field];
+            [params setObject:[filterPairs objectForKey:field] forKey:field];
+        }
+    } else if(filter) {
+        [query appendString:idOrSpecification >= 0 ? @" AND " : @" WHERE "];
+        [query appendString:filter];
+    }
+
+    return [aConnection executeQuery:[ARQuery queryWithString:query
+                                                   parameters:params
+                                                        limit:idOrSpecification == ARFindFirst ? 1 : limit
+                                                        order:order]];
 }
 
 
@@ -109,18 +102,23 @@
 #pragma mark convenience accessors
 + (NSArray *)findAll
 {
-  return [self find:ARFindAll];
+    return [self find:ARFindAll];
 }
 
 + (id)first
 {
-	return [self find:ARFindFirst];
+	return [self first:nil];
 }
+
++ (id)first:(NSString *)filter
+{
+    NSArray *result = [self find:ARFindFirst filter:filter join:nil order:AROrderAscending limit:1];
+    return [result count] > 0 ? [result objectAtIndex:0] : nil;
+}
+
 + (id)last
 {
-	NSArray *ret = [self find:ARFindFirst filter:nil join:nil order:@"id DESC" limit:1];
-	if(ret && [ret count] > 0)
-		return [ret objectAtIndex:0];
-	return nil;
+	NSArray *result = [self find:ARFindFirst filter:nil join:nil order:AROrderDescending limit:1];
+    return [result count] > 0 ? [result objectAtIndex:0] : nil;
 }
 @end

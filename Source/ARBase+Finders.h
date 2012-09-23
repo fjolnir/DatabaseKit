@@ -34,6 +34,7 @@
 #define _ARBASE_FINDERS_H_
 
 #import <ActiveRecord/ARBase.h>
+#import <ActiveRecord/ARQuery.h>
 
 @interface ARBase (Finders)
 // Finders
@@ -53,9 +54,9 @@
  * @param limit The maximum number of records to retrieve
  */
 + (NSArray *)find:(ARFindSpecification)idOrSpecification 
-           filter:(NSString *)whereSQL
-						 join:(NSString *)joinSQL
-          order:(NSString *)orderSQL
+           filter:(id)filter
+             join:(NSString *)joinSQL
+            order:(AROrder)order
             limit:(NSUInteger)limit;
 /*! Finds a record based on the find specification, filter and limit using the specified connection. 
  * @param idOrSpecification The find specification
@@ -65,9 +66,9 @@
  * @param connection The connection to use for the record. (Pass nil to use the default connection)
  */
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
-           filter:(NSString *)whereSQL
-						 join:(NSString *)joinSQL
-            order:(NSString *)orderSQL
+           filter:(id)filter
+             join:(NSString *)joinSQL
+            order:(AROrder)order
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection;
 /*! Finds ids of records matching the find specification, filter and limit using the specified connection.\n
@@ -80,16 +81,18 @@
  * @param connection The connection to use for the record. (Pass nil to use the default connection)
  */
 + (NSArray *)findIds:(ARFindSpecification)idOrSpecification
-							filter:(NSString *)whereSQL 
-								join:(NSString *)joinSQL
-							 order:(NSString *)orderSQL 
-							 limit:(NSUInteger)limit
-					connection:(id<ARConnection>)aConnection;
+              filter:(id)filter
+                join:(NSString *)joinSQL
+               order:(AROrder)order
+               limit:(NSUInteger)limit
+          connection:(id<ARConnection>)aConnection;
 
 /*! Finds all of the model's records */
 + (NSArray *)findAll;
 /*! Finds the first record */
 + (id)first;
+/*! Finds the first record matching filter*/
++ (id)first:(NSString *)filter;
 /*! Finds the last record */
 + (id)last;
 @end

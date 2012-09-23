@@ -58,7 +58,7 @@
 	if(orderSQL)
 		[query appendFormat:@" ORDER BY %@", orderSQL];
 	if(limit > 0)
-		[query appendFormat:@" LIMIT %d", limit];
+		[query appendFormat:@" LIMIT %ld", limit];
 	
   NSArray *ids = [self.record.connection executeSQL:query
 									substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:self.record.databaseId]
@@ -120,6 +120,11 @@
 @end
 
 @implementation ARBase (HasMany)
++ (void)hasMany:(NSString *)child
+{
+    [self.relationships addObject:[ARRelationshipHasMany relationshipWithName:child]];
+}
+
 - (NSArray *)hasMany
 {
   return [self relationshipsOfType:@"ARRelationshipHasMany"];

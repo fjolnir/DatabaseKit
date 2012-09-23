@@ -65,6 +65,10 @@
 @end
 
 @implementation ARBase (HasOne)
++ (void)hasOne:(NSString *)parent
+{
+    [self.relationships addObject:[ARRelationshipHasOne relationshipWithName:parent]];
+}
 - (NSArray *)hasOne
 {
   return [self relationshipsOfType:@"ARRelationshipHasOne"];

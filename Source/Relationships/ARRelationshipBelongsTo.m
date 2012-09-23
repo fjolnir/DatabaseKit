@@ -72,6 +72,10 @@
 @end
 
 @implementation ARBase (BelongsTo)
++ (void)belongsTo:(NSString *)owner
+{
+    [self.relationships addObject:[ARRelationshipBelongsTo relationshipWithName:owner]];
+}
 - (NSArray *)belongsTo
 {
   return [self relationshipsOfType:@"ARRelationshipBelongsTo"];

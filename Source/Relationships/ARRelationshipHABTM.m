@@ -66,7 +66,7 @@
 	if(orderSQL)
 		[idQuery appendFormat:@" ORDER BY %@", orderSQL];
 	if(limit > 0)
-		[idQuery appendFormat:@" LIMIT %d", limit];
+		[idQuery appendFormat:@" LIMIT %ld", limit];
 	
 	NSArray *partnerIds = [self.record.connection executeSQL:idQuery
 												 substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:self.record.databaseId]

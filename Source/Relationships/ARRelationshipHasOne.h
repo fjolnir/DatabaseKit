@@ -57,6 +57,7 @@
 @end
 
 @interface ARBase (HasOne)
++ (void)hasOne:(NSString *)parent;
 - (NSArray *)hasOne;
 @end
 #endif /* _ARRELATIONSHIPHASONE_H_ */

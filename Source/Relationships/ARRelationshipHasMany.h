@@ -57,6 +57,7 @@
 @end
 
 @interface ARBase (HasMany)
++ (void)hasMany:(NSString *)child;
 - (NSArray *)hasMany;
 @end
 #endif /* _ARRELATIONSHIPHASMANY_H_ */

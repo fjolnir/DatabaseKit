@@ -48,6 +48,7 @@
 @end
 
 @interface ARBase (HasManyThrough)
++ (void)hasMany:(NSString *)child through:(NSString *)middleMan;
 - (NSArray *)hasManyThrough;
 @end
 #endif /* _ARRELATIONSHIPHASMANYTHROUGH_H_ */

@@ -25,8 +25,8 @@
 {
 	if(!(self = [super init]))
     return nil;
-  self.name = aName;
-  self.className = aClassName;
+    self.name = aName;
+    self.className = aClassName;
 	self.proxyKey = aProxyKey;
   
   return self;
@@ -100,6 +100,10 @@
 @end
 
 @implementation ARBase (HasManyThrough)
++ (void)hasMany:(NSString *)child through:(NSString *)middleMan
+{
+    [self.relationships addObject:[ARRelationshipHasManyThrough relationshipWithName:child through:middleMan]];
+}
 - (NSArray *)hasManyThrough
 {
   return [self relationshipsOfType:@"ARRelationshipHasManyThrough"];

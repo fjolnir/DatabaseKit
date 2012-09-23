@@ -77,6 +77,8 @@
 		C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
+		C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* ARQuery.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7FAF115160C830F004B16B0 /* ARQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FAF113160C830F004B16B0 /* ARQuery.m */; };
 		F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
@@ -171,6 +173,8 @@
 		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Mac/Unit Tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
+		C7FAF112160C830F004B16B0 /* ARQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARQuery.h; sourceTree = "<group>"; };
+		C7FAF113160C830F004B16B0 /* ARQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARQuery.m; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F81CC1600E608994004CA13A /* ARBaseArrayInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ARBaseArrayInterface.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F81CC1610E608994004CA13A /* ARBaseArrayInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARBaseArrayInterface.m; sourceTree = "<group>"; };
@@ -513,6 +517,8 @@
 				F8DA52EB0E058F10002C3ADB /* ARConnection.h */,
 				F8DA52F00E058F10002C3ADB /* ARSQLiteConnection.h */,
 				F8DA52F10E058F10002C3ADB /* ARSQLiteConnection.m */,
+				C7FAF112160C830F004B16B0 /* ARQuery.h */,
+				C7FAF113160C830F004B16B0 /* ARQuery.m */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -577,6 +583,7 @@
 				F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+Inflections.h in Headers */,
 				F81CC1620E608994004CA13A /* ARBaseArrayInterface.h in Headers */,
+				C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7CAF32113BA1BE700013E21 /* Unit Tests-Prefix.pch in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
@@ -745,6 +752,7 @@
 				F81CC1630E608994004CA13A /* ARBaseArrayInterface.m in Sources */,
 				C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */,
 				C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */,
+				C7FAF115160C830F004B16B0 /* ARQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -883,6 +892,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -983,6 +993,7 @@
 		C7CAF30813BA1A7400013E21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = NO;
@@ -1013,6 +1024,7 @@
 		C7CAF30913BA1A7400013E21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = YES;

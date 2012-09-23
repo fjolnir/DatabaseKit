@@ -37,6 +37,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class ARQuery;
 
 @protocol ARConnection <NSObject>
 /*!
@@ -48,6 +49,8 @@
 
 /*! @copydoc ARSQLiteConnection::executeSQL:substitutions: */
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions;
+/*! @copydoc ARSQLiteConnection::executeQuery: */
+- (NSArray *)executeQuery:(ARQuery *)query;
 /*! @copydoc ARSQLiteConnection::closeConnection */
 - (BOOL)closeConnection;
 /*! @copydoc ARSQLiteConnection::columnsForTable: */

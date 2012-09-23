@@ -44,6 +44,7 @@
 @end
 
 @interface ARBase (BelongsTo)
++ (void)belongsTo:(NSString *)owner;
 - (NSArray *)belongsTo;
 @end
 #endif /* _ARRELATIONSHIPBELONGSTO_H_ */

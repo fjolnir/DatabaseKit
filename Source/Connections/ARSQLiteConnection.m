@@ -9,6 +9,7 @@
 #define LOG_QUERIES NO
 
 #import "ARSQLiteConnection.h"
+#import "ARQuery.h"
 #import <unistd.h>
 
 /*! @cond IGNORE */
@@ -133,6 +134,11 @@
   
   [self finalizeQuery:queryByteCode];
   return rowArray;
+}
+
+- (NSArray *)executeQuery:(ARQuery *)query
+{
+    return [self executeSQL:query.queryString substitutions:query.parameters];
 }
 
 - (NSUInteger)lastInsertId
