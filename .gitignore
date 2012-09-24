@@ -2,7 +2,6 @@
 build/*
 *.pbxuser
 *.mode1v3
-ActiveRecord.xcodeproj/project.xcworkspace/xcuserdata/*
 xcuserdata/*
 DerivedData/*
 
@@ -16,4 +15,6 @@ profile
 iPhone Headers/*
 Unit tests/simpleDatabase.db
 
-ActiveRecord.xcodeproj/xcuserdata/fyolnish.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
+DatabaseKit.xcodeproj/xcuserdata
+*.mode2v3
+DatabaseKit.xcodeproj/project.xcworkspace/xcuserdata
