@@ -56,7 +56,7 @@
 + (NSArray *)find:(ARFindSpecification)idOrSpecification 
            filter:(id)filter
              join:(NSString *)joinSQL
-            order:(AROrder)order
+            order:(NSString *)order
             limit:(NSUInteger)limit;
 /*! Finds a record based on the find specification, filter and limit using the specified connection. 
  * @param idOrSpecification The find specification
@@ -68,7 +68,7 @@
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
            filter:(id)filter
              join:(NSString *)joinSQL
-            order:(AROrder)order
+            order:(NSString *)order
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection;
 /*! Finds ids of records matching the find specification, filter and limit using the specified connection.\n
@@ -83,7 +83,7 @@
 + (NSArray *)findIds:(ARFindSpecification)idOrSpecification
               filter:(id)filter
                 join:(NSString *)joinSQL
-               order:(AROrder)order
+               order:(NSString *)order
                limit:(NSUInteger)limit
           connection:(id<ARConnection>)aConnection;
 

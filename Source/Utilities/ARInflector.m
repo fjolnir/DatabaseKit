@@ -48,19 +48,19 @@ static ARInflector *sharedInstance = nil;
 {
   for(NSDictionary *inflection in self.uncountables)
   {
-    if([[inflection objectForKey:@"pattern"] isEqualToString:[word lowercaseString]])
+    if([inflection[@"pattern"] isEqualToString:[word lowercaseString]])
       return word;
   }
   for(NSDictionary *inflection in self.irregulars)
   {
-    if([[inflection objectForKey:@"pattern"] isEqualToString:[word lowercaseString]])
-      return [inflection objectForKey:@"replacement"];
+    if([inflection[@"pattern"] isEqualToString:[word lowercaseString]])
+      return inflection[@"replacement"];
   }
   NSString *transformed;
   for(NSDictionary *inflection in self.plurals)
   {
-    transformed = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
-                                                 withString:[inflection objectForKey:@"replacement"]];
+    transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
+                                                 withString:inflection[@"replacement"]];
     if(![transformed isEqualToString:word])
       return transformed;
   }
@@ -70,19 +70,19 @@ static ARInflector *sharedInstance = nil;
 {
   for(NSDictionary *inflection in self.uncountables)
   {
-    if([[inflection objectForKey:@"pattern"] isEqualToString:[word lowercaseString]])
+    if([inflection[@"pattern"] isEqualToString:[word lowercaseString]])
       return word;
   }
   for(NSDictionary *inflection in self.irregulars)
   {
-    if([[inflection objectForKey:@"replacement"] isEqualToString:[word lowercaseString]])
-      return [inflection objectForKey:@"pattern"];
+    if([inflection[@"replacement"] isEqualToString:[word lowercaseString]])
+      return inflection[@"pattern"];
   }
   NSString *transformed;
   for(NSDictionary *inflection in self.singulars)
   {
-    transformed = [word stringByReplacingOccurrencesOfRegex:[inflection objectForKey:@"pattern"]
-                                                 withString:[inflection objectForKey:@"replacement"]];
+    transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
+                                                 withString:inflection[@"replacement"]];
     if(![transformed isEqualToString:word])
       return transformed;
   }

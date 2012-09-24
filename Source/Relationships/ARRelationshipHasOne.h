@@ -50,10 +50,7 @@
  * Then that person owns our belgian 
  * @endcode
  */
-@interface ARRelationshipHasOne : ARRelationshipHasMany {
-
-}
-
+@interface ARRelationshipHasOne : ARRelationshipHasMany
 @end
 
 @interface ARBase (HasOne)

@@ -39,6 +39,8 @@
 
 @class ARQuery;
 
+#define ARConnectionErrorDomain @"com.activerecord.connection"
+
 @protocol ARConnection <NSObject>
 /*!
  * Expects a dictionary with connection info, the required keys differ between connections
@@ -48,9 +50,7 @@
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err;
 
 /*! @copydoc ARSQLiteConnection::executeSQL:substitutions: */
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions;
-/*! @copydoc ARSQLiteConnection::executeQuery: */
-- (NSArray *)executeQuery:(ARQuery *)query;
+- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
 /*! @copydoc ARSQLiteConnection::closeConnection */
 - (BOOL)closeConnection;
 /*! @copydoc ARSQLiteConnection::columnsForTable: */

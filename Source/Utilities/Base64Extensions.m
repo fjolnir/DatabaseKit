@@ -144,6 +144,6 @@ static const short _base64DecodingTable[256] = {
 	*objPointer = '\0';
   
 	// Return the results as an NSString object
-	return [NSString stringWithCString:strResult encoding:NSASCIIStringEncoding];
+	return @(strResult);
 }
 @end

@@ -6,7 +6,7 @@
 //  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
-#import "NSString+Inflections.h"
+#import "NSString+ARAdditions.h"
 #import "ARInflector.h"
 #import "RegexKitLite.h"
 
@@ -62,7 +62,7 @@
 - (NSString *)camelizedString
 {
 	NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
-	NSMutableString *ret = [NSMutableString stringWithString:[parts objectAtIndex:0]];
+	NSMutableString *ret = [NSMutableString stringWithString:parts[0]];
 	[parts removeObjectAtIndex:0];
 	for(NSString *part in parts)
 	{
@@ -70,6 +70,11 @@
 	}
 	[parts release];
 	return ret;
+}
+
+- (NSString *)toString
+{
+    return self;
 }
 @end
 /* @endcond */

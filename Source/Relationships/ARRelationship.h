@@ -7,20 +7,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2007, Fjölnir Ásgeirsson
-// 
+//
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without modification, 
+//
+// Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
-// 
+//
 // Redistributions of source code must retain the above copyright notice, this list of conditions
 // and the following disclaimer.
 // Redistributions in binary form must reproduce the above copyright notice, this list of
-// conditions and the following disclaimer in the documentation and/or other materials provided with 
+// conditions and the following disclaimer in the documentation and/or other materials provided with
 // the distribution.
-// Neither the name of Fjölnir Ásgeirsson nor the names of its contributors may be 
+// Neither the name of Fjölnir Ásgeirsson nor the names of its contributors may be
 // used to endorse or promote products derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -45,13 +45,9 @@
  * You will most likely not need to use a relationship directly (except when creating it) since
  * ARBase's retrieval/sending methods handle finding and writing to relationships
  */
-@interface ARRelationship : NSObject {
-  NSString *name;
-  NSString *className;
-  ARBase *record;
-}
-@property(readwrite, retain) NSString *name, *className;
-@property(readwrite, assign) ARBase *record;
+@interface ARRelationship : NSObject <NSCopying>
+@property(readonly, retain) NSString *name, *className;
+@property(readonly, assign) ARBase *record;
 
 /*!
  * Creates a relationship with a given name using the passed class
@@ -62,11 +58,17 @@
 + (id)relationshipWithName:(NSString *)aName className:(NSString *)aClassName;
 /*!
  * Creates a relationship with a given name.
- * @param aName The name of the relationship,
+ * @param aName The name of the relationship.
  */
 + (id)relationshipWithName:(NSString *)aName;
 /*! @copydoc relationshipWithName: */
-- (id)initWithName:(NSString *)aName className:(NSString *)aClassName;
+- (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(ARBase *)aRecord;
+
+/*!
+ * Creates a copy of the object with record set to the passed record.
+ * @param record The record to use.
+ */
+- (id)copyUsingRecord:(ARBase *)record;
 
 /*!
  * Returns wether the relationship supports the passed key and wether it supports adding/removing for it
@@ -74,22 +76,22 @@
  */
 - (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet;
 /*!
- * Returns wether the relationship supports the passed key 
+ * Returns wether the relationship supports the passed key
  */
 - (BOOL)respondsToKey:(NSString *)key;
 /*! Retrieves a record for a given key */
 - (id)retrieveRecordForKey:(NSString *)key;
-/*! 
- * Retrieves a record for a given key by applying the passed filters 
+/*!
+ * Retrieves a record for a given key by applying the passed filters
  * @param key A valid key, can refer to either a column or a relationship
  * @param whereSQL A valid SQL WHERE statement (omitting the actual "WHERE")
  * @param orderSQL A valud SQL ORDER statement (omitting the actual "ORDER BY")
  * @param limit The maximum number of records to retrieve
  */
-- (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit;																								 
+- (id)retrieveRecordForKey:(NSString *)key
+                    filter:(NSString *)whereSQL
+                     order:(NSString *)orderSQL
+                     limit:(NSUInteger)limit;
 - (void)sendRecord:(id)record forKey:(NSString *)key;
 - (void)addRecord:(id)record forKey:(NSString *)key;
 - (void)removeRecord:(id)record forKey:(NSString *)key;

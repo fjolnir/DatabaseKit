@@ -42,7 +42,7 @@
 - (void)testQuery
 {
   NSString *query = @"SELECT * FROM foo" ;
-  NSArray *result = [connection executeSQL:query substitutions:nil];
+    NSArray *result = [connection executeSQL:query substitutions:nil error:nil];
   GHAssertTrue([result count] == 2, @"foo should have 2 rows");
   NSArray *columns = [[result objectAtIndex:0] allKeys];
   NSArray *expectedColumns = [NSArray arrayWithObjects:@"id", @"bar", @"baz", @"integer", nil];
@@ -59,9 +59,9 @@
   
   GHAssertNil(err, @"An error occured while creating the database (%@)", err);
   
-  [inMemoryDb executeSQL:@"CREATE TABLE test(\"id\" INTEGER PRIMARY KEY NOT NULL, \"aString\" varchar(255))" substitutions:nil];
-  [inMemoryDb executeSQL:@"INSERT INTO test(aString) VALUES('foobar')" substitutions:nil];
-  NSArray *fetch = [inMemoryDb executeSQL:@"SELECT * FROM test" substitutions:nil];
+    [inMemoryDb executeSQL:@"CREATE TABLE test(\"id\" INTEGER PRIMARY KEY NOT NULL, \"aString\" varchar(255))" substitutions:nil error:nil];
+    [inMemoryDb executeSQL:@"INSERT INTO test(aString) VALUES('foobar')" substitutions:nil error:nil];
+    NSArray *fetch = [inMemoryDb executeSQL:@"SELECT * FROM test" substitutions:nil error:nil];
   GHAssertEquals([fetch count], (NSUInteger)1, @"Row count should be 1");
   
   NSDictionary *row = [fetch objectAtIndex:0];

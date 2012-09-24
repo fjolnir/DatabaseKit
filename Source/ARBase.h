@@ -5,20 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2007, Fjölnir Ásgeirsson
-// 
+//
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without modification, 
+//
+// Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
-// 
+//
 // Redistributions of source code must retain the above copyright notice, this list of conditions
 // and the following disclaimer.
 // Redistributions in binary form must reproduce the above copyright notice, this list of
-// conditions and the following disclaimer in the documentation and/or other materials provided with 
+// conditions and the following disclaimer in the documentation and/or other materials provided with
 // the distribution.
-// Neither the name of Fjölnir Ásgeirsson nor the names of its contributors may be 
+// Neither the name of Fjölnir Ásgeirsson nor the names of its contributors may be
 // used to endorse or promote products derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -31,62 +31,60 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef _ARBASE_H_ 
-
-
-#define _ARBASE_H_ 
-
-
+#ifndef _ARBASE_H_
+#define _ARBASE_H_
 
 #import <Foundation/Foundation.h>
 #import <ActiveRecord/ARConnection.h>
 
-/*! 
+/*!
  * @enum ARFindSpecification
  * Defines what to find with -find
  * Example: [model find:ARFindFirst filter:@""];
  */
 typedef enum {
-  ARFindFirst = -1,
-  ARFindAll   = -2
+    ARFindFirst = -1,
+    ARFindAll   = -2
 } ARFindSpecification;
 
-/*! 
+/*!
  * @enum ARNamingStyle
  * Indicates how ActiveRecord will name it's tables
- * ObjC style: manyModels
+ * ObjC style:  manyModels
  * Rails style: many_models
  */
 typedef enum {
-  ARObjCNamingStyle  = 1,
-  ARRailsNamingStyle = 2
+    ARObjCNamingStyle  = 1,
+    ARRailsNamingStyle = 2
 } ARNamingStyle;
 
+@class ARTable;
+
 /*!
- * The base class for the ActiveRecord implementation\n
+ * The abstract base class for the ActiveRecord implementation\n
  * All models are subclasses of ARBase\n
  * \n
  * To use ARBase, subclass it with a class named <prefix>ModelName
  * set the prefix you'll use in +load (along with the default connection if you want one)\n
  * ARBase will then determine the table name (<prefix>ModelName -> modelname)\n
- * \n
- * <b>Do not</b> use ARBase directly. Hic sunt dracones
  */
- @interface ARBase : NSObject {
-  id<ARConnection> connection; 
-  NSUInteger databaseId;
-  NSMutableArray *relationships;
-	NSMutableDictionary *readCache;
-	NSMutableDictionary *writeCache;
-	NSMutableArray *addCache;
-	NSMutableArray *removeCache;
-	NSArray *columnCache;
+@interface ARBase : NSObject {
+    id<ARConnection> _connection;
+    ARTable *_table;
+    NSUInteger _databaseId;
+    NSMutableArray *_relationships;
+	NSMutableDictionary *_readCache;
+	NSMutableDictionary *_writeCache;
+	NSMutableArray *_addCache;
+	NSMutableArray *_removeCache;
+	NSArray *_columnCache;
 }
 @property(readwrite, retain) id<ARConnection> connection;
+@property(readonly, retain) ARTable *table;
 @property(readwrite, retain) NSMutableArray *relationships;
 @property(readwrite) NSUInteger databaseId;
 
-/*! Creates a new record and saves it in the database 
+/*! Creates a new record and saves it in the database
  * @param attributes A dictionary of keys/values to initialize the record with
  * @param connection The connection to use for the record. (Pass nil to use the default connection)
  */
@@ -167,19 +165,19 @@ typedef enum {
  * @param key A valid key, can refer to either a column or a relationship
  * @param value The value to set, can be any object recognized by active record
  */- (void)setObject:(id)obj forKey:(NSString *)key;
-/*! 
+/*!
  * Retrieves a value from the database\n
  * If caching is enabled the method will check if the value for the specified key has been cached,
  * if it has, then the cached value is returned otherwise it will be fetched from the database
  * @param key A valid key, can refer to either a column or a relationship
  */
 - (id)retrieveValueForKey:(NSString *)key;
-/*! 
+/*!
  * Retrieves a value from the database\n
  * Same as retrieveValueForKey:
  * @param key A valid key, can refer to either a column or a relationship
  */- (id)valueForKey:(NSString *)key;
-/*! 
+/*!
  * Retrieves a value from the database\n
  * Caching has not been implemented for this method.
  * @param key A valid key, can refer to either a column or a relationship
@@ -187,10 +185,10 @@ typedef enum {
  * @param orderSQL A valud SQL ORDER statement (omitting the actual "ORDER BY")
  * @param limit The maximum number of records to retrieve
  */
-- (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit;
+- (id)retrieveRecordForKey:(NSString *)key
+                    filter:(NSString *)whereSQL
+                     order:(NSString *)orderSQL
+                     limit:(NSUInteger)limit;
 
 // Transactions
 /*! Begins a database transaction */

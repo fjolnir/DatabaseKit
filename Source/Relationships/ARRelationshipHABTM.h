@@ -37,10 +37,7 @@
 #import <ActiveRecord/ARBase.h>
 #import <ActiveRecord/ARRelationship.h>
 
-@interface ARRelationshipHABTM : ARRelationship {
-
-}
-
+@interface ARRelationshipHABTM : ARRelationship
 @end
 
 @interface ARBase (HABTM)

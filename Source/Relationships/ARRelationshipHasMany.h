@@ -50,10 +50,7 @@
  * Then that person owns all belgians with personId set to 15
  * @endcode
  */
-@interface ARRelationshipHasMany : ARRelationship {
-
-}
-
+@interface ARRelationshipHasMany : ARRelationship
 @end
 
 @interface ARBase (HasMany)

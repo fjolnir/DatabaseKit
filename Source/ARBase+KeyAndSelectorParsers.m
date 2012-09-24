@@ -11,7 +11,7 @@
 //  or keys and return what relationships they represent)
 #import "ARBase.h"
 #import "ARBasePrivate.h"
-#import "NSString+Inflections.h"
+#import "NSString+ARAdditions.h"
 #import "ARRelationship.h"
 
 @implementation ARBase (KeyAndSelectorParsers)

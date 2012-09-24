@@ -35,7 +35,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (Inflections)
+@interface NSString (ARAdditions)
 /*! Returns a singularized form of the string */
 - (NSString *)pluralizedString;
 /*! Returns a pluralized form of the string */
@@ -50,5 +50,8 @@
 - (NSString *)underscoredString;
 /*! Converts an underscored string to a cameilzed one a_string -> aString */
 - (NSString *)camelizedString;
+
+/*! Just returns self */
+- (NSString *)toString;
 @end
 #endif /* _NSSTRING+INFLECTIONS_H_ */

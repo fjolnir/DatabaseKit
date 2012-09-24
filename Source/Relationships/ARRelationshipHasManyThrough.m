@@ -7,11 +7,15 @@
 //
 
 #import "ARRelationshipHasManyThrough.h"
-#import "NSString+Inflections.h"
+#import "NSString+ARAdditions.h"
 #import "ARBasePrivate.h"
 
+@interface ARRelationshipHasManyThrough ()
+@property(readwrite, retain) NSString *proxyKey;
+@end
+
 @implementation ARRelationshipHasManyThrough
-@synthesize proxyKey;
+
 + (id)relationshipWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey
 {
 	ARRelationshipHasManyThrough *ret = [[self alloc] initWithName:aName className:aClassName through:aProxyKey];
@@ -23,19 +27,18 @@
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey
 {
-	if(!(self = [super init]))
-    return nil;
-    self.name = aName;
-    self.className = aClassName;
-	self.proxyKey = aProxyKey;
-  
-  return self;
+	if(!(self = [super initWithName:aName className:aClassName record:nil]))
+        return nil;
+
+	self.proxyKey  = aProxyKey;
+
+    return self;
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName
 {
 	[NSException raise:@"ARBase error" format:@"You must create a has many through relationship using relationshipWithName:className:through:"];
 	return nil;
-}	
+}
 
 - (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
 {
@@ -45,8 +48,8 @@
 	return ret;
 }
 
-- (id)retrieveRecordForKey:(NSString *)key 
-                    filter:(NSString *)whereSQL 
+- (id)retrieveRecordForKey:(NSString *)key
+                    filter:(NSString *)whereSQL
                      order:(NSString *)orderSQL
                      limit:(NSUInteger)limit
 {
@@ -54,7 +57,7 @@
 		return nil;
 	NSMutableArray *partners = [NSMutableArray array];
 	id currentPartners;
-	for(ARBase *proxy in [self.record retrieveValueForKey:proxyKey])
+	for(ARBase *proxy in [self.record retrieveValueForKey:_proxyKey])
 	{
 		currentPartners = [proxy retrieveRecordForKey:self.name filter:whereSQL order:orderSQL limit:limit];
 		if([currentPartners isKindOfClass:[NSArray class]])
@@ -66,15 +69,15 @@
 }
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key
 {
-  if(![self respondsToKey:key])
-    return;
+    if(![self respondsToKey:key])
+        return;
 	[NSException raise:@"Writing not supported" format:@"has many through relationships don't support writing"];
 }
 - (void)addRecord:(id)aRecord forKey:(NSString *)key
 {
-  BOOL supportsAdding;
-  if(![self respondsToKey:key supportsAdding:&supportsAdding] || !supportsAdding)
-    return;
+    BOOL supportsAdding;
+    if(![self respondsToKey:key supportsAdding:&supportsAdding] || !supportsAdding)
+        return;
 	[NSException raise:@"Writing not supported" format:@"has many through relationships don't support writing"];
 
 }
@@ -87,15 +90,15 @@
 #pragma mark Copying
 - (id)copyWithZone:(NSZone *)zone
 {
-  ARRelationship *ret = [[[self class] allocWithZone:zone] initWithName:self.name className:self.className through:self.proxyKey];
-  ret.record = self.record;
-  return ret; 
+    ARRelationshipHasManyThrough *ret = [super copyWithZone:zone];
+    ret.proxyKey = _proxyKey;
+    return ret;
 }
 #pragma mark -
 #pragma mark Cosmetics
 - (NSString *)description
 {
-  return [NSString stringWithFormat:@"{ %@ Name: %@ through: %@ }", [super description], self.name, self.proxyKey];
+    return [NSString stringWithFormat:@"{ %@ Name: %@ through: %@ }", [super description], self.name, self.proxyKey];
 }
 @end
 
@@ -106,6 +109,6 @@
 }
 - (NSArray *)hasManyThrough
 {
-  return [self relationshipsOfType:@"ARRelationshipHasManyThrough"];
+    return [self relationshipsOfType:@"ARRelationshipHasManyThrough"];
 }
 @end

@@ -7,9 +7,9 @@
 //
 
 #import <ActiveRecord/ARRelationshipHasOne.h>
-//#import "ARRelationshipHasOne.h"
+#import "ARRelationshipHasOne.h"
 #import "ARBasePrivate.h"
-#import "NSString+Inflections.h"
+#import "NSString+ARAdditions.h"
 
 @implementation ARRelationshipHasOne
 #pragma mark Key parser
@@ -36,7 +36,7 @@
   if(!array || [array count] <= 0)
     return nil;
   // Else
-  return [array objectAtIndex:0];
+  return array[0];
 }
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key
 {
@@ -44,12 +44,12 @@
     return;
   id oldPartner = [self retrieveRecordForKey:key];
   if(oldPartner != nil)
-    [oldPartner sendValue:[NSNumber numberWithInt:0]
+    [oldPartner sendValue:@0
                    forKey:[[self.record class] idColumn]];
 	
 	if(!aRecord)
 		return;
-  [aRecord sendValue:[NSNumber numberWithUnsignedInt:self.record.databaseId]
+  [aRecord sendValue:@(self.record.databaseId)
               forKey:[[self.record class] idColumn]];
 }
 
@@ -57,10 +57,10 @@
 #pragma mark -
 - (NSString *)className
 {
-  if(!className)
+  if(![super className])
     return [NSString stringWithFormat:@"%@%@", [ARBase classPrefix], [self.name stringByCapitalizingFirstLetter]];
   else
-    return className;
+    return [super className];
 }
 @end
 

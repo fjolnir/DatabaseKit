@@ -8,7 +8,7 @@
 
 #import "ARInflectorTest.h"
 #import <ActiveRecord/ARInflector.h>
-#import <ActiveRecord/NSString+Inflections.h>
+#import <ActiveRecord/NSString+ARAdditions.h>
 
 @implementation ARInflectorTest
 - (void)setUp

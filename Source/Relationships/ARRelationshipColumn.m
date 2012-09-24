@@ -1,13 +1,7 @@
-//
-//  ARRelationshipColumn.m
-//  ActiveRecord
-//
-//  Created by Fjölnir Ásgeirsson on 9/12/07.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import "ARRelationshipColumn.h"
 #import "ARBasePrivate.h"
+#import "ARTable.h"
+#import "ARQuery.h"
 
 @implementation ARRelationshipColumn
 #pragma mark Key parser
@@ -25,21 +19,18 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE id = :id", key, [[self.record class] tableName]];
-    NSArray *result = [self.record.connection executeSQL:query 
-                                           substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                          [NSNumber numberWithInt:self.record.databaseId], @"id", nil]];
-    if([result count] < 1)
+    ARQuery *query = [[self.record.table select:key] where:@{ @"id": @(self.record.databaseId) }];
+    if([query count] < 1)
     {
-        ARDebugLog(@"Couldn't get result: %@", result);
+        ARDebugLog(@"Couldn't get result: %@", query);
         return nil;
     }
-    return [[result objectAtIndex:0] objectForKey:key];
+    return query[0][key];
 }
-- (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit
+- (id)retrieveRecordForKey:(NSString *)key
+                    filter:(NSString *)whereSQL
+                     order:(NSString *)orderSQL
+                     limit:(NSUInteger)limit
 {
 	return [self retrieveRecordForKey:key];
 }
@@ -47,10 +38,7 @@
 {
     if(![self respondsToKey:key])
         return;
-    NSString *query = [NSString stringWithFormat:@"UPDATE %@ SET %@=:value WHERE id = :id", [[self.record class] tableName], key];
-    [self.record.connection executeSQL:query
-                         substitutions:[NSDictionary dictionaryWithObjectsAndKeys:aRecord, @"value",
-                                        [NSNumber numberWithInt:self.record.databaseId], @"id", nil]];
+    [[[self.record.table update:@{ key: aRecord }] where:@{ @"id": @(self.record.databaseId) }] execute];
 }
 
 @end

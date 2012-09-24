@@ -80,12 +80,7 @@ typedef enum  {
  *                           name, @"name"]];
  * @endcode
  */
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions;
-
-/*!
- * Executes a query object
- */
-- (NSArray *)executeQuery:(ARQuery *)query;
+- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
 
 /*!
  * Returns the id of the row last inserted into

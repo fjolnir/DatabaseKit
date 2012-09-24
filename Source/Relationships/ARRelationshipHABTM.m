@@ -9,7 +9,7 @@
 #import "ARRelationshipHABTM.h"
 #import "ARBase.h"
 #import "ARBasePrivate.h"
-#import "NSString+Inflections.h"
+#import "NSString+ARAdditions.h"
 
 @implementation ARRelationshipHABTM
 - (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
@@ -69,14 +69,13 @@
 		[idQuery appendFormat:@" LIMIT %ld", limit];
 	
 	NSArray *partnerIds = [self.record.connection executeSQL:idQuery
-												 substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:self.record.databaseId]
-																																	 forKey:@"our_id"]];
+												 substitutions:@{@"our_id": @(self.record.databaseId) } error:nil];
 	id partnerRecord;
 	NSNumber *anId;
 	NSMutableArray *partners = [NSMutableArray array];
 	for(NSDictionary *dict in partnerIds)
 	{
-		anId = [dict objectForKey:[[self.record class] idColumnForModel:partnerClass]];
+		anId = dict[[[self.record class] idColumnForModel:partnerClass]];
 		partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection 
 																													id:[anId unsignedIntValue]];
 		[partners addObject:[partnerRecord autorelease]];
@@ -90,12 +89,12 @@
         return;
 
     // aRecord is an array
-    Class partnerClass = [[aRecord objectAtIndex:0] class];
+    Class partnerClass = [aRecord[0] class];
     NSString *joinTableName = [[self class] joinTableNameForModel:[self.record class] and:partnerClass];
     // First empty out the join table
     [self.record.connection executeSQL:[NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=:our_id", joinTableName, [[self.record class] idColumn]]
-                         substitutions:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:self.record.databaseId]
-                                                                   forKey:@"our_id"]];
+                         substitutions:@{@"our_id": @(self.record.databaseId)}
+                                 error:nil];
 		if(!aRecord)
 			return;
     // Then populate it
@@ -103,8 +102,9 @@
     {
         [self.record.connection executeSQL:[NSString stringWithFormat:@"INSERT INTO %@(%@, %@) VALUES(:our_id, :their_id)",
                                            joinTableName, [[self class] idColumn], [[partner class] idColumn]]
-                            substitutions:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:self.record.databaseId], @"our_id",
-                                           [NSNumber numberWithUnsignedInt:partner.databaseId], @"their_id", nil]];
+                            substitutions:@{@"our_id": @(self.record.databaseId),
+                                           @"their_id": [NSNumber numberWithUnsignedInt:partner.databaseId]}
+                                     error:nil];
     }
     
 }
@@ -126,8 +126,8 @@
 										 [[self.record class] joinTableNameForModel:[self.record class] and:[aRecord class]],
 										 [[self.record class] idColumn], [[aRecord class] idColumn]];
 	[self.record.connection executeSQL:query
-													 substitutions:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:[self.record databaseId]],
-																					@"our_id", [NSNumber numberWithUnsignedInt:[aRecord databaseId]], @"their_id", nil]];
+                         substitutions:@{@"our_id": @(self.record.databaseId), @"their_id": @([aRecord databaseId])}
+                                 error:nil];
 }
 
 - (void)removeRecord:(id)aRecord forKey:(NSString *)key
@@ -140,18 +140,19 @@
                        [[self.record.connection class] joinTableNameForModel:[self.record.connection class] and:[aRecord class]],
                        [[self.record.connection class] idColumn], [[aRecord class] idColumn]];
     [self.record.connection executeSQL:query
-                             substitutions:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:[self.record databaseId]], @"our_id",
-                                            [NSNumber numberWithUnsignedInt:[aRecord databaseId]], @"their_id", nil]];
+                             substitutions:@{@"our_id": @(self.record.databaseId),
+                                            @"their_id": @([aRecord databaseId])}
+                                 error:nil];
 }
 
 #pragma mark Accessors
 #pragma mark -
 - (NSString *)className
 {
-    if(!className)
+    if(!self.className)
         return [NSString stringWithFormat:@"%@%@", [ARBase classPrefix], [[self.name singularizedString] stringByCapitalizingFirstLetter]];
     else
-        return className;
+        return self.className;
 }
 @end
 

@@ -23,12 +23,10 @@
 																		  error:&err];
 	for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
 	{
-		@try {
-			[connection executeSQL:query substitutions:nil];
-		}
-		@catch (NSException * e) {
-			NSLog(@"FIXTUREFAIL!(%@): %@", query,e);
-		}
+        NSError *err = nil;
+        [connection executeSQL:query substitutions:nil error:&err];
+		if(err)
+			NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
 	}
 	// See if it works
   [ARBase setDefaultConnection:connection];

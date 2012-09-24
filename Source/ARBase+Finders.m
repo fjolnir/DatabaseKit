@@ -7,6 +7,8 @@
 //
 
 #import "ARBase+Finders.h"
+#import "ARTable.h"
+#import "ARQuery.h"
 
 @implementation ARBase (Finders)
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
@@ -27,7 +29,7 @@
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
            filter:(id)filter
              join:(NSString *)joinSQL
-            order:(AROrder)order
+            order:(NSString *)order
             limit:(NSUInteger)limit
 {
     return [self find:idOrSpecification
@@ -40,7 +42,7 @@
 + (NSArray *)find:(ARFindSpecification)idOrSpecification
            filter:(id)filter
              join:(NSString *)joinSQL
-            order:(AROrder)order
+            order:(NSString *)order
             limit:(NSUInteger)limit
        connection:(id<ARConnection>)aConnection
 {
@@ -54,7 +56,7 @@
     NSMutableArray *models = [NSMutableArray array];
     for(NSDictionary *match in ids)
     {
-        NSUInteger id = [[match objectForKey:@"id"] unsignedIntValue];
+        NSUInteger id = [match[@"id"] unsignedIntValue];
         [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
     }
     return models;
@@ -63,11 +65,19 @@
 + (NSArray *)findIds:(ARFindSpecification)idOrSpecification
               filter:(id)filter
                 join:(NSString *)joinSQL
-               order:(AROrder)order
+               order:(NSString *)order
                limit:(NSUInteger)limit
           connection:(id<ARConnection>)aConnection
 {
+    ARTable *table = [ARTable withConnection:aConnection name:[self tableName]];
+    ARQuery *q = [[table select:@"id"] limit:@(limit)];
+    if(idOrSpecification >= 0)
+        q = [q where:@{ @"id": @(idOrSpecification) }];
+    if(filter)
+        [q appendWhere:filter];
+    return [q execute];
 
+#if 0
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
 //	if(joinSQL)
@@ -95,6 +105,7 @@
                                                    parameters:params
                                                         limit:idOrSpecification == ARFindFirst ? 1 : limit
                                                         order:order]];
+#endif
 }
 
 
@@ -113,12 +124,12 @@
 + (id)first:(NSString *)filter
 {
     NSArray *result = [self find:ARFindFirst filter:filter join:nil order:AROrderAscending limit:1];
-    return [result count] > 0 ? [result objectAtIndex:0] : nil;
+    return [result count] > 0 ? result[0] : nil;
 }
 
 + (id)last
 {
 	NSArray *result = [self find:ARFindFirst filter:nil join:nil order:AROrderDescending limit:1];
-    return [result count] > 0 ? [result objectAtIndex:0] : nil;
+    return [result count] > 0 ? result[0] : nil;
 }
 @end

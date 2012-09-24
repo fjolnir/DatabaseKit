@@ -14,7 +14,7 @@
 
 /*! @cond IGNORE */
 @interface ARSQLiteConnection ()
-- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query;
+- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
 - (void)finalizeQuery:(sqlite3_stmt *)query;
 - (NSArray *)columnsForQuery:(sqlite3_stmt *)query;
 - (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query;
@@ -32,15 +32,14 @@
 }
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err
 {
-  NSString *path = [info objectForKey:@"path"] ? [info objectForKey:@"path"] : @"";
+  NSString *path = info[@"path"] ? info[@"path"] : @"";
   if(![path isEqualToString:@":memory:"] && ![[NSFileManager defaultManager] fileExistsAtPath:path])
   {
     if(err != NULL) {
       *err = [NSError errorWithDomain:@"database.sqlite.filenotfound" 
                                  code:ARSQLiteDatabaseNotFoundErrorCode 
-                             userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                       NSLocalizedString(@"SQLite database not found", @""), NSLocalizedDescriptionKey,
-                                       path, NSFilePathErrorKey, nil]];
+                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"SQLite database not found", @""),
+                                       NSFilePathErrorKey: path}];
     }
     return nil;
   }
@@ -53,9 +52,8 @@
     if(err != NULL) {
       *err = [NSError errorWithDomain:@"database.sqlite.openerror" 
                                  code:ARSQLiteDatabaseNotFoundErrorCode 
-                             userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSString stringWithUTF8String:errStr], NSLocalizedDescriptionKey,
-                                     path, NSFilePathErrorKey, nil]];
+                             userInfo:@{NSLocalizedDescriptionKey: @(errStr),
+                                     NSFilePathErrorKey: path}];
     }
     return nil;
   }
@@ -65,38 +63,51 @@
 }
 
 + (ARSQLiteConnection *)openConnectionToInMemoryDatabase:(NSError **)err {
-  return [self openConnectionWithInfo:[NSDictionary dictionaryWithObject:@":memory:" forKey:@"path"] error:err];
+  return [self openConnectionWithInfo:@{@"path": @":memory:"} error:err];
 }
 
 
 #pragma mark -
 #pragma mark SQL Eecuting
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(NSDictionary *)substitutions
+- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
+    BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
+                  [substitutions isKindOfClass:[NSMapTable class]];
+    NSParameterAssert(!substitutions                                       ||
+                      [substitutions isKindOfClass:[NSArray class]]        ||
+                      [substitutions isKindOfClass:[NSPointerArray class]] ||
+                      isDict);
 	//ARDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   // Prepare the query
   sqlite3_stmt *queryByteCode;
-  queryByteCode = [self prepareQuerySQL:sql];
+    queryByteCode = [self prepareQuerySQL:sql error:outErr];
+    if(!queryByteCode)
+        return nil;
 	NSArray *columnNames = [self columnsForQuery:queryByteCode];
 
-	for(int i = 1; i <= sqlite3_bind_parameter_count(queryByteCode); ++i)
+    const char *keyCstring;
+    NSString *key;
+    id sub;
+	for(int i = 0; i < sqlite3_bind_parameter_count(queryByteCode); ++i)
 	{
-		const char *keyCstring = sqlite3_bind_parameter_name(queryByteCode, i);
-		if(!keyCstring)
-			continue;
-		
-	  NSString *key = [[NSString stringWithUTF8String:keyCstring] stringByReplacingOccurrencesOfString:@":" withString:@""];
-		id sub = [substitutions objectForKey:key];
+        if(isDict) {
+            keyCstring = sqlite3_bind_parameter_name(queryByteCode, i);
+            if(!keyCstring)
+                continue;
+            key = [@(keyCstring) stringByReplacingOccurrencesOfString:@":" withString:@""];
+            sub = substitutions[key];
+        } else
+            sub = substitutions[i];
 		if(!sub)
 			continue;
 		if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
-			sqlite3_bind_text(queryByteCode, i, [sub UTF8String], -1, SQLITE_TRANSIENT);
+			sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
 		else if([sub isMemberOfClass:[NSData class]])
-			sqlite3_bind_blob(queryByteCode, i, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
+			sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
 		else if([sub isKindOfClass:[NSNumber class]])
-			sqlite3_bind_double(queryByteCode, i, [sub doubleValue]);
+			sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
 		else if([sub isMemberOfClass:[NSNull class]])
-			sqlite3_bind_null(queryByteCode, i);
+			sqlite3_bind_null(queryByteCode, i+1);
 		else
 			[NSException raise:@"Unrecognized object type" format:@"Active record doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
 	}
@@ -113,9 +124,12 @@
     }
     else if(err == SQLITE_ERROR || err == SQLITE_MISUSE)
     {
-      [NSException raise:@"SQLite error"
-                  format:@"Query: %@ Details: %@", sql, [NSString stringWithUTF8String:sqlite3_errmsg(database)]];
-      break;
+        if(outErr)
+            *outErr = [NSError errorWithDomain:ARConnectionErrorDomain
+                                          code:0
+                                      userInfo:@{ NSLocalizedDescriptionKey: @(sqlite3_errmsg(database)),
+                                                                   @"query": sql }];
+        return nil;
     }
     else if(err == SQLITE_ROW)
     {
@@ -124,8 +138,7 @@
       int i = 0;
       for (NSString *columnName in columnNames)
       {
-        [columns setObject:[self valueForColumn:i query:queryByteCode]
-                    forKey:columnName];
+        columns[columnName] = [self valueForColumn:i query:queryByteCode];
         ++i;
       }
       [rowArray addObject:columns];
@@ -136,11 +149,6 @@
   return rowArray;
 }
 
-- (NSArray *)executeQuery:(ARQuery *)query
-{
-    return [self executeSQL:query.queryString substitutions:query.parameters];
-}
-
 - (NSUInteger)lastInsertId
 {
   return (NSUInteger)sqlite3_last_insert_rowid(database);
@@ -148,7 +156,9 @@
 
 - (NSArray *)columnsForTable:(NSString *)tableName
 {
-  sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@", tableName]];
+  sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@", tableName] error:nil];
+    if(!queryByteCode)
+        return nil;
   NSArray *columns = [self columnsForQuery:queryByteCode];
   [self finalizeQuery:queryByteCode];
   return columns;
@@ -171,11 +181,11 @@
   {
     const char *name;
     name = sqlite3_column_name(query, i);
-    [columnNames addObject:[NSString stringWithUTF8String:name]];
+    [columnNames addObject:@(name)];
   }
   return columnNames;
 }
-- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
+- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outErr
 {
   if(LOG_QUERIES)
     ARDebugLog(@"Preparing query: %@", query);
@@ -189,9 +199,11 @@
                             &tail);
   if(err != SQLITE_OK || queryByteCode == NULL)
   {
-    [NSException raise:@"SQLite error" 
-                format:@"Couldn't compile the query(%@), Details: %@", query, [NSString stringWithUTF8String:sqlite3_errmsg(database)]];
-    
+      if(outErr)
+          *outErr = [NSError errorWithDomain:ARConnectionErrorDomain
+                                        code:0
+                                    userInfo:@{ NSLocalizedDescriptionKey: @(sqlite3_errmsg(database)),
+                                                                 @"query": query }];
     return nil;
   }
   
@@ -209,10 +221,10 @@
   switch(columnType)
   {
     case SQLITE_INTEGER:
-      return [NSNumber numberWithInt:sqlite3_column_int(query, colIndex)];
+      return @(sqlite3_column_int(query, colIndex));
       break;
     case SQLITE_FLOAT:
-      return [NSNumber numberWithDouble:sqlite3_column_double(query, colIndex)];
+      return @(sqlite3_column_double(query, colIndex));
       break;
     case SQLITE_BLOB:
       return [NSData dataWithBytes:sqlite3_column_blob(query, colIndex)
@@ -222,7 +234,7 @@
       return [NSNull null];
       break;
     case SQLITE_TEXT:
-      return [NSString stringWithUTF8String:(const char *)sqlite3_column_text(query, colIndex)];
+      return @((const char *)sqlite3_column_text(query, colIndex));
       break;
     default:
       // It really shouldn't ever come to this.
@@ -240,7 +252,7 @@
   if(err != SQLITE_OK)
   {
     [NSException raise:@"SQLite error" 
-                format:@"Couldn't start transaction, Details: %@", [NSString stringWithUTF8String:errorMessage]];
+                format:@"Couldn't start transaction, Details: %@", @(errorMessage)];
     return NO;
   }
   return YES;
@@ -252,7 +264,7 @@
   if(err != SQLITE_OK)
   {
     [NSException raise:@"SQLite error" 
-                format:@"Couldn't end transaction, Details: %@", [NSString stringWithUTF8String:errorMessage]];
+                format:@"Couldn't end transaction, Details: %@", @(errorMessage)];
     return NO;
   }
   return YES;
