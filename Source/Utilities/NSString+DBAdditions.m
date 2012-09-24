@@ -37,17 +37,17 @@
 
 - (NSString *)stringByCapitalizingFirstLetter
 {
-	NSString *capitalized = [self capitalizedString];
-	if([self length] > 1)
-		return [NSString stringWithFormat:@"%@%@", [capitalized substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
-	return capitalized;
+    NSString *capitalized = [self capitalizedString];
+    if([self length] > 1)
+        return [NSString stringWithFormat:@"%@%@", [capitalized substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
+    return capitalized;
 }
 - (NSString *)stringByDecapitalizingFirstLetter
 {
-	NSString *lowercase = [self lowercaseString];
-	if([self length] > 1)
-		return [NSString stringWithFormat:@"%@%@", [lowercase substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
-	return lowercase;
+    NSString *lowercase = [self lowercaseString];
+    if([self length] > 1)
+        return [NSString stringWithFormat:@"%@%@", [lowercase substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
+    return lowercase;
 }
 
 - (NSString *)underscoredString
@@ -56,19 +56,19 @@
                                                          withString:@"$1_$2"];
   underscored = [underscored stringByReplacingOccurrencesOfRegex:@"([a-z\\d])([A-Z])"
                                                       withString:@"$1_$2"];
-	
-	return [underscored lowercaseString];
+    
+    return [underscored lowercaseString];
 }
 - (NSString *)camelizedString
 {
-	NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
-	NSMutableString *ret = [NSMutableString stringWithString:parts[0]];
-	[parts removeObjectAtIndex:0];
-	for(NSString *part in parts)
-	{
-		[ret appendString:[part stringByCapitalizingFirstLetter]];
-	}
-	return ret;
+    NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
+    NSMutableString *ret = [NSMutableString stringWithString:parts[0]];
+    [parts removeObjectAtIndex:0];
+    for(NSString *part in parts)
+    {
+        [ret appendString:[part stringByCapitalizingFirstLetter]];
+    }
+    return ret;
 }
 
 - (NSString *)toString

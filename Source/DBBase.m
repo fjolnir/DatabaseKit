@@ -34,9 +34,9 @@ static NSString *classPrefix = nil;
 }
 - (id<DBConnection>)connection
 {
-	if(!_connection)
-		return [DBBase defaultConnection];
-	return _connection;
+    if(!_connection)
+        return [DBBase defaultConnection];
+    return _connection;
 }
 - (void)setConnection:(id<DBConnection>)aConnection {
     @synchronized(self) {
@@ -57,85 +57,85 @@ static NSString *classPrefix = nil;
 #pragma mark Caching
 + (BOOL)enableCache
 {
-	return enableCache;
+    return enableCache;
 }
 + (void)setEnableCache:(BOOL)flag
 {
-	enableCache = flag;
+    enableCache = flag;
 }
 - (void)refreshCache
 {
-	id value = nil;
-	for(NSString *key in [_readCache allKeys])
-	{
-		value = [self retrieveValueForKey:key];
-		if(value)
-			_readCache[key] = value;
-		else
-			[_readCache removeObjectForKey:key];
-	}
+    id value = nil;
+    for(NSString *key in [_readCache allKeys])
+    {
+        value = [self retrieveValueForKey:key];
+        if(value)
+            _readCache[key] = value;
+        else
+            [_readCache removeObjectForKey:key];
+    }
 }
 
 #pragma mark -
 #pragma mark Delayed writing
 + (BOOL)delayWriting
 {
-	return delayWriting;
+    return delayWriting;
 }
 + (void)setDelayWriting:(BOOL)flag
 {
-	delayWriting = flag;
+    delayWriting = flag;
 }
 - (void)save
 {
-	[self.connection beginTransaction];
-	NSString *key, *value;
-	for(int i = 0; i < [_writeCache count]; ++i)
-	{
-		key = [_writeCache allKeys][i];
-		value = _writeCache[key];
-		[self sendValue:value forKey:key];
-	}
-	// Apply the add/remove cache
-	for(int i = 0; i < [_addCache count]; ++i)
-	{
-		key = _addCache[i][@"key"];
-		value = _addCache[i][@"record"];
-		[self addRecord:value forKey:key ignoreCache:YES];
-	}
-	for(int i = 0; i < [_removeCache count]; ++i)
-	{
-		key = _removeCache[i][@"key"];
-		value = _removeCache[i][@"record"];
-		[self removeRecord:value forKey:key ignoreCache:YES];
-	}
-	[self.connection endTransaction];
-	// purge the cache so we don't write it again
-	[_addCache    removeAllObjects];
-	[_removeCache removeAllObjects];
-	[_writeCache  removeAllObjects];
+    [self.connection beginTransaction];
+    NSString *key, *value;
+    for(int i = 0; i < [_writeCache count]; ++i)
+    {
+        key = [_writeCache allKeys][i];
+        value = _writeCache[key];
+        [self sendValue:value forKey:key];
+    }
+    // Apply the add/remove cache
+    for(int i = 0; i < [_addCache count]; ++i)
+    {
+        key = _addCache[i][@"key"];
+        value = _addCache[i][@"record"];
+        [self addRecord:value forKey:key ignoreCache:YES];
+    }
+    for(int i = 0; i < [_removeCache count]; ++i)
+    {
+        key = _removeCache[i][@"key"];
+        value = _removeCache[i][@"record"];
+        [self removeRecord:value forKey:key ignoreCache:YES];
+    }
+    [self.connection endTransaction];
+    // purge the cache so we don't write it again
+    [_addCache    removeAllObjects];
+    [_removeCache removeAllObjects];
+    [_writeCache  removeAllObjects];
 }
 
 - (BOOL)destroy
 {
-	@try {
+    @try {
         [[[_table delete] where:@{ @"id": @(_databaseId) }] execute];
-		return YES;
-	}
-	@catch(NSException *e) {
+        return YES;
+    }
+    @catch(NSException *e) {
         DBLog(@"Error deleting record with id %ld, exception: %@", self.databaseId, e);
-	}
-	return NO;
+    }
+    return NO;
 }
 
 #pragma mark - Naming style
 + (DBNamingStyle)namingStyle
 {
-	return namingStyle;
+    return namingStyle;
 }
 + (void)setNamingStyle:(DBNamingStyle)style
 {
-	namingStyle = style;
+    namingStyle = style;
 }
 
 #pragma mark - Relationships
@@ -160,9 +160,9 @@ static NSString *classPrefix = nil;
     // Create a transaction
     @try {
         if(![connection beginTransaction]) {
-			[NSException raise:@"DBCreateErrorException" format:@"Couldn't start transaction for connection: %@", connection];
+            [NSException raise:@"DBCreateErrorException" format:@"Couldn't start transaction for connection: %@", connection];
             return nil;
-		}
+        }
         // Create a blank row (We handle the attributes seperately)
         DBTable *table = [DBTable withConnection:connection name:[self tableName]];
         [[table insert:@{ @"id" : [NSNull null] }] execute];
@@ -203,10 +203,10 @@ static NSString *classPrefix = nil;
     self.table      = [DBTable withConnection:aConnection name:[[self class] tableName]];
     self.databaseId = id;
 
-	_readCache   = [[NSMutableDictionary alloc] init];
-	_writeCache  = [[NSMutableDictionary alloc] init];
-	_addCache    = [[NSMutableArray alloc] init];
-	_removeCache = [[NSMutableArray alloc] init];
+    _readCache   = [[NSMutableDictionary alloc] init];
+    _writeCache  = [[NSMutableDictionary alloc] init];
+    _addCache    = [[NSMutableArray alloc] init];
+    _removeCache = [[NSMutableArray alloc] init];
 
     // Add the relationships
     self.relationships = [NSMutableArray array];
@@ -224,15 +224,15 @@ static NSString *classPrefix = nil;
 #pragma mark Accessors
 - (id)retrieveValueForKey:(NSString *)key
 {
-	// Check if we have a cached value and if caching is enabled
-	id cached = _readCache[key];
-	if(cached && [DBBase enableCache])
-		return cached;
+    // Check if we have a cached value and if caching is enabled
+    id cached = _readCache[key];
+    if(cached && [DBBase enableCache])
+        return cached;
 
-	// If not, we retrieve the value, return it and cache it if we should
-	id value = [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
-	if(value && [DBBase enableCache])
-		_readCache[key] = value;
+    // If not, we retrieve the value, return it and cache it if we should
+    id value = [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
+    if(value && [DBBase enableCache])
+        _readCache[key] = value;
     return value;
 }
 - (id)retrieveRecordForKey:(NSString *)key
@@ -249,20 +249,20 @@ static NSString *classPrefix = nil;
 }
 - (void)sendValue:(id)value forKey:(NSString *)key
 {
-	// Update the cache (should we update it before it's saved to the database, as in: setObject?)
-	if([DBBase enableCache])
-		_readCache[key] = value;
+    // Update the cache (should we update it before it's saved to the database, as in: setObject?)
+    if([DBBase enableCache])
+        _readCache[key] = value;
 
     DBRelationship *relationship = [self relationshipForKey:key];
-	if(relationship)
-		[relationship sendRecord:value forKey:key];
+    if(relationship)
+        [relationship sendRecord:value forKey:key];
 }
 - (void)setObject:(id)obj forKey:(NSString *)key
 {
-	if(delayWriting)
-		_writeCache[key] = obj;
-	else
-		[self sendValue:obj forKey:key];
+    if(delayWriting)
+        _writeCache[key] = obj;
+    else
+        [self sendValue:obj forKey:key];
 }
 - (id)valueForKey:(NSString *)key
 {
@@ -281,36 +281,36 @@ static NSString *classPrefix = nil;
 // This accessor adds a record to either a has many or has and belongs to many relationship
 - (void)addRecord:(id)record forKey:(NSString *)key
 {
-	[self addRecord:record forKey:key ignoreCache:NO];
+    [self addRecord:record forKey:key ignoreCache:NO];
 
 }
 // This accessor removes a record from either a has many or has and belongs to many relationship
 - (void)removeRecord:(id)record forKey:(NSString *)key
 {
-	[self removeRecord:record forKey:key ignoreCache:NO];
+    [self removeRecord:record forKey:key ignoreCache:NO];
 }
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
-	if([DBBase delayWriting] && !ignoreCache)
-		[_addCache addObject:@{@"key": key, @"record": record}];
-	else
-		[[self relationshipForKey:key] addRecord:record forKey:key];
+    if([DBBase delayWriting] && !ignoreCache)
+        [_addCache addObject:@{@"key": key, @"record": record}];
+    else
+        [[self relationshipForKey:key] addRecord:record forKey:key];
 }
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
-	if([DBBase delayWriting] && !ignoreCache)
-		[_removeCache addObject:@{@"key": key, @"record": record}];
-	else
-		[[self relationshipForKey:key] removeRecord:record forKey:key];
+    if([DBBase delayWriting] && !ignoreCache)
+        [_removeCache addObject:@{@"key": key, @"record": record}];
+    else
+        [[self relationshipForKey:key] removeRecord:record forKey:key];
 }
 
 #pragma mark -
 #pragma mark Database interface
 - (NSArray *)columns
 {
-	if(!_columnCache)
-		_columnCache = [self.connection columnsForTable:[[self class] tableName]];
-	return _columnCache;
+    if(!_columnCache)
+        _columnCache = [self.connection columnsForTable:[[self class] tableName]];
+    return _columnCache;
 }
 + (NSString *)idColumnForModel:(Class)modelClass
 {
@@ -330,9 +330,9 @@ static NSString *classPrefix = nil;
                                   range:NSMakeRange(0, [ret length])];
     }
     ret = (NSMutableString *)[[ret stringByDecapitalizingFirstLetter] pluralizedString];
-	if([[self class] namingStyle] == DBRailsNamingStyle)
-		return [ret underscoredString];
-	return ret;
+    if([[self class] namingStyle] == DBRailsNamingStyle)
+        return [ret underscoredString];
+    return ret;
 }
 
 + (NSString *)joinTableNameForModel:(Class)firstModel and:(Class)secondModel

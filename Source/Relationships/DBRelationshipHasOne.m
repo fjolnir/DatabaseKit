@@ -30,7 +30,7 @@
                         by:(id)orderByFields
                      limit:(NSNumber *)limit
 {
-	NSArray *array = [super retrieveRecordForKey:key filter:conditions order:order by:orderByFields limit:limit];
+    NSArray *array = [super retrieveRecordForKey:key filter:conditions order:order by:orderByFields limit:limit];
   if(!array || [array count] <= 0)
     return nil;
   // Else
@@ -44,9 +44,9 @@
   if(oldPartner != nil)
     [oldPartner sendValue:@0
                    forKey:[[self.record class] idColumn]];
-	
-	if(!aRecord)
-		return;
+    
+    if(!aRecord)
+        return;
   [aRecord sendValue:@(self.record.databaseId)
               forKey:[[self.record class] idColumn]];
 }

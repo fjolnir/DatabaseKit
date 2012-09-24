@@ -32,7 +32,7 @@
                         by:(id)orderByFields
                      limit:(NSNumber *)limit
 {
-	if(![self respondsToKey:key])
+    if(![self respondsToKey:key])
         return nil;
     NSString *partnerClassName = [NSString stringWithFormat:@"%@%@",
                                   [[self.record class] classPrefix],
@@ -58,10 +58,10 @@
     NSArray *ownerHasManyOf = [[aRecord hasMany] valueForKey:@"className"];
     NSArray *ownerHasOneOf = [[aRecord hasOne] valueForKey:@"className"];
 
-	Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
+    Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
                                             [[self.record class] classPrefix], [key stringByCapitalizingFirstLetter]]);
-	if(!aRecord && partnerClass)
-		[self.record sendValue:0 forKey:[partnerClass idColumn]];
+    if(!aRecord && partnerClass)
+        [self.record sendValue:0 forKey:[partnerClass idColumn]];
     else if([ownerHasManyOf containsObject:[self.record className]])
         [self.record sendValue:@([aRecord databaseId])
                         forKey:[[aRecord class] idColumn]];

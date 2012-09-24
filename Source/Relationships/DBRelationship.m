@@ -47,7 +47,7 @@
 }
 - (id)retrieveRecordForKey:(NSString *)key
 {
-	return [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
+    return [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
 }
 - (id)retrieveRecordForKey:(NSString *)key
                     filter:(id)conditions
@@ -55,8 +55,8 @@
                         by:(id)orderByFields
                      limit:(NSNumber *)limit
 {
-	[NSException raise:@"Unused method" format:@"You shouldn't be using DBRelationship directly!"];
-	return nil;
+    [NSException raise:@"Unused method" format:@"You shouldn't be using DBRelationship directly!"];
+    return nil;
 }
 - (void)sendRecord:(id)record forKey:(NSString *)key
 {

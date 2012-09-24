@@ -54,11 +54,11 @@
 
 - (void)testUnderscoring
 {
-	GHAssertEqualObjects([@"MyCamelizedString" underscoredString], @"my_camelized_string", @"underscore test failed");
+    GHAssertEqualObjects([@"MyCamelizedString" underscoredString], @"my_camelized_string", @"underscore test failed");
 }
 
 - (void)testCamelizing
 {
-	GHAssertEqualObjects([@"my_underscored_string" camelizedString], @"myUnderscoredString", @"camelize test failed");
+    GHAssertEqualObjects([@"my_underscored_string" camelizedString], @"myUnderscoredString", @"camelize test failed");
 }
 @end

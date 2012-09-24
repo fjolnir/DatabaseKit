@@ -77,18 +77,18 @@
                       [substitutions isKindOfClass:[NSArray class]]        ||
                       [substitutions isKindOfClass:[NSPointerArray class]] ||
                       isDict);
-	//DBDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
+    //DBDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
   // Prepare the query
   sqlite3_stmt *queryByteCode;
     queryByteCode = [self prepareQuerySQL:sql error:outErr];
     if(!queryByteCode)
         return nil;
-	NSArray *columnNames = [self columnsForQuery:queryByteCode];
+    NSArray *columnNames = [self columnsForQuery:queryByteCode];
 
     const char *keyCstring;
     NSString *key;
     id sub;
-	for(int i = 0; i < sqlite3_bind_parameter_count(queryByteCode); ++i) {
+    for(int i = 0; i < sqlite3_bind_parameter_count(queryByteCode); ++i) {
         if(isDict) {
             keyCstring = sqlite3_bind_parameter_name(queryByteCode, i);
             if(!keyCstring)
@@ -97,19 +97,19 @@
             sub = substitutions[key];
         } else
             sub = substitutions[i];
-		if(!sub)
-			continue;
-		if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
-			sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
-		else if([sub isMemberOfClass:[NSData class]])
-			sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
-		else if([sub isKindOfClass:[NSNumber class]])
-			sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
-		else if([sub isMemberOfClass:[NSNull class]])
-			sqlite3_bind_null(queryByteCode, i+1);
-		else
-			[NSException raise:@"Unrecognized object type" format:@"Active record doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
-	}
+        if(!sub)
+            continue;
+        if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
+            sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
+        else if([sub isMemberOfClass:[NSData class]])
+            sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
+        else if([sub isKindOfClass:[NSNumber class]])
+            sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
+        else if([sub isMemberOfClass:[NSNull class]])
+            sqlite3_bind_null(queryByteCode, i+1);
+        else
+            [NSException raise:@"Unrecognized object type" format:@"Active record doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
+    }
   
   NSMutableArray *rowArray = [NSMutableArray array];
   NSMutableDictionary *columns;

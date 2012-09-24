@@ -33,7 +33,7 @@
                         by:(id)orderByFields
                      limit:(NSNumber *)limit
 {
-	return [self retrieveRecordForKey:key];
+    return [self retrieveRecordForKey:key];
 }
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key
 {

@@ -46,7 +46,7 @@
             limit:(NSUInteger)limit
        connection:(id<DBConnection>)aConnection
 {
-	NSArray *ids = [self findIds:idOrSpecification
+    NSArray *ids = [self findIds:idOrSpecification
                           filter:filter
                             join:joinSQL
                            order:order
@@ -80,8 +80,8 @@
 #if 0
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@", [self tableName]];
-//	if(joinSQL)
-//		[query appendFormat:@" %@", joinSQL];
+//    if(joinSQL)
+//        [query appendFormat:@" %@", joinSQL];
 
     if(idOrSpecification >= 0) { // It's an actual id
         [query appendString:@" WHERE id=:id"];
@@ -118,7 +118,7 @@
 
 + (id)first
 {
-	return [self first:nil];
+    return [self first:nil];
 }
 
 + (id)first:(NSString *)filter
@@ -129,7 +129,7 @@
 
 + (id)last
 {
-	NSArray *result = [self find:DBFindFirst filter:nil join:nil order:DBOrderDescending limit:1];
+    NSArray *result = [self find:DBFindFirst filter:nil join:nil order:DBOrderDescending limit:1];
     return [result count] > 0 ? result[0] : nil;
 }
 @end

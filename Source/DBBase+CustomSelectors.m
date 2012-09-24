@@ -25,7 +25,7 @@
   DBAttributeSelectorType selectorType = [self typeOfSelector:[invocation selector] attributeName:&attributeName];
 
   DBRelationship *relationship = [self relationshipForKey:attributeName];
-	
+    
   if(relationship)
   {
     // the attribute name is the key we need to set so we pass it as the 'key' argument

@@ -73,11 +73,11 @@ typedef enum {
     DBTable *_table;
     NSUInteger _databaseId;
     NSMutableArray *_relationships;
-	NSMutableDictionary *_readCache;
-	NSMutableDictionary *_writeCache;
-	NSMutableArray *_addCache;
-	NSMutableArray *_removeCache;
-	NSArray *_columnCache;
+    NSMutableDictionary *_readCache;
+    NSMutableDictionary *_writeCache;
+    NSMutableArray *_addCache;
+    NSMutableArray *_removeCache;
+    NSArray *_columnCache;
 }
 @property(readwrite, strong) id<DBConnection> connection;
 @property(readonly, strong) DBTable *table;

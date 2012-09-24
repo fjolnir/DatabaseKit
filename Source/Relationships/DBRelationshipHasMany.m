@@ -39,17 +39,17 @@
                         by:(id)orderByFields
                      limit:(NSNumber *)limit
 {
-	if(![self respondsToKey:key])
+    if(![self respondsToKey:key])
         return nil;
     Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
                                             [[self.record class] classPrefix], [[key singularizedString] capitalizedString]]);
     if(!partnerClass)
     {
         [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)",
-		 key,
-		 [NSString stringWithFormat:@"%@%@", [[self.record class] classPrefix],
+         key,
+         [NSString stringWithFormat:@"%@%@", [[self.record class] classPrefix],
           [key stringByCapitalizingFirstLetter]]
-		 ];
+         ];
         return nil;
     }
     NSString *idColumn = [[self.record class] idColumnForModel:[self.record class]];
@@ -80,8 +80,8 @@
     for(id partner in oldPartners)
         [partner sendValue:@0
                     forKey:[[self.record class] idColumn]];
-	if(!aRecord)
-		return;
+    if(!aRecord)
+        return;
     for(id partner in aRecord)
         [partner sendValue:@(self.record.databaseId)
                     forKey:[[self.record class] idColumn]];
