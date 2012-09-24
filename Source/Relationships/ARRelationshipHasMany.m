@@ -69,32 +69,6 @@
         [partners addObject:partnerRecord];
     }
     return partners;
-#if 0
-    NSMutableString *query = [NSMutableString stringWithFormat:@"SELECT id FROM %@ WHERE %@ = :our_id",
-                              [partnerClass tableName], idColumn];
-	if(whereSQL)
-		[query appendFormat:@" AND %@", whereSQL];
-	if(orderSQL)
-		[query appendFormat:@" ORDER BY %@", orderSQL];
-	if(limit > 0)
-		[query appendFormat:@" LIMIT %ld", limit];
-
-
-    NSArray *ids = [self.record.connection executeSQL:query
-                                        substitutions:[NSDictionary dictionaryWithObject:@(self.record.databaseId)
-                                                                                  forKey:@"our_id"]];
-    NSNumber *anId;
-    id partnerRecord;
-    NSMutableArray *partners = [NSMutableArray array];
-    for(NSDictionary *dict in ids)
-    {
-        anId = [dict objectForKey:@"id"];
-        partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection
-                                                              id:[anId unsignedIntValue]];
-        [partners addObject:[partnerRecord autorelease]];
-    }
-    return partners;
-#endif
 }
 
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key
