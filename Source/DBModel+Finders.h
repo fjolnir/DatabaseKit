@@ -33,9 +33,9 @@
 #ifndef _DBBASE_FINDERS_H_
 #define _DBBASE_FINDERS_H_
 
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 
-@interface DBBase (Finders)
+@interface DBModel (Finders)
 // Finders
 /*! Finds a record based on the find specification. 
  * @param idOrSpecification The find specification

@@ -53,7 +53,7 @@
 @interface DBRelationshipHasOne : DBRelationshipHasMany
 @end
 
-@interface DBBase (HasOne)
+@interface DBModel (HasOne)
 + (void)hasOne:(NSString *)parent;
 - (NSArray *)hasOne;
 @end

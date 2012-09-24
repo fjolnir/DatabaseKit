@@ -62,13 +62,13 @@ typedef enum {
 
 /*!
  * The abstract base class for the DatabaseKit implementation\n
- * All models are subclasses of DBBase\n
+ * All models are subclasses of DBModel\n
  * \n
- * To use DBBase, subclass it with a class named <prefix>ModelName
+ * To use DBModel, subclass it with a class named <prefix>ModelName
  * set the prefix you'll use in +load (along with the default connection if you want one)\n
- * DBBase will then determine the table name (<prefix>ModelName -> modelname)\n
+ * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
-@interface DBBase : NSObject {
+@interface DBModel : NSObject {
     id<DBConnection> _connection;
     DBTable *_table;
     NSUInteger _databaseId;
@@ -107,9 +107,9 @@ typedef enum {
 - (id)initWithConnection:(id<DBConnection>)aConnection id:(NSUInteger)id;
 
 
-/*!  Sets the default connection to be used by DBBase and it's subclasses */
+/*!  Sets the default connection to be used by DBModel and it's subclasses */
 + (void)setDefaultConnection:(id<DBConnection>)aConnection;
-/*!  Returns the default connection used by DBBase and it's subclasses */
+/*!  Returns the default connection used by DBModel and it's subclasses */
 + (id<DBConnection>)defaultConnection;
 
 /*! Sets the class prefix for models\n
@@ -127,9 +127,9 @@ typedef enum {
 /*! Refetches all cached values */
 - (void)refreshCache;
 
-/*! Returns wether DBBase and it's subclasses will hold off writing changes to the database until told to save */
+/*! Returns wether DBModel and it's subclasses will hold off writing changes to the database until told to save */
 + (BOOL)delayWriting;
-/*! Sets wether DBBase and it's subclasses will hold off writing changes to the database until told to save */
+/*! Sets wether DBModel and it's subclasses will hold off writing changes to the database until told to save */
 + (void)setDelayWriting:(BOOL)flag;
 /*! Saves queued changes \n
  * Does nothing if delayWriting is NO

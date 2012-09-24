@@ -1,5 +1,5 @@
 //
-//  DBBaseTest.h
+//  DBModelTest.h
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
@@ -12,7 +12,7 @@
 @class TEAnimal;
 @class TEPerson;
 
-@interface TEModel : DBBase {
+@interface TEModel : DBModel {
   
 }
 @property(readwrite, strong) NSString *name, *info;
@@ -26,7 +26,7 @@
 - (NSArray *)belgians;
 @end
 
-@interface TEPerson : DBBase {
+@interface TEPerson : DBModel {
   
 }
 @property(readwrite, weak) NSString *userName, *realName;
@@ -37,7 +37,7 @@
 - (NSArray *)belgians;
 @end
 
-@interface TEBelgian : DBBase {
+@interface TEBelgian : DBModel {
   
 }
 @end
@@ -46,7 +46,7 @@
 @end
 
 
-@interface TEAnimal : DBBase {
+@interface TEAnimal : DBModel {
   
 }
 @end
@@ -60,7 +60,7 @@
 @end
 
 
-@interface DBBaseTest : GHTestCase {
+@interface DBModelTest : GHTestCase {
 }
 
 @end

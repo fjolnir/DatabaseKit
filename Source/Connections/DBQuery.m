@@ -1,6 +1,6 @@
 #import "DBQuery.h"
 #import "DBTable.h"
-#import "DBBase.h"
+#import "DBModel.h"
 
 NSString *const DBOrderDescending = @"DESC";
 NSString *const DBOrderAscending  = @"ASC";
@@ -294,7 +294,7 @@ NSString *const DBLeftJoin  = @"LEFT";
         return _connection;
     else if([_table isKindOfClass:[DBTable class]] && [(DBTable *)_table connection])
         return [(DBTable *)_table connection];
-    return [DBBase defaultConnection];
+    return [DBModel defaultConnection];
 }
 - (NSString *)toString
 {

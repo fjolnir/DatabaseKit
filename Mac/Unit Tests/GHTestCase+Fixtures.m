@@ -29,7 +29,7 @@
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
     }
     // See if it works
-  [DBBase setDefaultConnection:connection];
+  [DBModel setDefaultConnection:connection];
 
     DBQuery *q = [[DBTable withName:@"people"] select:@"*"];
     NSLog(@"%@", q[0]);
@@ -67,7 +67,7 @@
         }
     }
     // See if it works
-    [DBBase setDefaultConnection:connection];
+    [DBModel setDefaultConnection:connection];
     
     return connection;
 }*/

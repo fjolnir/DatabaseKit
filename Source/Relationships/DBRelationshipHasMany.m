@@ -8,8 +8,8 @@
 
 #import "DBRelationshipHasMany.h"
 #import "NSString+DBAdditions.h"
-#import "DBBase.h"
-#import "DBBasePrivate.h"
+#import "DBModel.h"
+#import "DBModelPrivate.h"
 #import "DBQuery.h"
 #import "DBTable.h"
 
@@ -109,13 +109,13 @@
 - (NSString *)className
 {
     if(![super className])
-        return [NSString stringWithFormat:@"%@%@", [DBBase classPrefix], [[self.name singularizedString] capitalizedString]];
+        return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [[self.name singularizedString] capitalizedString]];
     else
         return [super className];
 }
 @end
 
-@implementation DBBase (HasMany)
+@implementation DBModel (HasMany)
 + (void)hasMany:(NSString *)child
 {
     [self.relationships addObject:[DBRelationshipHasMany relationshipWithName:child]];

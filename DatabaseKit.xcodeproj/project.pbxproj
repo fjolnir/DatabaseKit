@@ -18,10 +18,10 @@
 		C7A5077613F01AD600301981 /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076F13F01AD600301981 /* singulars.plist */; };
 		C7A5077713F01AD600301981 /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077113F01AD600301981 /* uncountables.plist */; };
 		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
-		C7AED94813C1441F00C47919 /* DBBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBBase.m */; };
-		C7AED94913C1442000C47919 /* DBBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBBase+CustomSelectors.m */; };
-		C7AED94A13C1442200C47919 /* DBBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* DBBase+Finders.m */; };
-		C7AED94B13C1442400C47919 /* DBBase+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m */; };
+		C7AED94813C1441F00C47919 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBModel.m */; };
+		C7AED94913C1442000C47919 /* DBModel+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */; };
+		C7AED94A13C1442200C47919 /* DBModel+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* DBModel+Finders.m */; };
+		C7AED94B13C1442400C47919 /* DBModel+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */; };
 		C7AED94D13C1442F00C47919 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */; };
 		C7AED94E13C1443500C47919 /* DBRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F70E058F10002C3ADB /* DBRelationship.m */; };
 		C7AED94F13C1443600C47919 /* DBRelationshipBelongsTo.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F90E058F10002C3ADB /* DBRelationshipBelongsTo.m */; };
@@ -38,10 +38,10 @@
 		C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AED96413C148C700C47919 /* Base64Extensions.h */; };
 		C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
 		C7AED96913C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
-		C7AED96A13C14B4C00C47919 /* DBBase.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E70E058F10002C3ADB /* DBBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7AED96A13C14B4C00C47919 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E70E058F10002C3ADB /* DBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED96B13C14B5000C47919 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7AED96C13C14B5D00C47919 /* DBBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* DBBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7AED96D13C14B6D00C47919 /* DBBasePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBBasePrivate.h */; };
+		C7AED96C13C14B5D00C47919 /* DBModel+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* DBModel+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7AED96D13C14B6D00C47919 /* DBModelPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */; };
 		C7AED96F13C14B7900C47919 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EB0E058F10002C3ADB /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97013C14B7C00C47919 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97113C14B8000C47919 /* DBRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F60E058F10002C3ADB /* DBRelationship.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,7 +65,7 @@
 		C7CAF32013BA1BE700013E21 /* Unit Tests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */; };
 		C7CAF32213BA1C1C00013E21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31713BA1BE700013E21 /* InfoPlist.strings */; };
 		C7CAF32313BA1D1200013E21 /* DatabaseKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */; };
-		C7CAF32413BA1F5A00013E21 /* DBBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10360E06F6D500580499 /* DBBaseTest.m */; };
+		C7CAF32413BA1F5A00013E21 /* DBModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10360E06F6D500580499 /* DBModelTest.m */; };
 		C7CAF32613BA1F5F00013E21 /* DBInflectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10380E06F6D500580499 /* DBInflectorTest.m */; };
 		C7CAF32713BA1F6400013E21 /* DBSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B103C0E06F6D500580499 /* DBSQLiteConnectionTest.m */; };
 		C7CAF32813BA1F6800013E21 /* GHTestCase+Fixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */; };
@@ -80,13 +80,13 @@
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F8DA530F0E058F10002C3ADB /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA53100E058F10002C3ADB /* DBBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBBase+CustomSelectors.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		F8DA53110E058F10002C3ADB /* DBBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* DBBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA53120E058F10002C3ADB /* DBBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* DBBase+Finders.m */; };
-		F8DA53130E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m */; };
-		F8DA53140E058F10002C3ADB /* DBBase.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E70E058F10002C3ADB /* DBBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA53150E058F10002C3ADB /* DBBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBBase.m */; };
-		F8DA53160E058F10002C3ADB /* DBBasePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBBasePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53100E058F10002C3ADB /* DBModel+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F8DA53110E058F10002C3ADB /* DBModel+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* DBModel+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53120E058F10002C3ADB /* DBModel+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* DBModel+Finders.m */; };
+		F8DA53130E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */; };
+		F8DA53140E058F10002C3ADB /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E70E058F10002C3ADB /* DBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8DA53150E058F10002C3ADB /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBModel.m */; };
+		F8DA53160E058F10002C3ADB /* DBModelPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53170E058F10002C3ADB /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52EB0E058F10002C3ADB /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA531C0E058F10002C3ADB /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA531D0E058F10002C3ADB /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */; };
@@ -174,8 +174,8 @@
 		C7FE7F501610069500031BBD /* DBTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTable.h; sourceTree = "<group>"; };
 		C7FE7F511610069500031BBD /* DBTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTable.m; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		F87B10350E06F6D500580499 /* DBBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBBaseTest.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F87B10360E06F6D500580499 /* DBBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBBaseTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		F87B10350E06F6D500580499 /* DBModelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBModelTest.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F87B10360E06F6D500580499 /* DBModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBModelTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F87B10370E06F6D500580499 /* DBInflectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBInflectorTest.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F87B10380E06F6D500580499 /* DBInflectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBInflectorTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F87B103B0E06F6D500580499 /* DBSQLiteConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSQLiteConnectionTest.h; sourceTree = "<group>"; };
@@ -194,13 +194,13 @@
 		F8D301EF0E17A9F30075AFFF /* typelib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typelib.h; sourceTree = "<group>"; };
 		F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmysqlclient_r.a; sourceTree = "<group>"; };
 		F8DA52E20E058F10002C3ADB /* DatabaseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DatabaseKit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F8DA52E30E058F10002C3ADB /* DBBase+CustomSelectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBBase+CustomSelectors.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F8DA52E40E058F10002C3ADB /* DBBase+Finders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "DBBase+Finders.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F8DA52E50E058F10002C3ADB /* DBBase+Finders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBBase+Finders.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F8DA52E60E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBBase+KeyAndSelectorParsers.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F8DA52E70E058F10002C3ADB /* DBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBBase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F8DA52E80E058F10002C3ADB /* DBBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBBase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		F8DA52E90E058F10002C3ADB /* DBBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBBasePrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBModel+CustomSelectors.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		F8DA52E40E058F10002C3ADB /* DBModel+Finders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "DBModel+Finders.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F8DA52E50E058F10002C3ADB /* DBModel+Finders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBModel+Finders.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBModel+KeyAndSelectorParsers.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		F8DA52E70E058F10002C3ADB /* DBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBModel.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F8DA52E80E058F10002C3ADB /* DBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBModelPrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F8DA52EB0E058F10002C3ADB /* DBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBConnection.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSQLiteConnection.h; sourceTree = "<group>"; };
 		F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBSQLiteConnection.m; sourceTree = "<group>"; };
@@ -430,8 +430,8 @@
 				C7CAF2F613BA1A7300013E21 /* Supporting Files */,
 				C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */,
 				C7CAF2CD13BA199100013E21 /* GHUnit.framework */,
-				F87B10350E06F6D500580499 /* DBBaseTest.h */,
-				F87B10360E06F6D500580499 /* DBBaseTest.m */,
+				F87B10350E06F6D500580499 /* DBModelTest.h */,
+				F87B10360E06F6D500580499 /* DBModelTest.m */,
 				F87B10370E06F6D500580499 /* DBInflectorTest.h */,
 				F87B10380E06F6D500580499 /* DBInflectorTest.m */,
 				F87B103B0E06F6D500580499 /* DBSQLiteConnectionTest.h */,
@@ -479,13 +479,13 @@
 			isa = PBXGroup;
 			children = (
 				F8DA52E20E058F10002C3ADB /* DatabaseKit.h */,
-				F8DA52E70E058F10002C3ADB /* DBBase.h */,
-				F8DA52E80E058F10002C3ADB /* DBBase.m */,
-				F8DA52E30E058F10002C3ADB /* DBBase+CustomSelectors.m */,
-				F8DA52E40E058F10002C3ADB /* DBBase+Finders.h */,
-				F8DA52E50E058F10002C3ADB /* DBBase+Finders.m */,
-				F8DA52E60E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m */,
-				F8DA52E90E058F10002C3ADB /* DBBasePrivate.h */,
+				F8DA52E70E058F10002C3ADB /* DBModel.h */,
+				F8DA52E80E058F10002C3ADB /* DBModel.m */,
+				F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */,
+				F8DA52E40E058F10002C3ADB /* DBModel+Finders.h */,
+				F8DA52E50E058F10002C3ADB /* DBModel+Finders.m */,
+				F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */,
+				F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */,
 				F8DA52EA0E058F10002C3ADB /* Connections */,
 				F8DA52F50E058F10002C3ADB /* Relationships */,
 				F8DA53040E058F10002C3ADB /* Utilities */,
@@ -551,9 +551,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8DA530F0E058F10002C3ADB /* DatabaseKit.h in Headers */,
-				F8DA53110E058F10002C3ADB /* DBBase+Finders.h in Headers */,
-				F8DA53140E058F10002C3ADB /* DBBase.h in Headers */,
-				F8DA53160E058F10002C3ADB /* DBBasePrivate.h in Headers */,
+				F8DA53110E058F10002C3ADB /* DBModel+Finders.h in Headers */,
+				F8DA53140E058F10002C3ADB /* DBModel.h in Headers */,
+				F8DA53160E058F10002C3ADB /* DBModelPrivate.h in Headers */,
 				F8DA53170E058F10002C3ADB /* DBConnection.h in Headers */,
 				F8DA531C0E058F10002C3ADB /* DBSQLiteConnection.h in Headers */,
 				F8DA53200E058F10002C3ADB /* DBRelationship.h in Headers */,
@@ -579,7 +579,7 @@
 			files = (
 				C7AED97013C14B7C00C47919 /* DBSQLiteConnection.h in Headers */,
 				C7AED96F13C14B7900C47919 /* DBConnection.h in Headers */,
-				C7AED96A13C14B4C00C47919 /* DBBase.h in Headers */,
+				C7AED96A13C14B4C00C47919 /* DBModel.h in Headers */,
 				C7AED96B13C14B5000C47919 /* DatabaseKit.h in Headers */,
 				C7AED97213C14B8200C47919 /* DBRelationshipBelongsTo.h in Headers */,
 				C7AED97413C14B8600C47919 /* DBRelationshipHABTM.h in Headers */,
@@ -591,8 +591,8 @@
 				C7AED97513C14B8800C47919 /* DBRelationshipHasMany.h in Headers */,
 				C7AED97A13C14B9600C47919 /* NSArray+DBAdditions.h in Headers */,
 				C7AED97913C14B9500C47919 /* NSString+DBAdditions.h in Headers */,
-				C7AED96C13C14B5D00C47919 /* DBBase+Finders.h in Headers */,
-				C7AED96D13C14B6D00C47919 /* DBBasePrivate.h in Headers */,
+				C7AED96C13C14B5D00C47919 /* DBModel+Finders.h in Headers */,
+				C7AED96D13C14B6D00C47919 /* DBModelPrivate.h in Headers */,
 				C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */,
 				C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */,
 			);
@@ -716,10 +716,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8DA53100E058F10002C3ADB /* DBBase+CustomSelectors.m in Sources */,
-				F8DA53120E058F10002C3ADB /* DBBase+Finders.m in Sources */,
-				F8DA53130E058F10002C3ADB /* DBBase+KeyAndSelectorParsers.m in Sources */,
-				F8DA53150E058F10002C3ADB /* DBBase.m in Sources */,
+				F8DA53100E058F10002C3ADB /* DBModel+CustomSelectors.m in Sources */,
+				F8DA53120E058F10002C3ADB /* DBModel+Finders.m in Sources */,
+				F8DA53130E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m in Sources */,
+				F8DA53150E058F10002C3ADB /* DBModel.m in Sources */,
 				F8DA531D0E058F10002C3ADB /* DBSQLiteConnection.m in Sources */,
 				F8DA53210E058F10002C3ADB /* DBRelationship.m in Sources */,
 				F8DA53230E058F10002C3ADB /* DBRelationshipBelongsTo.m in Sources */,
@@ -743,10 +743,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */,
-				C7AED94813C1441F00C47919 /* DBBase.m in Sources */,
-				C7AED94913C1442000C47919 /* DBBase+CustomSelectors.m in Sources */,
-				C7AED94B13C1442400C47919 /* DBBase+KeyAndSelectorParsers.m in Sources */,
-				C7AED94A13C1442200C47919 /* DBBase+Finders.m in Sources */,
+				C7AED94813C1441F00C47919 /* DBModel.m in Sources */,
+				C7AED94913C1442000C47919 /* DBModel+CustomSelectors.m in Sources */,
+				C7AED94B13C1442400C47919 /* DBModel+KeyAndSelectorParsers.m in Sources */,
+				C7AED94A13C1442200C47919 /* DBModel+Finders.m in Sources */,
 				C7AED95013C1443A00C47919 /* DBRelationshipColumn.m in Sources */,
 				C7AED94F13C1443600C47919 /* DBRelationshipBelongsTo.m in Sources */,
 				C7A5070D13F011BE00301981 /* RegexKitLite.m in Sources */,
@@ -769,7 +769,7 @@
 			files = (
 				C7CAF30C13BA1AE200013E21 /* GHUnitTestMain.m in Sources */,
 				C7CAF32813BA1F6800013E21 /* GHTestCase+Fixtures.m in Sources */,
-				C7CAF32413BA1F5A00013E21 /* DBBaseTest.m in Sources */,
+				C7CAF32413BA1F5A00013E21 /* DBModelTest.m in Sources */,
 				C7CAF32713BA1F6400013E21 /* DBSQLiteConnectionTest.m in Sources */,
 				C7CAF32613BA1F5F00013E21 /* DBInflectorTest.m in Sources */,
 			);

@@ -1,7 +1,7 @@
-#import "DBBase.h"
+#import "DBModel.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBBasePrivate.h"
+#import "DBModelPrivate.h"
 #import "NSString+DBAdditions.h"
 #import "DBRelationship.h"
 #import "DBRelationshipColumn.h"
@@ -16,15 +16,15 @@ static void *relationshipAssocKey = NULL;
 static id<DBConnection> defaultConnection = nil;
 static NSString *classPrefix = nil;
 
-@interface DBBase ()
+@interface DBModel ()
 @property(readwrite, strong) DBTable *table;
 @end
 
-@implementation DBBase
+@implementation DBModel
 
 + (void)setDefaultConnection:(id<DBConnection>)aConnection
 {
-    @synchronized([DBBase class]) {
+    @synchronized([DBModel class]) {
         defaultConnection = aConnection;
     }
 }
@@ -35,7 +35,7 @@ static NSString *classPrefix = nil;
 - (id<DBConnection>)connection
 {
     if(!_connection)
-        return [DBBase defaultConnection];
+        return [DBModel defaultConnection];
     return _connection;
 }
 - (void)setConnection:(id<DBConnection>)aConnection {
@@ -185,14 +185,14 @@ static NSString *classPrefix = nil;
 }
 + (id)createWithAttributes:(NSDictionary *)attributes
 {
-    return [self createWithAttributes:attributes connection:[DBBase defaultConnection]];
+    return [self createWithAttributes:attributes connection:[DBModel defaultConnection]];
 }
 
 #pragma mark -
 #pragma mark Entry retrieving
 - (id)initWithId:(NSUInteger)id
 {
-    return [self initWithConnection:[DBBase defaultConnection] id:id];
+    return [self initWithConnection:[DBModel defaultConnection] id:id];
 }
 - (id)initWithConnection:(id<DBConnection>)aConnection id:(NSUInteger)id
 {
@@ -226,12 +226,12 @@ static NSString *classPrefix = nil;
 {
     // Check if we have a cached value and if caching is enabled
     id cached = _readCache[key];
-    if(cached && [DBBase enableCache])
+    if(cached && [DBModel enableCache])
         return cached;
 
     // If not, we retrieve the value, return it and cache it if we should
     id value = [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
-    if(value && [DBBase enableCache])
+    if(value && [DBModel enableCache])
         _readCache[key] = value;
     return value;
 }
@@ -250,7 +250,7 @@ static NSString *classPrefix = nil;
 - (void)sendValue:(id)value forKey:(NSString *)key
 {
     // Update the cache (should we update it before it's saved to the database, as in: setObject?)
-    if([DBBase enableCache])
+    if([DBModel enableCache])
         _readCache[key] = value;
 
     DBRelationship *relationship = [self relationshipForKey:key];
@@ -291,14 +291,14 @@ static NSString *classPrefix = nil;
 }
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
-    if([DBBase delayWriting] && !ignoreCache)
+    if([DBModel delayWriting] && !ignoreCache)
         [_addCache addObject:@{@"key": key, @"record": record}];
     else
         [[self relationshipForKey:key] addRecord:record forKey:key];
 }
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
-    if([DBBase delayWriting] && !ignoreCache)
+    if([DBModel delayWriting] && !ignoreCache)
         [_removeCache addObject:@{@"key": key, @"record": record}];
     else
         [[self relationshipForKey:key] removeRecord:record forKey:key];
@@ -323,8 +323,8 @@ static NSString *classPrefix = nil;
 + (NSString *)tableName
 {
     NSMutableString *ret = [[self className] mutableCopy];
-    if([DBBase classPrefix]) {
-        [ret replaceOccurrencesOfString:[DBBase classPrefix]
+    if([DBModel classPrefix]) {
+        [ret replaceOccurrencesOfString:[DBModel classPrefix]
                              withString:@""
                                 options:0
                                   range:NSMakeRange(0, [ret length])];

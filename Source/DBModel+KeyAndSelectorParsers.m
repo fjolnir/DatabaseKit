@@ -1,20 +1,20 @@
 //
-//  DBBase-KeyAndSelectorParsers.m
+//  DBModel-KeyAndSelectorParsers.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
 //  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
-// These methods are described in DBBase.m
+// These methods are described in DBModel.m
 // (Basically they just parse selectors(like 'setAttribute:' or simply 'attribute')
 //  or keys and return what relationships they represent)
-#import "DBBase.h"
-#import "DBBasePrivate.h"
+#import "DBModel.h"
+#import "DBModelPrivate.h"
 #import "NSString+DBAdditions.h"
 #import "DBRelationship.h"
 
-@implementation DBBase (KeyAndSelectorParsers)
+@implementation DBModel (KeyAndSelectorParsers)
 - (DBAttributeSelectorType)typeOfSelector:(SEL)aSelector
                             attributeName:(NSString **)outAttribute
 {

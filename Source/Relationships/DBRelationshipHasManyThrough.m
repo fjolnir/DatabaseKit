@@ -8,7 +8,7 @@
 
 #import "DBRelationshipHasManyThrough.h"
 #import "NSString+DBAdditions.h"
-#import "DBBasePrivate.h"
+#import "DBModelPrivate.h"
 
 @interface DBRelationshipHasManyThrough ()
 @property(readwrite, strong) NSString *proxyKey;
@@ -36,7 +36,7 @@
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName
 {
-    [NSException raise:@"DBBase error" format:@"You must create a has many through relationship using relationshipWithName:className:through:"];
+    [NSException raise:@"DBModel error" format:@"You must create a has many through relationship using relationshipWithName:className:through:"];
     return nil;
 }
 
@@ -58,7 +58,7 @@
         return nil;
     NSMutableArray *partners = [NSMutableArray array];
     id currentPartners;
-    for(DBBase *proxy in [self.record retrieveValueForKey:_proxyKey])
+    for(DBModel *proxy in [self.record retrieveValueForKey:_proxyKey])
     {
         currentPartners = [proxy retrieveRecordForKey:self.name filter:conditions order:order by:orderByFields limit:limit];
         if([currentPartners isKindOfClass:[NSArray class]])
@@ -103,7 +103,7 @@
 }
 @end
 
-@implementation DBBase (HasManyThrough)
+@implementation DBModel (HasManyThrough)
 + (void)hasMany:(NSString *)child through:(NSString *)middleMan
 {
     [self.relationships addObject:[DBRelationshipHasManyThrough relationshipWithName:child through:middleMan]];

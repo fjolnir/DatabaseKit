@@ -7,11 +7,11 @@
 //
 
 #import "DBRelationship.h"
-#import "DBBase.h"
+#import "DBModel.h"
 
 @interface DBRelationship ()
 @property(readwrite, strong) NSString *name, *className;
-@property(readwrite, unsafe_unretained) DBBase *record;
+@property(readwrite, unsafe_unretained) DBModel *record;
 @end
 
 @implementation DBRelationship
@@ -24,7 +24,7 @@
 {
     return [[self alloc] initWithName:aName className:nil record:nil];
 }
-- (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(DBBase *)aRecord
+- (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(DBModel *)aRecord
 {
     if(!(self = [super init]))
         return nil;
@@ -77,7 +77,7 @@
 {
     return [[[self class] allocWithZone:zone] initWithName:_name className:_className record:_record];
 }
-- (id)copyUsingRecord:(DBBase *)record
+- (id)copyUsingRecord:(DBModel *)record
 {
     DBRelationship *ret = [self copy];
     ret.record = record;
@@ -92,7 +92,7 @@
 }
 @end
 
-@implementation DBBase (Relationships)
+@implementation DBModel (Relationships)
 - (NSArray *)relationshipsOfType:(NSString *)type
 {
     NSMutableArray *ret = [NSMutableArray array];

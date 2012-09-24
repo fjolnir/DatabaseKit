@@ -1,5 +1,5 @@
 #import "DBRelationshipColumn.h"
-#import "DBBasePrivate.h"
+#import "DBModelPrivate.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 

@@ -34,13 +34,13 @@
 #define _DBRELATIONSHIPHABTM_H_
 
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 #import <DatabaseKit/DBRelationship.h>
 
 @interface DBRelationshipHABTM : DBRelationship
 @end
 
-@interface DBBase (HABTM)
+@interface DBModel (HABTM)
 - (NSArray *)hasAndBelongsToMany;
 @end
 #endif /* _DBRELATIONSHIPHABTM_H_ */

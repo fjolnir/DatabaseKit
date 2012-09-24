@@ -1,5 +1,5 @@
 #import "DBTable.h"
-#import "DBBase.h"
+#import "DBModel.h"
 #import "DBQuery.h"
 #import "NSString+DBAdditions.h"
 
@@ -25,7 +25,7 @@
 
 - (Class)modelClass
 {
-    NSString *prefix    = [DBBase classPrefix];
+    NSString *prefix    = [DBModel classPrefix];
     NSString *tableName = [[_name singularizedString] capitalizedString];
     return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
 }

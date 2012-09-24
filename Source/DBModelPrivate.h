@@ -34,7 +34,7 @@
 #ifndef _DBBASEPRIVATE_H_
 #define _DBBASEPRIVATE_H_
 
-#import "DBBase.h"
+#import "DBModel.h"
 
 @class DBRelationship;
 
@@ -49,7 +49,7 @@ typedef enum {
 
 #pragma mark -
 #pragma mark Private method definitions
-@interface DBBase () // Implemented in DBBase.m
+@interface DBModel () // Implemented in DBModel.m
 // Returns the column names of the table associated with the model
 - (NSArray *)columns;
 // Returns the name of the id column (foreign) for a model DBModel would mean modelId
@@ -62,7 +62,7 @@ typedef enum {
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache;
 @end
 
-@interface DBBase (KeyAndSelectorParsers) // Implemented in DBBase-KeyAndSelectorParsers.m
+@interface DBModel (KeyAndSelectorParsers) // Implemented in DBModel-KeyAndSelectorParsers.m
 - (DBRelationship *)relationshipForKey:(NSString *)key;
 - (DBAttributeSelectorType)typeOfSelector:(SEL)aSelector
                             attributeName:(NSString **)outAttribute;

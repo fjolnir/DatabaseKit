@@ -36,7 +36,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBRelationship.h>
 #import <DatabaseKit/DBRelationshipHasMany.h>
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 
 @interface DBRelationshipHasManyThrough : DBRelationshipHasMany
 @property(readonly, strong) NSString *proxyKey;
@@ -46,7 +46,7 @@
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey;
 @end
 
-@interface DBBase (HasManyThrough)
+@interface DBModel (HasManyThrough)
 + (void)hasMany:(NSString *)child through:(NSString *)middleMan;
 - (NSArray *)hasManyThrough;
 @end

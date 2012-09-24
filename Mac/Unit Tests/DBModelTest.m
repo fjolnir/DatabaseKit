@@ -1,5 +1,5 @@
 //
-//  DBBaseTest.m
+//  DBModelTest.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
@@ -8,18 +8,18 @@
 
 // TODO: Reset database for each test. (maybe use in memory database and fixtures)
 
-#import "DBBaseTest.h"
+#import "DBModelTest.h"
 #import <DatabaseKit/DatabaseKit.h>
 #import "GHTestCase+Fixtures.h"
 
-@implementation DBBase (PrefixSetter)
+@implementation DBModel (PrefixSetter)
 + (void)load
 {
     [self setClassPrefix:@"TE"]; // TE stands for test fyi
 }
 @end
 
-@implementation DBBaseTest
+@implementation DBModelTest
 - (void)setUp
 {
     [super setUpSQLiteFixtures];
@@ -146,13 +146,13 @@
 
 - (void)testDelayedWriting
 {
-    [DBBase setDelayWriting:YES];
+    [DBModel setDelayWriting:YES];
     TEModel *model = [TEModel find:DBFindFirst][0];
     [model setName:@"delayed"];
     GHAssertEqualObjects(@"a name", [model name], @"model name was saved prematurely!");
     [model save];
     GHAssertEqualObjects(@"delayed", [model name], @"model name was not saved!");
-    [DBBase setDelayWriting:NO];
+    [DBModel setDelayWriting:NO];
 }
 @end
 

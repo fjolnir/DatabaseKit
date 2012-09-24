@@ -35,7 +35,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBRelationship.h>
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 
 @interface DBRelationshipBelongsTo : DBRelationship {
 
@@ -43,7 +43,7 @@
 
 @end
 
-@interface DBBase (BelongsTo)
+@interface DBModel (BelongsTo)
 + (void)belongsTo:(NSString *)owner;
 - (NSArray *)belongsTo;
 @end

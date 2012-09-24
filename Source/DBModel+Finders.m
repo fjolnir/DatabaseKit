@@ -1,16 +1,16 @@
 //
-//  DBBase+Finders.m
+//  DBModel+Finders.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 14.8.2007.
 //  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
-#import "DBBase+Finders.h"
+#import "DBModel+Finders.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 
-@implementation DBBase (Finders)
+@implementation DBModel (Finders)
 + (NSArray *)find:(DBFindSpecification)idOrSpecification
 {
     return [self find:idOrSpecification

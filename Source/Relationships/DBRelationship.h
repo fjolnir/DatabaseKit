@@ -37,17 +37,17 @@
 #define _DBRELATIONSHIP_H_
 
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 
 /*!
  * The abstract superclass for writing DatabaseKit relationships.
  * DBRelationship itself implements no relationship, that's handled by it's subclassses\n
  * You will most likely not need to use a relationship directly (except when creating it) since
- * DBBase's retrieval/sending methods handle finding and writing to relationships
+ * DBModel's retrieval/sending methods handle finding and writing to relationships
  */
 @interface DBRelationship : NSObject <NSCopying>
 @property(readonly, strong) NSString *name, *className;
-@property(readonly, unsafe_unretained) DBBase *record;
+@property(readonly, unsafe_unretained) DBModel *record;
 
 /*!
  * Creates a relationship with a given name using the passed class
@@ -62,13 +62,13 @@
  */
 + (id)relationshipWithName:(NSString *)aName;
 /*! @copydoc relationshipWithName: */
-- (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(DBBase *)aRecord;
+- (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(DBModel *)aRecord;
 
 /*!
  * Creates a copy of the object with record set to the passed record.
  * @param record The record to use.
  */
-- (id)copyUsingRecord:(DBBase *)record;
+- (id)copyUsingRecord:(DBModel *)record;
 
 /*!
  * Returns wether the relationship supports the passed key and wether it supports adding/removing for it
@@ -95,7 +95,7 @@
 - (void)removeRecord:(id)record forKey:(NSString *)key;
 @end
 
-@interface DBBase (Relationships)
+@interface DBModel (Relationships)
 - (NSArray *)relationshipsOfType:(NSString *)type;
 @end
 #endif /* _DBRELATIONSHIP_H_ */

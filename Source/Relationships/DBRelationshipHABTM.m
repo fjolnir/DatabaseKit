@@ -7,10 +7,10 @@
 //
 
 #import "DBRelationshipHABTM.h"
-#import "DBBase.h"
+#import "DBModel.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBBasePrivate.h"
+#import "DBModelPrivate.h"
 #import "NSString+DBAdditions.h"
 
 @implementation DBRelationshipHABTM
@@ -91,7 +91,7 @@
     if(!aRecord)
         return;
     // Then populate it if any records where passed
-    for(DBBase *partner in aRecord) {
+    for(DBModel *partner in aRecord) {
         [[joinTable insert:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @(partner.databaseId)}] execute];
     }
 
@@ -136,13 +136,13 @@
 - (NSString *)className
 {
     if(!self.className)
-        return [NSString stringWithFormat:@"%@%@", [DBBase classPrefix], [[self.name singularizedString] stringByCapitalizingFirstLetter]];
+        return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [[self.name singularizedString] stringByCapitalizingFirstLetter]];
     else
         return self.className;
 }
 @end
 
-@implementation DBBase (HABTM)
+@implementation DBModel (HABTM)
 - (NSArray *)hasAndBelongsToMany
 {
     return [self relationshipsOfType:@"DBRelationshipHABTM"];

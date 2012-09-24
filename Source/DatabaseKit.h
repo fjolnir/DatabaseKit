@@ -33,8 +33,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ACTIVERECORD_H_ 
 #define _ACTIVERECORD_H_ 
-#import <DatabaseKit/DBBase.h>
-#import <DatabaseKit/DBBase+Finders.h>
+#import <DatabaseKit/DBModel.h>
+#import <DatabaseKit/DBModel+Finders.h>
 
 #import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBSQLiteConnection.h>

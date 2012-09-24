@@ -35,7 +35,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBRelationship.h>
-#import <DatabaseKit/DBBase.h>
+#import <DatabaseKit/DBModel.h>
 
 /*!
  * A one to many relationship
@@ -53,7 +53,7 @@
 @interface DBRelationshipHasMany : DBRelationship
 @end
 
-@interface DBBase (HasMany)
+@interface DBModel (HasMany)
 + (void)hasMany:(NSString *)child;
 - (NSArray *)hasMany;
 @end

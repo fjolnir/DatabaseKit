@@ -1,15 +1,15 @@
 //
-//  DBBase+CustomSelectors.m
+//  DBModel+CustomSelectors.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 12.8.2007.
 //  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
 //
 
-#import "DBBase.h"
-#import "DBBasePrivate.h"
+#import "DBModel.h"
+#import "DBModelPrivate.h"
 
-@implementation DBBase (CustomSelectors)
+@implementation DBModel (CustomSelectors)
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
   NSString *attributeName;

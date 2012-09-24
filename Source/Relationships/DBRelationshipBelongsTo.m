@@ -8,8 +8,8 @@
 
 #import "DBRelationshipBelongsTo.h"
 #import "NSString+DBAdditions.h"
-#import "DBBase.h"
-#import "DBBasePrivate.h"
+#import "DBModel.h"
+#import "DBModelPrivate.h"
 #import "DBRelationshipHasMany.h"
 #import "DBRelationshipHasOne.h"
 
@@ -72,7 +72,7 @@
 }
 @end
 
-@implementation DBBase (BelongsTo)
+@implementation DBModel (BelongsTo)
 + (void)belongsTo:(NSString *)owner
 {
     [self.relationships addObject:[DBRelationshipBelongsTo relationshipWithName:owner]];

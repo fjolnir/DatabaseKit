@@ -8,7 +8,7 @@
 
 #import <DatabaseKit/DBRelationshipHasOne.h>
 #import "DBRelationshipHasOne.h"
-#import "DBBasePrivate.h"
+#import "DBModelPrivate.h"
 #import "NSString+DBAdditions.h"
 
 @implementation DBRelationshipHasOne
@@ -56,13 +56,13 @@
 - (NSString *)className
 {
   if(![super className])
-    return [NSString stringWithFormat:@"%@%@", [DBBase classPrefix], [self.name stringByCapitalizingFirstLetter]];
+    return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [self.name stringByCapitalizingFirstLetter]];
   else
     return [super className];
 }
 @end
 
-@implementation DBBase (HasOne)
+@implementation DBModel (HasOne)
 + (void)hasOne:(NSString *)parent
 {
     [self.relationships addObject:[DBRelationshipHasOne relationshipWithName:parent]];
