@@ -54,7 +54,7 @@ and the implementation:
 
 That's it. Now we can get people like so:
 
-	ARQuery *people = [[DBTable withName:@"people"] select];
+	DBQuery *people = [[DBTable withName:@"people"] select];
 
 and if we want the name of the second person we could:
 
