@@ -10,19 +10,19 @@
 #import "ARBase.h"
 
 @interface ARRelationship ()
-@property(readwrite, retain) NSString *name, *className;
-@property(readwrite, assign) ARBase *record;
+@property(readwrite, strong) NSString *name, *className;
+@property(readwrite, unsafe_unretained) ARBase *record;
 @end
 
 @implementation ARRelationship
 
 + (id)relationshipWithName:(NSString *)aName className:(NSString *)aClassName
 {
-    return [[[self alloc] initWithName:aName className:aClassName record:nil] autorelease];
+    return [[self alloc] initWithName:aName className:aClassName record:nil];
 }
 + (id)relationshipWithName:(NSString *)aName
 {
-    return [[[self alloc] initWithName:aName className:nil record:nil] autorelease];
+    return [[self alloc] initWithName:aName className:nil record:nil];
 }
 - (id)initWithName:(NSString *)aName className:(NSString *)aClassName record:(ARBase *)aRecord
 {
@@ -74,7 +74,7 @@
 #pragma mark Copying
 - (id)copyWithZone:(NSZone *)zone
 {
-    return [[[[self class] allocWithZone:zone] initWithName:_name className:_className record:_record] autorelease];
+    return [[[self class] allocWithZone:zone] initWithName:_name className:_className record:_record];
 }
 - (id)copyUsingRecord:(ARBase *)record
 {

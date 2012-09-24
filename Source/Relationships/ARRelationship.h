@@ -46,8 +46,8 @@
  * ARBase's retrieval/sending methods handle finding and writing to relationships
  */
 @interface ARRelationship : NSObject <NSCopying>
-@property(readonly, retain) NSString *name, *className;
-@property(readonly, assign) ARBase *record;
+@property(readonly, strong) NSString *name, *className;
+@property(readonly, unsafe_unretained) ARBase *record;
 
 /*!
  * Creates a relationship with a given name using the passed class

@@ -15,7 +15,7 @@
 @interface TEModel : ARBase {
   
 }
-@property(readwrite, retain) NSString *name, *info;
+@property(readwrite, strong) NSString *name, *info;
 @end
 @interface TEModel (Accessors)
 - (NSArray *)people;
@@ -29,7 +29,7 @@
 @interface TEPerson : ARBase {
   
 }
-@property(readwrite, assign) NSString *userName, *realName;
+@property(readwrite, weak) NSString *userName, *realName;
 @end
 @interface TEPerson (Accessors)
 - (NSArray *)animals;

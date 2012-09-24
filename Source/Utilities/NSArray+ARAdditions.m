@@ -15,10 +15,8 @@
   NSMutableArray *ret = [NSMutableArray arrayWithArray:self];
   for(id item in ret)
   {
-		[item retain];
     [ret removeObjectIdenticalTo:item];
 		[ret addObject:item];
-		[item release];
   }
   return ret;
 }

@@ -1,19 +1,33 @@
 #import "ARTable.h"
+#import "ARBase.h"
 #import "ARQuery.h"
+#import "NSString+ARAdditions.h"
 
 @interface ARTable ()
-@property(readwrite, retain) NSString *name;
-@property(readwrite, retain) id<ARConnection> connection;
+@property(readwrite, strong) NSString *name;
+@property(readwrite, strong) id<ARConnection> connection;
 @end
 
 @implementation ARTable
+
++ (ARTable *)withName:(NSString *)name
+{
+    return [self withConnection:nil name:name];
+}
 
 + (ARTable *)withConnection:(id<ARConnection>)connection name:(NSString *)name
 {
     ARTable *ret   = [self new];
     ret.connection = connection;
     ret.name       = name;
-    return [ret autorelease];
+    return ret;
+}
+
+- (Class)modelClass
+{
+    NSString *prefix    = [ARBase classPrefix];
+    NSString *tableName = [[_name singularizedString] capitalizedString];
+    return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
 }
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx

@@ -36,12 +36,15 @@
 #import <ActiveRecord/ARConnection.h>
 
 @interface ARTable : NSObject
-@property(readonly, retain) NSString *name;
-@property(readonly, retain) id<ARConnection> connection;
+@property(readonly, strong) NSString *name;
+@property(readonly, strong) id<ARConnection> connection;
 
++ (ARTable *)withName:(NSString *)name;
 + (ARTable *)withConnection:(id<ARConnection>)connection name:(NSString *)name;
 
 - (NSString *)toString;
+
+- (Class)modelClass;
 
 - (ARQuery *)select:(id)fields;
 - (ARQuery *)select;

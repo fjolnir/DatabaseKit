@@ -45,7 +45,7 @@
   NSArray *plurals;
   NSArray *singulars;
 }
-@property(readwrite, retain) NSArray *irregulars, *uncountables, *plurals, *singulars;
+@property(readwrite, strong) NSArray *irregulars, *uncountables, *plurals, *singulars;
 
 /*! Returns the shared inflector object */
 + (ARInflector *)sharedInflector;

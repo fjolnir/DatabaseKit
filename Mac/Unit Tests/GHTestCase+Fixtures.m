@@ -19,7 +19,7 @@
                                                  encoding:NSUTF8StringEncoding 
                                                     error:nil];
 	
-	ARSQLiteConnection *connection = [ARSQLiteConnection openConnectionWithInfo:[NSDictionary dictionaryWithObject:path forKey:@"path"]
+	ARSQLiteConnection *connection = [ARSQLiteConnection openConnectionWithInfo:@{@"path": path}
 																		  error:&err];
 	for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
 	{
@@ -30,7 +30,14 @@
 	}
 	// See if it works
   [ARBase setDefaultConnection:connection];
-	
+
+    ARQuery *q = [[ARTable withName:@"people"] select:@"*"];
+    ARBase *myResult = q[0];
+    [myResult.connection beginTransaction];
+    [myResult pets];
+    [myResult.connection endTransaction];
+    NSLog(@"%@", q[0]);
+
 	return connection;
 }
 

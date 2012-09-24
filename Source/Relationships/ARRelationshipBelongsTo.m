@@ -45,8 +45,8 @@
     NSString *idColumn = [[self.record class] idColumnForModel:partnerClass];
     id partnerId = [self.record retrieveValueForKey:idColumn];
     if(![partnerId isEqual:[NSNull null]])
-        return [[[partnerClass alloc] initWithConnection:self.record.connection
-                                                      id:[partnerId unsignedIntValue]] autorelease];
+        return [[partnerClass alloc] initWithConnection:self.record.connection
+                                                      id:[partnerId unsignedIntValue]];
     return nil;
 }
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key

@@ -34,8 +34,8 @@
 
 - (void)testCreate
 {
-    TEModel *model = [TEModel createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Foobar", @"name",
-                                                    @"This is great!", @"info", nil]];
+    TEModel *model = [TEModel createWithAttributes:@{@"name": @"Foobar",
+                                                    @"info": @"This is great!"}];
 
 	GHAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
 	GHAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
@@ -43,8 +43,8 @@
 
 - (void)testDestroy
 {
-	TEModel *model = [TEModel createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Deletee", @"name",
-                                                    @"This won't exist for long", @"info", nil]];
+	TEModel *model = [TEModel createWithAttributes:@{@"name": @"Deletee",
+                                                    @"info": @"This won't exist for long"}];
 	NSUInteger theId = model.databaseId;
 	GHAssertTrue([model destroy], @"Couldn't delete record");
 	NSArray *result = [TEModel find:(ARFindSpecification)theId];
@@ -53,7 +53,7 @@
 
 - (void)testFindFirst
 {
-    TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
+    TEModel *first = [TEModel find:ARFindFirst][0];
 
     GHAssertNotNil(first, @"No result for first entry!");
 	GHAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
@@ -61,7 +61,7 @@
 
 - (void)testModifying
 {
-    TEModel *first = [[TEModel find:ARFindFirst] objectAtIndex:0];
+    TEModel *first = [TEModel find:ARFindFirst][0];
     [first beginTransaction];
     NSString *newName = @"NOT THE SAME NAME!";
     //[first setName:newName];
@@ -73,12 +73,12 @@
 - (void)testHasMany
 {
     // First test retrieving
-    TEModel *model = [[TEModel find:ARFindFirst] objectAtIndex:0];
+    TEModel *model = [TEModel find:ARFindFirst][0];
     NSArray *originalPeople = [model people];
     GHAssertTrue(([originalPeople count] == 2), @"TEModel should have 2 TEPeople but had %d", [originalPeople count]);
 
     // Then test sending
-    TEPerson *aPerson = [TEPerson createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"frankenstein", @"realName", @"frank", @"userName", nil]];
+    TEPerson *aPerson = [TEPerson createWithAttributes:@{@"realName": @"frankenstein", @"userName": @"frank"}];
     [model addPerson:aPerson];
     NSMutableArray *laterPeople = [originalPeople mutableCopy];
     [laterPeople addObject:aPerson];
@@ -86,15 +86,15 @@
 
     GHAssertTrue([[model people] count] == [laterPeople count], @"person count should've been %d but was %d", [laterPeople count], [[model people] count]);
 
-    [model setPeople:[NSArray arrayWithObject:aPerson]];
+    [model setPeople:@[aPerson]];
     GHAssertTrue([[model people] count] == 1, @"model should only have one person");
-    GHAssertTrue([[[model people] objectAtIndex:0] databaseId] == [aPerson databaseId], @"person id should've been %d but was %d", [aPerson databaseId], [[[model people] objectAtIndex:0] databaseId]);
+    GHAssertTrue([[model people][0] databaseId] == [aPerson databaseId], @"person id should've been %d but was %d", [aPerson databaseId], [[model people][0] databaseId]);
 }
 
 - (void)testHasManyThrough
 {
     // First test retrieving
-    TEModel *model = [[TEModel find:ARFindFirst] objectAtIndex:0];
+    TEModel *model = [TEModel find:ARFindFirst][0];
 	NSArray *belgians = [model belgians];
 	NSLog(@"belgians: %@", belgians);
     GHAssertTrue(([belgians count] == 2), @"TEModel should have 2 belgians but had %d", [belgians count]);
@@ -102,14 +102,14 @@
 
 - (void)testHasOne
 {
-    TEModel *model   = [[TEModel find:ARFindFirst] objectAtIndex:0];
-    TEAnimal *animal = [[TEAnimal find:ARFindAll] objectAtIndex:0];
+    TEModel *model   = [TEModel find:ARFindFirst][0];
+    TEAnimal *animal = [TEAnimal find:ARFindAll][0];
 
     GHAssertTrue(([animal databaseId] == [[model animal] databaseId]), @"%@ != %@ !!", animal, [model animal]);
 	return;
 
     // Then test sending
-    TEAnimal *anAnimal = [TEAnimal createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"Leopard", @"species", @"Godfred", @"nickname", nil]];
+    TEAnimal *anAnimal = [TEAnimal createWithAttributes:@{@"species": @"Leopard", @"nickname": @"Godfred"}];
 
     [model setAnimal:anAnimal];
     GHAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%d != %d)", [[model animal] databaseId], [anAnimal databaseId]);
@@ -117,13 +117,13 @@
 
 - (void)testBelongsTo
 {
-    TEPerson *person = [[TEPerson find:ARFindFirst] objectAtIndex:0];
+    TEPerson *person = [TEPerson find:ARFindFirst][0];
     TEModel *model = [person model];
 
     GHAssertNotNil(model, @"No model found for person!");
 
     // Then test sending
-    TEAnimal *anAnimal = [TEAnimal createWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@"cheetah", @"species", @"rick", @"nickname", nil]];
+    TEAnimal *anAnimal = [TEAnimal createWithAttributes:@{@"species": @"cheetah", @"nickname": @"rick"}];
 
     TEAnimal *oldAnimal = [model animal];
     [anAnimal setModel:model];
@@ -134,19 +134,20 @@
 
 - (void)testHasAndBelongsToMany
 {
-    TEPerson *person = [[TEPerson find:3] objectAtIndex:0];
-    TEAnimal *animal = [[TEAnimal find:ARFindFirst] objectAtIndex:0];
-	GHAssertEquals([[[person animals] objectAtIndex:0] databaseId], (NSUInteger)1, @"Person had wrong animal!");
-	GHAssertEquals([[[animal people] objectAtIndex:0] databaseId], (NSUInteger)3, @"Animal had wrong person!");
-	animal = [[TEAnimal find:2] objectAtIndex:0];
+    TEPerson *person = [TEPerson find:3][0];
+    TEAnimal *animal = [TEAnimal find:ARFindFirst][0];
+    NSLog(@"%@<--------------", [person animals]);
+	GHAssertEquals([[person animals][0] databaseId], (NSUInteger)1, @"Person had wrong animal!");
+	GHAssertEquals([[animal people][0] databaseId], (NSUInteger)3, @"Animal had wrong person!");
+	animal = [TEAnimal find:2][0];
 	[animal addPerson:person];
-	GHAssertEquals([[[animal people] objectAtIndex:0] databaseId], (NSUInteger)[person databaseId], @"Animal had wrong person!");
+	GHAssertEquals([[animal people][0] databaseId], (NSUInteger)[person databaseId], @"Animal had wrong person!");
 }
 
 - (void)testDelayedWriting
 {
 	[ARBase setDelayWriting:YES];
-	TEModel *model = [[TEModel find:ARFindFirst] objectAtIndex:0];
+	TEModel *model = [TEModel find:ARFindFirst][0];
 	[model setName:@"delayed"];
 	GHAssertEqualObjects(@"a name", [model name], @"model name was saved prematurely!");
 	[model save];

@@ -39,7 +39,7 @@
 #import <ActiveRecord/ARBase.h>
 
 @interface ARRelationshipHasManyThrough : ARRelationshipHasMany
-@property(readonly, retain) NSString *proxyKey;
+@property(readonly, strong) NSString *proxyKey;
 
 + (id)relationshipWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey;
 + (id)relationshipWithName:(NSString *)aName through:(NSString *)aProxyKey;

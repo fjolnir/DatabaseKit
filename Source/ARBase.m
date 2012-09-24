@@ -17,7 +17,7 @@ static id<ARConnection> defaultConnection = nil;
 static NSString *classPrefix = nil;
 
 @interface ARBase ()
-@property(readwrite, retain) ARTable *table;
+@property(readwrite, strong) ARTable *table;
 @end
 
 @implementation ARBase
@@ -25,8 +25,6 @@ static NSString *classPrefix = nil;
 + (void)setDefaultConnection:(id<ARConnection>)aConnection
 {
     @synchronized([ARBase class]) {
-        [aConnection retain];
-        [defaultConnection release];
         defaultConnection = aConnection;
     }
 }
@@ -42,16 +40,12 @@ static NSString *classPrefix = nil;
 }
 - (void)setConnection:(id<ARConnection>)aConnection {
     @synchronized(self) {
-        [aConnection retain];
-        [_connection release];
         _connection = aConnection;
     }
 }
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
-    [aPrefix retain];
-    [classPrefix release];
     classPrefix = aPrefix;
 }
 + (NSString *)classPrefix
@@ -178,7 +172,7 @@ static NSString *classPrefix = nil;
         for(NSString *key in [attributes allKeys]) {
             [record sendValue:attributes[key] forKey:key];
         }
-        return [record autorelease];
+        return record;
     }
     @catch (NSException *e) {
         ARDebugLog(@"Error during creation, exception: %@", e);
@@ -218,11 +212,9 @@ static NSString *classPrefix = nil;
     self.relationships = [NSMutableArray array];
     ARRelationshipColumn *columnRelationship = [[ARRelationshipColumn alloc] initWithName:nil className:nil record:self];
     [self.relationships addObject:columnRelationship];
-    [columnRelationship release];
-    for(ARRelationship *relationship in [[self class] relationships]) {
+    for(__strong ARRelationship *relationship in [[self class] relationships]) {
         relationship = [relationship copyUsingRecord:self];
         [self.relationships addObject:relationship];
-        [relationship release];
     }
 
     return self;
@@ -315,7 +307,7 @@ static NSString *classPrefix = nil;
 - (NSArray *)columns
 {
 	if(!_columnCache)
-		_columnCache = [[self.connection columnsForTable:[[self class] tableName]] retain];
+		_columnCache = [self.connection columnsForTable:[[self class] tableName]];
 	return _columnCache;
 }
 + (NSString *)idColumnForModel:(Class)modelClass
@@ -328,7 +320,7 @@ static NSString *classPrefix = nil;
 }
 + (NSString *)tableName
 {
-    NSMutableString *ret = [[[self className] mutableCopy] autorelease];
+    NSMutableString *ret = [[self className] mutableCopy];
     if([ARBase classPrefix]) {
         [ret replaceOccurrencesOfString:[ARBase classPrefix]
                              withString:@""
@@ -383,18 +375,4 @@ static NSString *classPrefix = nil;
 
 #pragma mark - Cleanup
 
-- (void)dealloc
-{
-    [_connection release];
-    [_relationships release];
-	
-	[_writeCache release];
-	[_readCache release];
-	[_addCache release];
-	[_removeCache release];
-	if(_columnCache)
-		[_columnCache release];
-    
-    [super dealloc];
-}
 @end

@@ -12,19 +12,23 @@ NSString *const ARQueryTypeDelete = @"DELETE";
 
 NSString *const ARStringCondition = @"ARStringCondition";
 
+NSString *const ARInnerJoin = @"INNER";
+NSString *const ARLeftJoin  = @"LEFT";
+
 @interface ARQuery () {
     BOOL _dirty;
     NSArray *_rows;
 }
-@property(readwrite, retain, nonatomic) id<ARConnection> connection;
-@property(readwrite, retain) NSString *type;
-@property(readwrite, retain) id table;
-@property(readwrite, retain) NSDictionary *parameters;
-@property(readwrite, retain) id fields;
-@property(readwrite, retain) id where;
-@property(readwrite, retain) NSArray *orderedBy;
-@property(readwrite, retain) NSString *order;
-@property(readwrite, retain) NSNumber *limit;
+@property(readwrite, strong, nonatomic) id<ARConnection> connection;
+@property(readwrite, strong) NSString *type;
+@property(readwrite, strong) id table;
+@property(readwrite, strong) NSDictionary *parameters;
+@property(readwrite, strong) id fields;
+@property(readwrite, strong) id where;
+@property(readwrite, strong) NSArray *orderedBy;
+@property(readwrite, strong) NSString *order;
+@property(readwrite, strong) NSNumber *limit;
+@property(readwrite, strong) id join;
 
 - (BOOL)_generateString:(NSString **)outString parameters:(NSArray **)outParameters;
 @end
@@ -41,7 +45,7 @@ NSString *const ARStringCondition = @"ARStringCondition";
     ARQuery *ret = [self new];
     ret.connection = connection;
     ret.table      = table;
-    return [ret autorelease];
+    return ret;
 }
 
 #pragma mark - Derivatives
@@ -57,7 +61,7 @@ NSString *const ARStringCondition = @"ARStringCondition";
     ARQuery *ret = [self copy];
     ret.type = ARQueryTypeSelect;
     ret.fields = IsArr(fields) ? fields : @[fields];
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)select
 {
@@ -70,7 +74,7 @@ NSString *const ARStringCondition = @"ARStringCondition";
     ARQuery *ret = [self copy];
     ret.type = ARQueryTypeInsert;
     ret.fields = fields;
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)update:(id)fields
 {
@@ -78,21 +82,21 @@ NSString *const ARStringCondition = @"ARStringCondition";
     ARQuery *ret = [self copy];
     ret.type = ARQueryTypeUpdate;
     ret.fields = fields;
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)delete
 {
     ARQuery *ret = [self copy];
     ret.type = ARQueryTypeDelete;
     ret.fields = nil;
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)where:(id)conds
 {
     NSParameterAssert(IsArr(conds) || IsDic(conds) || IsStr(conds));
     ARQuery *ret = [self copy];
     ret.where = conds;
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)appendWhere:(id)conds
 {
@@ -111,25 +115,42 @@ NSString *const ARStringCondition = @"ARStringCondition";
         }
     }
     ret.where = derivedConds;
-    return [ret autorelease];
+    return ret;
 }
+
 - (ARQuery *)order:(NSString *)order by:(id)fields
 {
     NSParameterAssert(IsArr(fields) || IsStr(fields));
     ARQuery *ret = [self copy];
     ret.order = order;
     ret.orderedBy = fields;
-    return [ret autorelease];
+    return ret;
 }
 - (ARQuery *)orderBy:(id)fields
 {
     return [self order:AROrderAscending by:fields];
 }
+
 - (ARQuery *)limit:(NSNumber *)limit
 {
     ARQuery *ret = [self copy];
     ret.limit = limit;
-    return [ret autorelease];
+    return ret;
+}
+
+- (ARQuery *)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields
+{
+    ARQuery *ret = [self copy];
+    ret.join = [ARJoin withType:type table:table fields:fields];
+    return ret;
+}
+- (ARQuery *)innerJoin:(id)table on:(NSDictionary *)fields
+{
+    return [self join:ARInnerJoin withTable:table on:fields];
+}
+- (ARQuery *)leftJoin:(id)table on:(NSDictionary *)fields
+{
+        return [self join:ARLeftJoin withTable:table on:fields];
 }
 
 #pragma mark -
@@ -179,6 +200,20 @@ NSString *const ARStringCondition = @"ARStringCondition";
         return NO;
     }
 
+    if(_join) {
+        if([_join isKindOfClass:[ARJoin class]]) {
+            [q appendFormat:@"%@ JOIN %@ ON ", _type, [_table toString]];
+            int i = 0;
+            ARJoin *join = _join;
+            for(id key in join.fields) {
+                if(i++ > 0)
+                    [q appendString:@" AND "];
+                [q appendFormat:@"%@.%@=%@.%@", [_table toString], join.fields[key], [join.table toString], key];
+            }
+        } else
+            [q appendFormat:@" %@", [_join toString]];
+    }
+
     if(_where && [_where count] > 0) {
         [q appendString:@" WHERE "];
         // In case of an array, we simply have a SQL string followed by parameters
@@ -225,9 +260,10 @@ NSString *const ARStringCondition = @"ARStringCondition";
     NSArray *params;
     [self _generateString:&query parameters:&params];
     NSError *err = nil;
+    ARLog(@"Executing query: %@ with params: %@", query, params);
     id ret = [[self connection] executeSQL:query substitutions:params error:&err];
     if(err) {
-        NSLog(@"%@", err);
+        ARDebugLog(@"%@", err);
         return nil;
     }
     return ret;
@@ -237,7 +273,11 @@ NSString *const ARStringCondition = @"ARStringCondition";
 {
     if(!_rows || _dirty)
         _rows = [self execute];
-    return _rows[idx];
+    NSDictionary *row = _rows[idx];
+    Class modelClass = [_table modelClass];
+    if(modelClass && row[@"id"])
+        return [[modelClass alloc] initWithConnection:[self connection] id:[row[@"id"] unsignedIntegerValue]];
+    return row;
 }
 
 - (NSUInteger)count
@@ -252,7 +292,7 @@ NSString *const ARStringCondition = @"ARStringCondition";
 {
     if(_connection)
         return _connection;
-    else if([_table isKindOfClass:[ARTable class]])
+    else if([_table isKindOfClass:[ARTable class]] && [(ARTable *)_table connection])
         return [(ARTable *)_table connection];
     return [ARBase defaultConnection];
 }
@@ -282,19 +322,41 @@ NSString *const ARStringCondition = @"ARStringCondition";
 }
 @end
 
+@interface ARJoin ()
+@property(readwrite, strong) NSString *type;
+@property(readwrite, strong) id table;
+@property(readwrite, strong) NSDictionary *fields;
+@end
+@implementation ARJoin
++ (ARJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields
+{
+    NSParameterAssert([table respondsToSelector:@selector(toString)]);
+    ARJoin *ret = [self new];
+    ret.type   = type;
+    ret.table  = table;
+    ret.fields = fields;
+    return ret;
+}
+- (NSString *)toString
+{
+    return [NSString stringWithFormat:@"%@ JOIN %@ ON ", _type, [_table toString]];
+}
+- (NSString *)description
+{
+    return [self toString];
+}
+@end
+
+@interface ARAs ()
+@property(readwrite, strong) NSString *field, *alias;
+@end
 @implementation ARAs
 + (ARAs *)field:(NSString *)field alias:(NSString *)alias
 {
-    return [[self alloc] initWithField:field alias:alias];
-}
-
-- (id)initWithField:(NSString *)field alias:(NSString *)alias
-{
-    if(!(self = [super init]))
-        return nil;
-    _field = [field retain];
-    _alias = [alias retain];
-    return self;
+    ARAs *ret = [self new];
+    ret.field = field;
+    ret.alias = alias;
+    return ret;
 }
 
 - (NSString *)toString

@@ -79,9 +79,9 @@ typedef enum {
 	NSMutableArray *_removeCache;
 	NSArray *_columnCache;
 }
-@property(readwrite, retain) id<ARConnection> connection;
-@property(readonly, retain) ARTable *table;
-@property(readwrite, retain) NSMutableArray *relationships;
+@property(readwrite, strong) id<ARConnection> connection;
+@property(readonly, strong) ARTable *table;
+@property(readwrite, strong) NSMutableArray *relationships;
 @property(readwrite) NSUInteger databaseId;
 
 /*! Creates a new record and saves it in the database

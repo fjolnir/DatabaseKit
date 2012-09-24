@@ -68,7 +68,6 @@
 	{
 		[ret appendString:[part stringByCapitalizingFirstLetter]];
 	}
-	[parts release];
 	return ret;
 }
 

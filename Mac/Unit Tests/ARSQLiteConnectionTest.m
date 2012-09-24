@@ -13,8 +13,7 @@
 @implementation ARSQLiteConnectionTest
 - (void)setUp
 {
-	[connection release];
-	connection = [[super setUpSQLiteFixtures] retain];
+	connection = [super setUpSQLiteFixtures];
 }
 
 - (void)tearDown
@@ -31,7 +30,7 @@
 {
   // Test if we fetch correct columns
   NSArray *columnsFromDb = [connection columnsForTable:@"foo"];
-  NSArray *columnsFixture = [NSArray arrayWithObjects:@"id", @"bar", @"baz", @"integer", nil];
+  NSArray *columnsFixture = @[@"id", @"bar", @"baz", @"integer"];
   for(NSString *fixture in columnsFixture)
   {
     GHAssertTrue([columnsFromDb containsObject:fixture],
@@ -44,8 +43,8 @@
   NSString *query = @"SELECT * FROM foo" ;
     NSArray *result = [connection executeSQL:query substitutions:nil error:nil];
   GHAssertTrue([result count] == 2, @"foo should have 2 rows");
-  NSArray *columns = [[result objectAtIndex:0] allKeys];
-  NSArray *expectedColumns = [NSArray arrayWithObjects:@"id", @"bar", @"baz", @"integer", nil];
+  NSArray *columns = [result[0] allKeys];
+  NSArray *expectedColumns = @[@"id", @"bar", @"baz", @"integer"];
   for(NSString *fixture in expectedColumns)
   {
     GHAssertTrue([columns containsObject:fixture],
@@ -64,8 +63,8 @@
     NSArray *fetch = [inMemoryDb executeSQL:@"SELECT * FROM test" substitutions:nil error:nil];
   GHAssertEquals([fetch count], (NSUInteger)1, @"Row count should be 1");
   
-  NSDictionary *row = [fetch objectAtIndex:0];
-  GHAssertEqualObjects([row objectForKey:@"id"], [NSNumber numberWithInt:1], @"ID should be 1");
-  GHAssertEqualObjects([row objectForKey:@"aString"], @"foobar", @"aString should be 'foobar'");
+  NSDictionary *row = fetch[0];
+  GHAssertEqualObjects(row[@"id"], @1, @"ID should be 1");
+  GHAssertEqualObjects(row[@"aString"], @"foobar", @"aString should be 'foobar'");
 }
 @end

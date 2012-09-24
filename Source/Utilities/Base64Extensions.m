@@ -95,7 +95,7 @@ static const short _base64DecodingTable[256] = {
 	// Cleanup and setup the return NSData
 	NSData *objData = [[NSData alloc] initWithBytes:objResult length:j];
 	free(objResult);
-	return [objData autorelease];
+	return objData;
 }
 
 @end

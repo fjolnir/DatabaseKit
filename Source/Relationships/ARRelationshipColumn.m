@@ -19,7 +19,7 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    ARQuery *query = [[self.record.table select:key] where:@{ @"id": @(self.record.databaseId) }];
+    NSArray *query = [[[self.record.table select:key] where:@{ @"id": @(self.record.databaseId) }] execute];
     if([query count] < 1)
     {
         ARDebugLog(@"Couldn't get result: %@", query);

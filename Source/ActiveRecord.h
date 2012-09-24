@@ -38,6 +38,8 @@
 
 #import <ActiveRecord/ARConnection.h>
 #import <ActiveRecord/ARSQLiteConnection.h>
+#import <ActiveRecord/ARTable.h>
+#import <ActiveRecord/ARQuery.h>
 
 #import <ActiveRecord/ARRelationship.h>
 #import <ActiveRecord/ARRelationshipHasMany.h>
@@ -46,7 +48,5 @@
 #import <ActiveRecord/ARRelationshipBelongsTo.h>
 #import <ActiveRecord/ARRelationshipHABTM.h>
 #import <ActiveRecord/ARRelationshipColumn.h>
-
-#import <ActiveRecord/ARBaseArrayInterface.h>
 
 #endif /* _ACTIVERECORD_H_ */

@@ -56,9 +56,9 @@
 		C7AED97A13C14B9600C47919 /* NSArray+ARAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+ARAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
 		C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
-		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
+		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2A513BA0A5600013E21 /* libicucore.dylib */; };
-		C7CAF30C13BA1AE200013E21 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */; };
+		C7CAF30C13BA1AE200013E21 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7CAF30D13BA1AE600013E21 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2CD13BA199100013E21 /* GHUnit.framework */; };
 		C7CAF30F13BA1B5300013E21 /* GHUnit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7CAF2CD13BA199100013E21 /* GHUnit.framework */; };
 		C7CAF31E13BA1BE700013E21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7CAF31713BA1BE700013E21 /* InfoPlist.strings */; };
@@ -74,14 +74,14 @@
 		C7CAF32A13BA201000013E21 /* ActiveRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ActiveRecord.framework */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
-		C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* ARQuery.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* ARQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7FAF115160C830F004B16B0 /* ARQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FAF113160C830F004B16B0 /* ARQuery.m */; };
-		C7FE7F521610069500031BBD /* ARTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FE7F501610069500031BBD /* ARTable.h */; };
+		C7FE7F521610069500031BBD /* ARTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FE7F501610069500031BBD /* ARTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7FE7F531610069500031BBD /* ARTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FE7F511610069500031BBD /* ARTable.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F8DA530F0E058F10002C3ADB /* ActiveRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* ActiveRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; };
+		F8DA53100E058F10002C3ADB /* ARBase+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* ARBase+CustomSelectors.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F8DA53110E058F10002C3ADB /* ARBase+Finders.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E40E058F10002C3ADB /* ARBase+Finders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53120E058F10002C3ADB /* ARBase+Finders.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E50E058F10002C3ADB /* ARBase+Finders.m */; };
 		F8DA53130E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* ARBase+KeyAndSelectorParsers.m */; };
@@ -562,16 +562,16 @@
 				F8DA53240E058F10002C3ADB /* ARRelationshipColumn.h in Headers */,
 				F8DA53260E058F10002C3ADB /* ARRelationshipHABTM.h in Headers */,
 				F8DA53280E058F10002C3ADB /* ARRelationshipHasMany.h in Headers */,
+				C7FE7F521610069500031BBD /* ARTable.h in Headers */,
 				F8DA532A0E058F10002C3ADB /* ARRelationshipHasManyThrough.h in Headers */,
 				F8DA532C0E058F10002C3ADB /* ARRelationshipHasOne.h in Headers */,
 				F8DA532E0E058F10002C3ADB /* ARInflector.h in Headers */,
+				C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+ARAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+ARAdditions.h in Headers */,
-				C7FAF114160C830F004B16B0 /* ARQuery.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7CAF32113BA1BE700013E21 /* Unit Tests-Prefix.pch in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
-				C7FE7F521610069500031BBD /* ARTable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +853,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -876,6 +877,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -978,7 +980,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1009,7 +1011,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

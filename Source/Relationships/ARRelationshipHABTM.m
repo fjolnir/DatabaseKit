@@ -8,6 +8,8 @@
 
 #import "ARRelationshipHABTM.h"
 #import "ARBase.h"
+#import "ARTable.h"
+#import "ARQuery.h"
 #import "ARBasePrivate.h"
 #import "NSString+ARAdditions.h"
 
@@ -49,11 +51,18 @@
 		 ];
     return nil;
   }
+
 	NSString *joinTableName = [[self.record class] joinTableNameForModel:[self.record class] and:partnerClass];
-	
+    NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
+    ARTable *partnerTable   = [ARTable withConnection:self.record.connection name:[partnerClass tableName]];
+    
+	ARQuery *q = [partnerTable select:partnerIdCol];
+    q          = [q innerJoin:joinTableName on:@{ @"id": partnerIdCol }];
+    q          = [q where:@{ [[self.record class] idColumn]: @(self.record.databaseId) }];
+    
 	NSMutableString *idQuery = [NSMutableString stringWithFormat:@"SELECT %@ FROM %@ INNER JOIN %@ ON %@.id = %@.%@ WHERE %@=:our_id",
-								[[self.record class] idColumnForModel:partnerClass], 
-								[partnerClass tableName], 
+								[[self.record class] idColumnForModel:partnerClass],
+								[partnerClass tableName],
 								joinTableName, 
 								[partnerClass tableName],
 								joinTableName,
@@ -69,7 +78,7 @@
 		[idQuery appendFormat:@" LIMIT %ld", limit];
 	
 	NSArray *partnerIds = [self.record.connection executeSQL:idQuery
-												 substitutions:@{@"our_id": @(self.record.databaseId) } error:nil];
+                                               substitutions:@{@"our_id": @(self.record.databaseId) } error:nil];
 	id partnerRecord;
 	NSNumber *anId;
 	NSMutableArray *partners = [NSMutableArray array];
@@ -78,7 +87,7 @@
 		anId = dict[[[self.record class] idColumnForModel:partnerClass]];
 		partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection 
 																													id:[anId unsignedIntValue]];
-		[partners addObject:[partnerRecord autorelease]];
+		[partners addObject:partnerRecord];
 	}
 	return partners;
 }

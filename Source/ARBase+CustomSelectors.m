@@ -22,8 +22,7 @@
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
   NSString *attributeName;
-  ARAttributeSelectorType selectorType = [self typeOfSelector:[invocation selector] 
-																								attributeName:&attributeName];
+  ARAttributeSelectorType selectorType = [self typeOfSelector:[invocation selector] attributeName:&attributeName];
 
   ARRelationship *relationship = [self relationshipForKey:attributeName];
 	

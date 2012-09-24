@@ -57,7 +57,7 @@
     for(NSDictionary *match in ids)
     {
         NSUInteger id = [match[@"id"] unsignedIntValue];
-        [models addObject:[[[self alloc] initWithConnection:aConnection id:id] autorelease]];
+        [models addObject:[[self alloc] initWithConnection:aConnection id:id]];
     }
     return models;
 }

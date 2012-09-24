@@ -64,7 +64,6 @@
         anId = row[@"id"];
         partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection id:[anId unsignedIntegerValue]];
         [partners addObject:partnerRecord];
-        [partnerRecord release];
     }
     return partners;
 #if 0

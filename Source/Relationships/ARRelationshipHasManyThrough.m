@@ -11,7 +11,7 @@
 #import "ARBasePrivate.h"
 
 @interface ARRelationshipHasManyThrough ()
-@property(readwrite, retain) NSString *proxyKey;
+@property(readwrite, strong) NSString *proxyKey;
 @end
 
 @implementation ARRelationshipHasManyThrough
@@ -19,7 +19,7 @@
 + (id)relationshipWithName:(NSString *)aName className:(NSString *)aClassName through:(NSString *)aProxyKey
 {
 	ARRelationshipHasManyThrough *ret = [[self alloc] initWithName:aName className:aClassName through:aProxyKey];
-	return [ret autorelease];
+	return ret;
 }
 + (id)relationshipWithName:(NSString *)aName through:(NSString *)aProxyKey
 {

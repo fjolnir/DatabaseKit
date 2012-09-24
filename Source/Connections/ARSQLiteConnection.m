@@ -28,7 +28,7 @@
 #pragma mark Initialization
 + (id)openConnectionWithInfo:(NSDictionary *)info error:(NSError **)err
 {
-  return [[[self alloc] initWithConnectionInfo:info error:err] autorelease];
+  return [[self alloc] initWithConnectionInfo:info error:err];
 }
 - (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err
 {
@@ -88,8 +88,7 @@
     const char *keyCstring;
     NSString *key;
     id sub;
-	for(int i = 0; i < sqlite3_bind_parameter_count(queryByteCode); ++i)
-	{
+	for(int i = 0; i < sqlite3_bind_parameter_count(queryByteCode); ++i) {
         if(isDict) {
             keyCstring = sqlite3_bind_parameter_name(queryByteCode, i);
             if(!keyCstring)
@@ -136,8 +135,7 @@
       // construct the dictionary for the row
       columns = [NSMutableDictionary dictionary];
       int i = 0;
-      for (NSString *columnName in columnNames)
-      {
+      for(NSString *columnName in columnNames) {
         columns[columnName] = [self valueForColumn:i query:queryByteCode];
         ++i;
       }
@@ -272,14 +270,8 @@
 
 #pragma mark -
 #pragma mark Cleanup
-- (void)finalize
-{
-  [super finalize];
-  [self closeConnection];
-}
 - (void)dealloc
 {
   [self closeConnection];
-  [super dealloc];
 }
 @end
