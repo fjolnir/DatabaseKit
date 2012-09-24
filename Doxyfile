@@ -90,7 +90,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ./trunk/Source
+INPUT                  = ./Source
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
@@ -164,8 +164,8 @@ HTML_STYLESHEET        =
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = NO
 GENERATE_DOCSET        = NO
-DOCSET_FEEDNAME        = "ActiveRecord Documentation"
-DOCSET_BUNDLE_ID       = is.ninjakitten.activerecord
+DOCSET_FEEDNAME        = "DatabaseKit Documentation"
+DOCSET_BUNDLE_ID       = is.fjolnir.dbkit
 HTML_DYNAMIC_SECTIONS  = NO
 CHM_FILE               = 
 HHC_LOCATION           = 
