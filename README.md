@@ -60,3 +60,21 @@ and if we want the name of the second person we could:
 
 	Person *person = people[1];
 	NSLog(@"%@ %@", person.firstName, person.lastName);
+
+### More advanced query generation
+
+    ARQuery *q = [[aTable select:@{ @"field1", @"field2" }] where:@{ @"id": @123 }];
+    for(NSDictionary *row in [q limit:@100]) {
+        NSLog(@"f1: %@", row[@"field1"]);
+    }
+
+---
+    // Delete really old rows
+    [[aTable delete] where:@[@"modifiedAt < ?", [NSDate distantPast]]];
+---
+The examples above look even nicer when written in my scripting language [Tranquil](http://github.com/fjolnir/Tranquil)
+
+    q = (aTable select: { $field1, $field2 }) where: { $id: 123 }
+    q each: `row | row print`
+    
+    (aTable delete) where: ["modifiedAt < ?", NSDate distantPast]
