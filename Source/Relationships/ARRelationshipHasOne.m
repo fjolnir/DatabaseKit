@@ -24,15 +24,13 @@
 }
 
 
-- (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit
+- (id)retrieveRecordForKey:(NSString *)key
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
-	NSArray *array = [super retrieveRecordForKey:key
-																				filter:whereSQL
-																				 order:orderSQL
-																				 limit:limit];
+	NSArray *array = [super retrieveRecordForKey:key filter:conditions order:order by:orderByFields limit:limit];
   if(!array || [array count] <= 0)
     return nil;
   // Else

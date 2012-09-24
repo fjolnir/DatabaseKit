@@ -230,20 +230,22 @@ static NSString *classPrefix = nil;
 		return cached;
 
 	// If not, we retrieve the value, return it and cache it if we should
-	id value = [self retrieveRecordForKey:key filter:nil order:nil limit:0];
+	id value = [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
 	if(value && [ARBase enableCache])
 		_readCache[key] = value;
     return value;
 }
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
-	ARRelationship *relationship = [self relationshipForKey:key];
-	id value = [relationship retrieveRecordForKey:key filter:whereSQL order:orderSQL limit:limit];
-
-    return value;
+    return [[self relationshipForKey:key] retrieveRecordForKey:key
+                                                        filter:conditions
+                                                         order:order
+                                                            by:orderByFields
+                                                         limit:limit];
 }
 - (void)sendValue:(id)value forKey:(NSString *)key
 {

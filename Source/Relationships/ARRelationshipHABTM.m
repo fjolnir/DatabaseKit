@@ -34,9 +34,10 @@
 
 
 - (id)retrieveRecordForKey:(NSString *)key 
-										filter:(NSString *)whereSQL 
-										 order:(NSString *)orderSQL
-										 limit:(NSUInteger)limit
+										filter:(id)conditions
+										 order:(NSString *)order
+                        by:(id)orderByFields
+										 limit:(NSNumber *)limit
 {
 	if(![self respondsToKey:key])
 		return nil;
@@ -59,35 +60,17 @@
 	ARQuery *q = [partnerTable select:partnerIdCol];
     q          = [q innerJoin:joinTableName on:@{ @"id": partnerIdCol }];
     q          = [q where:@{ [[self.record class] idColumn]: @(self.record.databaseId) }];
-    
-	NSMutableString *idQuery = [NSMutableString stringWithFormat:@"SELECT %@ FROM %@ INNER JOIN %@ ON %@.id = %@.%@ WHERE %@=:our_id",
-								[[self.record class] idColumnForModel:partnerClass],
-								[partnerClass tableName],
-								joinTableName, 
-								[partnerClass tableName],
-								joinTableName,
-								[[self.record class] idColumnForModel:partnerClass],
-								[[self.record class] idColumn]];
-	
-	
-	if(whereSQL)
-		[idQuery appendFormat:@" AND %@", whereSQL];
-	if(orderSQL)
-		[idQuery appendFormat:@" ORDER BY %@", orderSQL];
-	if(limit > 0)
-		[idQuery appendFormat:@" LIMIT %ld", limit];
-	
-	NSArray *partnerIds = [self.record.connection executeSQL:idQuery
-                                               substitutions:@{@"our_id": @(self.record.databaseId) } error:nil];
-	id partnerRecord;
-	NSNumber *anId;
+    if(conditions)
+        q = [q where:conditions];
+    if(order || orderByFields)
+        q = [q order:order ? order : AROrderAscending by:orderByFields];
+    if(limit)
+        q = [q limit:limit];
+
 	NSMutableArray *partners = [NSMutableArray array];
-	for(NSDictionary *dict in partnerIds)
-	{
-		anId = dict[[[self.record class] idColumnForModel:partnerClass]];
-		partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection 
-																													id:[anId unsignedIntValue]];
-		[partners addObject:partnerRecord];
+	for(NSDictionary *row in [q execute]) {
+		[partners addObject:[[partnerClass alloc] initWithConnection:self.record.connection
+                                                                  id:[row[partnerIdCol] unsignedIntValue]]];
 	}
 	return partners;
 }
@@ -126,17 +109,17 @@
 	// Check if the relationship already exists between us, if it does we shouldn't duplicate it
 	// Note to self: maybe we should replace this with a query, it'd be faster but uglier code.
 	NSArray *existingPartners = [self.record retrieveValueForKey:key];
-	for(id existingPartner in existingPartners)
-	{
+	for(id existingPartner in existingPartners) {
 			if([existingPartner databaseId] == [aRecord databaseId])
 					return;
-	} 
-	NSString *query = [NSString stringWithFormat:@"INSERT INTO %@(%@, %@) VALUES(:our_id, :their_id)", 
-										 [[self.record class] joinTableNameForModel:[self.record class] and:[aRecord class]],
-										 [[self.record class] idColumn], [[aRecord class] idColumn]];
-	[self.record.connection executeSQL:query
-                         substitutions:@{@"our_id": @(self.record.databaseId), @"their_id": @([aRecord databaseId])}
-                                 error:nil];
+	}
+    Class partnerClass = [aRecord class];
+    NSString *joinTableName = [[self.record class] joinTableNameForModel:[self.record class] and:partnerClass];
+    NSString *selfIdCol     = [[self.record class] idColumn];
+    NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
+    ARTable *joinTable      = [ARTable withConnection:self.record.connection name:joinTableName];
+
+    [[joinTable insert:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @([aRecord databaseId])}] execute];
 }
 
 - (void)removeRecord:(id)aRecord forKey:(NSString *)key

@@ -49,9 +49,10 @@
 }
 
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
 	if(![self respondsToKey:key])
 		return nil;
@@ -59,7 +60,7 @@
 	id currentPartners;
 	for(ARBase *proxy in [self.record retrieveValueForKey:_proxyKey])
 	{
-		currentPartners = [proxy retrieveRecordForKey:self.name filter:whereSQL order:orderSQL limit:limit];
+		currentPartners = [proxy retrieveRecordForKey:self.name filter:conditions order:order by:orderByFields limit:limit];
 		if([currentPartners isKindOfClass:[NSArray class]])
 			[partners addObjectsFromArray:currentPartners];
 		else

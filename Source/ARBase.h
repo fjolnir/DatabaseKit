@@ -186,9 +186,10 @@ typedef enum {
  * @param limit The maximum number of records to retrieve
  */
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit;
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit;
 
 // Transactions
 /*! Begins a database transaction */

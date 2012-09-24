@@ -164,7 +164,9 @@
 
 - (BOOL)closeConnection
 {
-  return sqlite3_close(database) == SQLITE_OK;
+    BOOL ret = sqlite3_close(database) == SQLITE_OK;
+    database = NULL;
+    return ret;
 }
 
 #pragma mark Private

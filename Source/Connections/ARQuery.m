@@ -202,13 +202,13 @@ NSString *const ARLeftJoin  = @"LEFT";
 
     if(_join) {
         if([_join isKindOfClass:[ARJoin class]]) {
-            [q appendFormat:@"%@ JOIN %@ ON ", _type, [_table toString]];
-            int i = 0;
             ARJoin *join = _join;
+            [q appendFormat:@" %@ JOIN %@ ON ", join.type, [join.table toString]];
+            int i = 0;
             for(id key in join.fields) {
                 if(i++ > 0)
                     [q appendString:@" AND "];
-                [q appendFormat:@"%@.%@=%@.%@", [_table toString], join.fields[key], [join.table toString], key];
+                [q appendFormat:@"%@.%@=%@.%@", [join.table toString], join.fields[key], [_table toString], key];
             }
         } else
             [q appendFormat:@" %@", [_join toString]];
@@ -310,7 +310,7 @@ NSString *const ARLeftJoin  = @"LEFT";
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    ARQuery *copy = [[self class] new];
+    ARQuery *copy  = [[self class] new];
     copy.type      = _type;
     copy.table     = _table;
     copy.fields    = _fields;
@@ -318,6 +318,7 @@ NSString *const ARLeftJoin  = @"LEFT";
     copy.orderedBy = _orderedBy;
     copy.order     = _order;
     copy.limit     = _limit;
+    copy.join      = _join;
     return copy;
 }
 @end

@@ -83,15 +83,13 @@
 - (id)retrieveRecordForKey:(NSString *)key;
 /*!
  * Retrieves a record for a given key by applying the passed filters
- * @param key A valid key, can refer to either a column or a relationship
- * @param whereSQL A valid SQL WHERE statement (omitting the actual "WHERE")
- * @param orderSQL A valud SQL ORDER statement (omitting the actual "ORDER BY")
- * @param limit The maximum number of records to retrieve
  */
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit;
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit;
+
 - (void)sendRecord:(id)record forKey:(NSString *)key;
 - (void)addRecord:(id)record forKey:(NSString *)key;
 - (void)removeRecord:(id)record forKey:(NSString *)key;

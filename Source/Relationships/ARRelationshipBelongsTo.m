@@ -27,9 +27,10 @@
 
 
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
 	if(![self respondsToKey:key])
         return nil;

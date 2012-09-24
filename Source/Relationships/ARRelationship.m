@@ -47,12 +47,13 @@
 }
 - (id)retrieveRecordForKey:(NSString *)key
 {
-	return [self retrieveRecordForKey:key filter:nil order:nil limit:0];
+	return [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
 }
 - (id)retrieveRecordForKey:(NSString *)key
-                    filter:(NSString *)whereSQL
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit
+                    filter:(id)conditions
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
 	[NSException raise:@"Unused method" format:@"You shouldn't be using ARRelationship directly!"];
 	return nil;

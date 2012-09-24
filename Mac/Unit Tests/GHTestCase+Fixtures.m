@@ -32,10 +32,6 @@
   [ARBase setDefaultConnection:connection];
 
     ARQuery *q = [[ARTable withName:@"people"] select:@"*"];
-    ARBase *myResult = q[0];
-    [myResult.connection beginTransaction];
-    [myResult pets];
-    [myResult.connection endTransaction];
     NSLog(@"%@", q[0]);
 
 	return connection;

@@ -35,8 +35,9 @@
 
 - (id)retrieveRecordForKey:(NSString *)key
                     filter:(id)conditions
-                     order:(NSString *)orderSQL
-                     limit:(NSUInteger)limit
+                     order:(NSString *)order
+                        by:(id)orderByFields
+                     limit:(NSNumber *)limit
 {
 	if(![self respondsToKey:key])
         return nil;
@@ -54,9 +55,11 @@
     NSString *idColumn = [[self.record class] idColumnForModel:[self.record class]];
 
     ARTable *partnerTable = [ARTable withConnection:self.record.connection name:[partnerClass tableName]];
-    ARQuery *q = [[[partnerTable select:@"id"] where:@{ idColumn: @(self.record.databaseId) }] limit:@(limit)];
+    ARQuery *q = [[[partnerTable select:@"id"] where:@{ idColumn: @(self.record.databaseId) }] limit:limit];
     if(conditions)
         q = [q appendWhere:conditions];
+    if(order || orderByFields)
+        q = [q order:order ? order : AROrderAscending by:orderByFields];
     NSNumber *anId;
     id partnerRecord;
     NSMutableArray *partners = [NSMutableArray array];
@@ -93,6 +96,7 @@
     return partners;
 #endif
 }
+
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key
 {
     if(![self respondsToKey:key])
