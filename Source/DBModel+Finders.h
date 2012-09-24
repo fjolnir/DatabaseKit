@@ -45,7 +45,7 @@
  * @param idOrSpecification The find specification
  * @param limit The maximum number of records to retrieve
  */
-+ (NSArray *)find:(DBFindSpecification)idOrSpecification connection:(id<DBConnection>)connection;
++ (NSArray *)find:(DBFindSpecification)idOrSpecification connection:(DBConnection *)connection;
 /*! Finds a record based on the find specification, filter and limit. 
  * @param idOrSpecification The find specification
  * @param whereSQL A valid SQL WHERE statement (omitting the actual "WHERE")
@@ -69,7 +69,7 @@
              join:(NSString *)joinSQL
             order:(NSString *)order
             limit:(NSUInteger)limit
-       connection:(id<DBConnection>)aConnection;
+       connection:(DBConnection *)aConnection;
 /*! Finds ids of records matching the find specification, filter and limit using the specified connection.\n
  * You generally won't need to use this method, but it can be useful in cases where you just want to know for example\n
  * The number of records matching.
@@ -84,7 +84,7 @@
                 join:(NSString *)joinSQL
                order:(NSString *)order
                limit:(NSUInteger)limit
-          connection:(id<DBConnection>)aConnection;
+          connection:(DBConnection *)aConnection;
 
 /*! Finds all of the model's records */
 + (NSArray *)findAll;

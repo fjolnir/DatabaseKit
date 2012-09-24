@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
-//  ARSTable.h
-//  Database table abstraction
+//  DBConnectionPool.h
+//   A connection pool to allow use of DBKit in multithreaded applications.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -35,24 +35,14 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
 
-@interface DBTable : NSObject
-@property(readonly, strong) NSString *name;
-@property(readonly, strong) DBConnection * connection;
+extern id DBConnectionRollback;
 
-+ (DBTable *)withName:(NSString *)name;
-+ (DBTable *)withConnection:(DBConnection *)connection name:(NSString *)name;
+typedef id (^DBConnectionPoolBlock)(DBConnection *connection);
 
-- (NSString *)toString;
+@interface DBConnectionPool : NSObject
+@property(readonly, retain) NSURL *URL;
 
-- (Class)modelClass;
-
-- (DBQuery *)select:(id)fields;
-- (DBQuery *)select;
-- (DBQuery *)insert:(id)fields;
-- (DBQuery *)update:(id)fields;
-- (DBQuery *)delete;
-- (DBQuery *)where:(id)conds;
-- (DBQuery *)order:(NSString *)order by:(id)fields;
-- (DBQuery *)orderBy:(id)fields;
-- (DBQuery *)limit:(NSNumber *)limit;
++ (DBConnectionPool *)withURL:(NSURL *)URL error:(NSError **)err;
+- (id)do:(DBConnectionPoolBlock)block;
+- (id)transaction:(DBConnectionPoolBlock)block;
 @end

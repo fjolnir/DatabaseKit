@@ -52,19 +52,14 @@
     }
 }
 
-- (void)testInMemoryDatabase {
+- (void)testPool
+{
     NSError *err = nil;
-    DBSQLiteConnection *inMemoryDb = [DBSQLiteConnection openConnectionToInMemoryDatabase:&err];
-
-    GHAssertNil(err, @"An error occured while creating the database (%@)", err);
-
-    [inMemoryDb executeSQL:@"CREATE TABLE test(\"id\" INTEGER PRIMARY KEY NOT NULL, \"aString\" varchar(255))" substitutions:nil error:nil];
-    [inMemoryDb executeSQL:@"INSERT INTO test(aString) VALUES('foobar')" substitutions:nil error:nil];
-    NSArray *fetch = [inMemoryDb executeSQL:@"SELECT * FROM test" substitutions:nil error:nil];
-    GHAssertEquals([fetch count], (NSUInteger)1, @"Row count should be 1");
-
-    NSDictionary *row = fetch[0];
-    GHAssertEqualObjects(row[@"id"], @1, @"ID should be 1");
-    GHAssertEqualObjects(row[@"aString"], @"foobar", @"aString should be 'foobar'");
+    DBConnectionPool *pool = [DBConnectionPool withURL:connection.URL error:&err];
+    GHAssertNil(err, @"Error creating pool: %@", pool);
+    NSArray *result = [pool do:^(DBConnection *c) {
+        return [connection executeSQL:@"SELECT * FROM foo"  substitutions:nil error:nil];
+    }];
+    NSLog(@"%@", result);
 }
 @end

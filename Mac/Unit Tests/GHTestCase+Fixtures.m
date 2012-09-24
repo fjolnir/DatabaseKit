@@ -10,17 +10,16 @@
 #import <DatabaseKit/DatabaseKit.h>
 
 @implementation GHTestCase (Fixtures)
-- (DBSQLiteConnection *)setUpSQLiteFixtures
+- (DBConnection *)setUpSQLiteFixtures
 {
-  NSError *err = nil;
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
+    NSError *err = nil;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
+    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"sqlite://%@", path] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *fixtures = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sqlite_fixtures" ofType:@"sql"]
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:nil];
 
-  NSString *fixtures = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sqlite_fixtures" ofType:@"sql"] 
-                                                 encoding:NSUTF8StringEncoding 
-                                                    error:nil];
-    
-    DBSQLiteConnection *connection = [DBSQLiteConnection openConnectionWithInfo:@{@"path": path}
-                                                                          error:&err];
+    DBConnection *connection = [DBConnection openConnectionWithURL:url error:&err];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
         NSError *err = nil;
@@ -29,46 +28,11 @@
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
     }
     // See if it works
-  [DBModel setDefaultConnection:connection];
+    [DBModel setDefaultConnection:connection];
 
     DBQuery *q = [[DBTable withName:@"people"] select:@"*"];
     NSLog(@"%@", q[0]);
 
     return connection;
 }
-
-/*- (DBMySQLConnection *)setUpMySQLFixtures
-{
-  NSError *err = nil;
-  NSMutableString *fixturePath = [NSMutableString stringWithUTF8String:__FILE__];
-  [fixturePath replaceOccurrencesOfString:[fixturePath lastPathComponent] 
-                               withString:@"mysql_fixtures.sql"
-                                  options:0
-                                    range:NSMakeRange(0, [fixturePath length])];
-   NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath encoding:NSUTF8StringEncoding error:nil];
-  DBMySQLConnection *connection = [DBMySQLConnection openConnectionWithInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                             @"127.0.0.1", @"host",
-                                                                             @"activerecord", @"user",
-                                                                             @"123", @"password",
-                                                                             @"activerecord_test", @"database",
-                                                                             [NSNumber numberWithInt:3306], @"port", nil]
-                                                                      error:&err];
-    GHAssertNil(err, @"There was an error connecting to MySQL");
-  if(err != nil)
-    return nil;
-    
-    for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
-    {
-        @try {
-            [connection executeSQL:query substitutions:nil];
-        }
-        @catch (NSException * e) {
-            NSLog(@"FIXTUREFAIL!(%@): %@", query,e);
-        }
-    }
-    // See if it works
-    [DBModel setDefaultConnection:connection];
-    
-    return connection;
-}*/
 @end

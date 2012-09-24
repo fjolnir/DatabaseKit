@@ -37,7 +37,7 @@
 #import <DatabaseKit/DBModel+Finders.h>
 
 #import <DatabaseKit/DBConnection.h>
-#import <DatabaseKit/DBSQLiteConnection.h>
+#import <DatabaseKit/DBConnectionPool.h>
 #import <DatabaseKit/DBTable.h>
 #import <DatabaseKit/DBQuery.h>
 

@@ -41,24 +41,61 @@
 
 #define DBConnectionErrorDomain @"com.activerecord.connection"
 
-@protocol DBConnection <NSObject>
-/*!
- * Expects a dictionary with connection info, the required keys differ between connections
- */
-+ (id)openConnectionWithInfo:(NSDictionary *)info error:(NSError **)err;
-/*! @copydoc openConnectionWithInfo:error: */
-- (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err;
+@interface DBConnection : NSObject
+@property(readonly, retain) NSURL *URL;
 
-/*! @copydoc DBSQLiteConnection::executeSQL:substitutions: */
+/*!
+ * Registers a DBConnection subclass to be tested against URLs
+ */
++ (void)registerConnectionClass:(Class)kls;
+
+/*!
+ * Indicates whether or not the class can handle a URL or not
+ */
++ (BOOL)canHandleURL:(NSURL *)URL;
+
+/*!
+ * Opens a connection to the database pointed to by URL
+ */
++ (id)openConnectionWithURL:(NSURL *)URL error:(NSError **)err;
+/*! @copydoc openConnectionWithURL:error: */
+- (id)initWithURL:(NSURL *)URL error:(NSError **)err;
+/*!
+ * Executes the given SQL string after making substitutions(optional, pass nil if none should be made).
+ * Substitutions should be used for values, not column/table names since
+ * they're formatted as values
+ *
+ * Example usage:
+ * @code
+ * [myConnection executeSQL:@"INSERT INTO mymodel(id, name) VALUES(:id, :name)"
+ *            substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
+ *                           myId, @"id",
+ *                           name, @"name"]];
+ * @endcode
+ */
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
-/*! @copydoc DBSQLiteConnection::closeConnection */
-- (BOOL)closeConnection;
-/*! @copydoc DBSQLiteConnection::columnsForTable: */
-- (NSArray *)columnsForTable:(NSString *)tableName;
-/*! @copydoc DBSQLiteConnection::beginTransaction */
-- (BOOL)beginTransaction;
-/*! @copydoc DBSQLiteConnection::endTransaction */
-- (BOOL)endTransaction;
-/*! @copydoc DBSQLiteConnection::lastInsertId */
+
+/*!
+ * Returns the id of the row last inserted into
+ */
 - (NSUInteger)lastInsertId;
+
+/*!
+ * Closes the connection\n
+ * does <b>not</b> release the object object itself
+ */
+- (BOOL)closeConnection;
+/*!
+ * Returns an array of strings containing the column names for the given table
+ * @param tableName Name of the table to retrieve columns for
+ */
+- (NSArray *)columnsForTable:(NSString *)tableName;
+
+/*! Begins a transaction */
+- (BOOL)beginTransaction;
+/*! Rolls back a transaction */
+- (BOOL)rollBack;
+/*! Ends a transaction */
+- (BOOL)endTransaction;
+
 @end

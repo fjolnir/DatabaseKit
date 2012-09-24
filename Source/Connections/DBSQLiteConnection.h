@@ -44,64 +44,10 @@ typedef enum  {
   DBSQLiteDatabaseNotFoundErrorCode = 0
 } DBSQLiteErrorCode;
 
-@interface DBSQLiteConnection : NSObject <DBConnection> {
-  sqlite3 *database;
+@interface DBSQLiteConnection : DBConnection {
+  sqlite3 *_connection;
 }
-/*!
- * Returns a ready to use sqlite "connection"\n
- * \n
- * Expects a dictionary with a single key: "path" which is the path to
- * the SQLite3 database file, sets 'err' and returns nil on error
- *
- * @param info A dictionary containing the path (key: "path")to the database (can be an in memory database)
- * @param err Set to an NSError object on failure.
- */
-+ (id)openConnectionWithInfo:(NSDictionary *)info error:(NSError **)err;
-/*! @copydoc openConnectionWithInfo:error: */
-- (id)initWithConnectionInfo:(NSDictionary *)info error:(NSError **)err;
-
-/*!
- * Returns a ready to use sqlite "connection" to an in memory database
- * \n
- * Creates an empty SQLite database in memory and returns a connection to it
- */
-+ (DBSQLiteConnection *)openConnectionToInMemoryDatabase:(NSError **)err;
-
-/*!
- * Executes the given SQL string after making substitutions(optional, pass nil if none should be made).
- * Substitutions should be used for values, not column/table names since
- * they're formatted as values
- *
- * Example usage:
- * @code
- * [myConnection executeSQL:@"INSERT INTO mymodel(id, name) VALUES(:id, :name)"
- *            substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
- *                           myId, @"id",
- *                           name, @"name"]];
- * @endcode
- */
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
-
-/*!
- * Returns the id of the row last inserted into
- */
-- (NSUInteger)lastInsertId;
-
-/*!
- * Closes the connection\n
- * does <b>not</b> release the object object itself
- */
-- (BOOL)closeConnection;
-/*!
- * Returns an array of strings containing the column names for the given table
- * @param tableName Name of the table to retrieve columns for
- */
-- (NSArray *)columnsForTable:(NSString *)tableName;
-
-/*! Begins a transaction */
-- (BOOL)beginTransaction;
-/*! Ends a transaction */
-- (BOOL)endTransaction;
+@property(readonly, retain) NSString *path;
 @end
 
 #endif /* _DBSQLITECONNECTION_H_ */

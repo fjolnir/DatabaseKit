@@ -77,6 +77,9 @@
 		C7FAF115160C830F004B16B0 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FAF113160C830F004B16B0 /* DBQuery.m */; };
 		C7FE7F521610069500031BBD /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FE7F501610069500031BBD /* DBTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7FE7F531610069500031BBD /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FE7F511610069500031BBD /* DBTable.m */; };
+		C7FF97F61610BCFF002957F7 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FF97F41610BCFF002957F7 /* DBConnectionPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7FF97F71610BCFF002957F7 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FF97F51610BCFF002957F7 /* DBConnectionPool.m */; };
+		C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FF97F81610BD5D002957F7 /* DBConnection.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		F87B106E0E06F76300580499 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106D0E06F76300580499 /* libcrypto.dylib */; };
 		F8DA530F0E058F10002C3ADB /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E20E058F10002C3ADB /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -173,6 +176,9 @@
 		C7FAF113160C830F004B16B0 /* DBQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBQuery.m; sourceTree = "<group>"; };
 		C7FE7F501610069500031BBD /* DBTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTable.h; sourceTree = "<group>"; };
 		C7FE7F511610069500031BBD /* DBTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTable.m; sourceTree = "<group>"; };
+		C7FF97F41610BCFF002957F7 /* DBConnectionPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConnectionPool.h; sourceTree = "<group>"; };
+		C7FF97F51610BCFF002957F7 /* DBConnectionPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnectionPool.m; sourceTree = "<group>"; };
+		C7FF97F81610BD5D002957F7 /* DBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnection.m; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F87B10350E06F6D500580499 /* DBModelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBModelTest.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F87B10360E06F6D500580499 /* DBModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBModelTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -497,6 +503,9 @@
 			isa = PBXGroup;
 			children = (
 				F8DA52EB0E058F10002C3ADB /* DBConnection.h */,
+				C7FF97F81610BD5D002957F7 /* DBConnection.m */,
+				C7FF97F41610BCFF002957F7 /* DBConnectionPool.h */,
+				C7FF97F51610BCFF002957F7 /* DBConnectionPool.m */,
 				F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */,
 				F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */,
 				C7FAF112160C830F004B16B0 /* DBQuery.h */,
@@ -568,6 +577,7 @@
 				C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */,
+				C7FF97F61610BCFF002957F7 /* DBConnectionPool.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
 			);
@@ -735,6 +745,8 @@
 				C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */,
 				C7FAF115160C830F004B16B0 /* DBQuery.m in Sources */,
 				C7FE7F531610069500031BBD /* DBTable.m in Sources */,
+				C7FF97F71610BCFF002957F7 /* DBConnectionPool.m in Sources */,
+				C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,10 @@
 
 #import <GHUnit/GHUnit.h>
 
-@class DBSQLiteConnection;
+@class DBConnection;
 
 @interface DBSQLiteConnectionTest : GHTestCase {
-  DBSQLiteConnection *connection;
+  DBConnection *connection;
 }
 - (void)testConnection;
 @end

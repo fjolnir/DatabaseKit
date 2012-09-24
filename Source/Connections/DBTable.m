@@ -5,7 +5,7 @@
 
 @interface DBTable ()
 @property(readwrite, strong) NSString *name;
-@property(readwrite, strong) id<DBConnection> connection;
+@property(readwrite, strong) DBConnection * connection;
 @end
 
 @implementation DBTable
@@ -15,7 +15,7 @@
     return [self withConnection:nil name:name];
 }
 
-+ (DBTable *)withConnection:(id<DBConnection>)connection name:(NSString *)name
++ (DBTable *)withConnection:(DBConnection *)connection name:(NSString *)name
 {
     DBTable *ret   = [self new];
     ret.connection = connection;

@@ -69,7 +69,7 @@ typedef enum {
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
 @interface DBModel : NSObject {
-    id<DBConnection> _connection;
+    DBConnection * _connection;
     DBTable *_table;
     NSUInteger _databaseId;
     NSMutableArray *_relationships;
@@ -79,7 +79,7 @@ typedef enum {
     NSMutableArray *_removeCache;
     NSArray *_columnCache;
 }
-@property(readwrite, strong) id<DBConnection> connection;
+@property(readwrite, strong) DBConnection * connection;
 @property(readonly, strong) DBTable *table;
 @property(readwrite, strong) NSMutableArray *relationships;
 @property(readwrite) NSUInteger databaseId;
@@ -88,7 +88,7 @@ typedef enum {
  * @param attributes A dictionary of keys/values to initialize the record with
  * @param connection The connection to use for the record. (Pass nil to use the default connection)
  */
-+ (id)createWithAttributes:(NSDictionary *)attributes connection:(id<DBConnection>)connection;
++ (id)createWithAttributes:(NSDictionary *)attributes connection:(DBConnection *)connection;
 /*! Creates a new record and saves it in the database using the default connection
  * @param attributes A dictionary of keys/values to initialize the record with
  */
@@ -104,13 +104,13 @@ typedef enum {
  * @param aConnection the connection to use
  * @param id The id of the record to retrieve
  */
-- (id)initWithConnection:(id<DBConnection>)aConnection id:(NSUInteger)id;
+- (id)initWithConnection:(DBConnection *)aConnection id:(NSUInteger)id;
 
 
 /*!  Sets the default connection to be used by DBModel and it's subclasses */
-+ (void)setDefaultConnection:(id<DBConnection>)aConnection;
++ (void)setDefaultConnection:(DBConnection *)aConnection;
 /*!  Returns the default connection used by DBModel and it's subclasses */
-+ (id<DBConnection>)defaultConnection;
++ (DBConnection *)defaultConnection;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n

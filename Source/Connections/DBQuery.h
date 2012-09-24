@@ -13,7 +13,7 @@ extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
 
 @interface DBQuery : NSObject <NSCopying>
-@property(readonly, strong, nonatomic) id<DBConnection> connection;
+@property(readonly, strong, nonatomic) DBConnection * connection;
 @property(readonly, strong) NSString *type;
 @property(readonly, strong) id table;
 @property(readonly, strong) id fields;
@@ -24,7 +24,7 @@ extern NSString *const DBLeftJoin;
 @property(readonly, strong) id join;
 
 + (DBQuery *)withTable:(id)table;
-+ (DBQuery *)withConnection:(id<DBConnection>)connection table:(id)table;
++ (DBQuery *)withConnection:(DBConnection *)connection table:(id)table;
 
 - (NSArray *)execute;
 

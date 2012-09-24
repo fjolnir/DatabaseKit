@@ -16,7 +16,7 @@
     return [self find:idOrSpecification
            connection:[self defaultConnection]];
 }
-+ (NSArray *)find:(DBFindSpecification)idOrSpecification connection:(id<DBConnection>)connection
++ (NSArray *)find:(DBFindSpecification)idOrSpecification connection:(DBConnection *)connection
 {
     return [self find:idOrSpecification
                filter:nil
@@ -44,7 +44,7 @@
              join:(NSString *)joinSQL
             order:(NSString *)order
             limit:(NSUInteger)limit
-       connection:(id<DBConnection>)aConnection
+       connection:(DBConnection *)aConnection
 {
     NSArray *ids = [self findIds:idOrSpecification
                           filter:filter
@@ -67,7 +67,7 @@
                 join:(NSString *)joinSQL
                order:(NSString *)order
                limit:(NSUInteger)limit
-          connection:(id<DBConnection>)aConnection
+          connection:(DBConnection *)aConnection
 {
     DBTable *table = [DBTable withConnection:aConnection name:[self tableName]];
     DBQuery *q = [[table select:@"id"] limit:@(limit)];

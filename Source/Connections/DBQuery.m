@@ -19,7 +19,7 @@ NSString *const DBLeftJoin  = @"LEFT";
     BOOL _dirty;
     NSArray *_rows;
 }
-@property(readwrite, strong, nonatomic) id<DBConnection> connection;
+@property(readwrite, strong, nonatomic) DBConnection * connection;
 @property(readwrite, strong) NSString *type;
 @property(readwrite, strong) id table;
 @property(readwrite, strong) NSDictionary *parameters;
@@ -39,7 +39,7 @@ NSString *const DBLeftJoin  = @"LEFT";
 {
     return [self withConnection:nil table:table];
 }
-+ (DBQuery *)withConnection:(id<DBConnection>)connection table:(id)table
++ (DBQuery *)withConnection:(DBConnection *)connection table:(id)table
 {
     NSParameterAssert(!table || [table respondsToSelector:@selector(toString)]);
     DBQuery *ret = [self new];
@@ -288,7 +288,7 @@ NSString *const DBLeftJoin  = @"LEFT";
 }
 #pragma mark -
 
-- (id<DBConnection>)connection
+- (DBConnection *)connection
 {
     if(_connection)
         return _connection;

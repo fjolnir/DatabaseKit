@@ -13,7 +13,7 @@ static DBNamingStyle namingStyle = DBObjCNamingStyle;
 
 static void *relationshipAssocKey = NULL;
 
-static id<DBConnection> defaultConnection = nil;
+static DBConnection * defaultConnection = nil;
 static NSString *classPrefix = nil;
 
 @interface DBModel ()
@@ -22,23 +22,23 @@ static NSString *classPrefix = nil;
 
 @implementation DBModel
 
-+ (void)setDefaultConnection:(id<DBConnection>)aConnection
++ (void)setDefaultConnection:(DBConnection *)aConnection
 {
     @synchronized([DBModel class]) {
         defaultConnection = aConnection;
     }
 }
-+ (id<DBConnection>)defaultConnection
++ (DBConnection *)defaultConnection
 {
     return defaultConnection;
 }
-- (id<DBConnection>)connection
+- (DBConnection *)connection
 {
     if(!_connection)
         return [DBModel defaultConnection];
     return _connection;
 }
-- (void)setConnection:(id<DBConnection>)aConnection {
+- (void)setConnection:(DBConnection *)aConnection {
     @synchronized(self) {
         _connection = aConnection;
     }
@@ -155,7 +155,7 @@ static NSString *classPrefix = nil;
 
 #pragma mark -
 #pragma mark Entry creation
-+ (id)createWithAttributes:(NSDictionary *)attributes connection:(id<DBConnection>)connection
++ (id)createWithAttributes:(NSDictionary *)attributes connection:(DBConnection *)connection
 {
     // Create a transaction
     @try {
@@ -194,7 +194,7 @@ static NSString *classPrefix = nil;
 {
     return [self initWithConnection:[DBModel defaultConnection] id:id];
 }
-- (id)initWithConnection:(id<DBConnection>)aConnection id:(NSUInteger)id
+- (id)initWithConnection:(DBConnection *)aConnection id:(NSUInteger)id
 {
     if(!(self = [self init]))
         return nil;

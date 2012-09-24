@@ -9,11 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import <GHUnit/GHUnit.h>
 
-@class DBSQLiteConnection;
-//@class DBMySQLConnection;
+@class DBConnection;
 
 // Sets the sqlite database up with fixtures
 @interface GHTestCase (Fixtures)
-- (DBSQLiteConnection *)setUpSQLiteFixtures;
+- (DBConnection *)setUpSQLiteFixtures;
 //- (DBMySQLConnection *)setUpMySQLFixtures;
 @end
