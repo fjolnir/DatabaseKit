@@ -1,16 +1,16 @@
 //
 //  SenTestCase+Fixtures.m
-//  ActiveRecord
+//  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 1.4.2008.
 //  Copyright 2008 Fjölnir Ásgeirsson. All rights reserved.
 //
 
 #import "GHTestCase+Fixtures.h"
-#import <ActiveRecord/ActiveRecord.h>
+#import <DatabaseKit/DatabaseKit.h>
 
 @implementation GHTestCase (Fixtures)
-- (ARSQLiteConnection *)setUpSQLiteFixtures
+- (DBSQLiteConnection *)setUpSQLiteFixtures
 {
   NSError *err = nil;
   NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
@@ -19,7 +19,7 @@
                                                  encoding:NSUTF8StringEncoding 
                                                     error:nil];
 	
-	ARSQLiteConnection *connection = [ARSQLiteConnection openConnectionWithInfo:@{@"path": path}
+	DBSQLiteConnection *connection = [DBSQLiteConnection openConnectionWithInfo:@{@"path": path}
 																		  error:&err];
 	for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
 	{
@@ -29,15 +29,15 @@
 			NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
 	}
 	// See if it works
-  [ARBase setDefaultConnection:connection];
+  [DBBase setDefaultConnection:connection];
 
-    ARQuery *q = [[ARTable withName:@"people"] select:@"*"];
+    DBQuery *q = [[DBTable withName:@"people"] select:@"*"];
     NSLog(@"%@", q[0]);
 
 	return connection;
 }
 
-/*- (ARMySQLConnection *)setUpMySQLFixtures
+/*- (DBMySQLConnection *)setUpMySQLFixtures
 {
   NSError *err = nil;
   NSMutableString *fixturePath = [NSMutableString stringWithUTF8String:__FILE__];
@@ -46,7 +46,7 @@
 								  options:0
 									range:NSMakeRange(0, [fixturePath length])];
    NSString *fixtures = [NSString stringWithContentsOfFile:fixturePath encoding:NSUTF8StringEncoding error:nil];
-  ARMySQLConnection *connection = [ARMySQLConnection openConnectionWithInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+  DBMySQLConnection *connection = [DBMySQLConnection openConnectionWithInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 																			 @"127.0.0.1", @"host",
 																			 @"activerecord", @"user",
 																			 @"123", @"password",
@@ -67,7 +67,7 @@
 		}
 	}
 	// See if it works
-	[ARBase setDefaultConnection:connection];
+	[DBBase setDefaultConnection:connection];
 	
 	return connection;
 }*/
