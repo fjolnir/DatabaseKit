@@ -32,7 +32,7 @@ Let's say I created a table called 'people' with 3 columns.
 
 And loaded it using
 
-	[DBModel setDefaultConnection:[DBSQLiteConnection openConnectionWithInfo:@{ @"path": <path> } error:&err];
+	[DBModel setDefaultConnection:[DBSQLiteConnection openConnectionWithInfo:@{ @"path": <path> } error:&err]];
 
 Then we'd create the following class definition:
 
