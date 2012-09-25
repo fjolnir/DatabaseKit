@@ -44,7 +44,7 @@
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
     
-    _path = [[URL absoluteString] substringFromIndex:9];
+    _path = [[[URL absoluteString] substringFromIndex:9] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if(![[NSFileManager defaultManager] fileExistsAtPath:_path])
     {
         if(err != NULL) {
