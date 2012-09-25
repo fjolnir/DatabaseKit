@@ -20,20 +20,18 @@ static DBInflector *sharedInstance = nil;
     if(!(self = [super init]))
         return nil;
 
-    // Open the list of inflections
-#if TARGET_OS_MAC
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-#elif (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-    NSBundle *bundle = [NSBundle mainBundle];
-#endif
-    self.irregulars = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"irregulars"
-                                                                        ofType:@"plist"]];
-    self.uncountables = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"uncountables"
-                                                                          ofType:@"plist"]];
-    self.plurals = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"plurals"
-                                                                     ofType:@"plist"]];
-    self.singulars = [NSArray arrayWithContentsOfFile:[bundle pathForResource:@"singulars"
-                                                                       ofType:@"plist"]];
+    self.irregulars = @[
+        #import "irregulars.inc"
+    ];
+    self.uncountables = @[
+        #import "uncountables.inc"
+    ];
+    self.plurals = @[
+        #import "plurals.inc"
+    ];
+    self.singulars = @[
+        #import "singulars.inc"
+    ];
 
     return self;
 }

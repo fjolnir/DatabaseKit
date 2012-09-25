@@ -12,11 +12,6 @@
 		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
 		C79BB92B13BA2A5400D52DB6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		C7A5070D13F011BE00301981 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; };
-		C7A5077313F01AD600301981 /* inflections.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076913F01AD600301981 /* inflections.plist */; };
-		C7A5077413F01AD600301981 /* irregulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076B13F01AD600301981 /* irregulars.plist */; };
-		C7A5077513F01AD600301981 /* plurals.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076D13F01AD600301981 /* plurals.plist */; };
-		C7A5077613F01AD600301981 /* singulars.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5076F13F01AD600301981 /* singulars.plist */; };
-		C7A5077713F01AD600301981 /* uncountables.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077113F01AD600301981 /* uncountables.plist */; };
 		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
 		C7AED94813C1441F00C47919 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBModel.m */; };
 		C7AED94913C1442000C47919 /* DBModel+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */; };
@@ -29,7 +24,6 @@
 		C7AED95213C1443E00C47919 /* DBRelationshipHasMany.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52FF0E058F10002C3ADB /* DBRelationshipHasMany.m */; };
 		C7AED95313C1444000C47919 /* DBRelationshipHasManyThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53010E058F10002C3ADB /* DBRelationshipHasManyThrough.m */; };
 		C7AED95413C1444200C47919 /* DBRelationshipHasOne.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53030E058F10002C3ADB /* DBRelationshipHasOne.m */; };
-		C7AED95513C1444C00C47919 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53060E058F10002C3ADB /* DBInflector.m */; };
 		C7AED95613C1444F00C47919 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA530C0E058F10002C3ADB /* NSString+DBAdditions.m */; };
 		C7AED95713C1445000C47919 /* NSArray+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53080E058F10002C3ADB /* NSArray+DBAdditions.m */; };
 		C7AED95B13C1447F00C47919 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AED95A13C1447F00C47919 /* libsqlite3.dylib */; };
@@ -49,7 +43,6 @@
 		C7AED97513C14B8800C47919 /* DBRelationshipHasMany.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52FE0E058F10002C3ADB /* DBRelationshipHasMany.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97613C14B8F00C47919 /* DBRelationshipHasManyThrough.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53000E058F10002C3ADB /* DBRelationshipHasManyThrough.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97713C14B9100C47919 /* DBRelationshipHasOne.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53020E058F10002C3ADB /* DBRelationshipHasOne.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7AED97813C14B9300C47919 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53050E058F10002C3ADB /* DBInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97913C14B9500C47919 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530B0E058F10002C3ADB /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97A13C14B9600C47919 /* NSArray+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
@@ -71,6 +64,8 @@
 		C7CAF32A13BA201000013E21 /* DatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */; };
 		C7E3D9011610CD1B00220FE9 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3D8FF1610CD1B00220FE9 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D9021610CD1B00220FE9 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9001610CD1B00220FE9 /* DB.m */; };
+		C7E3D90E1611DE9000220FE9 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3D9071611DE9000220FE9 /* DBInflector.h */; };
+		C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9081611DE9000220FE9 /* DBInflector.m */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
 		C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,8 +100,6 @@
 		F8DA532B0E058F10002C3ADB /* DBRelationshipHasManyThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53010E058F10002C3ADB /* DBRelationshipHasManyThrough.m */; };
 		F8DA532C0E058F10002C3ADB /* DBRelationshipHasOne.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53020E058F10002C3ADB /* DBRelationshipHasOne.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA532D0E058F10002C3ADB /* DBRelationshipHasOne.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53030E058F10002C3ADB /* DBRelationshipHasOne.m */; };
-		F8DA532E0E058F10002C3ADB /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53050E058F10002C3ADB /* DBInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8DA532F0E058F10002C3ADB /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53060E058F10002C3ADB /* DBInflector.m */; };
 		F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8DA53310E058F10002C3ADB /* NSArray+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA53080E058F10002C3ADB /* NSArray+DBAdditions.m */; };
 		F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530B0E058F10002C3ADB /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -146,11 +139,6 @@
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
 		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
-		C7A5076A13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = inflections.plist; sourceTree = "<group>"; };
-		C7A5076C13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = irregulars.plist; sourceTree = "<group>"; };
-		C7A5076E13F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = plurals.plist; sourceTree = "<group>"; };
-		C7A5077013F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = singulars.plist; sourceTree = "<group>"; };
-		C7A5077213F01AD600301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = uncountables.plist; sourceTree = "<group>"; };
 		C7A5077913F01B1200301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C7AED93D13C1440200C47919 /* libactive_record.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libactive_record.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7AED94313C1440200C47919 /* active_record-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "active_record-Prefix.pch"; sourceTree = "<group>"; };
@@ -170,6 +158,13 @@
 		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Mac/Unit Tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C7E3D8FF1610CD1B00220FE9 /* DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB.h; sourceTree = "<group>"; };
 		C7E3D9001610CD1B00220FE9 /* DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB.m; sourceTree = "<group>"; };
+		C7E3D9071611DE9000220FE9 /* DBInflector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBInflector.h; sourceTree = "<group>"; };
+		C7E3D9081611DE9000220FE9 /* DBInflector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBInflector.m; sourceTree = "<group>"; };
+		C7E3D9091611DE9000220FE9 /* inflections.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = inflections.inc; sourceTree = "<group>"; };
+		C7E3D90A1611DE9000220FE9 /* irregulars.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = irregulars.inc; sourceTree = "<group>"; };
+		C7E3D90B1611DE9000220FE9 /* plurals.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = plurals.inc; sourceTree = "<group>"; };
+		C7E3D90C1611DE9000220FE9 /* singulars.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = singulars.inc; sourceTree = "<group>"; };
+		C7E3D90D1611DE9000220FE9 /* uncountables.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = uncountables.inc; sourceTree = "<group>"; };
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		C7FAF112160C830F004B16B0 /* DBQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBQuery.h; sourceTree = "<group>"; };
@@ -222,8 +217,6 @@
 		F8DA53010E058F10002C3ADB /* DBRelationshipHasManyThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHasManyThrough.m; sourceTree = "<group>"; };
 		F8DA53020E058F10002C3ADB /* DBRelationshipHasOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipHasOne.h; sourceTree = "<group>"; };
 		F8DA53030E058F10002C3ADB /* DBRelationshipHasOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHasOne.m; sourceTree = "<group>"; };
-		F8DA53050E058F10002C3ADB /* DBInflector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBInflector.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		F8DA53060E058F10002C3ADB /* DBInflector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBInflector.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+DBAdditions.h"; sourceTree = "<group>"; };
 		F8DA53080E058F10002C3ADB /* NSArray+DBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+DBAdditions.m"; sourceTree = "<group>"; };
 		F8DA530B0E058F10002C3ADB /* NSString+DBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DBAdditions.h"; sourceTree = "<group>"; };
@@ -280,7 +273,6 @@
 			children = (
 				F8DA52E10E058F10002C3ADB /* Source */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
-				089C1665FE841158C02AAC07 /* Resources */,
 				C7AED96113C145F200C47919 /* Mac Specific */,
 				C7AED94113C1440200C47919 /* iPhone Specific */,
 				034768DFFF38A50411DB9C8B /* Products */,
@@ -298,14 +290,6 @@
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
 			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		089C1665FE841158C02AAC07 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F80750BA0E22BFA3006504CC /* Inflections */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
@@ -415,17 +399,18 @@
 			path = "../Unit Tests";
 			sourceTree = "<group>";
 		};
-		F80750BA0E22BFA3006504CC /* Inflections */ = {
+		C7E3D9061611DE9000220FE9 /* DBInflector */ = {
 			isa = PBXGroup;
 			children = (
-				C7A5076913F01AD600301981 /* inflections.plist */,
-				C7A5076B13F01AD600301981 /* irregulars.plist */,
-				C7A5076D13F01AD600301981 /* plurals.plist */,
-				C7A5076F13F01AD600301981 /* singulars.plist */,
-				C7A5077113F01AD600301981 /* uncountables.plist */,
+				C7E3D9071611DE9000220FE9 /* DBInflector.h */,
+				C7E3D9081611DE9000220FE9 /* DBInflector.m */,
+				C7E3D9091611DE9000220FE9 /* inflections.inc */,
+				C7E3D90A1611DE9000220FE9 /* irregulars.inc */,
+				C7E3D90B1611DE9000220FE9 /* plurals.inc */,
+				C7E3D90C1611DE9000220FE9 /* singulars.inc */,
+				C7E3D90D1611DE9000220FE9 /* uncountables.inc */,
 			);
-			name = Inflections;
-			path = en.lproj;
+			path = DBInflector;
 			sourceTree = "<group>";
 		};
 		F87B10320E06F6D500580499 /* Unit tests (Mac) */ = {
@@ -538,8 +523,7 @@
 		F8DA53040E058F10002C3ADB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F8DA53050E058F10002C3ADB /* DBInflector.h */,
-				F8DA53060E058F10002C3ADB /* DBInflector.m */,
+				C7E3D9061611DE9000220FE9 /* DBInflector */,
 				F8DA530B0E058F10002C3ADB /* NSString+DBAdditions.h */,
 				F8DA530C0E058F10002C3ADB /* NSString+DBAdditions.m */,
 				F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */,
@@ -570,7 +554,6 @@
 				C7FE7F521610069500031BBD /* DBTable.h in Headers */,
 				F8DA532A0E058F10002C3ADB /* DBRelationshipHasManyThrough.h in Headers */,
 				F8DA532C0E058F10002C3ADB /* DBRelationshipHasOne.h in Headers */,
-				F8DA532E0E058F10002C3ADB /* DBInflector.h in Headers */,
 				C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */,
@@ -578,6 +561,7 @@
 				C7E3D9011610CD1B00220FE9 /* DB.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
+				C7E3D90E1611DE9000220FE9 /* DBInflector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +578,6 @@
 				C7AED97313C14B8400C47919 /* DBRelationshipColumn.h in Headers */,
 				C7AED97613C14B8F00C47919 /* DBRelationshipHasManyThrough.h in Headers */,
 				C7AED97113C14B8000C47919 /* DBRelationship.h in Headers */,
-				C7AED97813C14B9300C47919 /* DBInflector.h in Headers */,
 				C7AED97713C14B9100C47919 /* DBRelationshipHasOne.h in Headers */,
 				C7AED97513C14B8800C47919 /* DBRelationshipHasMany.h in Headers */,
 				C7AED97A13C14B9600C47919 /* NSArray+DBAdditions.h in Headers */,
@@ -697,11 +680,6 @@
 			files = (
 				C7CAF31E13BA1BE700013E21 /* InfoPlist.strings in Resources */,
 				C7CAF32013BA1BE700013E21 /* Unit Tests-Info.plist in Resources */,
-				C7A5077313F01AD600301981 /* inflections.plist in Resources */,
-				C7A5077413F01AD600301981 /* irregulars.plist in Resources */,
-				C7A5077513F01AD600301981 /* plurals.plist in Resources */,
-				C7A5077613F01AD600301981 /* singulars.plist in Resources */,
-				C7A5077713F01AD600301981 /* uncountables.plist in Resources */,
 				C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -734,7 +712,6 @@
 				F8DA53290E058F10002C3ADB /* DBRelationshipHasMany.m in Sources */,
 				F8DA532B0E058F10002C3ADB /* DBRelationshipHasManyThrough.m in Sources */,
 				F8DA532D0E058F10002C3ADB /* DBRelationshipHasOne.m in Sources */,
-				F8DA532F0E058F10002C3ADB /* DBInflector.m in Sources */,
 				F8DA53310E058F10002C3ADB /* NSArray+DBAdditions.m in Sources */,
 				F8DA53350E058F10002C3ADB /* NSString+DBAdditions.m in Sources */,
 				C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */,
@@ -744,6 +721,7 @@
 				C7FF97F71610BCFF002957F7 /* DBConnectionPool.m in Sources */,
 				C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */,
 				C7E3D9021610CD1B00220FE9 /* DB.m in Sources */,
+				C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,7 +742,6 @@
 				C7AED95213C1443E00C47919 /* DBRelationshipHasMany.m in Sources */,
 				C7AED95413C1444200C47919 /* DBRelationshipHasOne.m in Sources */,
 				C7AED95313C1444000C47919 /* DBRelationshipHasManyThrough.m in Sources */,
-				C7AED95513C1444C00C47919 /* DBInflector.m in Sources */,
 				C7AED95613C1444F00C47919 /* NSString+DBAdditions.m in Sources */,
 				C7AED96913C148C700C47919 /* Base64Extensions.m in Sources */,
 				C7AED94D13C1442F00C47919 /* DBSQLiteConnection.m in Sources */,
@@ -794,46 +771,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C7A5076913F01AD600301981 /* inflections.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7A5076A13F01AD600301981 /* en */,
-			);
-			name = inflections.plist;
-			sourceTree = "<group>";
-		};
-		C7A5076B13F01AD600301981 /* irregulars.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7A5076C13F01AD600301981 /* en */,
-			);
-			name = irregulars.plist;
-			sourceTree = "<group>";
-		};
-		C7A5076D13F01AD600301981 /* plurals.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7A5076E13F01AD600301981 /* en */,
-			);
-			name = plurals.plist;
-			sourceTree = "<group>";
-		};
-		C7A5076F13F01AD600301981 /* singulars.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7A5077013F01AD600301981 /* en */,
-			);
-			name = singulars.plist;
-			sourceTree = "<group>";
-		};
-		C7A5077113F01AD600301981 /* uncountables.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7A5077213F01AD600301981 /* en */,
-			);
-			name = uncountables.plist;
-			sourceTree = "<group>";
-		};
 		C7A5077813F01B1200301981 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
