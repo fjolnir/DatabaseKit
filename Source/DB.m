@@ -25,7 +25,7 @@
 - (id)objectForKeyedSubscript:(id)key
 {
     NSParameterAssert([key isKindOfClass:[NSString class]]);
-    return [DBTable withConnection:_connection name:key];
+    return [DBTable withDatabase:self name:key];
 }
 
 @end

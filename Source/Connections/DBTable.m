@@ -5,20 +5,15 @@
 
 @interface DBTable ()
 @property(readwrite, strong) NSString *name;
-@property(readwrite, strong) DBConnection * connection;
+@property(readwrite, strong) DB *database;
 @end
 
 @implementation DBTable
 
-+ (DBTable *)withName:(NSString *)name
-{
-    return [self withConnection:nil name:name];
-}
-
-+ (DBTable *)withConnection:(DBConnection *)connection name:(NSString *)name
++ (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 {
     DBTable *ret   = [self new];
-    ret.connection = connection;
+    ret.database   = database;
     ret.name       = name;
     return ret;
 }
@@ -32,22 +27,22 @@
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:@{ @"id": @(idx) }][0];
+    return [[[[DBQuery withTable:self] select] limit:@1] where:@{ @"id": @(idx) }][0];
 }
 
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
 {
-    [[[DBQuery withConnection:_connection table:self] update:obj] where:@{ @"id": @(idx) }];
+    [[[DBQuery withTable:self] update:obj] where:@{ @"id": @(idx) }];
 }
 
 - (id)objectForKeyedSubscript:(id)cond
 {
-    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:cond];
+    return [[[[DBQuery withTable:self] select] limit:@1] where:cond];
 }
 
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond
 {
-    [[[DBQuery withConnection:_connection table:self] update:obj] where:cond];
+    [[[DBQuery withTable:self] update:obj] where:cond];
 }
 
 - (NSString *)toString
@@ -59,7 +54,12 @@
 {
     return [object isKindOfClass:[DBTable class]]
         && [_name        isEqual:[(DBTable*)object name]]
-        && [_connection  isEqual:[(DBTable*)object connection]];
+        && [_database    isEqual:[(DBTable*)object database]];
+}
+
+- (NSArray *)columns
+{
+    return [_database.connection columnsForTable:_name];
 }
 
 #pragma mark - Query generators

@@ -19,9 +19,8 @@ NSString *const DBLeftJoin  = @"LEFT";
     BOOL _dirty;
     NSArray *_rows;
 }
-@property(readwrite, strong, nonatomic) DBConnection * connection;
 @property(readwrite, strong) NSString *type;
-@property(readwrite, strong) id table;
+@property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) NSDictionary *parameters;
 @property(readwrite, strong) id fields;
 @property(readwrite, strong) id where;
@@ -35,15 +34,9 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 @implementation DBQuery
 
-+ (DBQuery *)withTable:(id)table
++ (DBQuery *)withTable:(DBTable *)table
 {
-    return [self withConnection:nil table:table];
-}
-+ (DBQuery *)withConnection:(DBConnection *)connection table:(id)table
-{
-    NSParameterAssert(!table || [table respondsToSelector:@selector(toString)]);
     DBQuery *ret = [self new];
-    ret.connection = connection;
     ret.table      = table;
     return ret;
 }
@@ -274,7 +267,7 @@ NSString *const DBLeftJoin  = @"LEFT";
         NSUInteger rowId = [connection lastInsertId];
         Class modelClass;
         if(rowId > 0 && (modelClass = [_table modelClass]))
-            return @[ [[modelClass alloc] initWithConnection:[self connection] id:rowId] ];
+            return @[ [[modelClass alloc] initWithTable:_table id:rowId] ];
     }
     return ret;
 }
@@ -286,7 +279,7 @@ NSString *const DBLeftJoin  = @"LEFT";
     NSDictionary *row = _rows[idx];
     Class modelClass = [_table modelClass];
     if(modelClass && row[@"id"])
-        return [[modelClass alloc] initWithConnection:[self connection] id:[row[@"id"] unsignedIntegerValue]];
+        return [[modelClass alloc] initWithTable:_table id:[row[@"id"] unsignedIntegerValue]];
     return row;
 }
 
@@ -305,12 +298,9 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (DBConnection *)connection
 {
-    if(_connection)
-        return _connection;
-    else if([_table isKindOfClass:[DBTable class]] && [(DBTable *)_table connection])
-        return [(DBTable *)_table connection];
-    return [DBModel defaultConnection];
+    return _table.database.connection;
 }
+
 - (NSString *)toString
 {
     NSString *ret = nil;

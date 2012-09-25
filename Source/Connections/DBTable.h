@@ -33,14 +33,13 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBConnection.h>
+#import <DatabaseKit/DB.h>
 
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
-@property(readonly, strong) DBConnection * connection;
+@property(readonly, strong) DB *database;
 
-+ (DBTable *)withName:(NSString *)name;
-+ (DBTable *)withConnection:(DBConnection *)connection name:(NSString *)name;
++ (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 
 - (NSString *)toString;
 - (Class)modelClass;
@@ -49,6 +48,8 @@
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
+
+- (NSArray *)columns;
 
 - (DBQuery *)select:(id)fields;
 - (DBQuery *)select;

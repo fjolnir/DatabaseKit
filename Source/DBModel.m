@@ -13,7 +13,6 @@ static DBNamingStyle namingStyle = DBObjCNamingStyle;
 
 static void *relationshipAssocKey = NULL;
 
-static DBConnection * defaultConnection = nil;
 static NSString *classPrefix = nil;
 
 @interface DBModel ()
@@ -21,28 +20,6 @@ static NSString *classPrefix = nil;
 @end
 
 @implementation DBModel
-
-+ (void)setDefaultConnection:(DBConnection *)aConnection
-{
-    @synchronized([DBModel class]) {
-        defaultConnection = aConnection;
-    }
-}
-+ (DBConnection *)defaultConnection
-{
-    return defaultConnection;
-}
-- (DBConnection *)connection
-{
-    if(!_connection)
-        return [DBModel defaultConnection];
-    return _connection;
-}
-- (void)setConnection:(DBConnection *)aConnection {
-    @synchronized(self) {
-        _connection = aConnection;
-    }
-}
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
@@ -88,28 +65,25 @@ static NSString *classPrefix = nil;
 }
 - (void)save
 {
-    [self.connection beginTransaction];
+    [_table.database.connection beginTransaction];
     NSString *key, *value;
-    for(int i = 0; i < [_writeCache count]; ++i)
-    {
+    for(int i = 0; i < [_writeCache count]; ++i) {
         key = [_writeCache allKeys][i];
         value = _writeCache[key];
         [self sendValue:value forKey:key];
     }
     // Apply the add/remove cache
-    for(int i = 0; i < [_addCache count]; ++i)
-    {
+    for(int i = 0; i < [_addCache count]; ++i) {
         key = _addCache[i][@"key"];
         value = _addCache[i][@"record"];
         [self addRecord:value forKey:key ignoreCache:YES];
     }
-    for(int i = 0; i < [_removeCache count]; ++i)
-    {
+    for(int i = 0; i < [_removeCache count]; ++i) {
         key = _removeCache[i][@"key"];
         value = _removeCache[i][@"record"];
         [self removeRecord:value forKey:key ignoreCache:YES];
     }
-    [self.connection endTransaction];
+    [_table.database.connection endTransaction];
     // purge the cache so we don't write it again
     [_addCache    removeAllObjects];
     [_removeCache removeAllObjects];
@@ -153,54 +127,14 @@ static NSString *classPrefix = nil;
     return relationships;
 }
 
-#pragma mark -
-#pragma mark Entry creation
-+ (id)createWithAttributes:(NSDictionary *)attributes connection:(DBConnection *)connection
-{
-    // Create a transaction
-    @try {
-        if(![connection beginTransaction]) {
-            [NSException raise:@"DBCreateErrorException" format:@"Couldn't start transaction for connection: %@", connection];
-            return nil;
-        }
-        // Create a blank row (We handle the attributes seperately)
-        DBTable *table = [DBTable withConnection:connection name:[self tableName]];
-        [[table insert:@{ @"id" : [NSNull null] }] execute];
+#pragma mark - Entry retrieval
 
-        NSUInteger rowId = [connection lastInsertId];
-        id record = [[self alloc] initWithConnection:connection id:rowId];
-        for(NSString *key in [attributes allKeys]) {
-            [record sendValue:attributes[key] forKey:key];
-        }
-        return record;
-    }
-    @catch (NSException *e) {
-        DBDebugLog(@"Error during creation, exception: %@", e);
-    }
-    @finally {
-        [connection endTransaction];
-    }
-
-    return nil;
-}
-+ (id)createWithAttributes:(NSDictionary *)attributes
-{
-    return [self createWithAttributes:attributes connection:[DBModel defaultConnection]];
-}
-
-#pragma mark -
-#pragma mark Entry retrieving
-- (id)initWithId:(NSUInteger)id
-{
-    return [self initWithConnection:[DBModel defaultConnection] id:id];
-}
-- (id)initWithConnection:(DBConnection *)aConnection id:(NSUInteger)id
+- (id)initWithTable:(DBTable *)aTable id:(NSUInteger)id;
 {
     if(!(self = [self init]))
         return nil;
-
-    self.connection = aConnection;
-    self.table      = [DBTable withConnection:aConnection name:[[self class] tableName]];
+    NSParameterAssert(aTable && id > 0);
+    self.table      = aTable;
     self.databaseId = id;
 
     _readCache   = [[NSMutableDictionary alloc] init];
@@ -291,13 +225,14 @@ static NSString *classPrefix = nil;
 - (void)addRecord:(id)record forKey:(NSString *)key
 {
     [self addRecord:record forKey:key ignoreCache:NO];
-
 }
+
 // This accessor removes a record from either a has many or has and belongs to many relationship
 - (void)removeRecord:(id)record forKey:(NSString *)key
 {
     [self removeRecord:record forKey:key ignoreCache:NO];
 }
+
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
 {
     if([DBModel delayWriting] && !ignoreCache)
@@ -318,7 +253,7 @@ static NSString *classPrefix = nil;
 - (NSArray *)columns
 {
     if(!_columnCache)
-        _columnCache = [self.connection columnsForTable:[[self class] tableName]];
+        _columnCache = [_table columns];
     return _columnCache;
 }
 + (NSString *)idColumnForModel:(Class)modelClass
@@ -355,11 +290,11 @@ static NSString *classPrefix = nil;
 }
 - (BOOL)beginTransaction
 {
-    return [self.connection beginTransaction];
+    return [_table.database.connection beginTransaction];
 }
 - (BOOL)endTransaction
 {
-    return [self.connection endTransaction];
+    return [_table.database.connection endTransaction];
 }
 
 #pragma mark - Cosmetics

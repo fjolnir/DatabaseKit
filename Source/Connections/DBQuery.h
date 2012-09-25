@@ -12,10 +12,11 @@ extern NSString *const DBQueryTypeDelete;
 extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
 
+@class DBTable;
+
 @interface DBQuery : NSObject <NSCopying>
-@property(readonly, strong, nonatomic) DBConnection * connection;
 @property(readonly, strong) NSString *type;
-@property(readonly, strong) id table;
+@property(readonly, strong) DBTable *table;
 @property(readonly, strong) id fields;
 @property(readonly, strong) id where;
 @property(readonly, strong) NSArray *orderedBy;
@@ -23,8 +24,7 @@ extern NSString *const DBLeftJoin;
 @property(readonly, strong) NSNumber *limit;
 @property(readonly, strong) id join;
 
-+ (DBQuery *)withTable:(id)table;
-+ (DBQuery *)withConnection:(DBConnection *)connection table:(id)table;
++ (DBQuery *)withTable:(DBTable *)table;
 
 - (NSArray *)execute;
 

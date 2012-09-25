@@ -59,49 +59,17 @@ typedef enum {
  * set the prefix you'll use in +load (along with the default connection if you want one)\n
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
-@interface DBModel : NSObject {
-    DBConnection *_connection;
-    DBTable *_table;
-    NSUInteger _databaseId;
-    NSMutableArray *_relationships;
-    NSMutableDictionary *_readCache;
-    NSMutableDictionary *_writeCache;
-    NSMutableArray *_addCache;
-    NSMutableArray *_removeCache;
-    NSArray *_columnCache;
-}
-@property(readwrite, strong) DBConnection * connection;
+@interface DBModel : NSObject
 @property(readonly, strong) DBTable *table;
 @property(readwrite, strong) NSMutableArray *relationships;
 @property(readwrite) NSUInteger databaseId;
 
-/*! Creates a new record and saves it in the database
- * @param attributes A dictionary of keys/values to initialize the record with
- * @param connection The connection to use for the record. (Pass nil to use the default connection)
- */
-+ (id)createWithAttributes:(NSDictionary *)attributes connection:(DBConnection *)connection;
-/*! Creates a new record and saves it in the database using the default connection
- * @param attributes A dictionary of keys/values to initialize the record with
- */
-+ (id)createWithAttributes:(NSDictionary *)attributes;
-
-/*! Creates a reference to the record corresponding to id\n
- * Note: Does not check if the record exists
- * @param id The id of the record to retrieve
- */
-- (id)initWithId:(NSUInteger)id;
 /*! Creates a reference to the record corresponding to id\n
  * Note: Does not check if the record exists
  * @param aConnection the connection to use
  * @param id The id of the record to retrieve
  */
-- (id)initWithConnection:(DBConnection *)aConnection id:(NSUInteger)id;
-
-
-/*!  Sets the default connection to be used by DBModel and it's subclasses */
-+ (void)setDefaultConnection:(DBConnection *)aConnection;
-/*!  Returns the default connection used by DBModel and it's subclasses */
-+ (DBConnection *)defaultConnection;
+- (id)initWithTable:(DBTable *)aTable id:(NSUInteger)id;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n

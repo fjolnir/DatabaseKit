@@ -49,7 +49,13 @@ typedef enum {
 
 #pragma mark -
 #pragma mark Private method definitions
-@interface DBModel () // Implemented in DBModel.m
+@interface DBModel () { // Implemented in DBModel.m
+    NSMutableDictionary *_readCache;
+    NSMutableDictionary *_writeCache;
+    NSMutableArray *_addCache;
+    NSMutableArray *_removeCache;
+    NSArray *_columnCache;
+}
 // Returns the column names of the table associated with the model
 - (NSArray *)columns;
 // Returns the name of the id column (foreign) for a model DBModel would mean modelId

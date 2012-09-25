@@ -54,7 +54,7 @@
     }
     NSString *idColumn = [[self.record class] idColumnForModel:[self.record class]];
 
-    DBTable *partnerTable = [DBTable withConnection:self.record.connection name:[partnerClass tableName]];
+    DBTable *partnerTable = self.record.table.database[[partnerClass tableName]];
     DBQuery *q = [[[partnerTable select:@"id"] where:@{ idColumn: @(self.record.databaseId) }] limit:limit];
     if(conditions)
         q = [q appendWhere:conditions];
@@ -65,7 +65,7 @@
     NSMutableArray *partners = [NSMutableArray array];
     for(NSDictionary *row in [q execute]) {
         anId = row[@"id"];
-        partnerRecord = [[partnerClass alloc] initWithConnection:self.record.connection id:[anId unsignedIntegerValue]];
+        partnerRecord = [[partnerClass alloc] initWithTable:partnerTable id:[anId unsignedIntegerValue]];
         [partners addObject:partnerRecord];
     }
     return partners;

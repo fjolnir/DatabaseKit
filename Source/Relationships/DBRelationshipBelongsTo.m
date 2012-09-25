@@ -12,6 +12,7 @@
 #import "DBModelPrivate.h"
 #import "DBRelationshipHasMany.h"
 #import "DBRelationshipHasOne.h"
+#import "DBTable.h"
 
 @implementation DBRelationshipBelongsTo
 #pragma mark Key parser
@@ -37,17 +38,17 @@
     NSString *partnerClassName = [NSString stringWithFormat:@"%@%@",
                                   [[self.record class] classPrefix],
                                   [key stringByCapitalizingFirstLetter]];
-    Class partnerClass = NSClassFromString(partnerClassName);;
+    Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {
         [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)", key, partnerClassName];
         return nil;
     }
     NSString *idColumn = [[self.record class] idColumnForModel:partnerClass];
-    id partnerId = [self.record valueForKey:idColumn];
+    id partnerId = self.record[idColumn];
     if(![partnerId isEqual:[NSNull null]])
-        return [[partnerClass alloc] initWithConnection:self.record.connection
-                                                      id:[partnerId unsignedIntValue]];
+        return [[partnerClass alloc] initWithTable:self.record.table.database[[partnerClass tableName]]
+                                                id:[partnerId unsignedIntValue]];
     return nil;
 }
 - (void)sendRecord:(id)aRecord forKey:(NSString *)key

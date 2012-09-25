@@ -10,6 +10,7 @@
 #import "DBModel.h"
 #import "DBTable.h"
 #import "DBQuery.h"
+#import "DBTable.h"
 #import "DBModelPrivate.h"
 #import "NSString+DBAdditions.h"
 
@@ -55,7 +56,7 @@
 
     NSString *joinTableName = [[self.record class] joinTableNameForModel:[self.record class] and:partnerClass];
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
-    DBTable *partnerTable   = [DBTable withConnection:self.record.connection name:[partnerClass tableName]];
+    DBTable *partnerTable   = self.record.table.database[[partnerClass tableName]];
 
     DBQuery *q = [partnerTable select:partnerIdCol];
     q          = [q innerJoin:joinTableName on:@{ @"id": partnerIdCol }];
@@ -69,8 +70,8 @@
 
     NSMutableArray *partners = [NSMutableArray array];
     for(NSDictionary *row in [q execute]) {
-        [partners addObject:[[partnerClass alloc] initWithConnection:self.record.connection
-                                                                  id:[row[partnerIdCol] unsignedIntValue]]];
+        [partners addObject:[[partnerClass alloc] initWithTable:partnerTable
+                                                             id:[row[partnerIdCol] unsignedIntValue]]];
     }
     return partners;
 }
@@ -85,7 +86,8 @@
     NSString *joinTableName = [[self class] joinTableNameForModel:[self.record class] and:partnerClass];
     NSString *selfIdCol     = [[self.record class] idColumn];
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
-    DBTable *joinTable = [DBTable withConnection:self.record.connection name:joinTableName];
+    DBTable *joinTable = self.record.table.database[joinTableName];
+
     // First empty out the join table
     [[[joinTable delete] where:@{ [[self.record class] idColumn]: @(self.record.databaseId) }] execute];
     if(!aRecord)
@@ -113,7 +115,7 @@
     NSString *joinTableName = [[self.record class] joinTableNameForModel:[self.record class] and:partnerClass];
     NSString *selfIdCol     = [[self.record class] idColumn];
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
-    DBTable *joinTable      = [DBTable withConnection:self.record.connection name:joinTableName];
+    DBTable *joinTable      = self.record.table.database[joinTableName];
 
     [[joinTable insert:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @([aRecord databaseId])}] execute];
 }
@@ -127,7 +129,7 @@
     NSString *joinTableName = [[self class] joinTableNameForModel:[self.record class] and:partnerClass];
     NSString *selfIdCol     = [[self.record class] idColumn];
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
-    DBTable *joinTable      = [DBTable withConnection:self.record.connection name:joinTableName];
+    DBTable *joinTable      = self.record.table.database[joinTableName];
     [[[joinTable delete] where:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @([aRecord databaseId])}] execute];
 }
 
