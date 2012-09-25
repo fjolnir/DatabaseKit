@@ -146,14 +146,12 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		32DBCF5E0370ADEE00C91783 /* DatabaseKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabaseKit_Prefix.pch; path = Mac/DatabaseKit_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
 		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
 		C7A5077913F01B1200301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C7AED93D13C1440200C47919 /* libactive_record.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libactive_record.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7AED94313C1440200C47919 /* active_record-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "active_record-Prefix.pch"; sourceTree = "<group>"; };
+		C7AED93D13C1440200C47919 /* libDatabaseKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDatabaseKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7AED95F13C144ED00C47919 /* Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		C7AED96413C148C700C47919 /* Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Extensions.h; sourceTree = "<group>"; };
 		C7AED96513C148C700C47919 /* Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Base64Extensions.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -177,6 +175,7 @@
 		C7E3D90D1611DE9000220FE9 /* uncountables.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = uncountables.inc; sourceTree = "<group>"; };
 		C7E3D9151611E12900220FE9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		C7E3D9171611E12E00220FE9 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
+		C7E3D9461611E34600220FE9 /* DatabaseKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseKit_Prefix.pch; sourceTree = "<group>"; };
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		C7FAF112160C830F004B16B0 /* DBQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBQuery.h; sourceTree = "<group>"; };
@@ -275,7 +274,7 @@
 			children = (
 				8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */,
 				C7CAF2F213BA1A7300013E21 /* Unit Tests.app */,
-				C7AED93D13C1440200C47919 /* libactive_record.a */,
+				C7AED93D13C1440200C47919 /* libDatabaseKit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -327,8 +326,9 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C7CAF28B13BA080A00013E21 /* RegexKitLite-4.0 */,
 				C7AED95F13C144ED00C47919 /* Debug.h */,
+				C7E3D9461611E34600220FE9 /* DatabaseKit_Prefix.pch */,
+				C7CAF28B13BA080A00013E21 /* RegexKitLite-4.0 */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -339,18 +339,9 @@
 				C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */,
 				C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */,
 				C7AED96013C1455900C47919 /* Libraries */,
-				C7AED94213C1440200C47919 /* Supporting Files */,
 			);
 			name = "iPhone Specific";
 			path = iPhone;
-			sourceTree = "<group>";
-		};
-		C7AED94213C1440200C47919 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C7AED94313C1440200C47919 /* active_record-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		C7AED96013C1455900C47919 /* Libraries */ = {
@@ -366,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
-				C7AED96313C1461F00C47919 /* Other Sources */,
 				C7AED96213C1460A00C47919 /* Resources */,
 			);
 			name = "Mac Specific";
@@ -379,14 +369,6 @@
 				C7A5077813F01B1200301981 /* InfoPlist.strings */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		C7AED96313C1461F00C47919 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32DBCF5E0370ADEE00C91783 /* DatabaseKit_Prefix.pch */,
-			);
-			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		C7CAF28B13BA080A00013E21 /* RegexKitLite-4.0 */ = {
@@ -643,7 +625,7 @@
 			);
 			name = "iPhone Library";
 			productName = active_record;
-			productReference = C7AED93D13C1440200C47919 /* libactive_record.a */;
+			productReference = C7AED93D13C1440200C47919 /* libDatabaseKit.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		C7CAF2F113BA1A7300013E21 /* Unit Tests */ = {
@@ -828,7 +810,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Mac/DatabaseKit_Prefix.pch;
+				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -850,7 +832,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Mac/DatabaseKit_Prefix.pch;
+				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -904,7 +886,7 @@
 				DSTROOT = /tmp/active_record.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iPhone/active_record-Prefix.pch";
+				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -914,7 +896,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
-				PRODUCT_NAME = active_record;
+				PRODUCT_NAME = DatabaseKit;
 				PUBLIC_HEADERS_FOLDER_PATH = include/DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -930,12 +912,12 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/active_record.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iPhone/active_record-Prefix.pch";
+				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
-				PRODUCT_NAME = active_record;
+				PRODUCT_NAME = DatabaseKit;
 				PUBLIC_HEADERS_FOLDER_PATH = include/DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

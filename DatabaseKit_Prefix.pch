@@ -1,0 +1,9 @@
+// Prefix header for the iPhone static library target
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import "Debug.h"
+    #ifdef TARGET_OS_IPHONE
+        #import "NSObject+iPhoneHacks.h"
+    #endif
+#endif
