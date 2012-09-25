@@ -661,8 +661,8 @@ provider RegexKitLite {
 #define REGEXKITLITE_TYPEDEFS  "___dtrace_typedefs$RegexKitLite$v1"
 #define REGEXKITLITE_COMPILEDREGEXCACHE(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) { __asm__ volatile(".reference " REGEXKITLITE_TYPEDEFS); __dtrace_probe$RegexKitLite$compiledRegexCache$v1$756e7369676e6564206c6f6e67$63686172202a$756e7369676e656420696e74$696e74$696e74$696e74$63686172202a$646f75626c65202a(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7); __asm__ volatile(".reference " REGEXKITLITE_STABILITY); }
 #define REGEXKITLITE_COMPILEDREGEXCACHE_ENABLED() __dtrace_isenabled$RegexKitLite$compiledRegexCache$v1()
-#define	REGEXKITLITE_CONVERTEDSTRINGU16CACHE(arg0, arg1, arg2, arg3, arg4, arg5, arg6) { __asm__ volatile(".reference " REGEXKITLITE_TYPEDEFS); __dtrace_probe$RegexKitLite$utf16ConversionCache$v1$756e7369676e6564206c6f6e67$756e7369676e656420696e74$646f75626c65202a$766f6964202a$756e7369676e6564206c6f6e67$756e7369676e6564206c6f6e67$6c6f6e67(arg0, arg1, arg2, arg3, arg4, arg5, arg6); __asm__ volatile(".reference " REGEXKITLITE_STABILITY); }
-#define	REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED() __dtrace_isenabled$RegexKitLite$utf16ConversionCache$v1()
+#define    REGEXKITLITE_CONVERTEDSTRINGU16CACHE(arg0, arg1, arg2, arg3, arg4, arg5, arg6) { __asm__ volatile(".reference " REGEXKITLITE_TYPEDEFS); __dtrace_probe$RegexKitLite$utf16ConversionCache$v1$756e7369676e6564206c6f6e67$756e7369676e656420696e74$646f75626c65202a$766f6964202a$756e7369676e6564206c6f6e67$756e7369676e6564206c6f6e67$6c6f6e67(arg0, arg1, arg2, arg3, arg4, arg5, arg6); __asm__ volatile(".reference " REGEXKITLITE_STABILITY); }
+#define    REGEXKITLITE_CONVERTEDSTRINGU16CACHE_ENABLED() __dtrace_isenabled$RegexKitLite$utf16ConversionCache$v1()
 
 extern void __dtrace_probe$RegexKitLite$compiledRegexCache$v1$756e7369676e6564206c6f6e67$63686172202a$756e7369676e656420696e74$696e74$696e74$696e74$63686172202a$646f75626c65202a(unsigned long, const char *, unsigned int, int, int, int, const char *, double *);
 extern int  __dtrace_isenabled$RegexKitLite$compiledRegexCache$v1(void);
