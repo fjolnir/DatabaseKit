@@ -119,7 +119,7 @@
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = ActiveRecord;
+			remoteInfo = DatabaseKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -275,7 +275,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0867D691FE84028FC02AAC07 /* ActiveRecord */ = {
+		0867D691FE84028FC02AAC07 /* DatabaseKit */ = {
 			isa = PBXGroup;
 			children = (
 				F8DA52E10E058F10002C3ADB /* Source */,
@@ -286,7 +286,7 @@
 				034768DFFF38A50411DB9C8B /* Products */,
 				F87B10320E06F6D500580499 /* Unit tests (Mac) */,
 			);
-			name = ActiveRecord;
+			name = DatabaseKit;
 			sourceTree = "<group>";
 		};
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
@@ -623,7 +623,7 @@
 			);
 			name = DatabaseKit;
 			productInstallPath = "$(HOME)/Library/Frameworks";
-			productName = ActiveRecord;
+			productName = DatabaseKit;
 			productReference = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -678,7 +678,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = 0867D691FE84028FC02AAC07 /* ActiveRecord */;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DatabaseKit */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -952,9 +952,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-all_load";
-				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
+				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
 				PRODUCT_NAME = active_record;
-				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;
+				PUBLIC_HEADERS_FOLDER_PATH = include/DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -973,9 +973,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-all_load";
-				PRIVATE_HEADERS_FOLDER_PATH = "include/ActiveRecord-Private";
+				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
 				PRODUCT_NAME = active_record;
-				PUBLIC_HEADERS_FOLDER_PATH = include/ActiveRecord;
+				PUBLIC_HEADERS_FOLDER_PATH = include/DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;

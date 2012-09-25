@@ -1,8 +1,8 @@
 require 'osx/cocoa'
 include OSX
 
-inPath = "/Users/aptiva/Desktop/ActiveRecord/English.lproj/irregulars.plist"
-outPath = "/Users/aptiva/Desktop/ActiveRecord/English.lproj/reverse irregulars.plist"
+inPath = "/Users/fjolnir/Desktop/DatabaseKit/English.lproj/irregulars.plist"
+outPath = "/Users/fjolnir/Desktop/DatabaseKit/English.lproj/reverse irregulars.plist"
 original = NSArray.arrayWithContentsOfFile inPath
 reverseEnum = original.reverseObjectEnumerator
 
