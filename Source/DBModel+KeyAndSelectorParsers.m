@@ -15,7 +15,7 @@
 #import "DBRelationship.h"
 
 @implementation DBModel (KeyAndSelectorParsers)
-- (DBAttributeSelectorType)typeOfSelector:(SEL)aSelector
++ (DBAttributeSelectorType)typeOfSelector:(SEL)aSelector
                             attributeName:(NSString **)outAttribute
 {
     NSString *selector = NSStringFromSelector(aSelector);   

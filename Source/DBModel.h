@@ -39,16 +39,6 @@
 #import <DatabaseKit/DBConnection.h>
 
 /*!
- * @enum DBFindSpecification
- * Defines what to find with -find
- * Example: [model find:DBFindFirst filter:@""];
- */
-typedef enum {
-    DBFindFirst = -1,
-    DBFindAll   = -2
-} DBFindSpecification;
-
-/*!
  * @enum DBNamingStyle
  * Indicates how DatabaseKit will name it's tables
  * ObjC style:  manyModels
@@ -181,6 +171,8 @@ typedef enum {
 - (id)valueForKey:(NSString *)key;
 - (id)objectForKeyedSubscript:(id)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
+- (void)addRecord:(id)record forKey:(NSString *)key;
+- (void)removeRecord:(id)record forKey:(NSString *)key;
 
 /*!
  * Retrieves a value from the database\n
