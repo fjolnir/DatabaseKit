@@ -9,10 +9,14 @@
 
 + (DB *)withURL:(NSURL *)URL
 {
+    return [self withURL:URL error:nil];
+}
+
++ (DB *)withURL:(NSURL *)URL error:(NSError **)err
+{
     DB *ret = [self new];
-    NSError *err = nil;
-    ret.connection = [DBConnectionPool openConnectionWithURL:URL error:&err];
-    if(err)
+    ret.connection = [DBConnectionPool openConnectionWithURL:URL error:err];
+    if(!ret.connection)
         return nil;
     return ret;
 }

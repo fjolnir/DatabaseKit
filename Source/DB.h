@@ -38,6 +38,8 @@
 @property(readonly, strong) DBConnection *connection;
 
 + (DB *)withURL:(NSURL *)URL;
++ (DB *)withURL:(NSURL *)URL error:(NSError **)err;
+
 // Returns a table whose name matches key or nil
 - (id)objectForKeyedSubscript:(id)key;
 @end
