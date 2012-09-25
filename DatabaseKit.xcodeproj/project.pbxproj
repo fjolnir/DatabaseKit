@@ -71,6 +71,8 @@
 		C7CAF32813BA1F6800013E21 /* GHTestCase+Fixtures.m in Sources */ = {isa = PBXBuildFile; fileRef = F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */; };
 		C7CAF32913BA200000013E21 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 		C7CAF32A13BA201000013E21 /* DatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */; };
+		C7E3D9011610CD1B00220FE9 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3D8FF1610CD1B00220FE9 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7E3D9021610CD1B00220FE9 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9001610CD1B00220FE9 /* DB.m */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7F5249A13EFED5F0086F32E /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
 		C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -170,6 +172,8 @@
 		C7CAF31813BA1BE700013E21 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		C7CAF31B13BA1BE700013E21 /* Unit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
 		C7CAF31C13BA1BE700013E21 /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Unit Tests-Prefix.pch"; path = "Mac/Unit Tests/Unit Tests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		C7E3D8FF1610CD1B00220FE9 /* DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB.h; sourceTree = "<group>"; };
+		C7E3D9001610CD1B00220FE9 /* DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB.m; sourceTree = "<group>"; };
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		C7FAF112160C830F004B16B0 /* DBQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBQuery.h; sourceTree = "<group>"; };
@@ -485,6 +489,8 @@
 			isa = PBXGroup;
 			children = (
 				F8DA52E20E058F10002C3ADB /* DatabaseKit.h */,
+				C7E3D8FF1610CD1B00220FE9 /* DB.h */,
+				C7E3D9001610CD1B00220FE9 /* DB.m */,
 				F8DA52E70E058F10002C3ADB /* DBModel.h */,
 				F8DA52E80E058F10002C3ADB /* DBModel.m */,
 				F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */,
@@ -578,6 +584,7 @@
 				F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */,
 				C7FF97F61610BCFF002957F7 /* DBConnectionPool.h in Headers */,
+				C7E3D9011610CD1B00220FE9 /* DB.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
 			);
@@ -747,6 +754,7 @@
 				C7FE7F531610069500031BBD /* DBTable.m in Sources */,
 				C7FF97F71610BCFF002957F7 /* DBConnectionPool.m in Sources */,
 				C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */,
+				C7E3D9021610CD1B00220FE9 /* DB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

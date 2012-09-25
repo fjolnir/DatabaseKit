@@ -35,6 +35,7 @@
 #define _DBBASE_H_
 
 #import <Foundation/Foundation.h>
+#import <DatabaseKit/DB.h>
 #import <DatabaseKit/DBConnection.h>
 
 /*!
@@ -69,7 +70,7 @@ typedef enum {
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
 @interface DBModel : NSObject {
-    DBConnection * _connection;
+    DBConnection *_connection;
     DBTable *_table;
     NSUInteger _databaseId;
     NSMutableArray *_relationships;

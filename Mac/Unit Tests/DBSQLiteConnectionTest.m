@@ -1,5 +1,5 @@
 //
-//  ARSQLiteConnectionTest.m
+//  DBSQLiteConnectionTest.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
@@ -52,14 +52,4 @@
     }
 }
 
-- (void)testPool
-{
-    NSError *err = nil;
-    DBConnectionPool *pool = [DBConnectionPool withURL:connection.URL error:&err];
-    GHAssertNil(err, @"Error creating pool: %@", pool);
-    NSArray *result = [pool do:^(DBConnection *c) {
-        return [connection executeSQL:@"SELECT * FROM foo"  substitutions:nil error:nil];
-    }];
-    NSLog(@"%@", result);
-}
 @end

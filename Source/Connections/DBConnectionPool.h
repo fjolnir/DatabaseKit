@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  DBConnectionPool.h
-//   A connection pool to allow use of DBKit in multithreaded applications.
+//   A connnection type that simply manages a pool of connections of a different type.
+//   Making sure that a any one is only used on a single thread.
 //
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -35,14 +36,5 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
 
-extern id DBConnectionRollback;
-
-typedef id (^DBConnectionPoolBlock)(DBConnection *connection);
-
-@interface DBConnectionPool : NSObject
-@property(readonly, retain) NSURL *URL;
-
-+ (DBConnectionPool *)withURL:(NSURL *)URL error:(NSError **)err;
-- (id)do:(DBConnectionPoolBlock)block;
-- (id)transaction:(DBConnectionPoolBlock)block;
+@interface DBConnectionPool : DBConnection
 @end

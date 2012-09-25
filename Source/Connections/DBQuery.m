@@ -256,12 +256,16 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (NSArray *)execute
 {
+    return [self executeOnConnection:[self connection]];
+}
+- (NSArray *)executeOnConnection:(DBConnection *)connection
+{
     NSString *query;
     NSArray *params;
     [self _generateString:&query parameters:&params];
     NSError *err = nil;
     DBLog(@"Executing query: %@ with params: %@", query, params);
-    id ret = [[self connection] executeSQL:query substitutions:params error:&err];
+    id ret = [connection executeSQL:query substitutions:params error:&err];
     if(err) {
         DBDebugLog(@"%@", err);
         return nil;

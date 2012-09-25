@@ -1,24 +1,28 @@
 #import "DBConnectionPool.h"
-
-id DBConnectionRollback = @"DBConnectionRollback";
+#import <pthread.h>
 
 @interface DBConnectionPool () {
     NSMutableArray *_connections;
+    pthread_key_t _threadLocalKey;
 }
 @property(readwrite, retain) NSURL *URL;
 - (DBConnection *)_getConnection:(NSError **)err;
-- (void)_addConnection:(DBConnection *)connection;
 @end
 
+static void _connectionCloser(void *ptr)
+{
+    DBConnection *connection = (__bridge id)ptr;
+    [connection closeConnection];
+}
+
 @implementation DBConnectionPool
-+ (DBConnectionPool *)withURL:(NSURL *)URL error:(NSError **)err
++ (DBConnection *)openConnectionWithURL:(NSURL *)URL error:(NSError **)err
 {
     DBConnectionPool *pool = [self new];
     pool.URL = URL;
     DBConnection *firstConnection = [pool _getConnection:err];
     if(!firstConnection)
         return nil;
-    [pool _addConnection:firstConnection];
     return pool;
 }
 
@@ -27,49 +31,62 @@ id DBConnectionRollback = @"DBConnectionRollback";
     if(!(self = [super init]))
         return nil;
     _connections = [NSMutableArray array];
+    pthread_key_create(&_threadLocalKey, &_connectionCloser);
     return self;
 }
 
-- (id)do:(DBConnectionPoolBlock)block
+- (void)dealloc
 {
-    DBConnection *connection = [self _getConnection:nil];
-    id ret = block(connection);
-    [self _addConnection:connection];
-    return ret;
-}
-
-- (id)transaction:(DBConnectionPoolBlock)block
-{
-    DBConnection *connection = [self _getConnection:nil];
-    [connection beginTransaction];
-    
-    id ret = block(connection);
-    
-    if(ret == DBConnectionRollback) {
-        ret = nil;
-        [connection rollBack];
-    } else
-        [connection endTransaction];
-
-    [self _addConnection:connection];
-    return ret;
+    pthread_key_delete(_threadLocalKey);
 }
 
 - (DBConnection *)_getConnection:(NSError **)err
 {
-    @synchronized(self) {
-        if([_connections count] > 0) {
-            DBConnection *connection = [_connections lastObject];
-            [_connections removeLastObject];
-            return connection;
-        }
-        return [DBConnection openConnectionWithURL:_URL error:err];
-    }
-}
-- (void)_addConnection:(DBConnection *)connection
-{
-    @synchronized(self) {
+    DBConnection *connection = (__bridge id)pthread_getspecific(_threadLocalKey);
+    if(!connection) {
+        connection = [DBConnection openConnectionWithURL:self.URL error:err];
         [_connections addObject:connection];
+        pthread_setspecific(_threadLocalKey, (__bridge void *)connection);
     }
+    return connection;
 }
+
+
+#pragma mark - Forwarders
+
+- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
+{
+    return [[self _getConnection:outErr] executeSQL:sql substitutions:substitutions error:outErr];
+}
+- (BOOL)closeConnection
+{
+    if([_connections count] == 0)
+        return YES;
+    BOOL ret = NO;
+    for(DBConnection *connection in _connections) {
+        ret |= [connection closeConnection];
+    }
+    return ret;
+}
+- (NSArray *)columnsForTable:(NSString *)tableName
+{
+    return [[self _getConnection:nil] columnsForTable:tableName];
+}
+- (BOOL)beginTransaction
+{
+    return [[self _getConnection:nil] beginTransaction];
+}
+- (BOOL)rollBack
+{
+    return [[self _getConnection:nil] rollBack];
+}
+- (BOOL)endTransaction
+{
+    return [[self _getConnection:nil] endTransaction];
+}
+- (NSUInteger)lastInsertId
+{
+    return [[self _getConnection:nil] lastInsertId];
+}
+
 @end

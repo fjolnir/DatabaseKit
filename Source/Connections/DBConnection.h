@@ -37,7 +37,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern id DBConnectionRollback;
+
 @class DBQuery;
+typedef id (^DBConnectionBlock)();
 
 #define DBConnectionErrorDomain @"com.activerecord.connection"
 
@@ -97,5 +100,7 @@
 - (BOOL)rollBack;
 /*! Ends a transaction */
 - (BOOL)endTransaction;
+/*! Wraps the passed block in a transaction and calls it */
+- (id)transaction:(DBConnectionBlock)block;
 
 @end

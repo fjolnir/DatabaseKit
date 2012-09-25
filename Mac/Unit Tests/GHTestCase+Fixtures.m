@@ -19,7 +19,7 @@
                                                    encoding:NSUTF8StringEncoding
                                                       error:nil];
 
-    DBConnection *connection = [DBConnection openConnectionWithURL:url error:&err];
+    DBConnection *connection = [DBConnectionPool openConnectionWithURL:url error:&err];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
         NSError *err = nil;
