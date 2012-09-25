@@ -26,12 +26,12 @@
     switch((int)[DBModel typeOfSelector:aSEL attributeName:&attributeName]) {
         case DBAttributeSelectorReader:
             class_addMethod([self class], aSEL, imp_implementationWithBlock(^(DBModel *self){
-                return [self retrieveValueForKey:attributeName];
+                return [self valueForKey:attributeName];
             }), "@@:");
             return YES;
         case DBAttributeSelectorWriter:
             class_addMethod([self class], aSEL, imp_implementationWithBlock(^(DBModel *self, id value) {
-                [self setObject:value forKey:attributeName];
+                [self setValue:value forKey:attributeName];
             }), "v@:@");
             return YES;
         case DBAttributeSelectorAdder:

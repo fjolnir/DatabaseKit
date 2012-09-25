@@ -76,7 +76,7 @@
     if(![self respondsToKey:key])
         return;
     // aRecord is expected to be an nsarray
-    NSArray *oldPartners = [self.record retrieveValueForKey:key];
+    NSArray *oldPartners = [self.record valueForKey:key];
     for(id partner in oldPartners)
         [partner sendValue:@0
                     forKey:[[self.record class] idColumn]];

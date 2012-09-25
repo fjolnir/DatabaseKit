@@ -58,7 +58,7 @@
         return nil;
     NSMutableArray *partners = [NSMutableArray array];
     id currentPartners;
-    for(DBModel *proxy in [self.record retrieveValueForKey:_proxyKey])
+    for(DBModel *proxy in [self.record valueForKey:_proxyKey])
     {
         currentPartners = [proxy retrieveRecordForKey:self.name filter:conditions order:order by:orderByFields limit:limit];
         if([currentPartners isKindOfClass:[NSArray class]])

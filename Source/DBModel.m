@@ -68,7 +68,7 @@ static NSString *classPrefix = nil;
     id value = nil;
     for(NSString *key in [_readCache allKeys])
     {
-        value = [self retrieveValueForKey:key];
+        value = [self valueForKey:key];
         if(value)
             _readCache[key] = value;
         else
@@ -222,7 +222,7 @@ static NSString *classPrefix = nil;
 
 #pragma mark -
 #pragma mark Accessors
-- (id)retrieveValueForKey:(NSString *)key
+- (id)valueForKey:(NSString *)key
 {
     // Check if we have a cached value and if caching is enabled
     id cached = _readCache[key];
@@ -235,6 +235,14 @@ static NSString *classPrefix = nil;
         _readCache[key] = value;
     return value;
 }
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    if(delayWriting)
+        _writeCache[key] = value;
+    else
+        [self sendValue:value forKey:key];
+}
+
 - (id)retrieveRecordForKey:(NSString *)key
                     filter:(id)conditions
                      order:(NSString *)order
@@ -257,36 +265,27 @@ static NSString *classPrefix = nil;
     if(relationship)
         [relationship sendRecord:value forKey:key];
 }
-- (void)setObject:(id)obj forKey:(NSString *)key
-{
-    if(delayWriting)
-        _writeCache[key] = obj;
-    else
-        [self sendValue:obj forKey:key];
-}
-- (id)valueForKey:(NSString *)key
-{
-    return [self retrieveValueForKey:key];
-}
+
 - (id)objectForKeyedSubscript:(id)key
 {
-    return [self retrieveValueForKey:key];
+    return [self valueForKey:key];
 }
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
 {
     NSParameterAssert([(NSObject*)key isKindOfClass:[NSString class]]);
-    [self setObject:obj forKey:(NSString *)key];
+    [self setValue:obj forKey:(NSString *)key];
 }
 
 // Called by KVC when it doesn't find a property/ivar for a given key.
 - (id)valueForUndefinedKey:(NSString *)key
 {
-    return [self retrieveValueForKey:key];
+    return [self valueForKey:key];
 }
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    [self setObject:value forKey:key];
+    [self setValue:value forKey:key];
 }
+
 
 // This accessor adds a record to either a has many or has and belongs to many relationship
 - (void)addRecord:(id)record forKey:(NSString *)key
@@ -369,7 +368,7 @@ static NSString *classPrefix = nil;
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, [self databaseId]];
     for(NSString *column in [self columns]) {
-        [description appendFormat:@"%@ = %@\n", column, [self retrieveValueForKey:column]];
+        [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
     [description appendString:@"}"];
     return description;

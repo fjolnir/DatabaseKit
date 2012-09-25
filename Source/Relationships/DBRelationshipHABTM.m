@@ -104,7 +104,7 @@
 
     // Check if the relationship already exists between us, if it does we shouldn't duplicate it
     // Note to self: maybe we should replace this with a query, it'd be faster but uglier code.
-    NSArray *existingPartners = [self.record retrieveValueForKey:key];
+    NSArray *existingPartners = [self.record valueForKey:key];
     for(id existingPartner in existingPartners) {
         if([existingPartner databaseId] == [aRecord databaseId])
             return;
