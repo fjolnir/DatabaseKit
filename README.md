@@ -10,9 +10,11 @@ Features:
  * Supported databases
   - SQLite 3
   - (PostgreSQL planned for the very near future)
- * Query composition done purely in Objective-C
- * Table relationships
- * Almost no code required
+ * Query composition done purely in Objective-C.
+ * Table relationships.
+ * If you use a connection pool(Done transparently by default) then query objects are thread safe.
+ * If you provide a model class, then results from it's corresponding table will automatically be returned as instances of that class.
+ * Almost no code required.
 
 Examples
 =============
