@@ -284,6 +284,11 @@ NSString *const DBLeftJoin  = @"LEFT";
     return row;
 }
 
+- (id)first
+{
+    return [self count] > 0 ? self[0] : nil;
+}
+
 - (NSUInteger)count
 {
     if(_rows && !_dirty)

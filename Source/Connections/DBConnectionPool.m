@@ -45,6 +45,8 @@ static void _connectionCloser(void *ptr)
     DBConnection *connection = (__bridge id)pthread_getspecific(_threadLocalKey);
     if(!connection) {
         connection = [DBConnection openConnectionWithURL:self.URL error:err];
+        if(!connection)
+            return nil;
         pthread_setspecific(_threadLocalKey, (__bridge void *)connection);
         @synchronized(self) { // Replace with a spinlock?
             [_connections addObject:connection];

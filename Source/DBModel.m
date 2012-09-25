@@ -268,6 +268,16 @@ static NSString *classPrefix = nil;
 {
     return [self retrieveValueForKey:key];
 }
+- (id)objectForKeyedSubscript:(id)key
+{
+    return [self retrieveValueForKey:key];
+}
+- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
+{
+    NSParameterAssert([(NSObject*)key isKindOfClass:[NSString class]]);
+    [self setObject:obj forKey:(NSString *)key];
+}
+
 // Called by KVC when it doesn't find a property/ivar for a given key.
 - (id)valueForUndefinedKey:(NSString *)key
 {

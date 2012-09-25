@@ -177,7 +177,11 @@ typedef enum {
  * Retrieves a value from the database\n
  * Same as retrieveValueForKey:
  * @param key A valid key, can refer to either a column or a relationship
- */- (id)valueForKey:(NSString *)key;
+ */
+- (id)valueForKey:(NSString *)key;
+- (id)objectForKeyedSubscript:(id)key;
+- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
+
 /*!
  * Retrieves a value from the database\n
  * Caching has not been implemented for this method.

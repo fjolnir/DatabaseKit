@@ -32,7 +32,7 @@
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:@{ @"id": @(idx) }][idx];
+    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:@{ @"id": @(idx) }][0];
 }
 
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
@@ -40,12 +40,12 @@
     [[[DBQuery withConnection:_connection table:self] update:obj] where:@{ @"id": @(idx) }];
 }
 
-- (id)objectAtKeyedSubscript:(id)cond
+- (id)objectForKeyedSubscript:(id)cond
 {
-    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:cond][0];
+    return [[[[DBQuery withConnection:_connection table:self] select] limit:@1] where:cond];
 }
 
-- (void)setObject:(id)obj atKeyedSubscript:(id)cond
+- (void)setObject:(id)obj forKeyedSubscript:(id)cond
 {
     [[[DBQuery withConnection:_connection table:self] update:obj] where:cond];
 }
