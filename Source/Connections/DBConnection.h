@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
-//  ARConnection.h
+//  DBConnection.h
 //   ARConnection is a protocol defining the methods required
 //   by active record connection interfaces to implement.
 //   It expects a SQL compliant backend (the rest of the framework
