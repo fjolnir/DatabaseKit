@@ -34,8 +34,7 @@
 
 - (void)testCreate
 {
-    TEModel *model = [TEModel createWithAttributes:@{@"name": @"Foobar",
-                                                    @"info": @"This is great!"}];
+    TEModel *model = [db[@"models"] insert:@{@"name": @"Foobar", @"info": @"This is great!"}][0];
 
     GHAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
     GHAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
@@ -43,11 +42,10 @@
 
 - (void)testDestroy
 {
-    TEModel *model = [TEModel createWithAttributes:@{@"name": @"Deletee",
-                                                    @"info": @"This won't exist for long"}];
+    TEModel *model = [db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}][0];
     NSUInteger theId = model.databaseId;
     GHAssertTrue([model destroy], @"Couldn't delete record");
-    NSArray *result = db[@"models"][theId];
+    NSArray *result = [[[db[@"models"] select] where:@{ @"id": @(theId) }] execute];
     GHAssertEquals([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 
@@ -78,7 +76,7 @@
     GHAssertTrue(([originalPeople count] == 2), @"TEModel should have 2 TEPeople but had %d", [originalPeople count]);
 
     // Then test sending
-    TEPerson *aPerson = [TEPerson createWithAttributes:@{@"realName": @"frankenstein", @"userName": @"frank"}];
+    TEPerson *aPerson = [db[@"people"] insert:@{@"realName": @"frankenstein", @"userName": @"frank"}][0];
     [model addPerson:aPerson];
     NSMutableArray *laterPeople = [originalPeople mutableCopy];
     [laterPeople addObject:aPerson];
@@ -109,7 +107,7 @@
     return;
 
     // Then test sending
-    TEAnimal *anAnimal = [TEAnimal createWithAttributes:@{@"species": @"Leopard", @"nickname": @"Godfred"}];
+    TEAnimal *anAnimal = [db[@"animals"] insert:@{@"species": @"Leopard", @"nickname": @"Godfried"}][0];
 
     [model setAnimal:anAnimal];
     GHAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%d != %d)", [[model animal] databaseId], [anAnimal databaseId]);
@@ -124,7 +122,7 @@
     GHAssertNotNil(model, @"No model found for person!");
 
     // Then test sending
-    TEAnimal *anAnimal = [TEAnimal createWithAttributes:@{@"species": @"cheetah", @"nickname": @"rick"}];
+    TEAnimal *anAnimal = [db[@"animals"] insert:@{@"species": @"cheetah", @"nickname": @"rick"}][0];
 
     TEAnimal *oldAnimal = [model animal];
     [anAnimal setModel:model];

@@ -31,7 +31,7 @@
             return YES;
         case DBAttributeSelectorWriter:
             class_addMethod([self class], aSEL, imp_implementationWithBlock(^(DBModel *self, id value) {
-                [self sendValue:value forKey:attributeName];
+                [self setObject:value forKey:attributeName];
             }), "v@:@");
             return YES;
         case DBAttributeSelectorAdder:

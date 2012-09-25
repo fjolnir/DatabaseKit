@@ -34,6 +34,8 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnectionPool.h>
 
+@class DBTable;
+
 @interface DB : NSObject
 @property(readonly, strong) DBConnection *connection;
 
@@ -41,5 +43,5 @@
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err;
 
 // Returns a table whose name matches key or nil
-- (id)objectForKeyedSubscript:(id)key;
+- (DBTable *)objectForKeyedSubscript:(id)key;
 @end

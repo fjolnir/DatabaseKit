@@ -265,10 +265,16 @@ NSString *const DBLeftJoin  = @"LEFT";
     [self _generateString:&query parameters:&params];
     NSError *err = nil;
     DBLog(@"Executing query: %@ with params: %@", query, params);
-    id ret = [connection executeSQL:query substitutions:params error:&err];
+    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
     if(err) {
         DBDebugLog(@"%@", err);
         return nil;
+    }
+    if([_type isEqualToString:DBQueryTypeInsert]) {
+        NSUInteger rowId = [connection lastInsertId];
+        Class modelClass;
+        if(rowId > 0 && (modelClass = [_table modelClass]))
+            return @[ [[modelClass alloc] initWithConnection:[self connection] id:rowId] ];
     }
     return ret;
 }
