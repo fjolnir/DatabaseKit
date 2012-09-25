@@ -43,8 +43,9 @@ extern NSString *const DBLeftJoin;
 - (DBQuery *)leftJoin:(id)table on:(NSDictionary *)fields;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
-- (NSString *)toString;
 - (NSUInteger)count;
+- (id)first;
+- (NSString *)toString;
 @end
 
 @interface DBJoin : NSObject
