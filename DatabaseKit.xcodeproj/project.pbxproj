@@ -412,7 +412,6 @@
 			children = (
 				C7CAF2F613BA1A7300013E21 /* Supporting Files */,
 				C7CAF2EC13BA1A0000013E21 /* GHUnitTestMain.m */,
-				C7CAF2CD13BA199100013E21 /* GHUnit.framework */,
 				F87B10350E06F6D500580499 /* DBModelTest.h */,
 				F87B10360E06F6D500580499 /* DBModelTest.m */,
 				F87B10370E06F6D500580499 /* DBInflectorTest.h */,
@@ -421,6 +420,7 @@
 				F87B103C0E06F6D500580499 /* DBSQLiteConnectionTest.m */,
 				F87B103F0E06F6D500580499 /* GHTestCase+Fixtures.h */,
 				F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */,
+				C7CAF2CD13BA199100013E21 /* GHUnit.framework */,
 			);
 			name = "Unit tests (Mac)";
 			path = "Mac/Unit Tests";
@@ -846,7 +846,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -864,7 +863,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

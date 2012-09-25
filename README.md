@@ -36,10 +36,34 @@ Examples
 ---
     // Change the name of everyone called John
     [[[people update:@{ @"name": @"Percie" }] where:@{ @"name": @"John" }] execute];
-
+--- 
+    // You can create a class to represent results from a table like so:
+    [DBModel setClassPrefix:@"Nice"]; // You'd set this to whatever prefix you're using
+    
+    @interface NicePerson : DBModel
+    @property(readwrite, copy) NSString *name, *address; // This is only to let the compiler know about the properties so that it doesn't throw warnings at you
+    - (void)introduceYourself;
+    @end
+    
+    @implementation NicePerson
+    @dynamic name, address;
+    - (void)introduceYourself
+    {
+        NSLog(@"Hi! I'm %@.", self.name);
+    }
+    @end
+    
+    // And now if you perform a query
+    NicePerson *someone = [[people select] limit:@1][0];
+    [someone introduceYourself];
+---
 The examples above look even nicer when written in my scripting language [Tranquil](http://github.com/fjolnir/Tranquil)
 
     q = db["table"] select: { @field1, @field2 }; where: { @id: 123 }
     q each: `row | row print`
     
     aTable delete; where: ["modifiedAt < ?", NSDate distantPast]
+    
+    #Person < DBModel {}
+    someone = (people select limit: 1)[0]
+    someone introduceYourself
