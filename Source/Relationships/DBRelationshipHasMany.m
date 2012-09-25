@@ -94,6 +94,8 @@
         return;
     [aRecord sendValue:@(self.record.databaseId)
                 forKey:[[self.record class] idColumn]];
+    if([DBModel enableCache])
+        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
 }
 - (void)removeRecord:(id)aRecord forKey:(NSString *)key
 {
@@ -102,6 +104,8 @@
         return;
     [self.record sendValue:@0U
                     forKey:[[self.record class] idColumn]];
+    if([DBModel enableCache])
+        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
 }
 
 #pragma mark Accessors

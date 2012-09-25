@@ -118,6 +118,8 @@
     DBTable *joinTable      = self.record.table.database[joinTableName];
 
     [[joinTable insert:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @([aRecord databaseId])}] execute];
+    if([DBModel enableCache])
+        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
 }
 
 - (void)removeRecord:(id)aRecord forKey:(NSString *)key
@@ -131,6 +133,8 @@
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
     DBTable *joinTable      = self.record.table.database[joinTableName];
     [[[joinTable delete] where:@{ selfIdCol: @(self.record.databaseId), partnerIdCol: @([aRecord databaseId])}] execute];
+    if([DBModel enableCache])
+        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
 }
 
 #pragma mark Accessors

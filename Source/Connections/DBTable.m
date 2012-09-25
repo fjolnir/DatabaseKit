@@ -22,6 +22,8 @@
 {
     NSString *prefix    = [DBModel classPrefix];
     NSString *tableName = [[_name singularizedString] capitalizedString];
+    if([DBModel namingStyle] == DBRailsNamingStyle)
+        tableName = [tableName underscoredString];
     return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
 }
 

@@ -23,7 +23,6 @@
 - (void)setUp
 {
     db = [super setUpSQLiteFixtures];
-    NSLog(@"DB: %@ --------------------", db);
 }
 
 - (void)testTableName
@@ -81,7 +80,6 @@
     NSMutableArray *laterPeople = [originalPeople mutableCopy];
     [laterPeople addObject:aPerson];
 
-
     GHAssertTrue([[model people] count] == [laterPeople count], @"person count should've been %d but was %d", [laterPeople count], [[model people] count]);
 
     [model setPeople:@[aPerson]];
@@ -135,7 +133,6 @@
 {
     TEPerson *person = db[@"people"][3];
     TEModel *animal = [[[db[@"animals"] select] limit:@1] first];
-    NSLog(@"%@<--------------", [person animals]);
     GHAssertEquals([[person animals][0] databaseId], (NSUInteger)1, @"Person had wrong animal!");
     GHAssertEquals([[animal people][0] databaseId], (NSUInteger)3, @"Animal had wrong person!");
     animal = db[@"animals"][2];

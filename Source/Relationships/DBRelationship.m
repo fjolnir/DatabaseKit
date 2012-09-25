@@ -28,7 +28,6 @@
 {
     if(!(self = [super init]))
         return nil;
-
     self.name      = aName;
     self.className = aClassName;
     self.record    = aRecord;

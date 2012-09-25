@@ -19,13 +19,21 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    NSArray *query = [[[self.record.table select:key] where:@{ @"id": @(self.record.databaseId) }] execute];
-    if([query count] < 1)
-    {
+    // If the cache is enabled, we just fetch the entire row
+    BOOL cache = [DBModel enableCache];
+    DBQuery *query = cache ? [self.record.table select] : [self.record.table select:key];
+    NSArray *result = [[query where:@{ @"id": @(self.record.databaseId) }] execute];
+    if([result count] < 1) {
         DBDebugLog(@"Couldn't get result: %@", query);
         return nil;
     }
-    return query[0][key];
+    NSDictionary *row = result[0];
+    if(cache) {
+        for(id key in row) {
+            [self.record.readCache setObject:row[key] forKey:key];
+        }
+    }
+    return row[key];
 }
 - (id)retrieveRecordForKey:(NSString *)key
                     filter:(id)conditions

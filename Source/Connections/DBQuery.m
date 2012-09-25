@@ -257,7 +257,7 @@ NSString *const DBLeftJoin  = @"LEFT";
     NSArray *params;
     [self _generateString:&query parameters:&params];
     NSError *err = nil;
-    DBLog(@"Executing query: %@ with params: %@", query, params);
+//    DBL   og(@"Executing query: %@ with params: %@", query, params);
     NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
     if(err) {
         DBDebugLog(@"%@", err);

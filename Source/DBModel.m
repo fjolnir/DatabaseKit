@@ -7,7 +7,7 @@
 #import "DBRelationshipColumn.h"
 #import <objc/runtime.h>
 
-static BOOL enableCache  = NO;
+static BOOL enableCache  = YES;
 static BOOL delayWriting = NO;
 static DBNamingStyle namingStyle = DBObjCNamingStyle;
 
@@ -159,8 +159,8 @@ static NSString *classPrefix = nil;
 - (id)valueForKey:(NSString *)key
 {
     // Check if we have a cached value and if caching is enabled
-    id cached = _readCache[key];
-    if(cached && [DBModel enableCache])
+    id cached;
+    if(enableCache && (cached = _readCache[key]))
         return cached;
 
     // If not, we retrieve the value, return it and cache it if we should
@@ -191,7 +191,6 @@ static NSString *classPrefix = nil;
 }
 - (void)sendValue:(id)value forKey:(NSString *)key
 {
-    // Update the cache (should we update it before it's saved to the database, as in: setObject?)
     if([DBModel enableCache])
         _readCache[key] = value;
 
