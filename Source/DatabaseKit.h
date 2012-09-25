@@ -35,7 +35,6 @@
 #define _ACTIVERECORD_H_ 
 #import <DatabaseKit/DB.h>
 #import <DatabaseKit/DBModel.h>
-#import <DatabaseKit/DBModel+Finders.h>
 
 #import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBConnectionPool.h>
