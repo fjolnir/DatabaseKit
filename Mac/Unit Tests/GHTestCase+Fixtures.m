@@ -10,7 +10,7 @@
 #import <DatabaseKit/DatabaseKit.h>
 
 @implementation GHTestCase (Fixtures)
-- (DBConnection *)setUpSQLiteFixtures
+- (DB *)setUpSQLiteFixtures
 {
     NSError *err = nil;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"cleanDatabase" ofType:@"db"];
@@ -18,21 +18,16 @@
     NSString *fixtures = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sqlite_fixtures" ofType:@"sql"]
                                                    encoding:NSUTF8StringEncoding
                                                       error:nil];
-
-    DBConnection *connection = [DBConnectionPool openConnectionWithURL:url error:&err];
+    NSLog(@"%@ %@", url, path);
+    DB *db = [DB withURL:url error:&err];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
         NSError *err = nil;
-        [connection executeSQL:query substitutions:nil error:&err];
+        [db.connection executeSQL:query substitutions:nil error:&err];
         if(err)
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
     }
-    // See if it works
-    [DBModel setDefaultConnection:connection];
 
-    DBQuery *q = [[DBTable withName:@"people"] select:@"*"];
-    NSLog(@"%@", q[0]);
-
-    return connection;
+    return db;
 }
 @end

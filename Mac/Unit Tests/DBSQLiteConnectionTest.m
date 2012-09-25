@@ -13,23 +13,23 @@
 @implementation DBSQLiteConnectionTest
 - (void)setUp
 {
-    connection = [super setUpSQLiteFixtures];
+    db = [super setUpSQLiteFixtures];
 }
 
 - (void)tearDown
 {
-    GHAssertTrue([connection closeConnection], @"Couldn't close connection");
+    GHAssertTrue([db.connection closeConnection], @"Couldn't close connection");
 }
 
 - (void)testConnection
 {
-    GHAssertNotNil(connection, @"connection should not be nil");
+    GHAssertNotNil(db.connection, @"connection should not be nil");
 }
 
 - (void)testFetchColumns
 {
     // Test if we fetch correct columns
-    NSArray *columnsFromDb = [connection columnsForTable:@"foo"];
+    NSArray *columnsFromDb = [db.connection columnsForTable:@"foo"];
     NSArray *columnsFixture = @[@"id", @"bar", @"baz", @"integer"];
     for(NSString *fixture in columnsFixture)
     {
@@ -41,7 +41,7 @@
 - (void)testQuery
 {
     NSString *query = @"SELECT * FROM foo" ;
-    NSArray *result = [connection executeSQL:query substitutions:nil error:nil];
+    NSArray *result = [db.connection executeSQL:query substitutions:nil error:nil];
     GHAssertTrue([result count] == 2, @"foo should have 2 rows");
     NSArray *columns = [result[0] allKeys];
     NSArray *expectedColumns = @[@"id", @"bar", @"baz", @"integer"];

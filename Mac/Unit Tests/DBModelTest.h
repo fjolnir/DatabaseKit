@@ -11,10 +11,9 @@
 
 @class TEAnimal;
 @class TEPerson;
+@class DB;
 
-@interface TEModel : DBModel {
-  
-}
+@interface TEModel : DBModel
 @property(readwrite, strong) NSString *name, *info;
 @end
 @interface TEModel (Accessors)
@@ -61,6 +60,7 @@
 
 
 @interface DBModelTest : GHTestCase {
+    DB *db;
 }
 
 @end

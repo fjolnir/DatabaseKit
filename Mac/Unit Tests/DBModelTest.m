@@ -22,8 +22,8 @@
 @implementation DBModelTest
 - (void)setUp
 {
-    [super setUpSQLiteFixtures];
-    //[super setUpMySQLFixtures];
+    db = [super setUpSQLiteFixtures];
+    NSLog(@"DB: %@ --------------------", db);
 }
 
 - (void)testTableName
@@ -47,13 +47,13 @@
                                                     @"info": @"This won't exist for long"}];
     NSUInteger theId = model.databaseId;
     GHAssertTrue([model destroy], @"Couldn't delete record");
-    NSArray *result = [TEModel find:(DBFindSpecification)theId];
+    NSArray *result = db[@"models"][theId];
     GHAssertEquals([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 
 - (void)testFindFirst
 {
-    TEModel *first = [TEModel find:DBFindFirst][0];
+    TEModel *first = [[[db[@"models"] select] limit:@1] first];
 
     GHAssertNotNil(first, @"No result for first entry!");
     GHAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
@@ -61,7 +61,7 @@
 
 - (void)testModifying
 {
-    TEModel *first = [TEModel find:DBFindFirst][0];
+    TEModel *first = [[[db[@"models"] select] limit:@1] first];
     [first beginTransaction];
     NSString *newName = @"NOT THE SAME NAME!";
     //[first setName:newName];
@@ -73,7 +73,7 @@
 - (void)testHasMany
 {
     // First test retrieving
-    TEModel *model = [TEModel find:DBFindFirst][0];
+    TEModel *model = [[[db[@"models"] select] limit:@1] first];
     NSArray *originalPeople = [model people];
     GHAssertTrue(([originalPeople count] == 2), @"TEModel should have 2 TEPeople but had %d", [originalPeople count]);
 
@@ -94,7 +94,7 @@
 - (void)testHasManyThrough
 {
     // First test retrieving
-    TEModel *model = [TEModel find:DBFindFirst][0];
+    TEModel *model = [[[db[@"models"] select] limit:@1] first];
     NSArray *belgians = [model belgians];
     NSLog(@"belgians: %@", belgians);
     GHAssertTrue(([belgians count] == 2), @"TEModel should have 2 belgians but had %d", [belgians count]);
@@ -102,8 +102,8 @@
 
 - (void)testHasOne
 {
-    TEModel *model   = [TEModel find:DBFindFirst][0];
-    TEAnimal *animal = [TEAnimal find:DBFindAll][0];
+    TEModel *model = [[[db[@"models"] select] limit:@1] first];
+    TEModel *animal = [[[db[@"animals"] select] limit:@1] first];
 
     GHAssertTrue(([animal databaseId] == [[model animal] databaseId]), @"%@ != %@ !!", animal, [model animal]);
     return;
@@ -117,7 +117,8 @@
 
 - (void)testBelongsTo
 {
-    TEPerson *person = [TEPerson find:DBFindFirst][0];
+    NSLog(@"%@ %@", db, db[@"people"]);
+    TEPerson *person = [[[db[@"people"] select] limit:@1] first];
     TEModel *model = [person model];
 
     GHAssertNotNil(model, @"No model found for person!");
@@ -134,12 +135,12 @@
 
 - (void)testHasAndBelongsToMany
 {
-    TEPerson *person = [TEPerson find:3][0];
-    TEAnimal *animal = [TEAnimal find:DBFindFirst][0];
+    TEPerson *person = db[@"people"][3];
+    TEModel *animal = [[[db[@"animals"] select] limit:@1] first];
     NSLog(@"%@<--------------", [person animals]);
     GHAssertEquals([[person animals][0] databaseId], (NSUInteger)1, @"Person had wrong animal!");
     GHAssertEquals([[animal people][0] databaseId], (NSUInteger)3, @"Animal had wrong person!");
-    animal = [TEAnimal find:2][0];
+    animal = db[@"animals"][2];
     [animal addPerson:person];
     GHAssertEquals([[animal people][0] databaseId], (NSUInteger)[person databaseId], @"Animal had wrong person!");
 }
@@ -147,7 +148,7 @@
 - (void)testDelayedWriting
 {
     [DBModel setDelayWriting:YES];
-    TEModel *model = [TEModel find:DBFindFirst][0];
+    TEModel *model = [[[db[@"models"] select] limit:@1] first];
     [model setName:@"delayed"];
     GHAssertEqualObjects(@"a name", [model name], @"model name was saved prematurely!");
     [model save];
