@@ -50,6 +50,11 @@
         GHAssertTrue([columns containsObject:fixture],
                      @"Columns didn't contain: %@", fixture);
     }
+    int i = 0;
+    for(id row in [db[@"foo"] select]) {
+        ++i;
+    }
+    GHAssertEquals(i, 2, @"Fast enumeration did not evaluate the correct amount of times");
 }
 
 @end

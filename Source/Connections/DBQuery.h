@@ -14,7 +14,7 @@ extern NSString *const DBLeftJoin;
 
 @class DBTable;
 
-@interface DBQuery : NSObject <NSCopying>
+@interface DBQuery : NSObject <NSCopying, NSFastEnumeration>
 @property(readonly, strong) NSString *type;
 @property(readonly, strong) DBTable *table;
 @property(readonly, strong) id fields;

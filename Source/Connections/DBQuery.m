@@ -257,7 +257,6 @@ NSString *const DBLeftJoin  = @"LEFT";
     NSArray *params;
     [self _generateString:&query parameters:&params];
     NSError *err = nil;
-//    DBL   og(@"Executing query: %@ with params: %@", query, params);
     NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
     if(err) {
         DBDebugLog(@"%@", err);
@@ -270,6 +269,13 @@ NSString *const DBLeftJoin  = @"LEFT";
             return @[ [[modelClass alloc] initWithTable:_table id:rowId] ];
     }
     return ret;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
+{
+    if(!_rows || _dirty)
+        _rows = [self execute];
+    return [_rows countByEnumeratingWithState:state objects:buffer count:len];
 }
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
