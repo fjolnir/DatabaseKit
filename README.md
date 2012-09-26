@@ -5,6 +5,11 @@ About:
 ======
 DatabaseKit is an unbelievably straight-forward to use database framework for Objective-C.
 
+Building:
+=========
+
+In order to build DatabaseKit you need to download [Postgres.app](http://postgresapp.com) and put it in your Applications folder (This is where the project is configured to look for the Postgres client library)
+
 Features:
 =========
  * Supported databases

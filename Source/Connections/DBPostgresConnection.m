@@ -88,7 +88,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
     NSString *connInfo = [[self class] postgresConnectionStringFromURL:URL];
-    NSAssert(connInfo, @"Invalid Postgre URL: %@", URL);
+    NSAssert(connInfo, @"Invalid PostgreSQL URL: %@", URL);
     _connection = PQconnectdb([connInfo UTF8String]);
     if(PQstatus(_connection) != CONNECTION_OK) {
         DBLog(@"Unable to connect to %@: %@", URL, [NSString stringWithUTF8String:PQerrorMessage(_connection)]);
