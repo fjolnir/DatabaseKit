@@ -41,7 +41,7 @@
     Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {
-        [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)", key, partnerClassName];
+        [NSException raise:@"DBKit error" format:@"No model class found for key %@! (looked for class named %@)", key, partnerClassName];
         return nil;
     }
     NSString *idColumn = [[self.record class] idColumnForModel:partnerClass];

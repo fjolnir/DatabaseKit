@@ -37,17 +37,12 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
-#import <sqlite3.h>
-
-@class DBQuery;
 
 typedef enum  {
   DBSQLiteDatabaseNotFoundErrorCode = 0
 } DBSQLiteErrorCode;
 
-@interface DBSQLiteConnection : DBConnection {
-  sqlite3 *_connection;
-}
+@interface DBSQLiteConnection : DBConnection
 @property(readonly, retain) NSString *path;
 @end
 

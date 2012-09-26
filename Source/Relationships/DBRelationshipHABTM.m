@@ -46,7 +46,7 @@
                                             [[self.record class] classPrefix], [[key singularizedString] stringByCapitalizingFirstLetter]]);
     if(!partnerClass)
     {
-        [NSException raise:@"Active record error" format:@"No model class found for key %@! (looked for class named %@)",
+        [NSException raise:@"DBKit error" format:@"No model class found for key %@! (looked for class named %@)",
          key,
          [NSString stringWithFormat:@"%@%@", [[self.record class] classPrefix],
           [key stringByCapitalizingFirstLetter]]

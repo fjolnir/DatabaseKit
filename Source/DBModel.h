@@ -116,14 +116,14 @@ typedef enum {
 /*! Sets a value in the database. If caching is enabled, the cache for key will be updated\n
  * <b>Note: </b> Ignores delayedWriting, if you want to use that use setValue:forKey: instead
  * @param key A valid key, can refer to either a column or a relationship
- * @param value The value to set, can be any object recognized by active record
+ * @param value The value to set, can be any object recognized by DBKit
  */
 - (void)sendValue:(id)value forKey:(NSString *)key;
 
 /*! Sets a value in the database. If caching is enabled, the cache for key will be updated\n
  * If delayedWriting is YES it will hold off writing changes to the database until told to save
  * @param key A valid key, can refer to either a column or a relationship
- * @param value The value to set, can be any object recognized by active record
+ * @param value The value to set, can be any object recognized by DBKit
  */
 - (void)setValue:(id)obj forKey:(NSString *)key;
 /*!

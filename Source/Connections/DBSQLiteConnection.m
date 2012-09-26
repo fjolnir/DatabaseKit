@@ -11,9 +11,12 @@
 #import "DBSQLiteConnection.h"
 #import "DBQuery.h"
 #import <unistd.h>
+#import <sqlite3.h>
 
 /*! @cond IGNORE */
-@interface DBSQLiteConnection ()
+@interface DBSQLiteConnection () {
+    sqlite3 *_connection;
+}
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
 - (void)finalizeQuery:(sqlite3_stmt *)query;
 - (NSArray *)columnsForQuery:(sqlite3_stmt *)query;
@@ -112,7 +115,7 @@
         else if([sub isMemberOfClass:[NSNull class]])
             sqlite3_bind_null(queryByteCode, i+1);
         else
-            [NSException raise:@"Unrecognized object type" format:@"Active record doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
+            [NSException raise:@"Unrecognized object type" format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
     }
 
     NSMutableArray *rowArray = [NSMutableArray array];
@@ -151,14 +154,9 @@
     return rowArray;
 }
 
-- (NSUInteger)lastInsertId
-{
-    return (NSUInteger)sqlite3_last_insert_rowid(_connection);
-}
-
 - (NSArray *)columnsForTable:(NSString *)tableName
 {
-    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@", tableName] error:nil];
+    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@ LIMIT 0", tableName] error:nil];
     if(!queryByteCode)
         return nil;
     NSArray *columns = [self columnsForQuery:queryByteCode];
