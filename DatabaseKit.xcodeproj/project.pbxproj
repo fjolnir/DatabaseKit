@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
-		C71D4B3B161282AC005FC42F /* DBPostgreConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71D4B39161282AC005FC42F /* DBPostgreConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71D4B3D161282AC005FC42F /* DBPostgreConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */; };
+		C71D4B3B161282AC005FC42F /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71D4B39161282AC005FC42F /* DBPostgresConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C71D4B3D161282AC005FC42F /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71D4B3A161282AC005FC42F /* DBPostgresConnection.m */; };
 		C71D4B4016128CA3005FC42F /* libpq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C71D4B3F16128CA3005FC42F /* libpq.a */; };
 		C785628113BABC6B0024052D /* cleanDatabase.db in Resources */ = {isa = PBXBuildFile; fileRef = C785628013BABC6B0024052D /* cleanDatabase.db */; };
 		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
@@ -151,8 +151,8 @@
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C71D4B39161282AC005FC42F /* DBPostgreConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPostgreConnection.h; sourceTree = "<group>"; };
-		C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPostgreConnection.m; sourceTree = "<group>"; };
+		C71D4B39161282AC005FC42F /* DBPostgresConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPostgresConnection.h; sourceTree = "<group>"; };
+		C71D4B3A161282AC005FC42F /* DBPostgresConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPostgresConnection.m; sourceTree = "<group>"; };
 		C71D4B3F16128CA3005FC42F /* libpq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpq.a; path = /Applications/Postgres.app/Contents/MacOS/lib/libpq.a; sourceTree = "<absolute>"; };
 		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
 		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
@@ -451,8 +451,8 @@
 				C7FF97F51610BCFF002957F7 /* DBConnectionPool.m */,
 				F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */,
 				F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */,
-				C71D4B39161282AC005FC42F /* DBPostgreConnection.h */,
-				C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */,
+				C71D4B39161282AC005FC42F /* DBPostgresConnection.h */,
+				C71D4B3A161282AC005FC42F /* DBPostgresConnection.m */,
 				C7FAF112160C830F004B16B0 /* DBQuery.h */,
 				C7FAF113160C830F004B16B0 /* DBQuery.m */,
 				C7FE7F501610069500031BBD /* DBTable.h */,
@@ -519,7 +519,7 @@
 				C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */,
-				C71D4B3B161282AC005FC42F /* DBPostgreConnection.h in Headers */,
+				C71D4B3B161282AC005FC42F /* DBPostgresConnection.h in Headers */,
 				C7FF97F61610BCFF002957F7 /* DBConnectionPool.h in Headers */,
 				C7E3D9011610CD1B00220FE9 /* DB.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
@@ -692,7 +692,7 @@
 				C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */,
 				C7E3D9021610CD1B00220FE9 /* DB.m in Sources */,
 				C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */,
-				C71D4B3D161282AC005FC42F /* DBPostgreConnection.m in Sources */,
+				C71D4B3D161282AC005FC42F /* DBPostgresConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

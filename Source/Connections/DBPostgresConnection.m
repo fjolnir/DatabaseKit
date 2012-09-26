@@ -1,5 +1,5 @@
 //
-//  DBPostgreConnection.m
+//  DBPostgresConnection.m
 //  DatabaseKit
 //
 //  Created by Fjölnir Ásgeirsson on 8.8.2007.
@@ -8,7 +8,7 @@
 
 #define LOG_QUERIES NO
 
-#import "DBPostgreConnection.h"
+#import "DBPostgresConnection.h"
 #import "DBQuery.h"
 #import "RegexKitLite.h"
 #import <unistd.h>
@@ -34,9 +34,9 @@
 /*! @cond IGNORE */
 static NSRange rangeOfParameterToken(NSString *param, NSString *query);
 static NSString *NSDateToPostgresTimestamp(NSDate *date);
-static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp);
+static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
 
-@interface DBPostgreConnection () {
+@interface DBPostgresConnection () {
     PGconn *_connection;
 }
 - (id)valueForRow:(unsigned int)rowIndex column:(unsigned int)colIndex result:(PGresult *)result;
@@ -45,7 +45,7 @@ static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp);
 
 #pragma mark -
 
-@implementation DBPostgreConnection
+@implementation DBPostgresConnection
 + (void)load
 {
     static dispatch_once_t onceToken;
@@ -55,10 +55,10 @@ static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp);
 }
 + (BOOL)canHandleURL:(NSURL *)URL
 {
-    return [[URL scheme] isEqualToString:@"postgre"];
+    return [[URL scheme] isEqualToString:@"postgres"];
 }
 
-+ (NSString *)postgreConnectionStringFromURL:(NSURL *)url
++ (NSString *)postgresConnectionStringFromURL:(NSURL *)url
 {
     NSMutableString *connectionString = [NSMutableString stringWithString:@""];
     if ([url host])
@@ -86,14 +86,14 @@ static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp);
 {
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
-    NSString *connInfo = [[self class] postgreConnectionStringFromURL:URL];
+    NSString *connInfo = [[self class] postgresConnectionStringFromURL:URL];
     NSAssert(connInfo, @"Invalid Postgre URL: %@", URL);
     _connection = PQconnectdb([connInfo UTF8String]);
     if(PQstatus(_connection) != CONNECTION_OK) {
         DBLog(@"Unable to connect to %@: %@", URL, [NSString stringWithUTF8String:PQerrorMessage(_connection)]);
         if(err) {
             *err = [NSError errorWithDomain:DBConnectionErrorDomain
-                                       code:DBPostgreConnectionFailed
+                                       code:DBPostgresConnectionFailed
                                    userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithUTF8String:PQerrorMessage(_connection)],
                                                            NSURLErrorKey: URL }];
         }
@@ -266,7 +266,7 @@ static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp);
         case TIMEOID:
         case TIMESTAMPOID:
         case TIMESTAMPTZOID:
-            return NSDateFromPostgreSQLTimestamp([NSString stringWithUTF8String:bytes]);
+            return NSDateFromPostgresTimestamp([NSString stringWithUTF8String:bytes]);
         case BYTEAOID:
             return [NSData dataWithBytes:bytes length:length];
             break;
@@ -361,7 +361,7 @@ static NSString *NSDateToPostgresTimestamp(NSDate *date)
     dispatch_once(&dateFormatterCreated, createDateFormatter);
     return [pgDateFormatter stringFromDate:date];
 }
-static NSDate *NSDateFromPostgreSQLTimestamp(NSString *timestamp)
+static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp)
 {
     dispatch_once(&dateFormatterCreated, createDateFormatter);
 

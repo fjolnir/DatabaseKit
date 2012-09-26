@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
-//  DBPostgreConnection.h
+//  DBPostgresConnection.h
 //   PostgreSQL adapter
 //
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,11 +40,11 @@
 
 typedef enum  {
     DBPostgreDatabaseNotFoundErrorCode = 0,
-    DBPostgreConnectionFailed  = 1,
+    DBPostgresConnectionFailed  = 1,
     DBPostgreQueryFailed = 2
 } DBPostgreErrorCode;
 
-@interface DBPostgreConnection : DBConnection
+@interface DBPostgresConnection : DBConnection
 
 @end
 
