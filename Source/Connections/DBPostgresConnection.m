@@ -61,18 +61,19 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
 + (NSString *)postgresConnectionStringFromURL:(NSURL *)url
 {
     NSMutableString *connectionString = [NSMutableString stringWithString:@""];
-    if ([url host])
+    if([url host])
         [connectionString appendFormat:@"host='%@' ", [url host]];
     else
         return nil;
-    if ([url port])
+    if([url port])
         [connectionString appendFormat:@"port='%@' ", [url port]];
-    if ([url user])
+    if([url user])
         [connectionString appendFormat:@"user='%@' ", [url user]];
-    if ([url password])
+    if([url password])
         [connectionString appendFormat:@"password='%@' ", [url password]];
-    if (![[url lastPathComponent] isEqual:@"/"])
-        [connectionString appendFormat:@"dbname='%@' ", [[url lastPathComponent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    NSString *dbName = [[url lastPathComponent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([dbName length] > 0 && ![dbName isEqual:@"/"])
+        [connectionString appendFormat:@"dbname='%@' ", dbName];
     else
         return nil; // No database, no dice
 
