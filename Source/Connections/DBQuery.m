@@ -1,6 +1,9 @@
 #import "DBQuery.h"
 #import "DBTable.h"
 #import "DBModel.h"
+#import "DBModelPrivate.h"
+
+NSString *const DBSelectAll = @"*";
 
 NSString *const DBOrderDescending = @"DESC";
 NSString *const DBOrderAscending  = @"ASC";
@@ -113,10 +116,11 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (DBQuery *)order:(NSString *)order by:(id)fields
 {
-    NSParameterAssert(IsArr(fields) || IsStr(fields));
+    BOOL isStr = IsStr(fields);
+    NSParameterAssert(IsArr(fields) || isStr);
     DBQuery *ret = [self copy];
     ret.order = order;
-    ret.orderedBy = fields;
+    ret.orderedBy = isStr ? @[fields] : fields;
     return ret;
 }
 - (DBQuery *)orderBy:(id)fields
@@ -163,12 +167,8 @@ NSString *const DBLeftJoin  = @"LEFT";
                 [q appendString:@", "];
 
             id obj = _fields[fieldName];
-            if(!obj || [obj isEqual:[NSNull null]]) {
-                [q appendString:@"NULL"];
-            } else {
-                [p addObject:obj];
-                [q appendString:@"?"];
-            }
+            [p addObject:obj ? obj : [NSNull null]];
+            [q appendFormat:@"$%d", i];
         }
         [q appendString:@")"];
     } else if([_type isEqualToString:DBQueryTypeUpdate]) {
@@ -182,8 +182,8 @@ NSString *const DBLeftJoin  = @"LEFT";
             if(!obj || [obj isEqual:[NSNull null]]) {
                 [q appendString:@"NULL"];
             } else {
-                [p addObject:obj];
-                [q appendString:@"?"];
+                [p addObject:obj ? obj : [NSNull null]];
+                [q appendFormat:@"$%d", i];
             }
         }
     } else if([_type isEqualToString:DBQueryTypeDelete]) {
@@ -212,7 +212,9 @@ NSString *const DBLeftJoin  = @"LEFT";
         // In case of an array, we simply have a SQL string followed by parameters
         if([_where isKindOfClass:[NSArray class]] || [_where isKindOfClass:[NSPointerArray class]]) {
             [q appendString:_where[0]];
-            // TODO : Handle params
+            for(int i = 1; i < [_where count]; ++i) {
+                [p addObject:_where[i]];
+            }
         }
         // In case of a dict, it's a key value set of equivalency tests
         else if([_where isKindOfClass:[NSDictionary class]] || [_where isKindOfClass:[NSMapTable class]]) {
@@ -222,12 +224,8 @@ NSString *const DBLeftJoin  = @"LEFT";
                     [q appendString:@", "];
                 [q appendFormat:@"%@=", fieldName];
                 id obj = _where[fieldName];
-                if(!obj || [obj isEqual:[NSNull null]]) {
-                    [q appendString:@"NULL"];
-                } else {
-                    [p addObject:obj];
-                    [q appendString:@"?"];
-                }
+                [p addObject:obj ? obj : [NSNull null]];
+                [q appendFormat:@"$%d", i];
             }
         } else
             NSAssert(NO, @"query.where must be either an array or a dictionary");
@@ -262,11 +260,11 @@ NSString *const DBLeftJoin  = @"LEFT";
         DBDebugLog(@"%@", err);
         return nil;
     }
-    if([_type isEqualToString:DBQueryTypeInsert]) {
-        NSUInteger rowId = [connection lastInsertId];
-        Class modelClass;
-        if(rowId > 0 && (modelClass = [_table modelClass]))
-            return @[ [[modelClass alloc] initWithTable:_table id:rowId] ];
+    // For inserts where a model class is available, we return the inserted object
+    Class modelClass;
+    if([_type isEqualToString:DBQueryTypeInsert] && (modelClass = [_table modelClass])) {
+        // Model classes require there to be an auto incremented id column so we just select the last id
+        return @[[[[_table select] order:DBOrderDescending by:@"id"] limit:@1][0]];
     }
     return ret;
 }
@@ -284,8 +282,12 @@ NSString *const DBLeftJoin  = @"LEFT";
         _rows = [self execute];
     NSDictionary *row = _rows[idx];
     Class modelClass = [_table modelClass];
-    if(modelClass && row[@"id"])
-        return [[modelClass alloc] initWithTable:_table id:[row[@"id"] unsignedIntegerValue]];
+    if(modelClass && row[@"id"]) {
+        DBModel *model = [[modelClass alloc] initWithTable:_table id:[row[@"id"] unsignedIntegerValue]];
+        if([_fields isEqual:@"*"] && [DBModel enableCache])
+            model.readCache = [row mutableCopy];
+        return model;
+    }
     return row;
 }
 

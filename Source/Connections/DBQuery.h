@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
 
+extern NSString *const DBSelectAll;
+
 extern NSString *const DBOrderDescending;
 extern NSString *const DBOrderAscending;
 

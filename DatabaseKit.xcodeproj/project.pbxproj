@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		C71D4B3B161282AC005FC42F /* DBPostgreConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71D4B39161282AC005FC42F /* DBPostgreConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C71D4B3D161282AC005FC42F /* DBPostgreConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */; };
+		C71D4B4016128CA3005FC42F /* libpq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C71D4B3F16128CA3005FC42F /* libpq.a */; };
 		C785628113BABC6B0024052D /* cleanDatabase.db in Resources */ = {isa = PBXBuildFile; fileRef = C785628013BABC6B0024052D /* cleanDatabase.db */; };
 		C785628413BAC2510024052D /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C785628313BAC2510024052D /* sqlite_fixtures.sql */; };
 		C79BB92B13BA2A5400D52DB6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -77,7 +80,7 @@
 		C7E3D93E1611E1E700220FE9 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3D9071611DE9000220FE9 /* DBInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D93F1611E1E700220FE9 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA530B0E058F10002C3ADB /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D9401611E1E700220FE9 /* NSArray+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7E3D9411611E1ED00220FE9 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */; };
+		C7E3D9411611E1ED00220FE9 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +151,9 @@
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C71D4B39161282AC005FC42F /* DBPostgreConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPostgreConnection.h; sourceTree = "<group>"; };
+		C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPostgreConnection.m; sourceTree = "<group>"; };
+		C71D4B3F16128CA3005FC42F /* libpq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpq.a; path = /Applications/Postgres.app/Contents/MacOS/lib/libpq.a; sourceTree = "<absolute>"; };
 		C785628013BABC6B0024052D /* cleanDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = cleanDatabase.db; sourceTree = "<group>"; };
 		C785628313BAC2510024052D /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqlite_fixtures.sql; sourceTree = "<group>"; };
 		C7A5077913F01B1200301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -196,15 +202,6 @@
 		F87B10400E06F6D500580499 /* GHTestCase+Fixtures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHTestCase+Fixtures.m"; sourceTree = "<group>"; };
 		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
-		F8D301E80E17A9F30075AFFF /* my_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_alloc.h; sourceTree = "<group>"; };
-		F8D301E90E17A9F30075AFFF /* my_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = my_list.h; sourceTree = "<group>"; };
-		F8D301EA0E17A9F30075AFFF /* mysql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql.h; sourceTree = "<group>"; };
-		F8D301EB0E17A9F30075AFFF /* mysql_com.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_com.h; sourceTree = "<group>"; };
-		F8D301EC0E17A9F30075AFFF /* mysql_embed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_embed.h; sourceTree = "<group>"; };
-		F8D301ED0E17A9F30075AFFF /* mysql_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_time.h; sourceTree = "<group>"; };
-		F8D301EE0E17A9F30075AFFF /* mysql_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_version.h; sourceTree = "<group>"; };
-		F8D301EF0E17A9F30075AFFF /* typelib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typelib.h; sourceTree = "<group>"; };
-		F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmysqlclient_r.a; sourceTree = "<group>"; };
 		F8DA52E20E058F10002C3ADB /* DatabaseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DatabaseKit.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBModel+CustomSelectors.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "DBModel+KeyAndSelectorParsers.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -239,6 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C71D4B4016128CA3005FC42F /* libpq.a in Frameworks */,
 				C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */,
@@ -295,8 +293,8 @@
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C71D4B3F16128CA3005FC42F /* libpq.a */,
 				C7CAF2A513BA0A5600013E21 /* libicucore.dylib */,
-				F8D301E60E17A9F30075AFFF /* MySQL Libraries */,
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
@@ -426,38 +424,6 @@
 			path = "Mac/Unit Tests";
 			sourceTree = "<group>";
 		};
-		F8D301E60E17A9F30075AFFF /* MySQL Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				F8D301E70E17A9F30075AFFF /* include */,
-				F8D301F00E17A9F30075AFFF /* lib */,
-			);
-			path = "MySQL Libraries";
-			sourceTree = "<group>";
-		};
-		F8D301E70E17A9F30075AFFF /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F8D301E80E17A9F30075AFFF /* my_alloc.h */,
-				F8D301E90E17A9F30075AFFF /* my_list.h */,
-				F8D301EA0E17A9F30075AFFF /* mysql.h */,
-				F8D301EB0E17A9F30075AFFF /* mysql_com.h */,
-				F8D301EC0E17A9F30075AFFF /* mysql_embed.h */,
-				F8D301ED0E17A9F30075AFFF /* mysql_time.h */,
-				F8D301EE0E17A9F30075AFFF /* mysql_version.h */,
-				F8D301EF0E17A9F30075AFFF /* typelib.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		F8D301F00E17A9F30075AFFF /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				F8D301F10E17A9F30075AFFF /* libmysqlclient_r.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		F8DA52E10E058F10002C3ADB /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,6 +451,8 @@
 				C7FF97F51610BCFF002957F7 /* DBConnectionPool.m */,
 				F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */,
 				F8DA52F10E058F10002C3ADB /* DBSQLiteConnection.m */,
+				C71D4B39161282AC005FC42F /* DBPostgreConnection.h */,
+				C71D4B3A161282AC005FC42F /* DBPostgreConnection.m */,
 				C7FAF112160C830F004B16B0 /* DBQuery.h */,
 				C7FAF113160C830F004B16B0 /* DBQuery.m */,
 				C7FE7F501610069500031BBD /* DBTable.h */,
@@ -551,6 +519,7 @@
 				C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */,
 				F8DA53300E058F10002C3ADB /* NSArray+DBAdditions.h in Headers */,
 				F8DA53340E058F10002C3ADB /* NSString+DBAdditions.h in Headers */,
+				C71D4B3B161282AC005FC42F /* DBPostgreConnection.h in Headers */,
 				C7FF97F61610BCFF002957F7 /* DBConnectionPool.h in Headers */,
 				C7E3D9011610CD1B00220FE9 /* DB.h in Headers */,
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
@@ -576,11 +545,11 @@
 				C7E3D93A1611E1E700220FE9 /* DBRelationshipHABTM.h in Headers */,
 				C7E3D93B1611E1E700220FE9 /* DBRelationshipHasMany.h in Headers */,
 				C7E3D93C1611E1E700220FE9 /* DBRelationshipHasManyThrough.h in Headers */,
+				C7E3D9411611E1ED00220FE9 /* DBSQLiteConnection.h in Headers */,
 				C7E3D93D1611E1E700220FE9 /* DBRelationshipHasOne.h in Headers */,
 				C7E3D93E1611E1E700220FE9 /* DBInflector.h in Headers */,
 				C7E3D93F1611E1E700220FE9 /* NSString+DBAdditions.h in Headers */,
 				C7E3D9401611E1E700220FE9 /* NSArray+DBAdditions.h in Headers */,
-				C7E3D9411611E1ED00220FE9 /* DBSQLiteConnection.h in Headers */,
 				C7AED96D13C14B6D00C47919 /* DBModelPrivate.h in Headers */,
 				C7E3D92E1611E1B500220FE9 /* Base64Extensions.h in Headers */,
 				C7E3D92F1611E1BA00220FE9 /* Debug.h in Headers */,
@@ -723,6 +692,7 @@
 				C7FF97F91610BD5D002957F7 /* DBConnection.m in Sources */,
 				C7E3D9021610CD1B00220FE9 /* DB.m in Sources */,
 				C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */,
+				C71D4B3D161282AC005FC42F /* DBPostgreConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,10 +781,16 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include\"",
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include/server\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = DatabaseKit;
 				WRAPPER_EXTENSION = framework;
@@ -833,9 +809,16 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = DatabaseKit_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include\"",
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include/server\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = DatabaseKit;
 				WRAPPER_EXTENSION = framework;

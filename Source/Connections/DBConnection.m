@@ -73,11 +73,6 @@ id DBConnectionRollback = @"DBConnectionRollback";
     NOT_IMPLEMENTED;
     return NO;
 }
-- (NSUInteger)lastInsertId
-{
-    NOT_IMPLEMENTED;
-    return NSNotFound;
-}
 
 - (id)transaction:(DBConnectionBlock)block
 {

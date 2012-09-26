@@ -50,11 +50,11 @@ typedef enum {
 #pragma mark -
 #pragma mark Private method definitions
 @interface DBModel () // Implemented in DBModel.m
-@property(readonly, retain) NSMutableDictionary *readCache;
-@property(readonly, retain) NSMutableDictionary *writeCache;
-@property(readonly, retain) NSMutableArray *addCache;
-@property(readonly, retain) NSMutableArray *removeCache;
-@property(readonly, retain) NSArray *columnCache;
+@property(readwrite, retain) NSMutableDictionary *readCache;
+@property(readwrite, retain) NSMutableDictionary *writeCache;
+@property(readwrite, retain) NSMutableArray *addCache;
+@property(readwrite, retain) NSMutableArray *removeCache;
+@property(readwrite, retain) NSArray *columnCache;
 
 // Returns the column names of the table associated with the model
 - (NSArray *)columns;

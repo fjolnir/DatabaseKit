@@ -79,11 +79,6 @@ typedef id (^DBConnectionBlock)();
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
 
 /*!
- * Returns the id of the row last inserted into
- */
-- (NSUInteger)lastInsertId;
-
-/*!
  * Closes the connection\n
  * does <b>not</b> release the object object itself
  */

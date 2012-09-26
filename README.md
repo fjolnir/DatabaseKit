@@ -9,7 +9,7 @@ Features:
 =========
  * Supported databases
   - SQLite 3
-  - (PostgreSQL planned for the very near future)
+  - PostgreSQL
  * Query composition done purely in Objective-C.
  * Table relationships.
  * If you use a connection pool(Done transparently by default) then query objects are thread safe.
@@ -32,7 +32,7 @@ Examples
 
 ---
     // Delete really old people
-    [[people delete] where:@[@"bornOn < ?", [NSDate distantPast]]];
+    [[people delete] where:@[@"bornOn < $1", [NSDate distantPast]]];
 ---
     // Change the name of everyone called John
     [[[people update:@{ @"name": @"Percie" }] where:@{ @"name": @"John" }] execute];
@@ -62,7 +62,7 @@ The examples above look even nicer when written in my scripting language [Tranqu
     q = db["table"] select: { @field1, @field2 }; where: { @id: 123 }
     q each: `row | row print`
     
-    aTable delete; where: ["modifiedAt < ?", NSDate distantPast]
+    aTable delete; where: ["modifiedAt < $1", NSDate distantPast]
     
     #Person < DBModel {}
     someone = (people select limit: 1)[0]

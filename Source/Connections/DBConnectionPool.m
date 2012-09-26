@@ -88,9 +88,5 @@ static void _connectionCloser(void *ptr)
 {
     return [[self _getConnection:nil] endTransaction];
 }
-- (NSUInteger)lastInsertId
-{
-    return [[self _getConnection:nil] lastInsertId];
-}
 
 @end
