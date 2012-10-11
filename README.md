@@ -65,11 +65,13 @@ Examples
 ---
 The examples above look even nicer when written in my scripting language [Tranquil](http://github.com/fjolnir/Tranquil)
 
-    q = db["table"] select: { @field1, @field2 }; where: { @id: 123 }
+    q = db["table"] select: { "field1", "field2" }; where: { "id": 123 }
     q each: `row | row print`
     
     aTable delete; where: ["modifiedAt < $1", NSDate distantPast]
     
-    #Person < DBModel {}
+    #Person < DBModel {
+        - introduceYourself `"Hi! I'm «#name»" print`
+    }
     someone = (people select limit: 1)[0]
     someone introduceYourself
