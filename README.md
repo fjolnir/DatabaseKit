@@ -30,20 +30,14 @@ Examples
     // Open a SQLite database
     DB *db = [DB withURL:[NSURL URLWithString:@"sqlite://myDb.sqlite"]];
 
+    // Alternatively; to open a Postgres database (This time with error handling)    
+    NSURL *pgURL = [NSURL URLWithString:@"postgres://username:password@server/database"];
+    NSError *err = nil;
+    DB *db = [DB withURL:pgURL error:&err];
+    if(!db)
+        NSLog(@"Error connecting to %@: %@", pgURL, [err localizedDescription]);
+
 ---
-
-    // Alternatively, open a Postgres database (this time with error handling)
-    NSString* connStr = @"postgres://username:password@server/database";
-    
-    NSError* err = nil;
-    DB *db = [DB withURL:[NSURL URLWithString:connStr] error:&err];
-    if (!db)
-    {
-        NSLog(@"Error: %@", [err localizedDescription]);
-        return;
-    }
-
---
 
 ### Querying:
 
