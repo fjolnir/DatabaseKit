@@ -34,7 +34,7 @@ Examples
     NSURL *pgURL = [NSURL URLWithString:@"postgres://username:password@server/database"];
     NSError *err = nil;
     DB *db = [DB withURL:pgURL error:&err];
-    if(!db)
+    if(err)
         NSLog(@"Error connecting to %@: %@", pgURL, [err localizedDescription]);
 
 ---
