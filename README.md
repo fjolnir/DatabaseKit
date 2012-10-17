@@ -25,9 +25,28 @@ Features:
 Examples
 =============
 
+### Connecting:
+
     // Open a SQLite database
     DB *db = [DB withURL:[NSURL URLWithString:@"sqlite://myDb.sqlite"]];
+
 ---
+
+    // Alternatively, open a Postgres database (this time with error handling)
+    NSString* connStr = @"postgres://username:password@server/database";
+    
+    NSError* err = nil;
+    DB *db = [DB withURL:[NSURL URLWithString:connStr] error:&err];
+    if (!db)
+    {
+        NSLog(@"Error: %@", [err localizedDescription]);
+        return;
+    }
+
+--
+
+### Querying:
+
     // Get the names of every person in our database
     DBTable *people = db[@"people"];
     ARQuery *names = [people select:@"name"];
