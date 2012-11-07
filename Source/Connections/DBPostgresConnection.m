@@ -169,7 +169,6 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
             paramFormats[i] = 1;
         } else if([sub isKindOfClass:[NSDate class]]) {
             NSString *timestamp = NSDateToPostgresTimestamp(sub);
-            NSLog(@"---------%@", timestamp);
             paramValues[i]  = [timestamp UTF8String];
             paramLengths[i] = [timestamp length];
             paramFormats[i] = 0;
