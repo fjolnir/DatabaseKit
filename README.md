@@ -25,9 +25,22 @@ Features:
 Examples
 =============
 
+### Connecting:
+
     // Open a SQLite database
     DB *db = [DB withURL:[NSURL URLWithString:@"sqlite://myDb.sqlite"]];
+
+    // Alternatively; to open a Postgres database (This time with error handling)    
+    NSURL *pgURL = [NSURL URLWithString:@"postgres://username:password@server/database"];
+    NSError *err = nil;
+    DB *db = [DB withURL:pgURL error:&err];
+    if(err)
+        NSLog(@"Error connecting to %@: %@", pgURL, [err localizedDescription]);
+
 ---
+
+### Querying:
+
     // Get the names of every person in our database
     DBTable *people = db[@"people"];
     ARQuery *names = [people select:@"name"];
@@ -65,11 +78,13 @@ Examples
 ---
 The examples above look even nicer when written in my scripting language [Tranquil](http://github.com/fjolnir/Tranquil)
 
-    q = db["table"] select: { @field1, @field2 }; where: { @id: 123 }
+    q = db["table"] select: { "field1", "field2" }; where: { "id": 123 }
     q each: `row | row print`
     
     aTable delete; where: ["modifiedAt < $1", NSDate distantPast]
     
-    #Person < DBModel {}
+    #Person < DBModel {
+        - introduceYourself `"Hi! I'm «#name»" print`
+    }
     someone = (people select limit: 1)[0]
     someone introduceYourself
