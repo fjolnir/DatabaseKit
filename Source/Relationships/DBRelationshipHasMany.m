@@ -42,7 +42,7 @@
     if(![self respondsToKey:key])
         return nil;
     Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
-                                            [[self.record class] classPrefix], [[key singularizedString] capitalizedString]]);
+                                            [[self.record class] classPrefix], [[key singularizedString] stringByCapitalizingFirstLetter]]);
     if(!partnerClass)
     {
         [NSException raise:@"DBKit error" format:@"No model class found for key %@! (looked for class named %@)",
@@ -113,7 +113,7 @@
 - (NSString *)className
 {
     if(![super className])
-        return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [[self.name singularizedString] capitalizedString]];
+        return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [[self.name singularizedString] stringByCapitalizingFirstLetter]];
     else
         return [super className];
 }
