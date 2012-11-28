@@ -215,7 +215,10 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
 
 - (NSArray *)columnsForTable:(NSString *)tableName
 {
-    PGresult *result = PQexec(_connection, [[NSString stringWithFormat:@"SELECT * FROM %@ LIMIT 0", tableName] UTF8String]);
+    NSMutableString *query = [NSMutableString stringWithString:@"SELECT * FROM "];
+    [query appendString:tableName];
+    [query appendString:@" LIMIT 0"];
+    PGresult *result = PQexec(_connection, [query UTF8String]);
     switch (PQresultStatus(result)) {
         case PGRES_BAD_RESPONSE:
         case PGRES_FATAL_ERROR:

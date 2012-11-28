@@ -38,16 +38,14 @@
 - (NSString *)stringByCapitalizingFirstLetter
 {
     NSString *capitalized = [self capitalizedString];
-    if([self length] > 1)
-        return [NSString stringWithFormat:@"%@%@", [capitalized substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
-    return capitalized;
+    return [self stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                         withString:[capitalized substringWithRange:NSMakeRange(0, 1)]];
 }
 - (NSString *)stringByDecapitalizingFirstLetter
 {
     NSString *lowercase = [self lowercaseString];
-    if([self length] > 1)
-        return [NSString stringWithFormat:@"%@%@", [lowercase substringWithRange:NSMakeRange(0, 1)], [self substringWithRange:NSMakeRange(1, [self length] - 1)]];
-    return lowercase;
+    return [self stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                         withString:[lowercase substringWithRange:NSMakeRange(0, 1)]];
 }
 
 - (NSString *)underscoredString

@@ -41,15 +41,12 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
-                                            [[self.record class] classPrefix], [[key singularizedString] stringByCapitalizingFirstLetter]]);
+    NSString *partnerClassName = [[[self.record class] classPrefix] stringByAppendingString:[key stringByCapitalizingFirstLetter]];
+    Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {
         [NSException raise:@"DBKit error" format:@"No model class found for key %@! (looked for class named %@)",
-         key,
-         [NSString stringWithFormat:@"%@%@", [[self.record class] classPrefix],
-          [key stringByCapitalizingFirstLetter]]
-         ];
+                                                 key, partnerClassName];
         return nil;
     }
     NSString *idColumn = [[self.record class] idColumnForModel:[self.record class]];
@@ -113,7 +110,7 @@
 - (NSString *)className
 {
     if(![super className])
-        return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [[self.name singularizedString] stringByCapitalizingFirstLetter]];
+        return [[DBModel classPrefix] stringByAppendingString:[[self.name singularizedString] stringByCapitalizingFirstLetter]];
     else
         return [super className];
 }

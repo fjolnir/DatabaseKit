@@ -35,9 +35,7 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    NSString *partnerClassName = [NSString stringWithFormat:@"%@%@",
-                                  [[self.record class] classPrefix],
-                                  [key stringByCapitalizingFirstLetter]];
+    NSString *partnerClassName = [[[self.record class] classPrefix] stringByAppendingString:[key stringByCapitalizingFirstLetter]];
     Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {
@@ -59,8 +57,8 @@
     NSArray *ownerHasManyOf = [[aRecord hasMany] valueForKey:@"className"];
     NSArray *ownerHasOneOf = [[aRecord hasOne] valueForKey:@"className"];
 
-    Class partnerClass = NSClassFromString([NSString stringWithFormat:@"%@%@",
-                                            [[self.record class] classPrefix], [key stringByCapitalizingFirstLetter]]);
+    NSString *partnerClassName = [[[self.record class] classPrefix] stringByAppendingString:[key stringByCapitalizingFirstLetter]];
+    Class partnerClass = NSClassFromString(partnerClassName);
     if(!aRecord && partnerClass)
         [self.record sendValue:0 forKey:[partnerClass idColumn]];
     else if([ownerHasManyOf containsObject:[self.record className]])

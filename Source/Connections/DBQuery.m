@@ -5,18 +5,18 @@
 
 NSString *const DBSelectAll = @"*";
 
-NSString *const DBOrderDescending = @"DESC";
-NSString *const DBOrderAscending  = @"ASC";
+NSString *const DBOrderDescending = @" DESC ";
+NSString *const DBOrderAscending  = @" ASC ";
 
-NSString *const DBQueryTypeSelect = @"SELECT";
-NSString *const DBQueryTypeInsert = @"INSERT";
-NSString *const DBQueryTypeUpdate = @"UPDATE";
-NSString *const DBQueryTypeDelete = @"DELETE";
+NSString *const DBQueryTypeSelect = @"SELECT ";
+NSString *const DBQueryTypeInsert = @"INSERT ";
+NSString *const DBQueryTypeUpdate = @"UPDATE ";
+NSString *const DBQueryTypeDelete = @"DELETE ";
 
 NSString *const DBStringCondition = @"DBStringCondition";
 
-NSString *const DBInnerJoin = @"INNER";
-NSString *const DBLeftJoin  = @"LEFT";
+NSString *const DBInnerJoin = @" INNER ";
+NSString *const DBLeftJoin  = @" LEFT ";
 
 @interface DBQuery () {
     BOOL _dirty;
@@ -154,16 +154,22 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (BOOL)_generateString:(NSString **)outString parameters:(NSArray **)outParameters
 {
-    NSMutableString *q     = [NSMutableString stringWithString:_type];
+    NSMutableString *q = [NSMutableString stringWithString:_type];
     NSMutableArray *p = [NSMutableArray array];
     
-    if([_type isEqualToString:DBQueryTypeSelect]) {
-        [q appendFormat:@" %@ FROM %@", [_fields componentsJoinedByString:@", "], [_table toString]];
+    if(__builtin_expect([_type isEqualToString:DBQueryTypeSelect], YES)) {
+        [q appendString:[_fields componentsJoinedByString:@", "]];
+        [q appendString:@" FROM "];
+        [q appendString:[_table toString]];
     } else if([_type isEqualToString:DBQueryTypeInsert]) {
-        [q appendFormat:@" INTO %@(%@) VALUES(", [_table toString], [[_fields allKeys] componentsJoinedByString:@", "]];
+        [q appendString:@" INTO "];
+        [q appendString:[_table toString]];
+        [q appendString:@"("];
+        [q appendString:[[_fields allKeys] componentsJoinedByString:@", "]];
+        [q appendString:@") VALUES("];
         int i = 0;
         for(id fieldName in _fields) {
-            if(i++ > 0)
+            if(__builtin_expect(i++ > 0, 1))
                 [q appendString:@", "];
 
             id obj = _fields[fieldName];
@@ -172,12 +178,15 @@ NSString *const DBLeftJoin  = @"LEFT";
         }
         [q appendString:@")"];
     } else if([_type isEqualToString:DBQueryTypeUpdate]) {
-        [q appendFormat:@" %@ SET ", [_table toString]];
+        [q appendString:@" "];
+        [q appendString:[_table toString]];
+        [q appendString:@" SET "];
         int i = 0;
         for(id fieldName in _fields) {
-            if(i++ > 0)
+            if(__builtin_expect(i++ > 0, 1))
                 [q appendString:@", "];
-            [q appendFormat:@"%@=", fieldName];
+            [q appendString:fieldName];
+            [q appendString:@"="];
             id obj = _fields[fieldName];
             if(!obj || [obj isEqual:[NSNull null]]) {
                 [q appendString:@"NULL"];
@@ -187,7 +196,8 @@ NSString *const DBLeftJoin  = @"LEFT";
             }
         }
     } else if([_type isEqualToString:DBQueryTypeDelete]) {
-        [q appendFormat:@" FROM %@", [_table toString]];
+        [q appendString:@" FROM "];
+        [q appendString:[_table toString]];
     } else {
         NSAssert(NO, @"Unknown query type: %@", _type);
         return NO;
@@ -196,15 +206,28 @@ NSString *const DBLeftJoin  = @"LEFT";
     if(_join) {
         if([_join isKindOfClass:[DBJoin class]]) {
             DBJoin *join = _join;
-            [q appendFormat:@" %@ JOIN %@ ON ", join.type, [join.table toString]];
+            NSString *tableName     = [_table toString];
+            NSString *joinTableName = [join.table toString];
+            NSDictionary *joinFields = join.fields;
+            [q appendString:join.type];
+            [q appendString:@" JOIN "];
+            [q appendString:joinTableName];
+            [q appendString:@" ON "];
             int i = 0;
             for(id key in join.fields) {
                 if(i++ > 0)
                     [q appendString:@" AND "];
-                [q appendFormat:@"%@.%@=%@.%@", [join.table toString], join.fields[key], [_table toString], key];
+                [q appendString:joinTableName];
+                [q appendString:@"."];
+                [q appendString:joinFields[key]];
+                [q appendString:@"="];
+                [q appendString:tableName];
+                [q appendString:key];
             }
-        } else
-            [q appendFormat:@" %@", [_join toString]];
+        } else {
+            [q appendString:@" "];
+            [q appendString:[_join toString]];
+        }
     }
 
     if(_where && [_where count] > 0) {
@@ -222,16 +245,18 @@ NSString *const DBLeftJoin  = @"LEFT";
             for(id fieldName in _where) {
                 if(i++ > 0)
                     [q appendString:@", "];
-                [q appendFormat:@"%@=", fieldName];
+                [q appendString:fieldName];
+                [q appendFormat:@"=$%d", i];
                 id obj = _where[fieldName];
                 [p addObject:obj ? obj : [NSNull null]];
-                [q appendFormat:@"$%d", i];
             }
         } else
             NSAssert(NO, @"query.where must be either an array or a dictionary");
     }
     if(_order && _orderedBy) {
-        [q appendFormat:@" ORDER BY %@ %@", [_orderedBy componentsJoinedByString:@", "], _order];
+        [q appendString:@" ORDER BY"];
+        [q appendString:[_orderedBy componentsJoinedByString:@", "]];
+        [q appendString:_order];
     }
 
     if([_limit unsignedIntegerValue] > 0)
@@ -257,7 +282,7 @@ NSString *const DBLeftJoin  = @"LEFT";
     NSError *err = nil;
     NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
     if(err) {
-        DBDebugLog(@"%@", err);
+        DBLog(@"%@", err);
         return nil;
     }
     // For inserts where a model class is available, we return the inserted object
@@ -353,7 +378,11 @@ NSString *const DBLeftJoin  = @"LEFT";
 }
 - (NSString *)toString
 {
-    return [NSString stringWithFormat:@"%@ JOIN %@ ON ", _type, [_table toString]];
+    NSMutableString *ret = [NSMutableString stringWithString:_type];
+    [ret appendString:@" JOIN "];
+    [ret appendString:[_table toString]];
+    [ret appendString:@" ON "];
+    return ret;
 }
 - (NSString *)description
 {
@@ -375,7 +404,12 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (NSString *)toString
 {
-    return [NSString stringWithFormat:@"(%@ AS %@)", _field, _alias];
+    NSMutableString *ret = [NSMutableString stringWithString:@"("];
+    [ret appendString:_field];
+    [ret appendString:@" AS "];
+    [ret appendString:_alias];
+    [ret appendString:@")"];
+    return ret;
 }
 - (NSString *)description
 {

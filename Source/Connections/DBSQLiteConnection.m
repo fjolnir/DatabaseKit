@@ -75,7 +75,7 @@
 }
 
 #pragma mark -
-#pragma mark SQL Eecuting
+#pragma mark SQL Executing
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
     BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
@@ -88,8 +88,10 @@
     // Prepare the query
     sqlite3_stmt *queryByteCode;
     queryByteCode = [self prepareQuerySQL:sql error:outErr];
-    if(!queryByteCode)
+    if(!queryByteCode) {
+        DBLog(@"Unable to prepare bytecode for SQLite query: %@", sql);
         return nil;
+    }
     NSArray *columnNames = [self columnsForQuery:queryByteCode];
 
     const char *keyCstring;
@@ -156,7 +158,10 @@
 
 - (NSArray *)columnsForTable:(NSString *)tableName
 {
-    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:[NSString stringWithFormat:@"SELECT * FROM %@ LIMIT 0", tableName] error:nil];
+    NSMutableString *query = [NSMutableString stringWithString:@"SELECT * FROM "];
+    [query appendString:tableName];
+    [query appendString:@" LIMIT 0"];
+    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:query error:nil];
     if(!queryByteCode)
         return nil;
     NSArray *columns = [self columnsForQuery:queryByteCode];

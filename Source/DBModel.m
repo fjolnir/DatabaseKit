@@ -282,10 +282,15 @@ static NSString *classPrefix = nil;
 {
     NSString *firstTableName  = [firstModel tableName];
     NSString *secondTableName = [secondModel tableName];
-    if([firstTableName compare:secondTableName options:NSForcedOrderingSearch] == NSOrderedAscending)
-        return [NSString stringWithFormat:@"%@_%@", firstTableName, secondTableName]; // Heh, the format kinda looks like a smilie
-    else
-        return [NSString stringWithFormat:@"%@_%@", secondTableName, firstTableName];
+    if([firstTableName compare:secondTableName options:NSForcedOrderingSearch] == NSOrderedDescending) {
+        NSString *t = firstTableName;
+        firstTableName = secondTableName;
+        secondTableName = t;
+    }
+    NSMutableString *ret = [NSMutableString stringWithString:firstTableName];
+    [ret appendString:@"_"];
+    [ret appendString:secondTableName];
+    return ret;
 }
 - (BOOL)beginTransaction
 {

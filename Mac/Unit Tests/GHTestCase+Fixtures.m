@@ -22,7 +22,7 @@
     DB *db = [DB withURL:url error:&err];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
-        NSError *err = nil;
+        err = nil;
         [db.connection executeSQL:query substitutions:nil error:&err];
         if(err)
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);

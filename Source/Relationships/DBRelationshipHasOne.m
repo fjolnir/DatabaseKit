@@ -56,7 +56,7 @@
 - (NSString *)className
 {
   if(![super className])
-    return [NSString stringWithFormat:@"%@%@", [DBModel classPrefix], [self.name stringByCapitalizingFirstLetter]];
+    return [[DBModel classPrefix] stringByAppendingString:[[self.name singularizedString] stringByCapitalizingFirstLetter]];
   else
     return [super className];
 }
