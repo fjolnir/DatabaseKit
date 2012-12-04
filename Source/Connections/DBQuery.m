@@ -66,7 +66,7 @@ NSString *const DBLeftJoin  = @"LEFT";
 
 - (DBQuery *)insert:(id)fields
 {
-    NSParameterAssert(IsDic(fields));
+    NSParameterAssert(IsDic(fields) || IsArr(fields));
     DBQuery *ret = [self copy];
     ret.type = DBQueryTypeInsert;
     ret.fields = fields;
@@ -94,6 +94,14 @@ NSString *const DBLeftJoin  = @"LEFT";
     ret.where = conds;
     return ret;
 }
+
+- (DBQuery *)whereForPredicate:(NSPredicate *)predicate;
+{
+    NSParameterAssert([predicate isKindOfClass:[NSPredicate class]]);
+
+    return [self where:[self _fetchWhereClauseForComparisonPredicate:predicate negate:NO parameterOffset:1]];
+}
+
 - (DBQuery *)appendWhere:(id)conds
 {
     if(!_where)
@@ -112,6 +120,13 @@ NSString *const DBLeftJoin  = @"LEFT";
     }
     ret.where = derivedConds;
     return ret;
+}
+
+- (DBQuery *)appendWhereForPredicate:(NSPredicate *)predicate
+{
+    NSParameterAssert([predicate isKindOfClass:[NSPredicate class]]);
+
+    return [self appendWhere:[self _fetchWhereClauseForComparisonPredicate:predicate negate:NO parameterOffset:1]];
 }
 
 - (DBQuery *)order:(NSString *)order by:(id)fields
@@ -160,23 +175,40 @@ NSString *const DBLeftJoin  = @"LEFT";
     if([_type isEqualToString:DBQueryTypeSelect]) {
         [q appendFormat:@" %@ FROM %@", [_fields componentsJoinedByString:@", "], [_table toString]];
     } else if([_type isEqualToString:DBQueryTypeInsert]) {
-        [q appendFormat:@" INTO %@(%@) VALUES(", [_table toString], [[_fields allKeys] componentsJoinedByString:@", "]];
-        int i = 0;
-        for(id fieldName in _fields) {
-            if(i++ > 0)
-                [q appendString:@", "];
-
-            id obj = _fields[fieldName];
-            [p addObject:obj ? obj : [NSNull null]];
-            [q appendFormat:@"$%d", i];
+        NSArray *fieldsArray = nil;
+        if ([_fields isKindOfClass:[NSDictionary class]]) {
+            fieldsArray = @[_fields];
         }
-        [q appendString:@")"];
+        else {
+            fieldsArray = _fields;
+        }
+        [q appendFormat:@" INTO %@(%@) VALUES", [_table toString], [[fieldsArray[0] allKeys] componentsJoinedByString:@", "]];
+        int offset = 0;
+        for (NSDictionary *currentFields in fieldsArray) {
+            if(offset > 0)
+                [q appendString:@","];
+                [q appendString:@"("];
+            int i = 0;
+            for(id fieldName in fieldsArray[0]) {
+                if(i++ > 0)
+                    [q appendString:@", "];
+
+                id obj = currentFields[fieldName];
+                [p addObject:obj ? obj : [NSNull null]];
+                [q appendFormat:@"$%d", i + offset];
+            }
+            offset += i;
+            [q appendString:@")"];
+        }
     } else if([_type isEqualToString:DBQueryTypeUpdate]) {
         [q appendFormat:@" %@ SET ", [_table toString]];
-        int i = 0;
+        int i = 1;
+        BOOL firstClause = YES;
         for(id fieldName in _fields) {
-            if(i++ > 0)
+            if(!firstClause) {
                 [q appendString:@", "];
+            }
+            firstClause = NO;
             [q appendFormat:@"%@=", fieldName];
             id obj = _fields[fieldName];
             if(!obj || [obj isEqual:[NSNull null]]) {
@@ -184,6 +216,7 @@ NSString *const DBLeftJoin  = @"LEFT";
             } else {
                 [p addObject:obj ? obj : [NSNull null]];
                 [q appendFormat:@"$%d", i];
+                i++;
             }
         }
     } else if([_type isEqualToString:DBQueryTypeDelete]) {
@@ -219,13 +252,14 @@ NSString *const DBLeftJoin  = @"LEFT";
         // In case of a dict, it's a key value set of equivalency tests
         else if([_where isKindOfClass:[NSDictionary class]] || [_where isKindOfClass:[NSMapTable class]]) {
             int i = 0;
+            int offset = p.count;
             for(id fieldName in _where) {
                 if(i++ > 0)
                     [q appendString:@", "];
                 [q appendFormat:@"%@=", fieldName];
                 id obj = _where[fieldName];
                 [p addObject:obj ? obj : [NSNull null]];
-                [q appendFormat:@"$%d", i];
+                [q appendFormat:@"$%d", i + offset];
             }
         } else
             NSAssert(NO, @"query.where must be either an array or a dictionary");
@@ -241,6 +275,191 @@ NSString *const DBLeftJoin  = @"LEFT";
     if(outParameters)
         *outParameters = p;
     return true;
+}
+
+- (NSPredicateOperatorType)_negateOperator:(NSPredicateOperatorType)aOperator;
+{
+    NSPredicateOperatorType returnedOperator;
+    
+    switch (aOperator) {
+        case NSLessThanPredicateOperatorType:
+            returnedOperator = NSGreaterThanOrEqualToPredicateOperatorType;
+            break;
+        case NSLessThanOrEqualToPredicateOperatorType:
+            returnedOperator = NSGreaterThanPredicateOperatorType;
+            break;
+        case NSGreaterThanPredicateOperatorType:
+            returnedOperator = NSLessThanOrEqualToPredicateOperatorType;
+            break;
+        case NSGreaterThanOrEqualToPredicateOperatorType:
+            returnedOperator = NSLessThanPredicateOperatorType;
+            break;
+        case NSEqualToPredicateOperatorType:
+            returnedOperator = NSNotEqualToPredicateOperatorType;
+            break;
+        case NSNotEqualToPredicateOperatorType:
+            returnedOperator = NSEqualToPredicateOperatorType;
+            break;
+        case NSMatchesPredicateOperatorType:
+        case NSLikePredicateOperatorType:
+        case NSInPredicateOperatorType:
+        case NSContainsPredicateOperatorType:
+            returnedOperator = NSContainsPredicateOperatorType; // cannot be handled here
+            break;
+        case NSBeginsWithPredicateOperatorType:
+            returnedOperator = NSBeginsWithPredicateOperatorType; // cannot be handled here
+            break;
+        case NSEndsWithPredicateOperatorType:
+            returnedOperator = NSEndsWithPredicateOperatorType; // cannot be handled here
+            break;
+        default:
+            returnedOperator = NSEqualToPredicateOperatorType;
+    }
+    
+    return returnedOperator;
+}
+
+// returns a where clause in an array format for the predicate given.
+- (NSArray *)_fetchWhereClauseForComparisonPredicate:(NSPredicate *)aPredicate negate:(BOOL)negate parameterOffset:(int)offset;
+{
+	if (nil == aPredicate || (![aPredicate isKindOfClass:[NSCompoundPredicate class]] && ![aPredicate isKindOfClass:[NSComparisonPredicate class]])) {
+		return nil;
+	}
+    int parameterOffset = offset;
+	id searchObject = [@[[NSMutableString string]] mutableCopy];
+    
+	if ([aPredicate isKindOfClass:[NSCompoundPredicate class]]) {
+        NSCompoundPredicate *predicate = (NSCompoundPredicate *)aPredicate;
+		switch ([predicate compoundPredicateType]) {
+			case NSNotPredicateType:
+            {
+				NSArray *result = [self _fetchWhereClauseForComparisonPredicate:[predicate subpredicates][0] negate:!negate parameterOffset:parameterOffset];
+                searchObject[0] = result[0];
+                [searchObject addObjectsFromArray:[result subarrayWithRange:NSMakeRange(1, result.count-1)]];
+				break;
+            }
+			case NSAndPredicateType:
+			{
+				NSArray *predicates = [predicate subpredicates];
+				for (NSUInteger i=0; i < [predicates count]; i++) {
+                    NSArray *result = [self _fetchWhereClauseForComparisonPredicate:[predicate subpredicates][i] negate:negate parameterOffset:parameterOffset];
+                    if ([searchObject count] >= 2) {
+                        searchObject[0] = [NSString stringWithFormat:@"(%@) AND (%@)", searchObject[0], result[0]];
+                    }
+                    else {
+                        searchObject[0] = result[0];
+                    }
+                    [searchObject addObjectsFromArray:[result subarrayWithRange:NSMakeRange(1, result.count-1)]];
+                    parameterOffset += result.count - 1;
+				}
+				
+			}
+				break;
+			case NSOrPredicateType:
+			{
+				NSArray *predicates = [predicate subpredicates];
+				for (NSUInteger i=0; i < [predicates count]; i++) {
+                    NSArray *result = [self _fetchWhereClauseForComparisonPredicate:[predicate subpredicates][i] negate:negate parameterOffset:parameterOffset];
+                    if ([searchObject count] >= 2) {
+                        searchObject[0] = [NSString stringWithFormat:@"(%@) OR (%@)", searchObject[0], result[0]];
+                    }
+                    else {
+                        searchObject[0] = result[0];
+                    }
+                    [searchObject addObjectsFromArray:[result subarrayWithRange:NSMakeRange(1, result.count-1)]];
+                    parameterOffset += result.count - 1;
+				}
+			}
+				break;
+				
+			default:
+				break;
+		}
+		
+	}
+	else {
+		
+		NSComparisonPredicate *predicate = (NSComparisonPredicate *)aPredicate;
+		NSPredicateOperatorType currentOperator = [predicate predicateOperatorType];
+        if (negate) {
+            currentOperator = [self _negateOperator:currentOperator];
+        }
+		// The IN operator type corresponds to "foo contains'f'", but the expressions are reversed to look like "'f' IN foo" so we need a special case
+		NSString *attributeName = (currentOperator == NSInPredicateOperatorType) ? [[predicate rightExpression] keyPath] : [[predicate leftExpression] keyPath];
+		id searchValue = (currentOperator == NSInPredicateOperatorType) ? [[predicate leftExpression] constantValue] : [[predicate rightExpression] constantValue];
+		switch (currentOperator) {
+			case NSLessThanPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ < $%d",attributeName, parameterOffset++];
+                [searchObject[1] addObject:searchValue];
+				break;
+			case NSLessThanOrEqualToPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ <= $%d",attributeName, parameterOffset++];
+                searchObject[1] = searchValue;
+				break;
+			case NSGreaterThanPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ > $%d",attributeName, parameterOffset++];
+                searchObject[1] = searchValue;
+				break;
+			case NSGreaterThanOrEqualToPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ >= $%d",attributeName, parameterOffset++];
+                searchObject[1] = searchValue;
+    			break;
+			case NSEqualToPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ = $%d",attributeName, parameterOffset++];
+                searchObject[1] = searchValue;
+				break;
+			case NSNotEqualToPredicateOperatorType:
+                searchObject[0] = [NSString stringWithFormat:@"%@ <> $%d",attributeName, parameterOffset++];
+                searchObject[1] = searchValue;
+				break;
+			case NSMatchesPredicateOperatorType:
+			case NSLikePredicateOperatorType:
+			case NSInPredicateOperatorType:
+			case NSContainsPredicateOperatorType:
+            {
+                NSString *operator = (predicate.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+                
+                if (negate) {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, parameterOffset++];
+                }
+                else {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, parameterOffset++];
+                }
+                searchObject[1] = [NSString stringWithFormat:@"%%%@%%",searchValue];
+            }
+                break;
+			case NSBeginsWithPredicateOperatorType:
+            {
+                NSString *operator = (predicate.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+                
+                if (negate) {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, parameterOffset++];
+                }
+                else {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, parameterOffset++];
+                }
+                searchObject[1] = [NSString stringWithFormat:@"%@%%",searchValue];
+            }
+ 				break;
+			case NSEndsWithPredicateOperatorType:
+            {
+                NSString *operator = (predicate.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+                
+                if (negate) {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, parameterOffset++];
+                }
+                else {
+                    searchObject[0] = [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, parameterOffset++];
+                }
+                searchObject[1] = [NSString stringWithFormat:@"%%%@", searchValue];
+            }
+				break;
+            case NSCustomSelectorPredicateOperatorType:
+            case NSBetweenPredicateOperatorType:
+                break;
+		}
+	}
+	return searchObject;
 }
 
 #pragma mark - Execution

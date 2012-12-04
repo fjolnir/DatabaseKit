@@ -622,7 +622,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "DatabaseKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -773,6 +773,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -786,12 +787,17 @@
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include/server\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/DatabaseKit.framework/Versions/A/DatabaseKit";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
+				OTHER_CFLAGS = (
+					"-DENABLE_AR_DEBUG",
+					"-DXXENABLE_DB_DEBUG",
+				);
 				PRODUCT_NAME = DatabaseKit;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -803,6 +809,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -814,7 +821,8 @@
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/include/server\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/DatabaseKit.framework/Versions/A/DatabaseKit";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
@@ -829,14 +837,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-DENABLE_AR_DEBUG";
+				OTHER_CFLAGS = (
+					"-DENABLE_AR_DEBUG",
+					"-DXXENABLE_DB_DEBUG",
+				);
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-DENABLE_AR_DEBUG";
 			};
@@ -846,9 +862,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "";
@@ -862,7 +883,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/active_record.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -889,7 +909,6 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/active_record.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -911,7 +930,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -942,7 +961,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_OBJCPP_ARC_ABI = NO;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (

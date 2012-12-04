@@ -53,6 +53,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
         [DBConnection registerConnectionClass:self];
     });
 }
+
 + (BOOL)canHandleURL:(NSURL *)URL
 {
     return [[URL scheme] isEqualToString:@"postgres"];
@@ -106,6 +107,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
 {
     [self closeConnection];
 }
+
 - (BOOL)closeConnection
 {
     if(!_connection)
@@ -119,7 +121,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
 
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
-    DBLog(@"%@ -- %@", sql, substitutions);
+    DBDebugLog(@"%@ -- %@", sql, substitutions);
     BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
                   [substitutions isKindOfClass:[NSMapTable class]];
     NSParameterAssert(!substitutions                                       ||
@@ -155,15 +157,32 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
             paramFormats[i] = 0;
         } else if([sub isKindOfClass:[NSNumber class]] || [sub isKindOfClass:NSClassFromString(@"TQNumber")]) {
             NSString *str;
-            double val = [sub doubleValue];
-            if(val - floor(val) < DBL_EPSILON)
-                str = [NSString stringWithFormat:@"%ld", [sub integerValue]];
-            else
-                str = [NSString stringWithFormat:@"%f", [sub doubleValue]];
+            const char *objCType = [sub objCType];
+            switch (*objCType) {
+                case 'd':
+                case 'f':
+                    str = [NSString stringWithFormat:@"%f", [sub doubleValue]];
+                    break;
+                case 'l':
+                case 'L':
+                    str = [NSString stringWithFormat:@"%ld", [sub longValue]];
+                    break;
+                case 'q':
+                case 'Q':
+                    str = [NSString stringWithFormat:@"%lld", [sub longLongValue]];
+                    break;
+                case 'B': // C++/C99 bool
+                case 'c': // ObjC BOOL
+                    str = [NSString stringWithFormat:@"%d", [sub intValue]];
+                    break;
+                default:
+                    str = [NSString stringWithFormat:@"%ld", [sub longValue]];
+                    break;
+            }
             paramValues[i]  = [str UTF8String];
             paramLengths[i] = [str length];
             paramFormats[i] = 0;
-        } else if([sub isMemberOfClass:[NSData class]]) {
+        } else if([sub isKindOfClass:[NSData class]]) {
             paramValues[i]  = [sub bytes];
             paramLengths[i] = [sub length];
             paramFormats[i] = 1;
@@ -204,7 +223,10 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
         columns = [NSMutableDictionary dictionary];
         int j = 0;
         for(NSString *columnName in columnNames) {
-            columns[columnName] = [self valueForRow:i column:j result:result];
+            id value = [self valueForRow:i column:j result:result];
+            if (value) {
+                columns[columnName] = value;
+            }
             ++j;
         }
         [rowArray addObject:columns];
@@ -254,9 +276,11 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
     switch(PQftype(result, colIndex))
     {
         case INT2OID:
-        case INT4OID:
-        case INT8OID:
             return @(atoi(bytes));
+        case INT4OID:
+            return @(strtoul(bytes, (char **)NULL, 10));
+        case INT8OID:
+            return @(strtoull(bytes, (char **)NULL, 10));
             break;
         case FLOAT4OID:
         case FLOAT8OID:
@@ -268,8 +292,13 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
         case TIMESTAMPTZOID:
             return NSDateFromPostgresTimestamp([NSString stringWithUTF8String:bytes]);
         case BYTEAOID:
-            return [NSData dataWithBytes:bytes length:length];
+        {
+            const unsigned char *rawBytes = PQunescapeBytea((const unsigned char *)bytes, &length);
+            NSData *data = [NSData dataWithBytes:rawBytes length:length];
+            PQfreemem((void *)rawBytes);
+            return data;
             break;
+        }
         case VARCHAROID:
         case TEXTOID:
         default:
