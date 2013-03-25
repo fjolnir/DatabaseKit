@@ -97,7 +97,7 @@ static NSString *classPrefix = nil;
         return YES;
     }
     @catch(NSException *e) {
-        DBLog(@"Error deleting record with id %ld, exception: %@", self.databaseId, e);
+        DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.databaseId, e);
     }
     return NO;
 }
@@ -305,7 +305,7 @@ static NSString *classPrefix = nil;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, [self databaseId]];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self databaseId]];
     for(NSString *column in [self columns]) {
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
