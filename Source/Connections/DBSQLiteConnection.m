@@ -10,6 +10,7 @@
 
 #import "DBSQLiteConnection.h"
 #import "DBQuery.h"
+#import "ISO8601DateFormatter.h"
 #import <unistd.h>
 #import <sqlite3.h>
 
@@ -46,21 +47,14 @@
 {
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
-    
-    _path = [[[URL absoluteString] substringFromIndex:9] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:_path])
-    {
-        if(err != NULL) {
-            *err = [NSError errorWithDomain:@"database.sqlite.filenotfound"
-                                       code:DBSQLiteDatabaseNotFoundErrorCode
-                                   userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"SQLite database not found", @""),
-                         NSFilePathErrorKey: _path}];
-        }
-        return nil;
-    }
-    // Else
+    _path = URL.path;
+
     int sqliteError = 0;
-    sqliteError = sqlite3_open([_path UTF8String], &_connection);
+    int flags = SQLITE_OPEN_READWRITE;
+    if([URL.query rangeOfString:@"create=yes"].location != NSNotFound)
+        flags |= SQLITE_OPEN_CREATE;
+    
+    sqliteError = sqlite3_open_v2([_path UTF8String], &_connection, flags, NULL);
     if(sqliteError != SQLITE_OK) {
         const char *errStr = sqlite3_errmsg(_connection);
         if(err != NULL) {
@@ -224,7 +218,14 @@
 // You have to step through the *query yourself,
 - (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query
 {
+    static dispatch_once_t onceToken;
+    static ISO8601DateFormatter *dateFormatter;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [ISO8601DateFormatter new];
+    });
+
     int columnType = sqlite3_column_type(query, colIndex);
+    const char *declType, *strVal;
     switch(columnType)
     {
         case SQLITE_INTEGER:
@@ -241,7 +242,16 @@
             return [NSNull null];
             break;
         case SQLITE_TEXT:
-            return @((const char *)sqlite3_column_text(query, colIndex));
+            declType = sqlite3_column_decltype(query, colIndex);
+            strVal = (const char *)sqlite3_column_text(query, colIndex);
+            if(strcmp("date", declType) == 0) {
+                NSString *dateStr = [[NSString alloc] initWithBytesNoCopy:(void*)strVal
+                                                                   length:strlen(strVal)
+                                                                 encoding:NSUTF8StringEncoding
+                                                             freeWhenDone:NO];
+                return [dateFormatter dateFromString:dateStr];
+            }
+            return @(strVal);
             break;
         default:
             // It really shouldn't ever come to this.

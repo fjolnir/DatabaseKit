@@ -19,6 +19,9 @@
 		C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
 		C7AED96D13C14B6D00C47919 /* DBModelPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */; };
 		C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
+		C7BD860916F828FA00DE8127 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860816F828FA00DE8127 /* libicucore.dylib */; };
+		C7BD860B16F828FF00DE8127 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860A16F828FF00DE8127 /* libsqlite3.dylib */; };
+		C7BD861016F82DAF00DE8127 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9001610CD1B00220FE9 /* DB.m */; };
 		C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = C7CAF29613BA080A00013E21 /* RegexKitLite.h */; };
 		C7CAF2A413BA080B00013E21 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CAF29813BA080A00013E21 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2A513BA0A5600013E21 /* libicucore.dylib */; };
@@ -39,8 +42,6 @@
 		C7E3D9021610CD1B00220FE9 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9001610CD1B00220FE9 /* DB.m */; };
 		C7E3D90E1611DE9000220FE9 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3D9071611DE9000220FE9 /* DBInflector.h */; };
 		C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9081611DE9000220FE9 /* DBInflector.m */; };
-		C7E3D9161611E12900220FE9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E3D9151611E12900220FE9 /* libsqlite3.dylib */; };
-		C7E3D9181611E12E00220FE9 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E3D9171611E12E00220FE9 /* libicucore.dylib */; };
 		C7E3D91A1611E16B00220FE9 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E80E058F10002C3ADB /* DBModel.m */; };
 		C7E3D91B1611E16B00220FE9 /* DBModel+CustomSelectors.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E30E058F10002C3ADB /* DBModel+CustomSelectors.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7E3D91C1611E16B00220FE9 /* DBModel+KeyAndSelectorParsers.m in Sources */ = {isa = PBXBuildFile; fileRef = F8DA52E60E058F10002C3ADB /* DBModel+KeyAndSelectorParsers.m */; };
@@ -82,6 +83,10 @@
 		C7E3D9401611E1E700220FE9 /* NSArray+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA53070E058F10002C3ADB /* NSArray+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D9411611E1ED00220FE9 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52F00E058F10002C3ADB /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
+		C7E3F07C17000C0C00F7B1F5 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3F07A17000C0C00F7B1F5 /* ISO8601DateFormatter.h */; };
+		C7E3F07D17000C0C00F7B1F5 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7E3F07A17000C0C00F7B1F5 /* ISO8601DateFormatter.h */; };
+		C7E3F07E17000C0C00F7B1F5 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F07B17000C0C00F7B1F5 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7E3F07F17000C0C00F7B1F5 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3F07B17000C0C00F7B1F5 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		C7FAF114160C830F004B16B0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7FAF112160C830F004B16B0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7FAF115160C830F004B16B0 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7FAF113160C830F004B16B0 /* DBQuery.m */; };
@@ -161,6 +166,8 @@
 		C7AED95F13C144ED00C47919 /* Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
 		C7AED96413C148C700C47919 /* Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Extensions.h; sourceTree = "<group>"; };
 		C7AED96513C148C700C47919 /* Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Base64Extensions.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		C7BD860816F828FA00DE8127 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
+		C7BD860A16F828FF00DE8127 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		C7CAF29613BA080A00013E21 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		C7CAF29813BA080A00013E21 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		C7CAF2A513BA0A5600013E21 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -179,9 +186,9 @@
 		C7E3D90B1611DE9000220FE9 /* plurals.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = plurals.inc; sourceTree = "<group>"; };
 		C7E3D90C1611DE9000220FE9 /* singulars.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = singulars.inc; sourceTree = "<group>"; };
 		C7E3D90D1611DE9000220FE9 /* uncountables.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = uncountables.inc; sourceTree = "<group>"; };
-		C7E3D9151611E12900220FE9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
-		C7E3D9171611E12E00220FE9 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
 		C7E3D9461611E34600220FE9 /* DatabaseKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseKit_Prefix.pch; sourceTree = "<group>"; };
+		C7E3F07A17000C0C00F7B1F5 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		C7E3F07B17000C0C00F7B1F5 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+iPhoneHacks.h"; sourceTree = "<group>"; };
 		C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+iPhoneHacks.m"; sourceTree = "<group>"; };
 		C7FAF112160C830F004B16B0 /* DBQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBQuery.h; sourceTree = "<group>"; };
@@ -248,8 +255,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7E3D9181611E12E00220FE9 /* libicucore.dylib in Frameworks */,
-				C7E3D9161611E12900220FE9 /* libsqlite3.dylib in Frameworks */,
+				C7BD860B16F828FF00DE8127 /* libsqlite3.dylib in Frameworks */,
+				C7BD860916F828FA00DE8127 /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,8 +352,8 @@
 		C7AED96013C1455900C47919 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				C7E3D9171611E12E00220FE9 /* libicucore.dylib */,
-				C7E3D9151611E12900220FE9 /* libsqlite3.dylib */,
+				C7BD860A16F828FF00DE8127 /* libsqlite3.dylib */,
+				C7BD860816F828FA00DE8127 /* libicucore.dylib */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -492,6 +499,8 @@
 				F8DA53080E058F10002C3ADB /* NSArray+DBAdditions.m */,
 				C7AED96413C148C700C47919 /* Base64Extensions.h */,
 				C7AED96513C148C700C47919 /* Base64Extensions.m */,
+				C7E3F07A17000C0C00F7B1F5 /* ISO8601DateFormatter.h */,
+				C7E3F07B17000C0C00F7B1F5 /* ISO8601DateFormatter.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -525,6 +534,7 @@
 				C7CAF2A213BA080B00013E21 /* RegexKitLite.h in Headers */,
 				C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */,
 				C7E3D90E1611DE9000220FE9 /* DBInflector.h in Headers */,
+				C7E3F07C17000C0C00F7B1F5 /* ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +565,7 @@
 				C7E3D92F1611E1BA00220FE9 /* Debug.h in Headers */,
 				C7AED97C13C14BCF00C47919 /* RegexKitLite.h in Headers */,
 				C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */,
+				C7E3F07D17000C0C00F7B1F5 /* ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,6 +704,7 @@
 				C7E3D9021610CD1B00220FE9 /* DB.m in Sources */,
 				C7E3D90F1611DE9000220FE9 /* DBInflector.m in Sources */,
 				C71D4B3D161282AC005FC42F /* DBPostgresConnection.m in Sources */,
+				C7E3F07E17000C0C00F7B1F5 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +714,7 @@
 			files = (
 				C7E3D91A1611E16B00220FE9 /* DBModel.m in Sources */,
 				C7E3D91B1611E16B00220FE9 /* DBModel+CustomSelectors.m in Sources */,
+				C7BD861016F82DAF00DE8127 /* DB.m in Sources */,
 				C7E3D91C1611E16B00220FE9 /* DBModel+KeyAndSelectorParsers.m in Sources */,
 				C7E3D91D1611E16B00220FE9 /* DBConnection.m in Sources */,
 				C7E3D91E1611E16B00220FE9 /* DBConnectionPool.m in Sources */,
@@ -721,6 +734,7 @@
 				C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */,
 				C7E3D92B1611E16B00220FE9 /* NSArray+DBAdditions.m in Sources */,
 				C7E3D92C1611E16B00220FE9 /* Base64Extensions.m in Sources */,
+				C7E3F07F17000C0C00F7B1F5 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
