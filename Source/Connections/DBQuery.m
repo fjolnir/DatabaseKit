@@ -28,8 +28,9 @@ NSString *const DBLeftJoin  = @" LEFT ";
 @property(readwrite, strong) id fields;
 @property(readwrite, strong) id where;
 @property(readwrite, strong) NSArray *orderedBy;
+@property(readwrite, strong) NSArray *groupedBy;
 @property(readwrite, strong) NSString *order;
-@property(readwrite, strong) NSNumber *limit;
+@property(readwrite, strong) NSNumber *limit, *offset;
 @property(readwrite, strong) id join;
 
 - (BOOL)_generateString:(NSString **)outString parameters:(NSArray **)outParameters;
@@ -128,10 +129,26 @@ NSString *const DBLeftJoin  = @" LEFT ";
     return [self order:DBOrderAscending by:fields];
 }
 
+- (DBQuery *)groupBy:(id)fields
+{
+    BOOL isStr = IsStr(fields);
+    NSParameterAssert(IsArr(fields) || isStr);
+    DBQuery *ret = [self copy];
+    ret.groupedBy = isStr ? @[fields] : fields;
+    return ret;
+}
+
 - (DBQuery *)limit:(NSNumber *)limit
 {
     DBQuery *ret = [self copy];
     ret.limit = limit;
+    return ret;
+}
+
+- (DBQuery *)offset:(NSNumber *)offset
+{
+    DBQuery *ret = [self copy];
+    ret.offset = offset;
     return ret;
 }
 
@@ -254,13 +271,19 @@ NSString *const DBLeftJoin  = @" LEFT ";
             NSAssert(NO, @"query.where must be either an array or a dictionary");
     }
     if(_order && _orderedBy) {
-        [q appendString:@" ORDER BY"];
+        [q appendString:@" ORDER BY "];
         [q appendString:[_orderedBy componentsJoinedByString:@", "]];
         [q appendString:_order];
     }
+    if(_groupedBy) {
+        [q appendString:@" GROUP BY "];
+        [q appendString:[_groupedBy componentsJoinedByString:@", "]];
+    }
 
     if([_limit unsignedIntegerValue] > 0)
-        [q appendFormat:@" LIMIT %ld", [_limit unsignedIntegerValue]];
+        [q appendFormat:@" LIMIT %ld", [_limit unsignedLongValue]];
+    if([_offset unsignedIntegerValue] > 0)
+        [q appendFormat:@" OFFSET %ld", [_offset unsignedLongValue]];
     if(outString)
         *outString = q;
     if(outParameters)
@@ -272,19 +295,33 @@ NSString *const DBLeftJoin  = @" LEFT ";
 
 - (NSArray *)execute
 {
-    return [self executeOnConnection:[self connection]];
-}
-- (NSArray *)executeOnConnection:(DBConnection *)connection
-{
-    NSString *query;
-    NSArray *params;
-    [self _generateString:&query parameters:&params];
     NSError *err = nil;
-    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
+    NSArray *result = [self executeOnConnection:[self connection] error:&err];
     if(err) {
         DBLog(@"%@", err);
         return nil;
     }
+    return result;
+}
+
+- (NSArray *)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSError *err = nil;
+    NSString *query;
+    NSArray  *params;
+    [self _generateString:&query parameters:&params];
+    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
+    if(!ret) {
+        if(outErr)
+            *outErr = err;
+        return nil;
+    }
+
     // For inserts where a model class is available, we return the inserted object
     Class modelClass;
     if([_type isEqualToString:DBQueryTypeInsert] && (modelClass = [_table modelClass])) {
@@ -325,6 +362,9 @@ NSString *const DBLeftJoin  = @" LEFT ";
 {
     if(_rows && !_dirty)
         return [_rows count];
+    else if(_groupedBy) {
+        return [[self execute] count];
+    }
     return [[self select:@"COUNT(*) AS count"][0][@"count"] unsignedIntegerValue];
 }
 #pragma mark -
