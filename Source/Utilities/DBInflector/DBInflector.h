@@ -44,6 +44,7 @@
   NSArray *uncountables;
   NSArray *plurals;
   NSArray *singulars;
+  NSCache *singularCache, *pluralCache;
 }
 @property(readwrite, strong) NSArray *irregulars, *uncountables, *plurals, *singulars;
 
