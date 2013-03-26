@@ -41,7 +41,9 @@ NSString *const DBLeftJoin  = @" LEFT ";
 + (DBQuery *)withTable:(DBTable *)table
 {
     DBQuery *ret = [self new];
-    ret.table      = table;
+    ret.table    = table;
+    ret.type     = DBQueryTypeSelect;
+    ret.fields   = @[@"*"];
     return ret;
 }
 
@@ -270,14 +272,14 @@ NSString *const DBLeftJoin  = @" LEFT ";
         } else
             NSAssert(NO, @"query.where must be either an array or a dictionary");
     }
+    if(_groupedBy) {
+        [q appendString:@" GROUP BY "];
+        [q appendString:[_groupedBy componentsJoinedByString:@", "]];
+    }
     if(_order && _orderedBy) {
         [q appendString:@" ORDER BY "];
         [q appendString:[_orderedBy componentsJoinedByString:@", "]];
         [q appendString:_order];
-    }
-    if(_groupedBy) {
-        [q appendString:@" GROUP BY "];
-        [q appendString:[_groupedBy componentsJoinedByString:@", "]];
     }
 
     if([_limit unsignedIntegerValue] > 0)
@@ -362,7 +364,7 @@ NSString *const DBLeftJoin  = @" LEFT ";
 {
     if(_rows && !_dirty)
         return [_rows count];
-    else if(_groupedBy) {
+    else if(_groupedBy || _offset || _limit) {
         return [[self execute] count];
     }
     return [[self select:@"COUNT(*) AS count"][0][@"count"] unsignedIntegerValue];
@@ -394,7 +396,9 @@ NSString *const DBLeftJoin  = @" LEFT ";
     copy.fields    = _fields;
     copy.where     = _where;
     copy.orderedBy = _orderedBy;
+    copy.groupedBy = _groupedBy;
     copy.order     = _order;
+    copy.offset    = _offset;
     copy.limit     = _limit;
     copy.join      = _join;
     return copy;
