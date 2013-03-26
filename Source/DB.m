@@ -31,11 +31,11 @@
 - (BOOL)createTable:(NSString *)tableName
         withColumns:(NSDictionary *)cols
          primaryKey:(NSDictionary *)primaryKeyInfo
-            options:(DBTableCreationOptions)options
+            options:(DBCreationOptions)options
               error:(NSError **)err
 {
     NSMutableString *query  = [NSMutableString stringWithString:@"CREATE TABLE"];
-    if(options & DBTableCreationOptionUnlessExists)
+    if(options & DBCreationOptionUnlessExists)
         [query appendString:@" IF NOT EXISTS"];
     [query appendFormat:@" %@(", tableName];
     
