@@ -15,7 +15,7 @@
 #import <sqlite3.h>
 
 /*! @cond IGNORE */
-@interface DBSQLiteConnection () {
+@interface DBSQLiteConnection () {  
     sqlite3 *_connection;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
@@ -32,7 +32,9 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [DBConnection registerConnectionClass:self];
+        @autoreleasepool {
+            [DBConnection registerConnectionClass:self];
+        }
     });
 }
 + (BOOL)canHandleURL:(NSURL *)URL
@@ -72,6 +74,13 @@
 #pragma mark SQL Executing
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
+    static dispatch_once_t onceToken;
+    static NSDateFormatter *dateFormatter;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    });
+    
     BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
     [substitutions isKindOfClass:[NSMapTable class]];
     NSParameterAssert(!substitutions                                       ||
@@ -110,6 +119,8 @@
             sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
         else if([sub isMemberOfClass:[NSNull class]])
             sqlite3_bind_null(queryByteCode, i+1);
+        else if([sub isKindOfClass:[NSDate class]])
+            sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT);
         else
             [NSException raise:@"Unrecognized object type" format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
     }
@@ -244,7 +255,7 @@
         case SQLITE_TEXT:
             declType = sqlite3_column_decltype(query, colIndex);
             strVal = (const char *)sqlite3_column_text(query, colIndex);
-            if(strcmp("date", declType) == 0) {
+            if(declType && strncmp("date", declType, 4) == 0) {
                 NSString *dateStr = [[NSString alloc] initWithBytesNoCopy:(void*)strVal
                                                                    length:strlen(strVal)
                                                                  encoding:NSUTF8StringEncoding
