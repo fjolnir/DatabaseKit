@@ -339,7 +339,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     }
     if(_order && _orderedBy) {
         [q appendString:@" ORDER BY "];
-        [q appendString:[_orderedBy componentsJoinedByString:@", "]];
+        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"%@, ", _order]]];
         [q appendString:_order];
     }
 
