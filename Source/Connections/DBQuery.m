@@ -53,7 +53,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 
 #pragma mark - Derivatives
 
-#define IsArr(x) ([x isKindOfClass:[NSArray class]] || [x isKindOfClass:[NSPointerArray class]])
+#define IsArr(x) ([x isKindOfClass:[NSArray class]] || ([NSPointerArray class] && [x isKindOfClass:[NSPointerArray class]]))
 #define IsDic(x) ([x isKindOfClass:[NSDictionary class]] || [x isKindOfClass:[NSMapTable class]])
 #define IsStr(x) ([x isKindOfClass:[NSString class]])
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
