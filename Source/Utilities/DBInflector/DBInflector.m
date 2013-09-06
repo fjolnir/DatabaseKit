@@ -47,24 +47,27 @@ static DBInflector *sharedInstance = nil;
     for(NSDictionary *inflection in self.uncountables) {
         if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
             pluralized = word;
-            break;
+            goto done;
         }
     }
+    
     for(NSDictionary *inflection in self.irregulars) {
         if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
-            pluralized = inflection[@"pattern"];
-            break;
+            pluralized = inflection[@"replacement"];
+            goto done;
         }
     }
-    NSString *transformed;
+
     for(NSDictionary *inflection in self.plurals) {
-        transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
-                                                     withString:inflection[@"replacement"]];
+        NSString *transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
+                                                               withString:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             pluralized = transformed;
-            break;
+            goto done;
         }
     }
+    
+done:
     if(!pluralized) pluralized = word;
     [pluralCache setObject:pluralized forKey:word];
     return pluralized;
@@ -78,24 +81,25 @@ static DBInflector *sharedInstance = nil;
     for(NSDictionary *inflection in self.uncountables) {
         if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
             singularized = word;
-            break;
+            goto done;
         }
     }
     for(NSDictionary *inflection in self.irregulars) {
         if([inflection[@"replacement"] isEqualToString:[word lowercaseString]]) {
             singularized = inflection[@"pattern"];
-            break;
+            goto done;
         }
     }
-    NSString *transformed;
     for(NSDictionary *inflection in self.singulars) {
-        transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
-                                                     withString:inflection[@"replacement"]];
+        NSString * transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
+                                                                withString:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             singularized = transformed;
-            break;
+            goto done;
         }
     }
+
+done:
     if(!singularized) singularized = word;
     [singularCache setObject:singularized forKey:word];
     return singularized;

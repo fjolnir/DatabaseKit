@@ -46,6 +46,8 @@ typedef enum {
 + (DB *)withURL:(NSURL *)URL;
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err;
 
+- (id)initWithConnection:(DBConnection *)aConnection;
+
 // Returns a table whose name matches key or nil
 - (DBTable *)objectForKeyedSubscript:(id)key;
 

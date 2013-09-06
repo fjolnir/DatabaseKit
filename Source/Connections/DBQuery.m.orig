@@ -1,12 +1,12 @@
-    #import "DBQuery.h"
+#import "DBQuery.h"
 #import "DBTable.h"
 #import "DBModel.h"
 #import "DBModelPrivate.h"
 
 NSString *const DBSelectAll = @"*";
 
-NSString *const DBOrderDescending = @" DESC";
-NSString *const DBOrderAscending  = @" ASC";
+NSString *const DBOrderDescending = @" DESC ";
+NSString *const DBOrderAscending  = @" ASC ";
 
 NSString *const DBQueryTypeSelect = @"SELECT ";
 NSString *const DBQueryTypeInsert = @"INSERT ";
@@ -115,6 +115,14 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     NSParameterAssert(IsArr(conds) || IsDic(conds) || isStr);
     DBQuery *ret = [self copy];
 
+<<<<<<< HEAD
+    NSMutableDictionary *derivedConds = [_where copy];
+    if(isStr)
+        derivedConds[DBStringCondition] = _where[DBStringCondition]
+                                          ? [_where[DBStringCondition] stringByAppendingFormat:@" AND %@", conds]
+                                          : conds;
+    else {
+=======
     NSMutableDictionary *derivedConds = [_where mutableCopy];
     derivedConds[DBStringConditions] = [_where[DBStringConditions] mutableCopy];
     if(isStr) {
@@ -122,6 +130,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             derivedConds[DBStringConditions] = [NSMutableArray new];
         [derivedConds[DBStringConditions] addObject:@[conds]];
     } else {
+>>>>>>> 840a7ad8c331e4832ba56924ebc25ea7c20a906d
         for(id key in conds) {
             derivedConds[key] = conds[key];
         }
@@ -241,10 +250,11 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 
             id obj = _fields[fieldName];
             [p addObject:obj ? obj : [NSNull null]];
-            [q appendFormat:@"$%lu", (unsigned long)[p count]];
+            [q appendFormat:@"$%d", [p count]];
         }
         [q appendString:@")"];
     } else if([_type isEqualToString:DBQueryTypeUpdate]) {
+        [q appendString:@" "];
         [q appendString:[_table toString]];
         [q appendString:@" SET "];
         int i = 0;
@@ -261,7 +271,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             }
         }
     } else if([_type isEqualToString:DBQueryTypeDelete]) {
-        [q appendString:@"FROM "];
+        [q appendString:@" FROM "];
         [q appendString:[_table toString]];
     } else {
         NSAssert(NO, @"Unknown query type: %@", _type);
@@ -287,7 +297,6 @@ static NSString *const DBStringConditions = @"DBStringConditions";
                 [q appendString:joinFields[key]];
                 [q appendString:@"="];
                 [q appendString:tableName];
-                [q appendString:@"."];
                 [q appendString:key];
             }
         } else {
@@ -310,7 +319,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
                     for(int j = 1; j < [cond count]; ++j) {
                         [self _addParam:cond[j] withToken:NO currentParams:p query:q];
                         [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
-                                                 withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
+                                                 withString:[NSString stringWithFormat:@"$%d", [p count]]
                                                     options:0
                                                       range:(NSRange){ 0, [condStr length] }];
                     }

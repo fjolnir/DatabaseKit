@@ -43,7 +43,7 @@
     if(![self respondsToKey:key])
         return nil;
     NSString *classPrefix = [[self.record class] classPrefix];
-    NSString *partnerClassName = [classPrefix stringByAppendingString:[key stringByCapitalizingFirstLetter]];
+    NSString *partnerClassName = [classPrefix stringByAppendingString:[[key singularizedString] stringByCapitalizingFirstLetter]];
     Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {

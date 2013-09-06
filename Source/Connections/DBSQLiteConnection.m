@@ -49,7 +49,7 @@
 {
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
-    _path = URL.path;
+    _path = URL ? URL.path : @":memory:";
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;

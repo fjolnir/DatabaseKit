@@ -14,11 +14,14 @@
 
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err
 {
-    DB *ret = [self new];
-    ret.connection = [DBConnectionPool openConnectionWithURL:URL error:err];
-    if(!ret.connection)
-        return nil;
-    return ret;
+    return [[self alloc] initWithConnection:[DBConnectionPool openConnectionWithURL:URL error:err]];
+}
+
+- (id)initWithConnection:(DBConnection *)aConnection
+{
+    if((self = [super init]))
+        _connection = aConnection;
+    return _connection ? self : nil;
 }
 
 // Returns a table whose name matches key

@@ -41,7 +41,7 @@
 {
     if(![self respondsToKey:key])
         return nil;
-    NSString *partnerClassName = [[[self.record class] classPrefix] stringByAppendingString:[key stringByCapitalizingFirstLetter]];
+    NSString *partnerClassName = [[[self.record class] classPrefix] stringByAppendingString:[[key singularizedString] stringByCapitalizingFirstLetter]];
     Class partnerClass = NSClassFromString(partnerClassName);
     if(!partnerClass)
     {
@@ -91,8 +91,10 @@
         return;
     [aRecord sendValue:@(self.record.databaseId)
                 forKey:[[self.record class] idColumn]];
+    NSLog(@"%@", [self.record readCache]);
     if([DBModel enableCache])
         [[self.record readCache] removeObjectForKey:[key pluralizedString]];
+    NSLog(@"%@", [self.record readCache]);
 }
 - (void)removeRecord:(id)aRecord forKey:(NSString *)key
 {
