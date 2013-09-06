@@ -16,6 +16,7 @@ static void _connectionCloser(void *ptr)
 }
 
 @implementation DBConnectionPool
+
 + (DBConnection *)openConnectionWithURL:(NSURL *)URL error:(NSError **)err
 {
     DBConnectionPool *pool = [self new];
@@ -48,7 +49,7 @@ static void _connectionCloser(void *ptr)
         if(!connection)
             return nil;
         pthread_setspecific(_threadLocalKey, (__bridge void *)connection);
-        @synchronized(self) { // Replace with a spinlock?
+        @synchronized(_connections) { // Replace with a spinlock?
             [_connections addObject:connection];
         }
     }

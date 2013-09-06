@@ -104,7 +104,9 @@ NSString *const DBLeftJoin  = @" LEFT ";
 
     NSMutableDictionary *derivedConds = [_where copy];
     if(isStr)
-        derivedConds[DBStringCondition] = _where[DBStringCondition] ? [_where[DBStringCondition] stringByAppendingFormat:@" AND %@", conds] : conds;
+        derivedConds[DBStringCondition] = _where[DBStringCondition]
+                                          ? [_where[DBStringCondition] stringByAppendingFormat:@" AND %@", conds]
+                                          : conds;
     else {
         for(id key in conds) {
             derivedConds[key] = conds[key];
