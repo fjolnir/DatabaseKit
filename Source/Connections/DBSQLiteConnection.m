@@ -10,11 +10,12 @@
 
 #import "DBSQLiteConnection.h"
 #import "DBQuery.h"
+#import "ISO8601DateFormatter.h"
 #import <unistd.h>
 #import <sqlite3.h>
 
 /*! @cond IGNORE */
-@interface DBSQLiteConnection () {
+@interface DBSQLiteConnection () {  
     sqlite3 *_connection;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
@@ -31,7 +32,9 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [DBConnection registerConnectionClass:self];
+        @autoreleasepool {
+            [DBConnection registerConnectionClass:self];
+        }
     });
 }
 + (BOOL)canHandleURL:(NSURL *)URL
@@ -46,21 +49,14 @@
 {
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
-    
-    _path = [[[URL absoluteString] substringFromIndex:9] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:_path])
-    {
-        if(err != NULL) {
-            *err = [NSError errorWithDomain:@"database.sqlite.filenotfound"
-                                       code:DBSQLiteDatabaseNotFoundErrorCode
-                                   userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"SQLite database not found", @""),
-                         NSFilePathErrorKey: _path}];
-        }
-        return nil;
-    }
-    // Else
+    _path = URL.path;
+
     int sqliteError = 0;
-    sqliteError = sqlite3_open([_path UTF8String], &_connection);
+    int flags = SQLITE_OPEN_READWRITE;
+    if([URL.query rangeOfString:@"create=yes"].location != NSNotFound)
+        flags |= SQLITE_OPEN_CREATE;
+    
+    sqliteError = sqlite3_open_v2([_path UTF8String], &_connection, flags, NULL);
     if(sqliteError != SQLITE_OK) {
         const char *errStr = sqlite3_errmsg(_connection);
         if(err != NULL) {
@@ -78,6 +74,13 @@
 #pragma mark SQL Executing
 - (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
+    static dispatch_once_t onceToken;
+    static NSDateFormatter *dateFormatter;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    });
+    
     BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
     [substitutions isKindOfClass:[NSMapTable class]];
     NSParameterAssert(!substitutions                                       ||
@@ -116,6 +119,8 @@
             sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
         else if([sub isMemberOfClass:[NSNull class]])
             sqlite3_bind_null(queryByteCode, i+1);
+        else if([sub isKindOfClass:[NSDate class]])
+            sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT);
         else
             [NSException raise:@"Unrecognized object type" format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
     }
@@ -224,7 +229,14 @@
 // You have to step through the *query yourself,
 - (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query
 {
+    static dispatch_once_t onceToken;
+    static ISO8601DateFormatter *dateFormatter;
+    dispatch_once(&onceToken, ^{
+        dateFormatter = [ISO8601DateFormatter new];
+    });
+
     int columnType = sqlite3_column_type(query, colIndex);
+    const char *declType, *strVal;
     switch(columnType)
     {
         case SQLITE_INTEGER:
@@ -241,7 +253,16 @@
             return [NSNull null];
             break;
         case SQLITE_TEXT:
-            return @((const char *)sqlite3_column_text(query, colIndex));
+            declType = sqlite3_column_decltype(query, colIndex);
+            strVal = (const char *)sqlite3_column_text(query, colIndex);
+            if(declType && strncmp("date", declType, 4) == 0) {
+                NSString *dateStr = [[NSString alloc] initWithBytesNoCopy:(void*)strVal
+                                                                   length:strlen(strVal)
+                                                                 encoding:NSUTF8StringEncoding
+                                                             freeWhenDone:NO];
+                return [dateFormatter dateFromString:dateStr];
+            }
+            return @(strVal);
             break;
         default:
             // It really shouldn't ever come to this.

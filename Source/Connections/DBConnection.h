@@ -42,7 +42,7 @@ extern id DBConnectionRollback;
 @class DBQuery;
 typedef id (^DBConnectionBlock)();
 
-#define DBConnectionErrorDomain @"com.activerecord.connection"
+#define DBConnectionErrorDomain @"com.databasekit.connection"
 
 @interface DBConnection : NSObject
 @property(readonly, retain) NSURL *URL;

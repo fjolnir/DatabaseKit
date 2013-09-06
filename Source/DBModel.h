@@ -138,7 +138,6 @@ typedef enum {
  * Same as retrieveValueForKey:
  * @param key A valid key, can refer to either a column or a relationship
  */
-- (id)valueForKey:(NSString *)key;
 - (id)objectForKeyedSubscript:(id)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 - (void)addRecord:(id)record forKey:(NSString *)key;

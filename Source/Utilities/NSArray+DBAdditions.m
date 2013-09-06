@@ -10,7 +10,7 @@
 
 /* @cond IGNORE */
 @implementation NSArray (DBAdditions)
-- (NSMutableArray *)arrayByRemovingDuplicates // This seems ugly, todo: beutify
+- (NSMutableArray *)arrayByRemovingDuplicates // This seems ugly, todo: beautify
 {
   NSMutableArray *ret = [NSMutableArray arrayWithArray:self];
   for(id item in ret)
