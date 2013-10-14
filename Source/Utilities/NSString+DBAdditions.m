@@ -8,7 +8,6 @@
 
 #import "NSString+DBAdditions.h"
 #import "DBInflector.h"
-#import "RegexKitLite.h"
 
 /* @cond IGNORE */
 @implementation NSString (Inflections)
@@ -50,10 +49,14 @@
 
 - (NSString *)underscoredString
 {
-  NSString *underscored = [self stringByReplacingOccurrencesOfRegex:@"([A-Z]+)([A-Z][a-z])"
-                                                         withString:@"$1_$2"];
-  underscored = [underscored stringByReplacingOccurrencesOfRegex:@"([a-z\\d])([A-Z])"
-                                                      withString:@"$1_$2"];
+    NSString *underscored = [self stringByReplacingOccurrencesOfString:@"([A-Z]+)([A-Z][a-z])"
+                                                            withString:@"$1_$2"
+                                                               options:NSRegularExpressionSearch
+                                                                 range:(NSRange) { 0, [self length] }];
+    underscored = [underscored stringByReplacingOccurrencesOfString:@"([a-z\\d])([A-Z])"
+                                                         withString:@"$1_$2"
+                                                            options:NSRegularExpressionSearch
+                                                              range:(NSRange) { 0, [underscored length] }];
     
     return [underscored lowercaseString];
 }

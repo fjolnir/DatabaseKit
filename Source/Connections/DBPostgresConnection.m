@@ -10,7 +10,6 @@
 
 #import "DBPostgresConnection.h"
 #import "DBQuery.h"
-#import "RegexKitLite.h"
 #import <unistd.h>
 #import <libpq-fe.h>
 

@@ -92,7 +92,7 @@
     sqlite3_stmt *queryByteCode;
     queryByteCode = [self prepareQuerySQL:sql error:outErr];
     if(!queryByteCode) {
-        DBLog(@"Unable to prepare bytecode for SQLite query: %@", sql);
+        DBLog(@"Unable to prepare bytecode for SQLite query: '%@'", sql);
         return nil;
     }
     NSArray *columnNames = [self columnsForQuery:queryByteCode];
