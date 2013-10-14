@@ -18,7 +18,7 @@ DB *DBSQLiteDatabaseForTesting()
     NSBundle *bundle = [NSBundle bundleForClass:[DummyClass class]];
     NSString *fixtures = [NSString stringWithContentsOfFile:[bundle pathForResource:@"sqlite_fixtures" ofType:@"sql"]
                                                    encoding:NSUTF8StringEncoding
-                                                      error:nil];
+                                                      error:NULL];
     
     NSError *err = nil;
     DB *db = [[DB alloc] initWithConnection:[[DBSQLiteConnection alloc] initWithURL:nil error:&err]];

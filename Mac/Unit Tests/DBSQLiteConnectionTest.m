@@ -47,7 +47,7 @@
 - (void)testQuery
 {
     NSString *query = @"SELECT * FROM foo" ;
-    NSArray *result = [db.connection executeSQL:query substitutions:nil error:nil];
+    NSArray *result = [db.connection executeSQL:query substitutions:nil error:NULL];
     XCTAssertTrue([result count] == 2, @"foo should have 2 rows");
     NSArray *columns = [result[0] allKeys];
     NSArray *expectedColumns = @[@"id", @"bar", @"baz", @"integer"];
