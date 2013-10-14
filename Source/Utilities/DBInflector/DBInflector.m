@@ -1,5 +1,4 @@
 #import "DBInflector.h"
-#import "RegexKitLite.h"
 
 static DBInflector *sharedInstance = nil;
 
@@ -59,8 +58,10 @@ static DBInflector *sharedInstance = nil;
     }
 
     for(NSDictionary *inflection in self.plurals) {
-        NSString *transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
-                                                               withString:inflection[@"replacement"]];
+        NSString *transformed = [word stringByReplacingOccurrencesOfString:inflection[@"pattern"]
+                                                                withString:inflection[@"replacement"]
+                                                                   options:NSRegularExpressionSearch|NSRegularExpressionCaseInsensitive
+                                                                     range:(NSRange) { 0, [word length] }];
         if(![transformed isEqualToString:word]) {
             pluralized = transformed;
             goto done;
@@ -91,8 +92,10 @@ done:
         }
     }
     for(NSDictionary *inflection in self.singulars) {
-        NSString * transformed = [word stringByReplacingOccurrencesOfRegex:inflection[@"pattern"]
-                                                                withString:inflection[@"replacement"]];
+        NSString *transformed = [word stringByReplacingOccurrencesOfString:inflection[@"pattern"]
+                                                                withString:inflection[@"replacement"]
+                                                                   options:NSRegularExpressionSearch|NSRegularExpressionCaseInsensitive
+                                                                     range:(NSRange) { 0, [word length] }];
         if(![transformed isEqualToString:word]) {
             singularized = transformed;
             goto done;
