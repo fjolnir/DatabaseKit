@@ -1,12 +1,12 @@
 CC = clang
 
 PREFIX = /usr/local
-PRODUCT_NAME = libdatabasekit.so
+PRODUCT = libdatabasekit
 
 CFLAGS  = -fblocks -fobjc-nonfragile-abi -fno-constant-cfstrings -I. -Wall -g -O0 -I/usr/local/include -Idependencies -DDEBUG_TRACE -Wno-trigraphs -Wno-shorten-64-to-32
 
 LIB_CFLAGS = -fPIC
-LDFLAGS=-L/usr/local/lib -lobjc -lpthread -ldispatch `gnustep-config --base-libs` -lpq
+LDFLAGS=-L/usr/local/lib -lobjc -lpthread -lpq -lsqlite3
 
 SRC       = DatabaseKit/DB.m \
             DatabaseKit/DBQuery.m \
@@ -37,6 +37,14 @@ OBJ_NOARC = $(addprefix build/, $(patsubst %.c, %.o, $(SRC_NOARC:.m=.o)))
 
 $(OBJ): ARC_CFLAGS := -fobjc-arc
 
+ifeq ($(shell uname),Darwin)
+	PRODUCT_FILENAME += $(addsuffix .dylib,$(PRODUCT))
+	LDFLAGS += -framework Foundation
+else
+	PRODUCT_FILENAME += $(addsuffix .so,$PRODUCT)
+	LDFLAGS += `gnustep-config --base-libs` -ldispatch -lpthread
+endif
+
 build/%.o: %.m
 	@echo "\033[32m * Building $< -> $@\033[0m"
 	@mkdir -p $(dir $@)
@@ -50,12 +58,12 @@ build/%.o: %.c
 
 all: $(OBJ_NOARC) $(OBJ)
 	@echo "\033[32m * Linking...\033[0m"
-	@$(CC) $(LDFLAGS) $(OBJ) $(OBJ_NOARC) -shared -o build/$(PRODUCT_NAME)
+	@$(CC) $(LDFLAGS) $(OBJ) $(OBJ_NOARC) -shared -o build/$(PRODUCT_FILENAME)
 
 install: all
 	@mkdir -p $(PREFIX)/include/DatabaseKit
 	@cp DatabaseKit/*.h $(PREFIX)/include/DatabaseKit
-	@cp build/$(PRODUCT_NAME) $(PREFIX)/lib/$(PRODUCT_NAME)
+	@cp build/$(PRODUCT_NAME) $(PREFIX)/lib/$(PRODUCT_FILENAME)
 
 clean:
 	@rm -rf build
