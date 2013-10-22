@@ -24,22 +24,22 @@
 {
     NSString *attributeName;
     switch((int)[DBModel typeOfSelector:aSEL attributeName:&attributeName]) {
-        case DBAttributeSelectorReader:
+        case DBAttributeSelectorReader: {
             class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self){
                 return [self valueForKey:attributeName];
             }), "@@:");
             return YES;
-        case DBAttributeSelectorWriter:
+        } case DBAttributeSelectorWriter: {
             class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self, id value) {
                 [self setValue:value forKey:attributeName];
             }), "v@:@");
             return YES;
-        case DBAttributeSelectorAdder:
+        } case DBAttributeSelectorAdder: {
             class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self, id value) {
                 [self addRecord:value forKey:attributeName];
             }), "v@:@");
             return YES;
-        case DBAttributeSelectorRemover:
+        } case DBAttributeSelectorRemover:
             class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self, id value) {
                 [self removeRecord:value forKey:attributeName];
             }), "v@:@");

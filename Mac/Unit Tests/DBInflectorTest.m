@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <DatabaseKit/DBInflector.h>
-#import <DatabaseKit/NSString+DBAdditions.h>
+#import <DatabaseKit/Utilities/DBInflector/DBInflector.h>
+#import <DatabaseKit/Utilities/NSString+DBAdditions.h>
 
 @class DBInflector;
 
