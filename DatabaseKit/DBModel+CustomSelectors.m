@@ -25,7 +25,7 @@
     NSString *attributeName;
     switch((int)[DBModel typeOfSelector:aSEL attributeName:&attributeName]) {
         case DBAttributeSelectorReader: {
-            class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self){
+            class_addMethod(self, aSEL, imp_implementationWithBlock(^(DBModel *self) {
                 return [self valueForKey:attributeName];
             }), "@@:");
             return YES;

@@ -433,6 +433,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     }
     return [[self select:@"COUNT(*) AS count"][0][@"count"] unsignedIntegerValue];
 }
+
 #pragma mark -
 
 - (DBConnection *)connection

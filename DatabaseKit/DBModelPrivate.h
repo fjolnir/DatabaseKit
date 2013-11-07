@@ -72,14 +72,6 @@ typedef enum {
 - (DBRelationship *)relationshipForKey:(NSString *)key;
 + (DBAttributeSelectorType)typeOfSelector:(SEL)aSelector
                             attributeName:(NSString **)outAttribute;
-// Does all the heavy lifting when figuring out what to do with the attribute selectors
-// (Parses them and then tell what sort of relationship it's for, wether it's a writer,
-//  reader, etc.. and what the name of the attribute it affects is
-/*- (DBRelationshipType)typeOfSelector:(SEL)aSelector
-                       attributeName:(NSString **)outAttribute
-                        selectorType:(DBAttributeSelectorType *)selectorType;
-// Determines what sort of relationship a key represents
-- (DBRelationshipType)relationShipTypeForKey:(NSString *)key;*/
 @end
 
 /*! @endcond */
