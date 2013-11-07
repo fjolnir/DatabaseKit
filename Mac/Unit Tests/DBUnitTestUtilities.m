@@ -9,20 +9,30 @@
 #import "DBUnitTestUtilities.h"
 #import <DatabaseKit/DatabaseKit.h>
 
-@interface DummyClass : NSObject
+@interface FixtureGetter : NSObject
++ (NSString *)fixturesForDatabase:(NSString *)dbName;
 @end
-@implementation DummyClass
+@implementation FixtureGetter
++ (NSString *)fixturesForDatabase:(NSString *)dbName
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *fileName = [NSString stringWithFormat:@"%@_fixtures", dbName];
+    
+    return [NSString stringWithContentsOfFile:[bundle pathForResource:fileName ofType:@"sql"]
+                                     encoding:NSUTF8StringEncoding
+                                        error:NULL];
+}
 @end
+
+
 DB *DBSQLiteDatabaseForTesting()
 {
-    NSBundle *bundle = [NSBundle bundleForClass:[DummyClass class]];
-    NSString *fixtures = [NSString stringWithContentsOfFile:[bundle pathForResource:@"sqlite_fixtures" ofType:@"sql"]
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:NULL];
-    
     NSError *err = nil;
-    DB *db = [[DB alloc] initWithConnection:[[DBSQLiteConnection alloc] initWithURL:nil error:&err]];
+    DBSQLiteConnection *connection = [[DBSQLiteConnection alloc] initWithURL:nil
+                                                                       error:&err];
+    DB *db = [[DB alloc] initWithConnection:connection];
 
+    NSString *fixtures = [FixtureGetter fixturesForDatabase:@"sqlite"];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
         err = nil;
@@ -30,6 +40,24 @@ DB *DBSQLiteDatabaseForTesting()
         if(err)
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
     }
+    return db;
+}
 
+DB *DBPostgresDatabaseForTesting()
+{
+    NSError *err = nil;
+    NSURL *url = [NSURL URLWithString:@"postgres://localhost/dbkit_test"];
+    DBSQLiteConnection *connection = [[DBPostgresConnection alloc] initWithURL:url
+                                                                         error:&err];
+    NSAssert(connection, @"Please create a postgres database called 'dbkit_test' on localhost");
+    DB *db = [[DB alloc] initWithConnection:connection];
+    NSString *fixtures = [FixtureGetter fixturesForDatabase:@"postgres"];
+    for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
+    {
+        err = nil;
+        [db.connection executeSQL:query substitutions:nil error:&err];
+        if(err)
+            NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
+    }
     return db;
 }

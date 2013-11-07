@@ -33,6 +33,8 @@
 		C73F18921816A57C002F163F /* DatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */; };
 		C7759E0117D9BE1B000334EF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7759E0017D9BE1B000334EF /* Cocoa.framework */; };
 		C79C0EC217D9BC3400E538B9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79C0EC117D9BC3400E538B9 /* XCTest.framework */; };
+		C7A36907182BAE21006C3682 /* postgres_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C7A36906182BAE21006C3682 /* postgres_fixtures.sql */; };
+		C7A36909182BAE48006C3682 /* DBPostgresConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A36908182BAE48006C3682 /* DBPostgresConnectionTest.m */; };
 		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
 		C7BD860916F828FA00DE8127 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860816F828FA00DE8127 /* libicucore.dylib */; };
 		C7BD860B16F828FF00DE8127 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860A16F828FF00DE8127 /* libsqlite3.dylib */; };
@@ -123,6 +125,8 @@
 		C79C0EC317D9BC3400E538B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C79C0EC517D9BC3400E538B9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		C79C0ECB17D9BC3400E538B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C7A36906182BAE21006C3682 /* postgres_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = postgres_fixtures.sql; path = "Mac/Unit Tests/postgres_fixtures.sql"; sourceTree = SOURCE_ROOT; };
+		C7A36908182BAE48006C3682 /* DBPostgresConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPostgresConnectionTest.m; sourceTree = "<group>"; };
 		C7A5077913F01B1200301981 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C7AED93D13C1440200C47919 /* libDatabaseKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDatabaseKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BD860816F828FA00DE8127 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
@@ -356,6 +360,7 @@
 				C7D504031809B1D800818DBF /* DBModelTest.m */,
 				C7D504041809B1D800818DBF /* DBQueryTest.m */,
 				C7D504051809B1D800818DBF /* DBSQLiteConnectionTest.m */,
+				C7A36908182BAE48006C3682 /* DBPostgresConnectionTest.m */,
 				C7D504061809B1D800818DBF /* DBUnitTestUtilities.h */,
 				C7D504071809B1D800818DBF /* DBUnitTestUtilities.m */,
 				C79C0EC817D9BC3400E538B9 /* Supporting Files */,
@@ -369,6 +374,7 @@
 			children = (
 				C7D5041B180BB2CF00818DBF /* mysql_fixtures.sql */,
 				C7D5041C180BB2CF00818DBF /* sqlite_fixtures.sql */,
+				C7A36906182BAE21006C3682 /* postgres_fixtures.sql */,
 				C7D5040D1809B1EA00818DBF /* DatabaseKit Tests-Info.plist */,
 				C79C0ECA17D9BC3400E538B9 /* InfoPlist.strings */,
 				C7D5040F1809B26300818DBF /* DatabaseKit Tests-Prefix.pch */,
@@ -545,6 +551,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A36907182BAE21006C3682 /* postgres_fixtures.sql in Resources */,
 				C7D5041E180BB2CF00818DBF /* sqlite_fixtures.sql in Resources */,
 				C7D5041D180BB2CF00818DBF /* mysql_fixtures.sql in Resources */,
 			);
@@ -604,6 +611,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7A36909182BAE48006C3682 /* DBPostgresConnectionTest.m in Sources */,
 				C7D5040C1809B1D800818DBF /* DBUnitTestUtilities.m in Sources */,
 				C7D504081809B1D800818DBF /* DBInflectorTest.m in Sources */,
 				C7D504091809B1D800818DBF /* DBModelTest.m in Sources */,
@@ -670,6 +678,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = DatabaseKit;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -692,6 +701,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6.8;
 				PRODUCT_NAME = DatabaseKit;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -835,7 +845,7 @@
 				INFOPLIST_FILE = "Mac/Unit Tests/DatabaseKit Tests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -876,7 +886,7 @@
 				INFOPLIST_FILE = "Mac/Unit Tests/DatabaseKit Tests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = xctest;
