@@ -37,11 +37,12 @@ OBJ_NOARC = $(addprefix build/, $(patsubst %.c, %.o, $(SRC_NOARC:.m=.o)))
 
 $(OBJ): ARC_CFLAGS := -fobjc-arc
 
+STATICLIB_FILENAME = $(addsuffix .a,$(PRODUCT))
 ifeq ($(shell uname),Darwin)
-	PRODUCT_FILENAME += $(addsuffix .dylib,$(PRODUCT))
+	SHAREDLIB_FILENAME = $(addsuffix .dylib,$(PRODUCT))
 	LDFLAGS += -framework Foundation
 else
-	PRODUCT_FILENAME += $(addsuffix .so,$PRODUCT)
+	SHAREDLIB_FILENAME = $(addsuffix .so,$(PRODUCT))
 	LDFLAGS += `gnustep-config --base-libs` -ldispatch -lpthread
 endif
 
@@ -58,12 +59,13 @@ build/%.o: %.c
 
 all: $(OBJ_NOARC) $(OBJ)
 	@echo "\033[32m * Linking...\033[0m"
-	@$(CC) $(LDFLAGS) $(OBJ) $(OBJ_NOARC) -shared -o build/$(PRODUCT_FILENAME)
+	@$(CC) $(LDFLAGS) $(OBJ) $(OBJ_NOARC) -shared -o build/$(SHAREDLIB_FILENAME)
+	@ar rcs build/$(STATICLIB_FILENAME) $(OBJ)
 
 install: all
 	@mkdir -p $(PREFIX)/include/DatabaseKit
 	@cp DatabaseKit/*.h $(PREFIX)/include/DatabaseKit
-	@cp build/$(PRODUCT_NAME) $(PREFIX)/lib/$(PRODUCT_FILENAME)
+	@cp build/$(PRODUCT_NAME) $(PREFIX)/lib/$(SHAREDLIB_FILENAME)
 
 clean:
 	@rm -rf build
