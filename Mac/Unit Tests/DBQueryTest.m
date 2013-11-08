@@ -20,15 +20,15 @@
 - (void)testBuilding
 {
     XCTAssertEqualObjects([[[[Q select] where:@{ @"foo": @1 }] order:DBOrderDescending by:@"id" ] toString],
-                          @"SELECT * FROM aTable WHERE foo IS $1 ORDER BY id DESC", @"");
+                          @"SELECT * FROM aTable WHERE \"foo\"=$1 ORDER BY \"id\" DESC", @"");
     
     NSArray *fields = @[@"a", @"b", @"c"];
     XCTAssertEqualObjects([[Q select:fields] toString],
-                          @"SELECT a, b, c FROM aTable", @"");
+                          @"SELECT \"a\", \"b\", \"c\" FROM aTable", @"");
     
     NSDictionary *update = @{ @"a": @1, @"b": @2, @"c": @3 };
     XCTAssertEqualObjects([[Q update:update] toString],
-                          @"UPDATE aTable SET a=$1, b=$2, c=$3", @"");
+                          @"UPDATE aTable SET \"a\"=$1, \"b\"=$2, \"c\"=$3", @"");
     
     XCTAssertEqualObjects([[Q delete] toString], @"DELETE FROM aTable", @"");
 }

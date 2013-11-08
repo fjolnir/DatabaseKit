@@ -48,7 +48,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     DBQuery *ret = [self new];
     ret.table    = table;
     ret.type     = DBQueryTypeSelect;
-    ret.fields   = @[@"*"];
+    ret.fields   = @[DBSelectAll];
     return ret;
 }
 
@@ -69,7 +69,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 }
 - (DBQuery *)select
 {
-    return [self select:@"*"];
+    return [self select:DBSelectAll];
 }
 
 - (DBQuery *)insert:(id)fields
@@ -226,15 +226,21 @@ static NSString *const DBStringConditions = @"DBStringConditions";
                         : [NSMutableArray array];
     
     if(__builtin_expect([_type isEqualToString:DBQueryTypeSelect], YES)) {
-        [q appendString:[_fields componentsJoinedByString:@", "]];
+        if([_fields count] == 1 && _fields[0] == DBSelectAll)
+            [q appendString:DBSelectAll];
+        else {
+            [q appendString:@"\""];
+            [q appendString:[_fields componentsJoinedByString:@"\", \""]];
+            [q appendString:@"\""];
+        }
         [q appendString:@" FROM "];
         [q appendString:[_table toString]];
     } else if([_type isEqualToString:DBQueryTypeInsert]) {
         [q appendString:@" INTO "];
         [q appendString:[_table toString]];
-        [q appendString:@"("];
-        [q appendString:[[_fields allKeys] componentsJoinedByString:@", "]];
-        [q appendString:@") VALUES("];
+        [q appendString:@"(\""];
+        [q appendString:[[_fields allKeys] componentsJoinedByString:@"\", \""]];
+        [q appendString:@"\") VALUES("];
         int i = 0;
         for(id fieldName in _fields) {
             if(__builtin_expect(i++ > 0, 1))
@@ -247,13 +253,13 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         [q appendString:@")"];
     } else if([_type isEqualToString:DBQueryTypeUpdate]) {
         [q appendString:[_table toString]];
-        [q appendString:@" SET "];
+        [q appendString:@" SET \""];
         int i = 0;
         for(id fieldName in _fields) {
             if(__builtin_expect(i++ > 0, 1))
-                [q appendString:@", "];
+                [q appendString:@", \""];
             [q appendString:fieldName];
-            [q appendString:@"="];
+            [q appendString:@"\"="];
             id obj = _fields[fieldName];
             if(!obj || [obj isEqual:[NSNull null]]) {
                 [q appendString:@"NULL"];
@@ -284,12 +290,13 @@ static NSString *const DBStringConditions = @"DBStringConditions";
                 if(i++ > 0)
                     [q appendString:@" AND "];
                 [q appendString:joinTableName];
-                [q appendString:@"."];
+                [q appendString:@".\""];
                 [q appendString:joinFields[key]];
-                [q appendString:@"="];
+                [q appendString:@"\"="];
                 [q appendString:tableName];
-                [q appendString:@"."];
+                [q appendString:@".\""];
                 [q appendString:key];
+                [q appendString:@"\""];
             }
         } else {
             [q appendString:@" "];
@@ -323,8 +330,9 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             } else {
                 if(i++ > 0)
                     [q appendString:@" AND "];
+                [q appendString:@"\""];
                 [q appendString:fieldName];
-                [q appendString:@" IS "];
+                [q appendString:@"\"="];
                 [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
             }
         }
@@ -339,8 +347,9 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             return false;
     }
     if(_order && _orderedBy) {
-        [q appendString:@" ORDER BY "];
-        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"%@, ", _order]]];
+        [q appendString:@" ORDER BY \""];
+        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"\" %@, ", _order]]];
+        [q appendString:@"\""];
         [q appendString:_order];
     }
 
@@ -412,7 +421,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     if(modelClass && row[@"id"]) {
         DBModel *model = [[modelClass alloc] initWithTable:_table
                                                 databaseId:[row[@"id"] unsignedIntegerValue]];
-        if([_fields isEqual:@"*"] && [DBModel enableCache])
+        if([_fields isEqual:DBSelectAll] && [DBModel enableCache])
             model.readCache = [row mutableCopy];
         return model;
     }

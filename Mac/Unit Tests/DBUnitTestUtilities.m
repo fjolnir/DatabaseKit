@@ -49,7 +49,7 @@ DB *DBPostgresDatabaseForTesting()
     NSURL *url = [NSURL URLWithString:@"postgres://localhost/dbkit_test"];
     DBSQLiteConnection *connection = [[DBPostgresConnection alloc] initWithURL:url
                                                                          error:&err];
-    NSAssert(connection, @"Please create a postgres database called 'dbkit_test' on localhost");
+    NSCAssert(connection, @"Please create a postgres database called 'dbkit_test' on localhost");
     DB *db = [[DB alloc] initWithConnection:connection];
     NSString *fixtures = [FixtureGetter fixturesForDatabase:@"postgres"];
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])

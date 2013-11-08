@@ -41,13 +41,14 @@
 #import <DatabaseKit/Connections/DBConnection.h>
 #import <DatabaseKit/Connections/DBConnectionPool.h>
 #import <DatabaseKit/Connections/DBSQLiteConnection.h>
+#import <DatabaseKit/Connections/DBPostgresConnection.h>
 
-#import <DatabaseKit/DBRelationship.h>
-#import <DatabaseKit/DBRelationshipHasMany.h>
-#import <DatabaseKit/DBRelationshipHasManyThrough.h>
-#import <DatabaseKit/DBRelationshipHasOne.h>
-#import <DatabaseKit/DBRelationshipBelongsTo.h>
-#import <DatabaseKit/DBRelationshipHABTM.h>
-#import <DatabaseKit/DBRelationshipColumn.h>
+#import <DatabaseKit/Relationships/DBRelationship.h>
+#import <DatabaseKit/Relationships/DBRelationshipHasMany.h>
+#import <DatabaseKit/Relationships/DBRelationshipHasManyThrough.h>
+#import <DatabaseKit/Relationships/DBRelationshipHasOne.h>
+#import <DatabaseKit/Relationships/DBRelationshipBelongsTo.h>
+#import <DatabaseKit/Relationships/DBRelationshipHABTM.h>
+#import <DatabaseKit/Relationships/DBRelationshipColumn.h>
 
 #endif /* _ACTIVERECORD_H_ */
