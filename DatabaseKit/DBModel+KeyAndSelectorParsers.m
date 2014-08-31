@@ -22,7 +22,7 @@
     NSScanner *scanner = [NSScanner scannerWithString:selector];
     DBAttributeSelectorType selectorType;
     NSString *type;
-  // Scan up to the first uppercase character to figure out what sort of action we're dealing with
+    // Scan up to the first uppercase character to figure out what sort of action we're dealing with
     if([scanner scanUpToCharactersFromSet:[NSCharacterSet uppercaseLetterCharacterSet] intoString:&type])
     {
         if([type isEqualToString:@"set"])
@@ -36,7 +36,7 @@
             selectorType = DBAttributeSelectorReader;
             [scanner setScanLocation:0];
         }
-      // Prepare the attribute name for output
+        // Prepare the attribute name for output
         if(outAttribute != NULL)
         {
           // Make the first char lowercase

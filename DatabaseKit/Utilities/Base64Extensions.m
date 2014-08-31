@@ -23,7 +23,8 @@ static const short _base64DecodingTable[256] = {
 
 
 @implementation NSString (Base64Extensions)
-- (NSData *)decodeBase64 {
+- (NSData *)decodeBase64
+{
     const char *objPointer = [self cStringUsingEncoding:NSUTF8StringEncoding];
     int intLength = strlen(objPointer);
     int intCurrent;
@@ -97,7 +98,6 @@ static const short _base64DecodingTable[256] = {
     free(objResult);
     return objData;
 }
-
 @end
 
 @implementation NSData (Base64Extensions)
