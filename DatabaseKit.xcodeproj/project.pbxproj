@@ -12,21 +12,18 @@
 		C71D4B3D161282AC005FC42F /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71D4B3A161282AC005FC42F /* DBPostgresConnection.m */; };
 		C7759E0117D9BE1B000334EF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7759E0017D9BE1B000334EF /* Cocoa.framework */; };
 		C7759E0617D9BFB3000334EF /* DatabaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */; };
+		C79B66E219B3811800B15FDD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C79B66E119B3811800B15FDD /* libsqlite3.dylib */; };
 		C79C0EC217D9BC3400E538B9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79C0EC117D9BC3400E538B9 /* XCTest.framework */; };
 		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
 		C7AED96613C148C700C47919 /* Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7AED96413C148C700C47919 /* Base64Extensions.h */; };
 		C7AED96813C148C700C47919 /* Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7AED96513C148C700C47919 /* Base64Extensions.m */; };
 		C7AED96D13C14B6D00C47919 /* DBModelPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F8DA52E90E058F10002C3ADB /* DBModelPrivate.h */; };
-		C7BD860916F828FA00DE8127 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860816F828FA00DE8127 /* libicucore.dylib */; };
-		C7BD860B16F828FF00DE8127 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BD860A16F828FF00DE8127 /* libsqlite3.dylib */; };
 		C7BD861016F82DAF00DE8127 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E3D9001610CD1B00220FE9 /* DB.m */; };
-		C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CAF2A513BA0A5600013E21 /* libicucore.dylib */; };
 		C7D504081809B1D800818DBF /* DBInflectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504011809B1D800818DBF /* DBInflectorTest.m */; };
 		C7D504091809B1D800818DBF /* DBModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504031809B1D800818DBF /* DBModelTest.m */; };
 		C7D5040A1809B1D800818DBF /* DBQueryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504041809B1D800818DBF /* DBQueryTest.m */; };
 		C7D5040B1809B1D800818DBF /* DBSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504051809B1D800818DBF /* DBSQLiteConnectionTest.m */; };
 		C7D5040C1809B1D800818DBF /* DBUnitTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504071809B1D800818DBF /* DBUnitTestUtilities.m */; };
-		C7D5040E1809B1EA00818DBF /* DatabaseKit Tests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D5040D1809B1EA00818DBF /* DatabaseKit Tests-Info.plist */; };
 		C7D50419180BB00500818DBF /* libpq.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D50418180BB00500818DBF /* libpq.dylib */; };
 		C7D5041D180BB2CF00818DBF /* mysql_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C7D5041B180BB2CF00818DBF /* mysql_fixtures.sql */; };
 		C7D5041E180BB2CF00818DBF /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C7D5041C180BB2CF00818DBF /* sqlite_fixtures.sql */; };
@@ -136,6 +133,8 @@
 		C71D4B3A161282AC005FC42F /* DBPostgresConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPostgresConnection.m; sourceTree = "<group>"; };
 		C71D4B3F16128CA3005FC42F /* libpq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpq.a; path = /Applications/Postgres.app/Contents/MacOS/lib/libpq.a; sourceTree = "<absolute>"; };
 		C7759E0017D9BE1B000334EF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C79B66E119B3811800B15FDD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
+		C79B66E319B3811C00B15FDD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
 		C79C0EBF17D9BC3400E538B9 /* DatabaseKit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DatabaseKit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C79C0EC117D9BC3400E538B9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C79C0EC317D9BC3400E538B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -220,7 +219,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7D50419180BB00500818DBF /* libpq.dylib in Frameworks */,
-				C7CAF2AB13BA0C1000013E21 /* libicucore.dylib in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */,
 			);
@@ -240,8 +238,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7BD860B16F828FF00DE8127 /* libsqlite3.dylib in Frameworks */,
-				C7BD860916F828FA00DE8127 /* libicucore.dylib in Frameworks */,
+				C79B66E219B3811800B15FDD /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +312,8 @@
 		C79C0EC017D9BC3400E538B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C79B66E319B3811C00B15FDD /* libicucore.dylib */,
+				C79B66E119B3811800B15FDD /* libsqlite3.dylib */,
 				C7D50418180BB00500818DBF /* libpq.dylib */,
 				C7759E0017D9BE1B000334EF /* Cocoa.framework */,
 				C79C0EC117D9BC3400E538B9 /* XCTest.framework */,
@@ -644,7 +643,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7D5041E180BB2CF00818DBF /* sqlite_fixtures.sql in Resources */,
-				C7D5040E1809B1EA00818DBF /* DatabaseKit Tests-Info.plist in Resources */,
 				C7D5041D180BB2CF00818DBF /* mysql_fixtures.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
