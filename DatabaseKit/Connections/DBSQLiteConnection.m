@@ -19,6 +19,7 @@
 /*! @cond IGNORE */
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
+    NSMapTable *_cachedStatements;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
 - (void)finalizeQuery:(sqlite3_stmt *)query;
@@ -52,6 +53,8 @@
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
     _path = URL ? URL.path : @":memory:";
+    _cachedStatements = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPersonality|NSMapTableCopyIn
+                                              valueOptions:NSPointerFunctionsOpaquePersonality];
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
@@ -89,10 +92,9 @@
                       [substitutions isKindOfClass:[NSArray class]]        ||
                       [substitutions isKindOfClass:[NSPointerArray class]] ||
                       isDict);
-//    DBLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
+    DBLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
     // Prepare the query
-    sqlite3_stmt *queryByteCode;
-    queryByteCode = [self prepareQuerySQL:sql error:outErr];
+    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:sql error:outErr];
     if(!queryByteCode) {
         DBLog(@"Unable to prepare bytecode for SQLite query: '%@'", sql);
         return nil;
@@ -159,7 +161,6 @@
         }
     }
 
-    [self finalizeQuery:queryByteCode];
     return rowArray;
 }
 
@@ -171,13 +172,16 @@
     sqlite3_stmt *queryByteCode = [self prepareQuerySQL:query error:NULL];
     if(!queryByteCode)
         return nil;
-    NSArray *columns = [self columnsForQuery:queryByteCode];
-    [self finalizeQuery:queryByteCode];
-    return columns;
+    return [self columnsForQuery:queryByteCode];
 }
 
 - (BOOL)closeConnection
 {
+    for(NSString *query in _cachedStatements) {
+        sqlite3_finalize(NSMapGet(_cachedStatements, (__bridge void *)query));
+    }
+    [_cachedStatements removeAllObjects];
+
     BOOL ret = sqlite3_close(_connection) == SQLITE_OK;
     _connection = NULL;
     return ret;
@@ -205,7 +209,12 @@
         DBDebugLog(@"Preparing query: %@", query);
 
     // Prepare the query
-    sqlite3_stmt *queryByteCode;
+    sqlite3_stmt *queryByteCode = NSMapGet(_cachedStatements, (__bridge void *)query);
+    if(queryByteCode) {
+        sqlite3_reset(queryByteCode);
+        return queryByteCode;
+    }
+
     const char *tail;
     int err = sqlite3_prepare_v2(_connection,
                                  [query UTF8String],
@@ -221,6 +230,7 @@
         return NULL;
     }
 
+    NSMapInsert(_cachedStatements, (__bridge void *)query, queryByteCode);
     return queryByteCode;
 }
 - (void)finalizeQuery:(sqlite3_stmt *)query
