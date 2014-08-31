@@ -56,11 +56,8 @@
         XCTAssertTrue([columns containsObject:fixture],
                      @"Columns didn't contain: %@", fixture);
     }
-    int i = 0;
-    for(id row in [db[@"foo"] select]) {
-        ++i;
-    }
-    XCTAssertEqual(i, 2, @"Fast enumeration did not evaluate the correct amount of times");
+
+    XCTAssertEqual([db[@"foo"] count], 2, @"Fast enumeration did not evaluate the correct amount of times");
 }
 
 @end

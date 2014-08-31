@@ -69,4 +69,5 @@ typedef enum {
 - (DBQuery *)order:(NSString *)order by:(id)fields;
 - (DBQuery *)orderBy:(id)fields;
 - (DBQuery *)limit:(NSNumber *)limit;
+- (NSUInteger)count;
 @end

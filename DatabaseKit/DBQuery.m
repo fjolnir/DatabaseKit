@@ -229,9 +229,17 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         if([_fields count] == 1 && _fields[0] == DBSelectAll)
             [q appendString:DBSelectAll];
         else {
-            [q appendString:@"\""];
-            [q appendString:[_fields componentsJoinedByString:@"\", \""]];
-            [q appendString:@"\""];
+            int i = 0;
+            for(id field in _fields) {
+                if(__builtin_expect(i++ > 0, 1))
+                    [q appendString:@", "];
+                if([field isKindOfClass:[NSString class]]) {
+                    [q appendString:@"\""];
+                    [q appendString:[field stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
+                    [q appendString:@"\""];
+                } else
+                    [q appendString:[field toString]];
+            }
         }
         [q appendString:@" FROM "];
         [q appendString:[_table toString]];
@@ -440,7 +448,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     else if(_groupedBy || _offset || _limit || _unionQuery) {
         return [[self execute] count];
     }
-    return [[self select:@"COUNT(*) AS count"][0][@"count"] unsignedIntegerValue];
+    return [[self select:[DBAs field:@"COUNT(*)" alias:@"count"]][0][@"count"] unsignedIntegerValue];
 }
 
 #pragma mark -
@@ -524,11 +532,9 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 
 - (NSString *)toString
 {
-    NSMutableString *ret = [NSMutableString stringWithString:@"("];
-    [ret appendString:_field];
+    NSMutableString *ret = [NSMutableString stringWithString:_field];
     [ret appendString:@" AS "];
     [ret appendString:_alias];
-    [ret appendString:@")"];
     return ret;
 }
 - (NSString *)description

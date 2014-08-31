@@ -130,5 +130,9 @@
 {
     return [[DBQuery withTable:self] limit:limit];
 }
+- (NSUInteger)count
+{
+    return [[DBQuery withTable:self] count];
+}
 
 @end
