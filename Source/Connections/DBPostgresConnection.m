@@ -90,11 +90,11 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
     NSAssert(connInfo, @"Invalid PostgreSQL URL: %@", URL);
     _connection = PQconnectdb([connInfo UTF8String]);
     if(PQstatus(_connection) != CONNECTION_OK) {
-        DBLog(@"Unable to connect to %@: %@", URL, [NSString stringWithUTF8String:PQerrorMessage(_connection)]);
+        DBLog(@"Unable to connect to %@: %@", URL, @(PQerrorMessage(_connection)));
         if(err) {
             *err = [NSError errorWithDomain:DBConnectionErrorDomain
                                        code:DBPostgresConnectionFailed
-                                   userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithUTF8String:PQerrorMessage(_connection)],
+                                   userInfo:@{ NSLocalizedDescriptionKey: @(PQerrorMessage(_connection)),
                                                            NSURLErrorKey: URL }];
         }
         return nil;
@@ -189,7 +189,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
             if(outErr)
                 *outErr = [[NSError alloc] initWithDomain:DBConnectionErrorDomain
                                                      code:DBPostgreQueryFailed
-                                                 userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithUTF8String:PQresultErrorMessage(result)] }];
+                                                 userInfo:@{ NSLocalizedDescriptionKey: @(PQresultErrorMessage(result)) }];
             return nil;
         default:
             break;
@@ -268,7 +268,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
         case TIMEOID:
         case TIMESTAMPOID:
         case TIMESTAMPTZOID:
-            return NSDateFromPostgresTimestamp([NSString stringWithUTF8String:bytes]);
+            return NSDateFromPostgresTimestamp(@(bytes));
         case BYTEAOID:
             return [NSData dataWithBytes:bytes length:length];
             break;

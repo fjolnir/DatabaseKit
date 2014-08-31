@@ -14,6 +14,7 @@
         return YES;
     return NO;
 }
+
 #pragma mark -
 - (id)retrieveRecordForKey:(NSString *)key
 {
@@ -30,7 +31,7 @@
     NSDictionary *row = result[0];
     if(cache) {
         for(id key in row) {
-            [self.record.readCache setObject:row[key] forKey:key];
+            self.record.readCache[key] = row[key];
         }
     }
     return row[key];
