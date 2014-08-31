@@ -21,7 +21,7 @@
 {
     if((self = [super init]))
         _connection = aConnection;
-    return _connection ? self : nil;
+    return self && _connection ? self : nil;
 }
 
 // Returns a table whose name matches key
