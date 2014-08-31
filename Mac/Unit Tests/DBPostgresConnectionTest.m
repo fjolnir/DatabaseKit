@@ -10,16 +10,16 @@
 #import <DatabaseKit/DatabaseKit.h>
 #import "DBUnitTestUtilities.h"
 
-@interface DBSQLiteConnectionTest : XCTestCase {
+@interface DBPostgresConnectionTest : XCTestCase {
     DB *db;
 }
 - (void)testConnection;
 @end
 
-@implementation DBSQLiteConnectionTest
+@implementation DBPostgresConnectionTest
 - (void)setUp
 {
-    db = DBSQLiteDatabaseForTesting();
+    db = DBPostgresDatabaseForTesting();
 }
 
 - (void)tearDown
