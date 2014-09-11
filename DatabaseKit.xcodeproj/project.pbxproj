@@ -16,7 +16,6 @@
 		C71CE9B119B3839600C77150 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97819B3839600C77150 /* DBConnectionPool.h */; };
 		C71CE9B219B3839600C77150 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97919B3839600C77150 /* DBConnectionPool.m */; };
 		C71CE9B319B3839600C77150 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97919B3839600C77150 /* DBConnectionPool.m */; };
-		C71CE9B419B3839600C77150 /* DBConnectionPool.m.orig in Resources */ = {isa = PBXBuildFile; fileRef = C71CE97A19B3839600C77150 /* DBConnectionPool.m.orig */; };
 		C71CE9B519B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9B619B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; };
 		C71CE9B719B3839600C77150 /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97C19B3839600C77150 /* DBPostgresConnection.m */; };
@@ -182,6 +181,7 @@
 		C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBAdditions.m"; sourceTree = "<group>"; };
 		C71CEA1119B383AD00C77150 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debug.h; path = DatabaseKit/Debug.h; sourceTree = "<group>"; };
 		C71D4B3F16128CA3005FC42F /* libpq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpq.a; path = /Applications/Postgres.app/Contents/MacOS/lib/libpq.a; sourceTree = "<absolute>"; };
+		C76774A119C1F04F00B9B687 /* DBIndexedCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBIndexedCollection.h; sourceTree = "<group>"; };
 		C7759E0017D9BE1B000334EF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C79B66E119B3811800B15FDD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		C79B66E319B3811C00B15FDD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
@@ -360,6 +360,7 @@
 				C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */,
 				C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */,
 				C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */,
+				C76774A119C1F04F00B9B687 /* DBIndexedCollection.h */,
 			);
 			name = Utilities;
 			path = DatabaseKit/Utilities;
@@ -642,7 +643,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */,
-				C71CE9B419B3839600C77150 /* DBConnectionPool.m.orig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
