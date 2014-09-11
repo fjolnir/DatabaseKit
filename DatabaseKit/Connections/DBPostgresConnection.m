@@ -161,15 +161,31 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
             paramFormats[i] = 0;
         } else if([sub isKindOfClass:[NSNumber class]] || [sub isKindOfClass:NSClassFromString(@"TQNumber")]) {
             NSString *str;
-            double val = [sub doubleValue];
-            if(val - floor(val) < DBL_EPSILON)
-                str = [NSString stringWithFormat:@"%ld", [sub integerValue]];
-            else
-                str = [NSString stringWithFormat:@"%f", [sub doubleValue]];
+            switch (*[sub objCType]) {
+                case 'd':
+                case 'f':
+                    str = [NSString stringWithFormat:@"%f", [sub doubleValue]];
+                    break;
+                case 'l':
+                case 'L':
+                    str = [NSString stringWithFormat:@"%ld", [sub longValue]];
+                    break;
+                case 'q':
+                case 'Q':
+                    str = [NSString stringWithFormat:@"%lld", [sub longLongValue]];
+                    break;
+                case 'B': // C++/C99 bool
+                case 'c': // ObjC BOOL
+                    str = [NSString stringWithFormat:@"%d", [sub intValue]];
+                    break;
+                default:
+                    str = [NSString stringWithFormat:@"%ld", [sub longValue]];
+                    break;
+            }
             paramValues[i]  = [str UTF8String];
             paramLengths[i] = [str length];
             paramFormats[i] = 0;
-        } else if([sub isMemberOfClass:[NSData class]]) {
+        } else if([sub isKindOfClass:[NSData class]]) {
             paramValues[i]  = [sub bytes];
             paramLengths[i] = [sub length];
             paramFormats[i] = 1;
@@ -263,10 +279,11 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
     switch(PQftype(result, colIndex))
     {
         case INT2OID:
+             return @(atoi(bytes));
         case INT4OID:
+            return @(strtoul(bytes, (char **)NULL, 10));
         case INT8OID:
-            return @(atoi(bytes));
-            break;
+            return @(strtoull(bytes, (char **)NULL, 10));
         case FLOAT4OID:
         case FLOAT8OID:
             return @(atof(bytes));
@@ -276,9 +293,12 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
         case TIMESTAMPOID:
         case TIMESTAMPTZOID:
             return NSDateFromPostgresTimestamp(@(bytes));
-        case BYTEAOID:
-            return [NSData dataWithBytes:bytes length:length];
-            break;
+        case BYTEAOID: {
+            const unsigned char *rawBytes = PQunescapeBytea((const unsigned char *)bytes, &length);
+            NSData *data = [NSData dataWithBytes:rawBytes length:length];
+            PQfreemem((void *)rawBytes);
+            return data;
+        }
         case VARCHAROID:
         case TEXTOID:
         default:

@@ -119,9 +119,23 @@
             sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
         else if([sub isMemberOfClass:[NSData class]])
             sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], [sub length], SQLITE_STATIC); // Not sure if we should make this transient
-        else if([sub isKindOfClass:[NSNumber class]])
-            sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
-        else if([sub isMemberOfClass:[NSNull class]])
+        else if([sub isKindOfClass:[NSNumber class]]) {
+            switch (*[sub objCType]) {
+                case 'd':
+                case 'f':
+                    sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
+                    break;
+                case 'l':
+                case 'L':
+                case 'q':
+                case 'Q':
+                    sqlite3_bind_int64(queryByteCode, i+1, [sub longLongValue]);
+                    break;
+                default:
+                    sqlite3_bind_int(queryByteCode, i+1, [sub intValue]);
+                    break;
+            }
+        } else if([sub isMemberOfClass:[NSNull class]])
             sqlite3_bind_null(queryByteCode, i+1);
         else if([sub isKindOfClass:[NSDate class]])
             sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT);
