@@ -9,7 +9,7 @@
 #define LOG_QUERIES NO
 
 #import "DBPostgresConnection.h"
-#import "../DBQuery.h"
+#import "../Queries/DBQuery.h"
 #import "../Debug.h"
 #import <unistd.h>
 #import <dispatch/dispatch.h>

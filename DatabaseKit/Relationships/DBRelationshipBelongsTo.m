@@ -11,7 +11,7 @@
 #import "DBRelationshipHasOne.h"
 #import "../Utilities/NSString+DBAdditions.h"
 #import "../DBModel.h"
-#import "../DBModelPrivate.h"
+#import "../DBModel+Private.h"
 #import "../DBTable.h"
 
 @implementation DBRelationshipBelongsTo

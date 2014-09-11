@@ -10,7 +10,7 @@
 // (Basically they just parse selectors(like 'setAttribute:' or simply 'attribute')
 //  or keys and return what relationships they represent)
 #import "DBModel.h"
-#import "DBModelPrivate.h"
+#import "DBModel+Private.h"
 #import "Utilities/NSString+DBAdditions.h"
 #import "Relationships/DBRelationship.h"
 

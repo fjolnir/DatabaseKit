@@ -1,7 +1,7 @@
 #import "DBRelationshipColumn.h"
-#import "../DBModelPrivate.h"
+#import "../DBModel+Private.h"
 #import "../DBTable.h"
-#import "../DBQuery.h"
+#import "../Queries/DBQuery.h"
 #import "../Debug.h"
 
 @implementation DBRelationshipColumn

@@ -35,7 +35,7 @@
 #define _ACTIVERECORD_H_ 
 #import <DatabaseKit/DB.h>
 #import <DatabaseKit/DBTable.h>
-#import <DatabaseKit/DBQuery.h>
+#import <DatabaseKit/Queries/DBQuery.h>
 #import <DatabaseKit/DBModel.h>
 
 #import <DatabaseKit/Connections/DBConnection.h>

@@ -39,41 +39,6 @@ extern NSString *const DBUnionAll;
 - (NSString *)toString;
 @end
 
-@interface DBSelectQuery : DBQuery <NSFastEnumeration>
-@property(readonly, strong) NSArray *orderedBy;
-@property(readonly, strong) NSArray *groupedBy;
-@property(readonly, strong) NSString *order;
-@property(readonly, strong) NSNumber *limit, *offset;
-@property(readonly, strong) id join;
-@property(readonly, strong) DBSelectQuery *unionQuery;
-@property(readonly, strong) NSString *unionType;
-
-- (instancetype)order:(NSString *)order by:(id)fields;
-- (instancetype)orderBy:(id)fields;
-- (instancetype)groupBy:(id)fields;
-- (instancetype)limit:(NSNumber *)limit;
-- (instancetype)offset:(NSNumber *)offset;
-
-- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields;
-- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields;
-- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields;
-- (instancetype)union:(DBSelectQuery *)otherQuery;
-- (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type;
-
-- (id)objectAtIndexedSubscript:(NSUInteger)idx;
-- (NSUInteger)count;
-- (id)first;
-@end
-
-@interface DBInsertQuery : DBQuery
-@end
-
-@interface DBUpdateQuery : DBInsertQuery
-@end
-
-@interface DBDeleteQuery : DBQuery
-@end
-
 @interface DBJoin : NSObject
 @property(readonly, strong) NSString *type;
 @property(readonly, strong) id table;
@@ -86,3 +51,7 @@ extern NSString *const DBUnionAll;
 
 + (DBAs *)field:(NSString *)field alias:(NSString *)alias;
 @end
+
+#import <DatabaseKit/Queries/DBSelectQuery.h>
+#import <DatabaseKit/Queries/DBInsertQuery.h>
+#import <DatabaseKit/Queries/DBDeleteQuery.h>

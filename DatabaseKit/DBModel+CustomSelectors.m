@@ -7,7 +7,7 @@
 //
 
 #import "DBModel.h"
-#import "DBModelPrivate.h"
+#import "DBModel+Private.h"
 #import <objc/runtime.h>
 
 @implementation DBModel (CustomSelectors)

@@ -9,8 +9,8 @@
 #import "DBRelationshipHasMany.h"
 #import "../Utilities/NSString+DBAdditions.h"
 #import "../DBModel.h"
-#import "../DBModelPrivate.h"
-#import "../DBQuery.h"
+#import "../DBModel+Private.h"
+#import "../Queries/DBQuery.h"
 #import "../DBTable.h"
 
 @implementation DBRelationshipHasMany

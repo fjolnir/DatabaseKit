@@ -9,7 +9,7 @@
 #define LOG_QUERIES NO
 
 #import "DBSQLiteConnection.h"
-#import "../DBQuery.h"
+#import "../Queries/DBQuery.h"
 #import "../Debug.h"
 #import "../Utilities/ISO8601DateFormatter.h"
 #import <unistd.h>

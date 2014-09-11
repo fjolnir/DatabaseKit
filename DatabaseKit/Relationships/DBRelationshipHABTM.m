@@ -9,9 +9,9 @@
 #import "DBRelationshipHABTM.h"
 #import "../DBModel.h"
 #import "../DBTable.h"
-#import "../DBQuery.h"
+#import "../Queries/DBQuery.h"
 #import "../DBTable.h"
-#import "../DBModelPrivate.h"
+#import "../DBModel+Private.h"
 #import "../Utilities/NSString+DBAdditions.h"
 
 @implementation DBRelationshipHABTM

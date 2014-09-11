@@ -19,7 +19,7 @@
 
 - (void)testBuilding
 {
-    XCTAssertEqualObjects([[[[Q select] where:@{ @"foo": @1 }] order:DBOrderDescending by:@"id" ] toString],
+    XCTAssertEqualObjects([[[[Q select] where:@{ @"foo": @1 }] order:DBOrderDescending by:@[@"id"]] toString],
                           @"SELECT * FROM aTable WHERE \"foo\"=$1 ORDER BY \"id\" DESC", @"");
     
     NSArray *fields = @[@"a", @"b", @"c"];

@@ -7,7 +7,7 @@
 //
 
 #import "DBRelationshipHasManyThrough.h"
-#import "../DBModelPrivate.h"
+#import "../DBModel+Private.h"
 #import "../Utilities/NSString+DBAdditions.h"
 
 @interface DBRelationshipHasManyThrough ()

@@ -7,7 +7,7 @@
 //
 
 #import "DBRelationshipHasOne.h"
-#import "../DBModelPrivate.h"
+#import "../DBModel+Private.h"
 #import "../Utilities/NSString+DBAdditions.h"
 
 @implementation DBRelationshipHasOne
