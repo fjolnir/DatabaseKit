@@ -88,7 +88,7 @@
 
 - (void)testCreate
 {
-    TEModel *model = [db[@"models"] insert:@{@"name": @"Foobar", @"info": @"This is great!"}][0];
+    TEModel *model = [[[db[@"models"] insert:@{@"name": @"Foobar", @"info": @"This is great!"}] execute] firstObject];
 
     XCTAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
     XCTAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
@@ -96,7 +96,7 @@
 
 - (void)testDestroy
 {
-    TEModel *model = [db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}][0];
+    TEModel *model = [[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
     NSUInteger theId = model.databaseId;
     XCTAssertTrue([model destroy], @"Couldn't delete record");
     NSArray *result = [[[db[@"models"] select] where:@{ @"id": @(theId) }] execute];
@@ -130,7 +130,7 @@
     XCTAssertTrue(([originalPeople count] == 2), @"TEModel should have 2 TEPeople but had %lu", [originalPeople count]);
 
     // Then test sending
-    TEPerson *aPerson = [db[@"people"] insert:@{@"realName": @"frankenstein", @"userName": @"frank"}][0];
+    TEPerson *aPerson = [[[db[@"people"] insert:@{@"realName": @"frankenstein", @"userName": @"frank"}] execute] firstObject];
     NSLog(@"inserted: %@ %@", aPerson, [aPerson class]);
     [model addPerson:aPerson];
     NSMutableArray *laterPeople = [originalPeople mutableCopy];
@@ -161,7 +161,7 @@
     return;
 
     // Then test sending
-    TEAnimal *anAnimal = [db[@"animals"] insert:@{@"species": @"Leopard", @"nickname": @"Godfried"}][0];
+    TEAnimal *anAnimal = [[[db[@"animals"] insert:@{@"species": @"Leopard", @"nickname": @"Godfried"}] execute] firstObject];
 
     [model setAnimal:anAnimal];
     XCTAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%lu != %lu)", [[model animal] databaseId], [anAnimal databaseId]);
@@ -176,7 +176,7 @@
     XCTAssertNotNil(model, @"No model found for person!");
 
     // Then test sending
-    TEAnimal *anAnimal = [db[@"animals"] insert:@{@"species": @"cheetah", @"nickname": @"rick"}][0];
+    TEAnimal *anAnimal = [[[db[@"animals"] insert:@{@"species": @"cheetah", @"nickname": @"rick"}] execute] firstObject];
 
     TEAnimal *oldAnimal = [model animal];
     [anAnimal setModel:model];

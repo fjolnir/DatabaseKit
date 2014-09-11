@@ -93,24 +93,24 @@
 
 #pragma mark - Query generators
 
-- (DBQuery *)select:(id)fields
+- (DBSelectQuery *)select:(id<DBIndexedCollection>)fields
 {
     return [[DBQuery withTable:self] select:fields];
 }
-- (DBQuery *)select
+- (DBSelectQuery *)select
 {
     return [[DBQuery withTable:self] select];
 }
 
-- (DBQuery *)insert:(id)fields
+- (DBInsertQuery *)insert:(id)fields
 {
     return [[DBQuery withTable:self] insert:fields];
 }
-- (DBQuery *)update:(id)fields
+- (DBUpdateQuery *)update:(id)fields
 {
     return [[DBQuery withTable:self] update:fields];
 }
-- (DBQuery *)delete
+- (DBDeleteQuery *)delete
 {
     return [[DBQuery withTable:self] delete];
 }
@@ -120,19 +120,19 @@
 }
 - (DBQuery *)order:(NSString *)order by:(id)fields
 {
-    return [[DBQuery withTable:self] order:order by:fields];
+    return [[DBSelectQuery withTable:self] order:order by:fields];
 }
 - (DBQuery *)orderBy:(id)fields
 {
-    return [[DBQuery withTable:self] orderBy:fields];
+    return [[DBSelectQuery withTable:self] orderBy:fields];
 }
 - (DBQuery *)limit:(NSNumber *)limit
 {
-    return [[DBQuery withTable:self] limit:limit];
+    return [[DBSelectQuery withTable:self] limit:limit];
 }
 - (NSUInteger)count
 {
-    return [[DBQuery withTable:self] count];
+    return [[DBSelectQuery withTable:self] count];
 }
 
 @end

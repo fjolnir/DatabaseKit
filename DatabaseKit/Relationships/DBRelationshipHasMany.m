@@ -52,7 +52,7 @@
     NSString *idColumn = [[self.record class] idColumnForModel:[self.record class]];
 
     DBTable *partnerTable = self.record.table.database[[partnerClass tableName]];
-    DBQuery *q = [[[partnerTable select:@"id"] where:@{ idColumn: @(self.record.databaseId) }] limit:limit];
+    DBSelectQuery *q = [[[partnerTable select:@[@"id"]] where:@{ idColumn: @(self.record.databaseId) }] limit:limit];
     if(conditions)
         q = [q appendWhere:conditions];
     if(order || orderByFields)

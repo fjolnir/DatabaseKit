@@ -1,15 +1,11 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/Utilities/DBIndexedCollection.h>
 
 extern NSString *const DBSelectAll;
 
 extern NSString *const DBOrderDescending;
 extern NSString *const DBOrderAscending;
-
-extern NSString *const DBQueryTypeSelect;
-extern NSString *const DBQueryTypeInsert;
-extern NSString *const DBQueryTypeUpdate;
-extern NSString *const DBQueryTypeDelete;
 
 extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
@@ -17,49 +13,65 @@ extern NSString *const DBLeftJoin;
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
-@class DBTable;
+@class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
 
-@interface DBQuery : NSObject <NSCopying, NSFastEnumeration>
-@property(readonly, strong) NSString *type;
+@interface DBQuery : NSObject <NSCopying>
+//@property(readonly, strong) NSString *type;
 @property(readonly, strong) DBTable *table;
 @property(readonly, strong) id fields;
 @property(readonly, strong) NSDictionary *where;
-@property(readonly, strong) NSArray *orderedBy;
-@property(readonly, strong) NSArray *groupedBy;
-@property(readonly, strong) NSString *order;
-@property(readonly, strong) NSNumber *limit, *offset;
-@property(readonly, strong) id join;
-@property(readonly, strong) DBQuery *unionQuery;
-@property(readonly, strong) NSString *unionType;
 
-+ (DBQuery *)withTable:(DBTable *)table;
++ (instancetype)withTable:(DBTable *)table;
 
 - (NSArray *)execute;
 - (NSArray *)execute:(NSError **)err;
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
 
-- (DBQuery *)select:(id)fields;
-- (DBQuery *)select;
-- (DBQuery *)insert:(id)fields;
-- (DBQuery *)update:(id)fields;
-- (DBQuery *)delete;
-- (DBQuery *)where:(id)conds;
-- (DBQuery *)appendWhere:(id)conds;
-- (DBQuery *)order:(NSString *)order by:(id)fields;
-- (DBQuery *)orderBy:(id)fields;
-- (DBQuery *)groupBy:(id)fields;
-- (DBQuery *)limit:(NSNumber *)limit;
-- (DBQuery *)offset:(NSNumber *)offset;
-- (DBQuery *)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields;
-- (DBQuery *)innerJoin:(id)table on:(NSDictionary *)fields;
-- (DBQuery *)leftJoin:(id)table on:(NSDictionary *)fields;
-- (DBQuery *)union:(DBQuery *)otherQuery;
-- (DBQuery *)union:(DBQuery *)otherQuery type:(NSString *)type;
+- (DBSelectQuery *)select:(id<DBIndexedCollection>)fields;
+- (DBSelectQuery *)select;
+- (DBInsertQuery *)insert:(id<DBKeyedCollection>)fields;
+- (DBUpdateQuery *)update:(id<DBKeyedCollection>)fields;
+- (DBDeleteQuery *)delete;
+
+- (instancetype)where:(id)conds;
+- (instancetype)appendWhere:(id)conds;
+
+- (NSString *)toString;
+@end
+
+@interface DBSelectQuery : DBQuery <NSFastEnumeration>
+@property(readonly, strong) NSArray *orderedBy;
+@property(readonly, strong) NSArray *groupedBy;
+@property(readonly, strong) NSString *order;
+@property(readonly, strong) NSNumber *limit, *offset;
+@property(readonly, strong) id join;
+@property(readonly, strong) DBSelectQuery *unionQuery;
+@property(readonly, strong) NSString *unionType;
+
+- (instancetype)order:(NSString *)order by:(id)fields;
+- (instancetype)orderBy:(id)fields;
+- (instancetype)groupBy:(id)fields;
+- (instancetype)limit:(NSNumber *)limit;
+- (instancetype)offset:(NSNumber *)offset;
+
+- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields;
+- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields;
+- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields;
+- (instancetype)union:(DBSelectQuery *)otherQuery;
+- (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 - (NSUInteger)count;
 - (id)first;
-- (NSString *)toString;
+@end
+
+@interface DBInsertQuery : DBQuery
+@end
+
+@interface DBUpdateQuery : DBInsertQuery
+@end
+
+@interface DBDeleteQuery : DBQuery
 @end
 
 @interface DBJoin : NSObject

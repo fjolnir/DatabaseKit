@@ -56,7 +56,7 @@
     NSString *partnerIdCol  = [[self.record class] idColumnForModel:partnerClass];
     DBTable *partnerTable   = self.record.table.database[[partnerClass tableName]];
 
-    DBQuery *q = [partnerTable select:partnerIdCol];
+    DBSelectQuery *q = [partnerTable select:@[partnerIdCol]];
     q          = [q innerJoin:joinTableName on:@{ @"id": partnerIdCol }];
     q          = [q where:@{ [[self.record class] idColumn]: @(self.record.databaseId) }];
     if(conditions)

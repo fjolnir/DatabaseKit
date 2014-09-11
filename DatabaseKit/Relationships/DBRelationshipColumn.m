@@ -23,7 +23,7 @@
         return nil;
     // If the cache is enabled, we just fetch the entire row
     BOOL cache = [DBModel enableCache];
-    DBQuery *query = cache ? [self.record.table select] : [self.record.table select:key];
+    DBSelectQuery *query = cache ? [self.record.table select] : [self.record.table select:@[key]];
     NSArray *result = [[query where:@{ @"id": @(self.record.databaseId) }] execute];
     if([result count] < 1) {
         DBDebugLog(@"Couldn't get result: %@", query);

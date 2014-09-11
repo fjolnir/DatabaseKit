@@ -9,11 +9,6 @@ NSString *const DBSelectAll = @"*";
 NSString *const DBOrderDescending = @" DESC";
 NSString *const DBOrderAscending  = @" ASC";
 
-NSString *const DBQueryTypeSelect = @"SELECT ";
-NSString *const DBQueryTypeInsert = @"INSERT ";
-NSString *const DBQueryTypeUpdate = @"UPDATE ";
-NSString *const DBQueryTypeDelete = @"DELETE ";
-
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
 
@@ -23,32 +18,47 @@ NSString *const DBUnionAll = @" UNION ALL ";
 static NSString *const DBStringConditions = @"DBStringConditions";
 
 @interface DBQuery () {
+    @protected
+    DBTable *_table;
+    id _fields;
+    NSDictionary *_where;
+
     BOOL _dirty;
     NSArray *_rows;
 }
-@property(readwrite, strong) NSString *type;
 @property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) id fields;
 @property(readwrite, strong) NSDictionary *where;
+
++ (NSString *)_queryType;
+
+- (BOOL)_generateString:(NSMutableString *)query parameters:(NSMutableArray *)parameters;
+- (id)_copyWithSubclass:(Class)aClass;
+@end
+
+@interface DBSelectQuery ()
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
 @property(readwrite, strong) NSString *order;
 @property(readwrite, strong) NSNumber *limit, *offset;
 @property(readwrite, strong) id join;
-@property(readwrite, strong) DBQuery *unionQuery;
+@property(readwrite, strong) DBSelectQuery *unionQuery;
 @property(readwrite, strong) NSString *unionType;
-
-- (BOOL)_generateString:(NSString **)outString parameters:(NSMutableArray **)outParameters;
 @end
 
 @implementation DBQuery
 
-+ (DBQuery *)withTable:(DBTable *)table
++ (NSString *)_queryType
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"DBQuery does not implement SQL generation."];
+    return nil;
+}
+
++ (instancetype)withTable:(DBTable *)table
 {
     DBQuery *ret = [self new];
     ret.table    = table;
-    ret.type     = DBQueryTypeSelect;
-    ret.fields   = @[DBSelectAll];
     return ret;
 }
 
@@ -59,43 +69,41 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 #define IsStr(x) ([x isKindOfClass:[NSString class]])
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
-- (DBQuery *)select:(id)fields
+- (DBQuery *)select:(id<DBIndexedCollection>)fields
 {
-    NSParameterAssert(IsArr(fields) || IsStr(fields) || IsAS(fields));
-    DBQuery *ret = [self copy];
-    ret.type = DBQueryTypeSelect;
-    ret.fields = IsArr(fields) ? fields : @[fields];
+    NSParameterAssert(!fields || IsArr(fields));
+    DBQuery *ret = [self _copyWithSubclass:[DBSelectQuery class]];
+    ret.fields = !fields         ? nil
+                 : IsArr(fields) ? fields
+                                 : @[fields];
     return ret;
 }
-- (DBQuery *)select
+- (DBSelectQuery *)select
 {
-    return [self select:DBSelectAll];
+    return [self select:nil];
 }
 
-- (DBQuery *)insert:(id)fields
+- (DBInsertQuery *)insert:(id<DBKeyedCollection>)fields
 {
     NSParameterAssert(IsDic(fields));
-    DBQuery *ret = [self copy];
-    ret.type = DBQueryTypeInsert;
+    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
     ret.fields = fields;
     return ret;
 }
-- (DBQuery *)update:(id)fields
+- (DBUpdateQuery *)update:(id<DBKeyedCollection>)fields
 {
     NSParameterAssert(IsDic(fields));
-    DBQuery *ret = [self copy];
-    ret.type = DBQueryTypeUpdate;
+    DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
     ret.fields = fields;
     return ret;
 }
-- (DBQuery *)delete
+- (DBDeleteQuery *)delete
 {
-    DBQuery *ret = [self copy];
-    ret.type = DBQueryTypeDelete;
+    DBDeleteQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
     ret.fields = nil;
     return ret;
 }
-- (DBQuery *)where:(id)conds
+- (instancetype)where:(id)conds
 {
     NSParameterAssert(IsArr(conds) || IsDic(conds) || IsStr(conds));
     DBQuery *ret = [self copy];
@@ -108,7 +116,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         ret.where = conds;
     return ret;
 }
-- (DBQuery *)appendWhere:(id)conds
+- (instancetype)appendWhere:(id)conds
 {
     if(!_where)
         return [self where:conds];
@@ -131,70 +139,6 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return ret;
 }
 
-- (DBQuery *)order:(NSString *)order by:(id)fields
-{
-    BOOL isStr = IsStr(fields);
-    NSParameterAssert(IsArr(fields) || isStr);
-    DBQuery *ret = [self copy];
-    ret.order = order;
-    ret.orderedBy = isStr ? @[fields] : fields;
-    return ret;
-}
-- (DBQuery *)orderBy:(id)fields
-{
-    return [self order:DBOrderAscending by:fields];
-}
-
-- (DBQuery *)groupBy:(id)fields
-{
-    BOOL isStr = IsStr(fields);
-    NSParameterAssert(IsArr(fields) || isStr);
-    DBQuery *ret = [self copy];
-    ret.groupedBy = isStr ? @[fields] : fields;
-    return ret;
-}
-
-- (DBQuery *)limit:(NSNumber *)limit
-{
-    DBQuery *ret = [self copy];
-    ret.limit = limit;
-    return ret;
-}
-
-- (DBQuery *)offset:(NSNumber *)offset
-{
-    DBQuery *ret = [self copy];
-    ret.offset = offset;
-    return ret;
-}
-
-- (DBQuery *)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields
-{
-    DBQuery *ret = [self copy];
-    ret.join = [DBJoin withType:type table:table fields:fields];
-    return ret;
-}
-- (DBQuery *)innerJoin:(id)table on:(NSDictionary *)fields
-{
-    return [self join:DBInnerJoin withTable:table on:fields];
-}
-- (DBQuery *)leftJoin:(id)table on:(NSDictionary *)fields
-{
-        return [self join:DBLeftJoin withTable:table on:fields];
-}
-
-- (DBQuery *)union:(DBQuery *)otherQuery
-{
-    return [self union:otherQuery type:DBUnion];
-}
-
-- (DBQuery *)union:(DBQuery *)otherQuery type:(NSString *)type
-{
-    DBQuery *ret = [self copy];
-    ret.unionQuery = otherQuery;
-    ret.unionType  = type;
-    return ret;
-}
 
 #pragma mark -
 
@@ -204,10 +148,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             query:(NSMutableString *)query
 {
     if([param isKindOfClass:[DBQuery class]]) {
-        NSString *subQuery;
-        if(![param _generateString:&subQuery parameters:&params])
+        if(![param _generateString:query parameters:params])
             return NO;
-        [query appendString:subQuery];
         addToken = NO;
     } else if(!param)
         [params addObject:[NSNull null]];
@@ -218,70 +160,152 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return YES;
 }
 
-- (BOOL)_generateString:(NSString **)outString parameters:(NSMutableArray **)outParameters
+- (BOOL)_generateWhereString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
-    NSMutableString *q = [NSMutableString stringWithString:_type];
-    NSMutableArray *p = outParameters && *outParameters
-                        ? *outParameters
-                        : [NSMutableArray array];
-    
-    if(__builtin_expect([_type isEqualToString:DBQueryTypeSelect], YES)) {
-        if([_fields count] == 1 && _fields[0] == DBSelectAll)
-            [q appendString:DBSelectAll];
-        else {
-            int i = 0;
-            for(id field in _fields) {
-                if(__builtin_expect(i++ > 0, 1))
-                    [q appendString:@", "];
-                if([field isKindOfClass:[NSString class]]) {
-                    [q appendString:@"\""];
-                    [q appendString:[field stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
-                    [q appendString:@"\""];
-                } else
-                    [q appendString:[field toString]];
-            }
-        }
-        [q appendString:@" FROM "];
-        [q appendString:[_table toString]];
-    } else if([_type isEqualToString:DBQueryTypeInsert]) {
-        [q appendString:@" INTO "];
-        [q appendString:[_table toString]];
-        [q appendString:@"(\""];
-        [q appendString:[[_fields allKeys] componentsJoinedByString:@"\", \""]];
-        [q appendString:@"\") VALUES("];
-        int i = 0;
-        for(id fieldName in _fields) {
-            if(__builtin_expect(i++ > 0, 1))
-                [q appendString:@", "];
+    NSParameterAssert(q && p);
 
-            id obj = _fields[fieldName];
-            [p addObject:obj ? obj : [NSNull null]];
-            [q appendFormat:@"$%lu", (unsigned long)[p count]];
-        }
-        [q appendString:@")"];
-    } else if([_type isEqualToString:DBQueryTypeUpdate]) {
-        [q appendString:[_table toString]];
-        [q appendString:@" SET \""];
-        int i = 0;
-        for(id fieldName in _fields) {
-            if(__builtin_expect(i++ > 0, 1))
-                [q appendString:@", \""];
+    if([_where count] == 0)
+        return YES;
+
+    [q appendString:@" WHERE "];
+    int i = 0;
+    for(NSString *fieldName in _where) {
+
+        if([fieldName isEqualToString:DBStringConditions]) {
+            for(NSArray *cond in _where[fieldName]) {
+                if(i++ > 0)
+                    [q appendString:@" AND "];
+
+                NSMutableString *condStr = [cond[0] mutableCopy];
+                for(int j = 1; j < [cond count]; ++j) {
+                    [self _addParam:cond[j] withToken:NO currentParams:p query:q];
+                    [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
+                                             withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
+                                                options:0
+                                                  range:(NSRange){ 0, [condStr length] }];
+                }
+                [q appendString:@"("];
+                [q appendString:condStr];
+                [q appendString:@") "];
+            }
+        } else {
+            if(i++ > 0)
+                [q appendString:@" AND "];
+            [q appendString:@"\""];
             [q appendString:fieldName];
             [q appendString:@"\"="];
-            id obj = _fields[fieldName];
-            if(!obj || [obj isEqual:[NSNull null]]) {
-                [q appendString:@"NULL"];
-            } else {
-                [self _addParam:obj withToken:YES currentParams:p query:q];
-            }
+            [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
         }
-    } else if([_type isEqualToString:DBQueryTypeDelete]) {
-        [q appendString:@"FROM "];
-        [q appendString:[_table toString]];
-    } else {
-        NSAssert1(NO, @"Unknown query type: %@", _type);
-        return NO;
     }
+    return YES;
+}
+
+- (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
+{
+    NSParameterAssert(q && p);
+    [q appendString:[[self class] _queryType]];
+    return YES;
+}
+
+#pragma mark - Execution
+
+- (NSArray *)execute
+{
+    NSError *err = nil;
+    NSArray *result = [self executeOnConnection:[self connection] error:&err];
+    if(err) {
+        DBLog(@"%@", err);
+        return nil;
+    }
+    return result;
+}
+
+- (NSArray *)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSError *err = nil;
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+
+    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
+    if(!ret) {
+        if(outErr)
+            *outErr = err;
+        return nil;
+    }
+    return ret;
+}
+
+#pragma mark -
+
+- (DBConnection *)connection
+{
+    return _table.database.connection;
+}
+
+- (NSString *)toString
+{
+    NSMutableString *ret = [NSMutableString new];
+    [self _generateString:ret parameters:[NSMutableArray new]];
+    return ret;
+}
+
+- (NSString *)description
+{
+    return [self toString];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    return [self _copyWithSubclass:[self class]];
+}
+
+- (id)_copyWithSubclass:(Class)aClass
+{
+    NSParameterAssert([aClass isSubclassOfClass:[DBQuery class]]);
+    DBQuery *copy   = [aClass new];
+    copy.table      = _table;
+    copy.fields     = _fields;
+    copy.where      = _where;
+    return copy;
+}
+@end
+
+
+@implementation DBSelectQuery
+
++ (NSString *)_queryType
+{
+    return @"SELECT ";
+}
+
+- (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
+{
+    NSParameterAssert(q && p);
+    [q appendString:[[self class] _queryType]];
+
+    if(_fields == nil)
+        [q appendString:DBSelectAll];
+    else {
+        int i = 0;
+        for(id field in _fields) {
+            if(__builtin_expect(i++ > 0, 1))
+                [q appendString:@", "];
+            if([field isKindOfClass:[NSString class]]) {
+                [q appendString:@"\""];
+                [q appendString:[field stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
+                [q appendString:@"\""];
+            } else
+                [q appendString:[field toString]];
+        }
+    }
+    [q appendString:@" FROM "];
+    [q appendString:[_table toString]];
 
     if(_join) {
         if([_join isKindOfClass:[DBJoin class]]) {
@@ -312,39 +336,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         }
     }
 
-    if(_where && [_where count] > 0) {
-        [q appendString:@" WHERE "];
-        int i = 0;
-        for(NSString *fieldName in _where) {
-            
-            if([fieldName isEqualToString:DBStringConditions]) {
-                for(NSArray *cond in _where[fieldName]) {
-                    if(i++ > 0)
-                        [q appendString:@" AND "];
+    [self _generateWhereString:q parameters:p];
 
-                    NSMutableString *condStr = [cond[0] mutableCopy];
-                    for(int j = 1; j < [cond count]; ++j) {
-                        [self _addParam:cond[j] withToken:NO currentParams:p query:q];
-                        [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
-                                                 withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
-                                                    options:0
-                                                      range:(NSRange){ 0, [condStr length] }];
-                    }
-                    [q appendString:@"("];
-                    [q appendString:condStr];
-                    [q appendString:@") "];
-
-                }
-            } else {
-                if(i++ > 0)
-                    [q appendString:@" AND "];
-                [q appendString:@"\""];
-                [q appendString:fieldName];
-                [q appendString:@"\"="];
-                [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
-            }
-        }
-    }
     if(_groupedBy) {
         [q appendString:@" GROUP BY "];
         [q appendString:[_groupedBy componentsJoinedByString:@", "]];
@@ -366,51 +359,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     if([_offset unsignedIntegerValue] > 0)
         [q appendFormat:@" OFFSET %ld", [_offset unsignedLongValue]];
 
-    if(outString)
-        *outString = q;
-    if(outParameters)
-        *outParameters = p;
-    return true;
-}
-
-#pragma mark - Execution
-
-- (NSArray *)execute
-{
-    NSError *err = nil;
-    NSArray *result = [self executeOnConnection:[self connection] error:&err];
-    if(err) {
-        DBLog(@"%@", err);
-        return nil;
-    }
-    return result;
-}
-
-- (NSArray *)execute:(NSError **)err
-{
-    return [self executeOnConnection:[self connection] error:err];
-}
-
-- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
-{
-    NSError *err = nil;
-    NSString *query;
-    NSArray  *params;
-    [self _generateString:&query parameters:&params];
-    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
-    if(!ret) {
-        if(outErr)
-            *outErr = err;
-        return nil;
-    }
-
-    // For inserts where a model class is available, we return the inserted object
-    Class modelClass;
-    if([_type isEqualToString:DBQueryTypeInsert] && (modelClass = [_table modelClass])) {
-        // Model classes require there to be an auto incremented id column so we just select the last id
-        return @[[[[_table select] order:DBOrderDescending by:@"id"] limit:@1][0]];
-    }
-    return ret;
+    return YES;
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
@@ -429,7 +378,7 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     if(modelClass && row[@"id"]) {
         DBModel *model = [[modelClass alloc] initWithTable:_table
                                                 databaseId:[row[@"id"] unsignedIntegerValue]];
-        if([_fields isEqual:DBSelectAll] && [DBModel enableCache])
+        if(_fields == nil && [DBModel enableCache])
             model.readCache = [row mutableCopy];
         return model;
     }
@@ -448,35 +397,77 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     else if(_groupedBy || _offset || _limit || _unionQuery) {
         return [[self execute] count];
     }
-    return [[self select:[DBAs field:@"COUNT(*)" alias:@"count"]][0][@"count"] unsignedIntegerValue];
+    return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }
 
-#pragma mark -
-
-- (DBConnection *)connection
+- (instancetype)order:(NSString *)order by:(id)fields
 {
-    return _table.database.connection;
+    BOOL isStr = IsStr(fields);
+    NSParameterAssert(IsArr(fields) || isStr);
+    DBSelectQuery *ret = [self copy];
+    ret.order = order;
+    ret.orderedBy = isStr ? @[fields] : fields;
+    return ret;
+}
+- (instancetype)orderBy:(id)fields
+{
+    return [self order:DBOrderAscending by:fields];
 }
 
-- (NSString *)toString
+- (instancetype)groupBy:(id)fields
 {
-    NSString *ret = nil;
-    [self _generateString:&ret parameters:NULL];
+    BOOL isStr = IsStr(fields);
+    NSParameterAssert(IsArr(fields) || isStr);
+    DBSelectQuery *ret = [self copy];
+    ret.groupedBy = isStr ? @[fields] : fields;
     return ret;
 }
 
-- (NSString *)description
+- (instancetype)limit:(NSNumber *)limit
 {
-    return [self toString];
+    DBSelectQuery *ret = [self copy];
+    ret.limit = limit;
+    return ret;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (instancetype)offset:(NSNumber *)offset
 {
-    DBQuery *copy   = [[self class] new];
-    copy.type       = _type;
-    copy.table      = _table;
-    copy.fields     = _fields;
-    copy.where      = _where;
+    DBSelectQuery *ret = [self copy];
+    ret.offset = offset;
+    return ret;
+}
+
+- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields
+{
+    DBSelectQuery *ret = [self copy];
+    ret.join = [DBJoin withType:type table:table fields:fields];
+    return ret;
+}
+- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields
+{
+    return [self join:DBInnerJoin withTable:table on:fields];
+}
+- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields
+{
+    return [self join:DBLeftJoin withTable:table on:fields];
+}
+
+- (instancetype)union:(DBSelectQuery *)otherQuery
+{
+    return [self union:otherQuery type:DBUnion];
+}
+
+- (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type
+{
+    DBSelectQuery *ret = [self copy];
+    ret.unionQuery = otherQuery;
+    ret.unionType  = type;
+    return ret;
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    DBSelectQuery *copy   = [super copyWithZone:zone];
     copy.orderedBy  = _orderedBy;
     copy.groupedBy  = _groupedBy;
     copy.order      = _order;
@@ -487,6 +478,105 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     copy.unionType  = _unionType;
     return copy;
 }
+
+@end
+
+@implementation DBInsertQuery
+
++ (NSString *)_queryType
+{
+    return @"INSERT ";
+}
+
+- (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
+{
+    NSParameterAssert(q && p);
+    [q appendString:[[self class] _queryType]];
+
+    [q appendString:@"INTO "];
+    [q appendString:[_table toString]];
+    [q appendString:@"(\""];
+    [q appendString:[[_fields allKeys] componentsJoinedByString:@"\", \""]];
+    [q appendString:@"\") VALUES("];
+    int i = 0;
+    for(id fieldName in _fields) {
+        if(__builtin_expect(i++ > 0, 1))
+            [q appendString:@", "];
+
+        id obj = _fields[fieldName];
+        [p addObject:obj ? obj : [NSNull null]];
+        [q appendFormat:@"$%lu", (unsigned long)[p count]];
+    }
+    [q appendString:@")"];
+
+    return [self _generateWhereString:q parameters:p];
+}
+
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
+{
+    NSArray *ret = [super executeOnConnection:connection error:outErr];
+
+    // For inserts where a model class is available, we return the inserted object
+    Class modelClass;
+    if(ret && (modelClass = [_table modelClass])) {
+       // Model classes require there to be an auto incremented id column so we just select the last id
+       return @[[[[_table select] order:DBOrderDescending by:@"id"] limit:@1][0]];
+    } else
+        return ret;
+}
+
+@end
+
+@implementation DBUpdateQuery
+
++ (NSString *)_queryType
+{
+    return @"UPDATE ";
+}
+
+- (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
+{
+    [q appendString:[[self class] _queryType]];
+
+    [q appendString:[_table toString]];
+    [q appendString:@" SET \""];
+    int i = 0;
+    for(id fieldName in _fields) {
+        if(__builtin_expect(i++ > 0, 1))
+            [q appendString:@", \""];
+        [q appendString:fieldName];
+        [q appendString:@"\"="];
+        id obj = _fields[fieldName];
+        if(!obj || [obj isEqual:[NSNull null]]) {
+            [q appendString:@"NULL"];
+        } else {
+            [self _addParam:obj withToken:YES currentParams:p query:q];
+        }
+    }
+
+    return [self _generateWhereString:q parameters:p];
+}
+
+@end
+
+@implementation DBDeleteQuery
+
++ (NSString *)_queryType
+{
+    return @"DELETE ";
+}
+
+- (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
+{
+    NSParameterAssert(q && p);
+    [q appendString:[[self class] _queryType]];
+
+    [q appendString:@"FROM "];
+    [q appendString:[_table toString]];
+
+    return [self _generateWhereString:q parameters:p];
+}
+
 @end
 
 @interface DBJoin ()
