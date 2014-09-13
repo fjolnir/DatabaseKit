@@ -71,10 +71,9 @@
 - (id)copyUsingRecord:(DBModel *)record;
 
 /*!
- * Returns wether the relationship supports the passed key and wether it supports adding/removing for it
- * @param supportsAddingRet A BOOL pointer, will be set to YES/NO depending on wether adding/removing is supported
+ * Returns wether the relationship supports the passed key
  */
-- (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet;
+- (BOOL)respondsToKey:(NSString *)key;
 /*!
  * Returns wether the relationship supports the passed key
  */
@@ -91,8 +90,6 @@
                      limit:(NSNumber *)limit;
 
 - (void)sendRecord:(id)record forKey:(NSString *)key;
-- (void)addRecord:(id)record forKey:(NSString *)key;
-- (void)removeRecord:(id)record forKey:(NSString *)key;
 @end
 
 @interface DBModel (Relationships)

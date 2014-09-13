@@ -127,8 +127,6 @@
  */
 - (id)objectForKeyedSubscript:(id)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
-- (void)addRecord:(id)record forKey:(NSString *)key;
-- (void)removeRecord:(id)record forKey:(NSString *)key;
 @end
 
 #endif /* _DBBASE_H_ */

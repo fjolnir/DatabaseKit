@@ -21,7 +21,6 @@
 @interface TEModel (Accessors)
 - (NSArray *)people;
 - (void)setPeople:(NSArray *)people;
-- (void)addPerson:(TEPerson *)person;
 - (TEAnimal *)animal;
 - (void)setAnimal:(TEAnimal *)animal;
 @end
@@ -56,7 +55,6 @@
 - (TEModel *)model;
 - (void)setModel:(TEModel *)animal;
 - (NSArray *)people;
-- (void)addPerson:(TEPerson *)person;
 @end
 
 
@@ -131,7 +129,8 @@
     // Then test sending
     TEPerson *aPerson = [[[db[@"people"] insert:@{@"realName": @"frankenstein", @"userName": @"frank"}] execute] firstObject];
     NSLog(@"inserted: %@ %@", aPerson, [aPerson class]);
-    [model addPerson:aPerson];
+
+    model.people = [originalPeople arrayByAddingObjectsFromArray:@[aPerson]];
     NSMutableArray *laterPeople = [originalPeople mutableCopy];
     [laterPeople addObject:aPerson];
 

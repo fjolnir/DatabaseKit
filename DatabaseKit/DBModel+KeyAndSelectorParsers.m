@@ -27,10 +27,6 @@
     {
         if([type isEqualToString:@"set"])
             selectorType = DBAttributeSelectorWriter;
-        else if([type isEqualToString:@"add"])
-            selectorType = DBAttributeSelectorAdder;
-        else if([type isEqualToString:@"remove"])
-            selectorType = DBAttributeSelectorRemover;
         else
         {
             selectorType = DBAttributeSelectorReader;

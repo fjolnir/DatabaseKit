@@ -73,21 +73,8 @@ static NSString *classPrefix = nil;
         value = _writeCache[key];
         [self sendValue:value forKey:key];
     }
-    // Apply the add/remove cache
-    for(int i = 0; i < [_addCache count]; ++i) {
-        key = _addCache[i][@"key"];
-        value = _addCache[i][@"record"];
-        [self addRecord:value forKey:key ignoreCache:YES];
-    }
-    for(int i = 0; i < [_removeCache count]; ++i) {
-        key = _removeCache[i][@"key"];
-        value = _removeCache[i][@"record"];
-        [self removeRecord:value forKey:key ignoreCache:YES];
-    }
     [_table.database.connection endTransaction];
     // purge the cache so we don't write it again
-    [_addCache    removeAllObjects];
-    [_removeCache removeAllObjects];
     [_writeCache  removeAllObjects];
 }
 

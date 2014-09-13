@@ -11,15 +11,10 @@
 #import "../Utilities/NSString+DBAdditions.h"
 
 @implementation DBRelationshipHasOne
-#pragma mark Key parser
-#pragma mark -
-- (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
+
+- (BOOL)respondsToKey:(NSString *)key
 {
-  if(supportsAddingRet != NULL)
-    *supportsAddingRet = NO;
-  if([key isEqualToString:[self.name singularizedString]])
-    return YES;
-  return NO;
+    return [key isEqualToString:[self.name singularizedString]];
 }
 
 

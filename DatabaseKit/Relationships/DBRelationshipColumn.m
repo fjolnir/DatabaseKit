@@ -5,18 +5,12 @@
 #import "../Debug.h"
 
 @implementation DBRelationshipColumn
-#pragma mark Key parser
-#pragma mark -
-- (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
+
+- (BOOL)respondsToKey:(NSString *)key
 {
-    if(supportsAddingRet != NULL)
-        *supportsAddingRet = NO;
-    if([[self.record columns] containsObject:key])
-        return YES;
-    return NO;
+    return [[self.record columns] containsObject:key];
 }
 
-#pragma mark -
 - (id)retrieveRecordForKey:(NSString *)key
 {
     if(![self respondsToKey:key])

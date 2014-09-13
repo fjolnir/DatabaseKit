@@ -42,9 +42,7 @@
 #pragma mark Private types
 typedef enum { 
   DBAttributeSelectorReader  = 1,
-  DBAttributeSelectorWriter  = 2,
-  DBAttributeSelectorAdder   = 3,
-  DBAttributeSelectorRemover = 4,
+  DBAttributeSelectorWriter,
 } DBAttributeSelectorType;
 
 #pragma mark -
@@ -52,8 +50,6 @@ typedef enum {
 @interface DBModel () // Implemented in DBModel.m
 @property(readwrite, retain) NSMutableDictionary *readCache;
 @property(readwrite, retain) NSMutableDictionary *writeCache;
-@property(readwrite, retain) NSMutableArray *addCache;
-@property(readwrite, retain) NSMutableArray *removeCache;
 @property(readwrite, retain) NSArray *columnCache;
 
 // Returns the column names of the table associated with the model
@@ -61,9 +57,6 @@ typedef enum {
 // Returns the name of the id column (foreign) for a model DBModel would mean modelId
 + (NSString *)idColumnForModel:(Class)modelClass;
 + (NSString *)idColumn;
-
-- (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache;
-- (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache;
 @end
 
 @interface DBModel (KeyAndSelectorParsers) // Implemented in DBModel-KeyAndSelectorParsers.m

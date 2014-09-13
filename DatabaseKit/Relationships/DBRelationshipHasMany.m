@@ -14,23 +14,10 @@
 #import "../DBTable.h"
 
 @implementation DBRelationshipHasMany
-#pragma mark Key parser
-#pragma mark -
-- (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
+
+- (BOOL)respondsToKey:(NSString *)key
 {
-    if([key isEqualToString:self.name])
-    {
-        if(supportsAddingRet != NULL)
-            *supportsAddingRet = NO;
-        return YES;
-    }
-    else if([key isEqualToString:[self.name singularizedString]])
-    {
-        if(supportsAddingRet != NULL)
-            *supportsAddingRet = YES;
-        return YES;
-    }
-    return NO;
+    return [key isEqualToString:self.name];
 }
 
 - (id)retrieveRecordForKey:(NSString *)key
@@ -85,28 +72,7 @@
                     forKey:[[self.record class] idColumn]];
 
 }
-- (void)addRecord:(id)aRecord forKey:(NSString *)key
-{
-    BOOL supportsAdding;
-    if(![self respondsToKey:key supportsAdding:&supportsAdding] || !supportsAdding)
-        return;
-    [aRecord sendValue:@(self.record.databaseId)
-                forKey:[[self.record class] idColumn]];
-    NSLog(@"%@", [self.record readCache]);
-    if([DBModel enableCache])
-        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
-    NSLog(@"%@", [self.record readCache]);
-}
-- (void)removeRecord:(id)aRecord forKey:(NSString *)key
-{
-    BOOL supportsAdding;
-    if(![self respondsToKey:key supportsAdding:&supportsAdding] || !supportsAdding)
-        return;
-    [self.record sendValue:@0U
-                    forKey:[[self.record class] idColumn]];
-    if([DBModel enableCache])
-        [[self.record readCache] removeObjectForKey:[key pluralizedString]];
-}
+
 
 #pragma mark Accessors
 #pragma mark -

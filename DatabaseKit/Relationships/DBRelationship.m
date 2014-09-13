@@ -34,16 +34,11 @@
     return self;
 }
 
-- (BOOL)respondsToKey:(NSString *)key supportsAdding:(BOOL *)supportsAddingRet
-{
-    if(supportsAddingRet != NULL)
-        *supportsAddingRet = NO;
-    return NO;
-}
 - (BOOL)respondsToKey:(NSString *)key
 {
-    return [self respondsToKey:key supportsAdding:NULL];
+    return NO;
 }
+
 - (id)retrieveRecordForKey:(NSString *)key
 {
     return [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
@@ -61,14 +56,7 @@
 {
     return;
 }
-- (void)addRecord:(id)record forKey:(NSString *)key
-{
-    return;
-}
-- (void)removeRecord:(id)record forKey:(NSString *)key
-{
-    return;
-}
+
 
 #pragma mark -
 #pragma mark Copying
