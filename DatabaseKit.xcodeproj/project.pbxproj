@@ -19,7 +19,6 @@
 		C71CE9B519B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9B619B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; };
 		C71CE9B719B3839600C77150 /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97C19B3839600C77150 /* DBPostgresConnection.m */; };
-		C71CE9B819B3839600C77150 /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97C19B3839600C77150 /* DBPostgresConnection.m */; };
 		C71CE9B919B3839600C77150 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9BA19B3839600C77150 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */; };
 		C71CE9BB19B3839600C77150 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97E19B3839600C77150 /* DBSQLiteConnection.m */; };
@@ -84,6 +83,11 @@
 		C7D50419180BB00500818DBF /* libpq.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D50418180BB00500818DBF /* libpq.dylib */; };
 		C7D5041E180BB2CF00818DBF /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C7D5041C180BB2CF00818DBF /* sqlite_fixtures.sql */; };
 		C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F5249813EFED5F0086F32E /* NSObject+iPhoneHacks.m */; };
+		C7E423DF19C4D7340069D010 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B819C2032B00B9B687 /* DBQuery.m */; };
+		C7E423E019C4D7340069D010 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B319C2032B00B9B687 /* DBDeleteQuery.m */; };
+		C7E423E119C4D7340069D010 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B519C2032B00B9B687 /* DBInsertQuery.m */; };
+		C7E423E219C4D7340069D010 /* DBSelectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774BA19C2032B00B9B687 /* DBSelectQuery.m */; };
+		C7E423E319C4D7340069D010 /* DBRawQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76DC67019C469E6008D54C8 /* DBRawQuery.m */; };
 		C7F5249913EFED5F0086F32E /* NSObject+iPhoneHacks.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F5249713EFED5F0086F32E /* NSObject+iPhoneHacks.h */; settings = {ATTRIBUTES = (); }; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
@@ -650,7 +654,11 @@
 				C71CE9BC19B3839600C77150 /* DBSQLiteConnection.m in Sources */,
 				C71CE9B319B3839600C77150 /* DBConnectionPool.m in Sources */,
 				C71CE9D419B3839600C77150 /* DBTable.m in Sources */,
-				C71CE9B819B3839600C77150 /* DBPostgresConnection.m in Sources */,
+				C7E423DF19C4D7340069D010 /* DBQuery.m in Sources */,
+				C7E423E019C4D7340069D010 /* DBDeleteQuery.m in Sources */,
+				C7E423E119C4D7340069D010 /* DBInsertQuery.m in Sources */,
+				C7E423E219C4D7340069D010 /* DBSelectQuery.m in Sources */,
+				C7E423E319C4D7340069D010 /* DBRawQuery.m in Sources */,
 				C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */,
 				C71CE9C219B3839600C77150 /* DB.m in Sources */,
 				C71CE9FA19B3839600C77150 /* DBInflector.m in Sources */,

@@ -19,7 +19,7 @@
 /*! @cond IGNORE */
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
-    NSMapTable *_cachedStatements;
+    NSMutableDictionary *_cachedStatements;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
 - (void)finalizeQuery:(sqlite3_stmt *)query;
@@ -53,8 +53,7 @@
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
     _path = URL ? URL.path : @":memory:";
-    _cachedStatements = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPersonality|NSMapTableCopyIn
-                                              valueOptions:NSPointerFunctionsOpaquePersonality];
+    _cachedStatements = [NSMutableDictionary new];
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
@@ -191,8 +190,8 @@
 
 - (BOOL)closeConnection
 {
-    for(NSString *query in _cachedStatements) {
-        sqlite3_finalize(NSMapGet(_cachedStatements, (__bridge void *)query));
+    for(NSValue *query in _cachedStatements.allValues) {
+        sqlite3_finalize([query pointerValue]);
     }
     [_cachedStatements removeAllObjects];
 
@@ -223,7 +222,7 @@
         DBDebugLog(@"Preparing query: %@", query);
 
     // Prepare the query
-    sqlite3_stmt *queryByteCode = NSMapGet(_cachedStatements, (__bridge void *)query);
+    sqlite3_stmt *queryByteCode = [_cachedStatements[query] pointerValue];
     if(queryByteCode) {
         sqlite3_reset(queryByteCode);
         return queryByteCode;
@@ -244,7 +243,7 @@
         return NULL;
     }
 
-    NSMapInsert(_cachedStatements, (__bridge void *)query, queryByteCode);
+    _cachedStatements[query] = [NSValue valueWithPointer:queryByteCode];
     return queryByteCode;
 }
 - (void)finalizeQuery:(sqlite3_stmt *)query
