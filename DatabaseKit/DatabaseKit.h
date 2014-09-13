@@ -45,10 +45,7 @@
 
 #import <DatabaseKit/Relationships/DBRelationship.h>
 #import <DatabaseKit/Relationships/DBRelationshipHasMany.h>
-#import <DatabaseKit/Relationships/DBRelationshipHasManyThrough.h>
 #import <DatabaseKit/Relationships/DBRelationshipHasOne.h>
-#import <DatabaseKit/Relationships/DBRelationshipBelongsTo.h>
-#import <DatabaseKit/Relationships/DBRelationshipHABTM.h>
 #import <DatabaseKit/Relationships/DBRelationshipColumn.h>
 
 #endif /* _ACTIVERECORD_H_ */

@@ -50,26 +50,14 @@
 		C71CE9D819B3839600C77150 /* DBRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE98D19B3839600C77150 /* DBRelationship.h */; };
 		C71CE9D919B3839600C77150 /* DBRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE98E19B3839600C77150 /* DBRelationship.m */; };
 		C71CE9DA19B3839600C77150 /* DBRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE98E19B3839600C77150 /* DBRelationship.m */; };
-		C71CE9DB19B3839600C77150 /* DBRelationshipBelongsTo.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE98F19B3839600C77150 /* DBRelationshipBelongsTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71CE9DC19B3839600C77150 /* DBRelationshipBelongsTo.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE98F19B3839600C77150 /* DBRelationshipBelongsTo.h */; };
-		C71CE9DD19B3839600C77150 /* DBRelationshipBelongsTo.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99019B3839600C77150 /* DBRelationshipBelongsTo.m */; };
-		C71CE9DE19B3839600C77150 /* DBRelationshipBelongsTo.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99019B3839600C77150 /* DBRelationshipBelongsTo.m */; };
 		C71CE9DF19B3839600C77150 /* DBRelationshipColumn.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99119B3839600C77150 /* DBRelationshipColumn.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9E019B3839600C77150 /* DBRelationshipColumn.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99119B3839600C77150 /* DBRelationshipColumn.h */; };
 		C71CE9E119B3839600C77150 /* DBRelationshipColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99219B3839600C77150 /* DBRelationshipColumn.m */; };
 		C71CE9E219B3839600C77150 /* DBRelationshipColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99219B3839600C77150 /* DBRelationshipColumn.m */; };
-		C71CE9E319B3839600C77150 /* DBRelationshipHABTM.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99319B3839600C77150 /* DBRelationshipHABTM.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71CE9E419B3839600C77150 /* DBRelationshipHABTM.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99319B3839600C77150 /* DBRelationshipHABTM.h */; };
-		C71CE9E519B3839600C77150 /* DBRelationshipHABTM.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99419B3839600C77150 /* DBRelationshipHABTM.m */; };
-		C71CE9E619B3839600C77150 /* DBRelationshipHABTM.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99419B3839600C77150 /* DBRelationshipHABTM.m */; };
 		C71CE9E719B3839600C77150 /* DBRelationshipHasMany.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99519B3839600C77150 /* DBRelationshipHasMany.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9E819B3839600C77150 /* DBRelationshipHasMany.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99519B3839600C77150 /* DBRelationshipHasMany.h */; };
 		C71CE9E919B3839600C77150 /* DBRelationshipHasMany.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99619B3839600C77150 /* DBRelationshipHasMany.m */; };
 		C71CE9EA19B3839600C77150 /* DBRelationshipHasMany.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99619B3839600C77150 /* DBRelationshipHasMany.m */; };
-		C71CE9EB19B3839600C77150 /* DBRelationshipHasManyThrough.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99719B3839600C77150 /* DBRelationshipHasManyThrough.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71CE9EC19B3839600C77150 /* DBRelationshipHasManyThrough.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99719B3839600C77150 /* DBRelationshipHasManyThrough.h */; };
-		C71CE9ED19B3839600C77150 /* DBRelationshipHasManyThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99819B3839600C77150 /* DBRelationshipHasManyThrough.m */; };
-		C71CE9EE19B3839600C77150 /* DBRelationshipHasManyThrough.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99819B3839600C77150 /* DBRelationshipHasManyThrough.m */; };
 		C71CE9EF19B3839600C77150 /* DBRelationshipHasOne.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99919B3839600C77150 /* DBRelationshipHasOne.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9F019B3839600C77150 /* DBRelationshipHasOne.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99919B3839600C77150 /* DBRelationshipHasOne.h */; };
 		C71CE9F119B3839600C77150 /* DBRelationshipHasOne.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE99A19B3839600C77150 /* DBRelationshipHasOne.m */; };
@@ -158,16 +146,10 @@
 		C71CE98B19B3839600C77150 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debug.h; path = DatabaseKit/Debug.h; sourceTree = SOURCE_ROOT; };
 		C71CE98D19B3839600C77150 /* DBRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationship.h; sourceTree = "<group>"; };
 		C71CE98E19B3839600C77150 /* DBRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationship.m; sourceTree = "<group>"; };
-		C71CE98F19B3839600C77150 /* DBRelationshipBelongsTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipBelongsTo.h; sourceTree = "<group>"; };
-		C71CE99019B3839600C77150 /* DBRelationshipBelongsTo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipBelongsTo.m; sourceTree = "<group>"; };
 		C71CE99119B3839600C77150 /* DBRelationshipColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipColumn.h; sourceTree = "<group>"; };
 		C71CE99219B3839600C77150 /* DBRelationshipColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipColumn.m; sourceTree = "<group>"; };
-		C71CE99319B3839600C77150 /* DBRelationshipHABTM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipHABTM.h; sourceTree = "<group>"; };
-		C71CE99419B3839600C77150 /* DBRelationshipHABTM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHABTM.m; sourceTree = "<group>"; };
 		C71CE99519B3839600C77150 /* DBRelationshipHasMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipHasMany.h; sourceTree = "<group>"; };
 		C71CE99619B3839600C77150 /* DBRelationshipHasMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHasMany.m; sourceTree = "<group>"; };
-		C71CE99719B3839600C77150 /* DBRelationshipHasManyThrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipHasManyThrough.h; sourceTree = "<group>"; };
-		C71CE99819B3839600C77150 /* DBRelationshipHasManyThrough.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHasManyThrough.m; sourceTree = "<group>"; };
 		C71CE99919B3839600C77150 /* DBRelationshipHasOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRelationshipHasOne.h; sourceTree = "<group>"; };
 		C71CE99A19B3839600C77150 /* DBRelationshipHasOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRelationshipHasOne.m; sourceTree = "<group>"; };
 		C71CE99C19B3839600C77150 /* Base64Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Extensions.h; sourceTree = "<group>"; };
@@ -347,16 +329,10 @@
 			children = (
 				C71CE98D19B3839600C77150 /* DBRelationship.h */,
 				C71CE98E19B3839600C77150 /* DBRelationship.m */,
-				C71CE98F19B3839600C77150 /* DBRelationshipBelongsTo.h */,
-				C71CE99019B3839600C77150 /* DBRelationshipBelongsTo.m */,
 				C71CE99119B3839600C77150 /* DBRelationshipColumn.h */,
 				C71CE99219B3839600C77150 /* DBRelationshipColumn.m */,
-				C71CE99319B3839600C77150 /* DBRelationshipHABTM.h */,
-				C71CE99419B3839600C77150 /* DBRelationshipHABTM.m */,
 				C71CE99519B3839600C77150 /* DBRelationshipHasMany.h */,
 				C71CE99619B3839600C77150 /* DBRelationshipHasMany.m */,
-				C71CE99719B3839600C77150 /* DBRelationshipHasManyThrough.h */,
-				C71CE99819B3839600C77150 /* DBRelationshipHasManyThrough.m */,
 				C71CE99919B3839600C77150 /* DBRelationshipHasOne.h */,
 				C71CE99A19B3839600C77150 /* DBRelationshipHasOne.m */,
 			);
@@ -528,7 +504,6 @@
 				C76774C219C2032B00B9B687 /* DBSelectQuery.h in Headers */,
 				C71CE9B019B3839600C77150 /* DBConnectionPool.h in Headers */,
 				C71CE9B919B3839600C77150 /* DBSQLiteConnection.h in Headers */,
-				C71CE9DB19B3839600C77150 /* DBRelationshipBelongsTo.h in Headers */,
 				C76774BD19C2032B00B9B687 /* DBInsertQuery.h in Headers */,
 				C71CE9EF19B3839600C77150 /* DBRelationshipHasOne.h in Headers */,
 				C71CE9E719B3839600C77150 /* DBRelationshipHasMany.h in Headers */,
@@ -536,8 +511,6 @@
 				C71CE9D119B3839600C77150 /* DBTable.h in Headers */,
 				C71CE9BF19B3839600C77150 /* DB.h in Headers */,
 				C71CE9AC19B3839600C77150 /* DBConnection.h in Headers */,
-				C71CE9E319B3839600C77150 /* DBRelationshipHABTM.h in Headers */,
-				C71CE9EB19B3839600C77150 /* DBRelationshipHasManyThrough.h in Headers */,
 				C71CE9D719B3839600C77150 /* DBRelationship.h in Headers */,
 				C71CE9C319B3839600C77150 /* DBModel.h in Headers */,
 				C76774C019C2032B00B9B687 /* DBQuery.h in Headers */,
@@ -558,7 +531,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C71CE9DC19B3839600C77150 /* DBRelationshipBelongsTo.h in Headers */,
 				C71CE9D819B3839600C77150 /* DBRelationship.h in Headers */,
 				C71CEA1319B383AD00C77150 /* Debug.h in Headers */,
 				C71CE9BA19B3839600C77150 /* DBSQLiteConnection.h in Headers */,
@@ -566,14 +538,12 @@
 				C71CE9F819B3839600C77150 /* DBInflector.h in Headers */,
 				C71CEA0E19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
 				C71CEA0619B3839600C77150 /* ISO8601DateFormatter.h in Headers */,
-				C71CE9EC19B3839600C77150 /* DBRelationshipHasManyThrough.h in Headers */,
 				C71CE9BE19B3839600C77150 /* DatabaseKit.h in Headers */,
 				C71CE9CC19B3839600C77150 /* DBModel+Private.h in Headers */,
 				C71CE9D219B3839600C77150 /* DBTable.h in Headers */,
 				C71CE9F419B3839600C77150 /* Base64Extensions.h in Headers */,
 				C71CE9B119B3839600C77150 /* DBConnectionPool.h in Headers */,
 				C71CE9C019B3839600C77150 /* DB.h in Headers */,
-				C71CE9E419B3839600C77150 /* DBRelationshipHABTM.h in Headers */,
 				C71CE9E019B3839600C77150 /* DBRelationshipColumn.h in Headers */,
 				C71CE9AD19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9F019B3839600C77150 /* DBRelationshipHasOne.h in Headers */,
@@ -714,13 +684,10 @@
 				C71CE9B219B3839600C77150 /* DBConnectionPool.m in Sources */,
 				C71CE9D319B3839600C77150 /* DBTable.m in Sources */,
 				C71CE9B719B3839600C77150 /* DBPostgresConnection.m in Sources */,
-				C71CE9E519B3839600C77150 /* DBRelationshipHABTM.m in Sources */,
-				C71CE9DD19B3839600C77150 /* DBRelationshipBelongsTo.m in Sources */,
 				C71CE9C919B3839600C77150 /* DBModel+KeyAndSelectorParsers.m in Sources */,
 				C76774C319C2032B00B9B687 /* DBSelectQuery.m in Sources */,
 				C71CE9D919B3839600C77150 /* DBRelationship.m in Sources */,
 				C71CE9C119B3839600C77150 /* DB.m in Sources */,
-				C71CE9ED19B3839600C77150 /* DBRelationshipHasManyThrough.m in Sources */,
 				C76DC67219C469E6008D54C8 /* DBRawQuery.m in Sources */,
 				C71CE9F919B3839600C77150 /* DBInflector.m in Sources */,
 			);
@@ -755,13 +722,10 @@
 				C71CE9B319B3839600C77150 /* DBConnectionPool.m in Sources */,
 				C71CE9D419B3839600C77150 /* DBTable.m in Sources */,
 				C71CE9B819B3839600C77150 /* DBPostgresConnection.m in Sources */,
-				C71CE9E619B3839600C77150 /* DBRelationshipHABTM.m in Sources */,
-				C71CE9DE19B3839600C77150 /* DBRelationshipBelongsTo.m in Sources */,
 				C7E3D9421611E24B00220FE9 /* NSObject+iPhoneHacks.m in Sources */,
 				C71CE9CA19B3839600C77150 /* DBModel+KeyAndSelectorParsers.m in Sources */,
 				C71CE9DA19B3839600C77150 /* DBRelationship.m in Sources */,
 				C71CE9C219B3839600C77150 /* DB.m in Sources */,
-				C71CE9EE19B3839600C77150 /* DBRelationshipHasManyThrough.m in Sources */,
 				C71CE9FA19B3839600C77150 /* DBInflector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

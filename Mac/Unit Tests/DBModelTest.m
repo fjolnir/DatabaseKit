@@ -24,7 +24,6 @@
 - (void)addPerson:(TEPerson *)person;
 - (TEAnimal *)animal;
 - (void)setAnimal:(TEAnimal *)animal;
-- (NSArray *)belgians;
 @end
 
 @interface TEPerson : DBModel {
@@ -143,15 +142,6 @@
     XCTAssertTrue([[model people][0] databaseId] == [aPerson databaseId], @"person id should've been %lu but was %lu", [aPerson databaseId], [[model people][0] databaseId]);
 }
 
-- (void)testHasManyThrough
-{
-    // First test retrieving
-    TEModel *model = [[[db[@"models"] select] limit:@1] first];
-    NSArray *belgians = [model belgians];
-    NSLog(@"belgians: %@", belgians);
-    XCTAssertTrue(([belgians count] == 2), @"TEModel should have 2 belgians but had %lu", [belgians count]);
-}
-
 - (void)testHasOne
 {
     TEModel *model = [[[db[@"models"] select] limit:@1] first];
@@ -165,35 +155,6 @@
 
     [model setAnimal:anAnimal];
     XCTAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%lu != %lu)", [[model animal] databaseId], [anAnimal databaseId]);
-}
-
-- (void)testBelongsTo
-{
-    NSLog(@"%@ %@", db, db[@"people"]);
-    TEPerson *person = [[[db[@"people"] select] limit:@1] first];
-    TEModel *model = [person model];
-
-    XCTAssertNotNil(model, @"No model found for person!");
-
-    // Then test sending
-    TEAnimal *anAnimal = [[[db[@"animals"] insert:@{@"species": @"cheetah", @"nickname": @"rick"}] execute] firstObject];
-
-    TEAnimal *oldAnimal = [model animal];
-    [anAnimal setModel:model];
-
-    XCTAssertTrue(([[anAnimal model] databaseId] == [model databaseId]), @"model id was wrong (%lu != %lu)", [[anAnimal model] databaseId], [model databaseId]);
-    [model setAnimal:oldAnimal];
-}
-
-- (void)testHasAndBelongsToMany
-{
-    TEPerson *person = db[@"people"][3];
-    TEModel *animal = [[[db[@"animals"] select] limit:@1] first];
-    XCTAssertEqual([[person animals][0] databaseId], (NSUInteger)1, @"Person had wrong animal!");
-    XCTAssertEqual([[animal people][0] databaseId], (NSUInteger)3, @"Animal had wrong person!");
-    animal = db[@"animals"][2];
-    [animal addPerson:person];
-    XCTAssertEqual([[animal people][0] databaseId], (NSUInteger)[person databaseId], @"Animal had wrong person!");
 }
 
 - (void)testDelayedWriting
@@ -214,7 +175,6 @@
 {
     [[self relationships] addObject:[DBRelationshipHasMany relationshipWithName:@"people"]];
     [[self relationships] addObject:[DBRelationshipHasOne relationshipWithName:@"animal"]];
-    [[self relationships] addObject:[DBRelationshipHasManyThrough relationshipWithName:@"belgians" through:@"people"]];
 
 }
 @end
@@ -223,24 +183,13 @@
 @dynamic userName, realName;
 + (void)initialize
 {
-    [[self relationships] addObject:[DBRelationshipBelongsTo relationshipWithName:@"model"]];
-    [[self relationships] addObject:[DBRelationshipHABTM relationshipWithName:@"animals"]];
     [[self relationships] addObject:[DBRelationshipHasMany relationshipWithName:@"belgians"]];
 }
 
 @end
 
 @implementation TEAnimal
-+ (void)initialize
-{
-    [[self relationships] addObject:[DBRelationshipBelongsTo relationshipWithName:@"model"]];
-    [[self relationships] addObject:[DBRelationshipHABTM relationshipWithName:@"people"]];
-}
 @end
 
 @implementation TEBelgian
-+ (void)initialize
-{
-    [[self relationships] addObject:[DBRelationshipBelongsTo relationshipWithName:@"person"]];
-}
 @end

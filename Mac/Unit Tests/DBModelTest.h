@@ -32,7 +32,6 @@
 @end
 @interface TEPerson (Accessors)
 - (NSArray *)animals;
-- (TEModel *)model;
 - (NSArray *)belgians;
 @end
 
@@ -41,7 +40,6 @@
 }
 @end
 @interface TEBelgian (Accessors)
-- (TEPerson *)person;
 @end
 
 
@@ -52,7 +50,6 @@
 @interface TEAnimal (Accessors)
 - (NSString *)species;
 - (NSString *)nickname;
-- (TEModel *)model;
 - (void)setModel:(TEModel *)animal;
 - (NSArray *)people;
 - (void)addPerson:(TEPerson *)person;
