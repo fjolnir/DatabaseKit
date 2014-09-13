@@ -47,7 +47,7 @@
  */
 @interface DBRelationship : NSObject <NSCopying>
 @property(readonly, strong) NSString *name, *className;
-@property(readonly, unsafe_unretained) DBModel *record;
+@property(readonly, weak) DBModel *record;
 
 /*!
  * Creates a relationship with a given name using the passed class

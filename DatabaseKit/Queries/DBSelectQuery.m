@@ -252,3 +252,57 @@ NSString *const DBUnionAll = @" UNION ALL ";
 }
 
 @end
+
+@interface DBJoin ()
+@property(readwrite, strong) NSString *type;
+@property(readwrite, strong) id table;
+@property(readwrite, strong) NSDictionary *fields;
+@end
+@implementation DBJoin
++ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields
+{
+    NSParameterAssert([table respondsToSelector:@selector(toString)]);
+    DBJoin *ret = [self new];
+    ret.type   = type;
+    ret.table  = table;
+    ret.fields = fields;
+    return ret;
+}
+- (NSString *)toString
+{
+    NSMutableString *ret = [NSMutableString stringWithString:_type];
+    [ret appendString:@" JOIN "];
+    [ret appendString:[_table toString]];
+    [ret appendString:@" ON "];
+    return ret;
+}
+- (NSString *)description
+{
+    return [self toString];
+}
+@end
+
+@interface DBAs ()
+@property(readwrite, strong) NSString *field, *alias;
+@end
+@implementation DBAs
++ (DBAs *)field:(NSString *)field alias:(NSString *)alias
+{
+    DBAs *ret = [self new];
+    ret.field = field;
+    ret.alias = alias;
+    return ret;
+}
+
+- (NSString *)toString
+{
+    NSMutableString *ret = [NSMutableString stringWithString:_field];
+    [ret appendString:@" AS "];
+    [ret appendString:_alias];
+    return ret;
+}
+- (NSString *)description
+{
+    return [self toString];
+}
+@end

@@ -31,19 +31,6 @@
 - (NSString *)toString;
 @end
 
-@interface DBJoin : NSObject
-@property(readonly, strong) NSString *type;
-@property(readonly, strong) id table;
-@property(readonly, strong) NSDictionary *fields;
-+ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields;
-@end
-
-@interface DBAs : NSObject
-@property(readonly, strong) NSString *field, *alias;
-
-+ (DBAs *)field:(NSString *)field alias:(NSString *)alias;
-@end
-
 #import <DatabaseKit/Queries/DBSelectQuery.h>
 #import <DatabaseKit/Queries/DBInsertQuery.h>
 #import <DatabaseKit/Queries/DBDeleteQuery.h>
