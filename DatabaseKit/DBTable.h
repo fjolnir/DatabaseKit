@@ -34,7 +34,6 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
-#import <DatabaseKit/Utilities/DBIndexedCollection.h>
 
 @class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
 
@@ -63,10 +62,10 @@ typedef enum {
 
 - (NSArray *)columns;
 
-- (DBSelectQuery *)select:(id<DBIndexedCollection>)fields;
+- (DBSelectQuery *)select:(NSArray *)fields;
 - (DBSelectQuery *)select;
-- (DBInsertQuery *)insert:(id<DBKeyedCollection>)fields;
-- (DBUpdateQuery *)update:(id<DBKeyedCollection>)fields;
+- (DBInsertQuery *)insert:(NSDictionary *)fields;
+- (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
 - (DBQuery *)where:(id)conds;
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;

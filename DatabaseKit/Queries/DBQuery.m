@@ -41,9 +41,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 #define IsStr(x) ([x isKindOfClass:[NSString class]])
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
-- (DBQuery *)select:(id<DBIndexedCollection>)fields
+- (DBQuery *)select:(NSArray *)fields
 {
-    NSParameterAssert(!fields || IsArr(fields));
     DBQuery *ret = [self _copyWithSubclass:[DBSelectQuery class]];
     ret.fields = !fields         ? nil
                  : IsArr(fields) ? fields
@@ -55,16 +54,14 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return [self select:nil];
 }
 
-- (DBInsertQuery *)insert:(id<DBKeyedCollection>)fields
+- (DBInsertQuery *)insert:(NSDictionary *)fields
 {
-    NSParameterAssert(IsDic(fields));
     DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
     ret.fields = fields;
     return ret;
 }
-- (DBUpdateQuery *)update:(id<DBKeyedCollection>)fields
+- (DBUpdateQuery *)update:(NSDictionary *)fields
 {
-    NSParameterAssert(IsDic(fields));
     DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
     ret.fields = fields;
     return ret;

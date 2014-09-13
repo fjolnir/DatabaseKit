@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/Connections/DBConnection.h>
-#import <DatabaseKit/Utilities/DBIndexedCollection.h>
 
 extern NSString *const DBSelectAll;
 
@@ -27,10 +26,10 @@ extern NSString *const DBUnionAll;
 - (NSArray *)execute:(NSError **)err;
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
 
-- (DBSelectQuery *)select:(id<DBIndexedCollection>)fields;
+- (DBSelectQuery *)select:(NSArray *)fields;
 - (DBSelectQuery *)select;
-- (DBInsertQuery *)insert:(id<DBKeyedCollection>)fields;
-- (DBUpdateQuery *)update:(id<DBKeyedCollection>)fields;
+- (DBInsertQuery *)insert:(NSDictionary *)fields;
+- (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
 
 - (instancetype)where:(id)conds;

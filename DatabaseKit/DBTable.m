@@ -93,7 +93,7 @@
 
 #pragma mark - Query generators
 
-- (DBSelectQuery *)select:(id<DBIndexedCollection>)fields
+- (DBSelectQuery *)select:(NSArray *)fields
 {
     return [[DBQuery withTable:self] select:fields];
 }
