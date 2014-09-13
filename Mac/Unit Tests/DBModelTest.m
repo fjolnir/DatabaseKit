@@ -145,7 +145,7 @@
 - (void)testHasOne
 {
     TEModel *model = [[[db[@"models"] select] limit:@1] first];
-    TEModel *animal = [[[db[@"animals"] select] limit:@1] first];
+    TEAnimal *animal = [[[db[@"animals"] select] limit:@1] first];
 
     XCTAssertTrue(([animal databaseId] == [[model animal] databaseId]), @"%@ != %@ !!", animal, [model animal]);
     return;
