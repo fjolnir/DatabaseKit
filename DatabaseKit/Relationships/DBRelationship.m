@@ -11,7 +11,7 @@
 
 @interface DBRelationship ()
 @property(readwrite, strong) NSString *name, *className;
-@property(readwrite, unsafe_unretained) DBModel *record;
+@property(readwrite, weak) DBModel *record;
 @end
 
 @implementation DBRelationship
