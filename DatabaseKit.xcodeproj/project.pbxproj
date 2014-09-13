@@ -295,6 +295,7 @@
 		C71CE99B19B3839600C77150 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C76DC67319C46FA8008D54C8 /* DBUtilities.h */,
 				C71CE99C19B3839600C77150 /* Base64Extensions.h */,
 				C71CE99D19B3839600C77150 /* Base64Extensions.m */,
 				C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */,
@@ -302,7 +303,6 @@
 				C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */,
 				C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */,
 				C71CE99E19B3839600C77150 /* DBInflector */,
-				C76DC67319C46FA8008D54C8 /* DBUtilities.h */,
 			);
 			name = Utilities;
 			path = DatabaseKit/Utilities;
