@@ -3,7 +3,9 @@
 #import "DBQuery.h"
 #import "Utilities/NSString+DBAdditions.h"
 
-@interface DBTable ()
+@interface DBTable () {
+    NSArray *_columns;
+}
 @property(readwrite, strong) NSString *name;
 @property(readwrite, strong) DB *database;
 @end
@@ -52,7 +54,9 @@
 
 - (NSArray *)columns
 {
-    return [_database.connection columnsForTable:_name];
+    if(!_columns)
+        _columns = [_database.connection columnsForTable:_name];
+    return _columns;
 }
 
 #pragma mark - Query generators
@@ -106,7 +110,7 @@
 - (BOOL)isEqual:(id)object
 {
     return [object isKindOfClass:[DBTable class]]
-        && [_name        isEqual:[(DBTable*)object name]]
+        && [_name isEqual:[(DBTable*)object name]]
         && _database == [(DBTable *)object database];
 }
 
