@@ -50,10 +50,4 @@ typedef enum {
 
 // Returns a table whose name matches key or nil
 - (DBTable *)objectForKeyedSubscript:(id)key;
-
-- (BOOL)createTable:(NSString *)tableName
-        withColumns:(NSDictionary *)fields // { name: { type: <string>, unique: <bool>, notnull: <bool>, default: <object> }
-         primaryKey:(id)primaryKeyInfo     // { column: <string>, order: <string: asc/desc>, noautoincrement: <bool> } or a string containing column name
-            options:(DBCreationOptions)options
-              error:(NSError **)err;
 @end
