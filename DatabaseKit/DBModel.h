@@ -38,17 +38,6 @@
 #import <DatabaseKit/DB.h>
 #import <DatabaseKit/Connections/DBConnection.h>
 
-/*!
- * @enum DBNamingStyle
- * Indicates how DatabaseKit will name it's tables
- * ObjC style:  manyModels
- * Rails style: many_models
- */
-typedef enum {
-    DBObjCNamingStyle  = 1,
-    DBRailsNamingStyle = 2
-} DBNamingStyle;
-
 @class DBTable;
 
 /*!
@@ -100,11 +89,6 @@ typedef enum {
  * If the record is successfully deleted the model object is released
  */
 - (BOOL)destroy;
-
-/*! Returns the naming style (See docs for DBNamingStyle for more info) */
-+ (DBNamingStyle)namingStyle;
-/*! Sets the current naming style (See docs for DBNamingStyle for more info) */
-+ (void)setNamingStyle:(DBNamingStyle)style;
 
 /*! Returns the table name of the record based on the class name by converting it to lowercase, pluralizing it and removing the class prefix if one is set. */
 + (NSString *)tableName;

@@ -11,7 +11,6 @@
 
 static BOOL enableCache  = YES;
 static BOOL delayWriting = NO;
-static DBNamingStyle namingStyle = DBObjCNamingStyle;
 
 static void *relationshipAssocKey = NULL;
 
@@ -102,16 +101,6 @@ static NSString *classPrefix = nil;
         DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.databaseId, e);
     }
     return NO;
-}
-
-#pragma mark - Naming style
-+ (DBNamingStyle)namingStyle
-{
-    return namingStyle;
-}
-+ (void)setNamingStyle:(DBNamingStyle)style
-{
-    namingStyle = style;
 }
 
 #pragma mark - Relationships
