@@ -37,10 +37,6 @@
 
 @class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
 
-typedef enum {
-    DBKeyOptionUnique = DBCreationOptionUnlessExists + 1
-} DBKeyOptions;
-
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
 @property(readonly, strong) DB *database;
@@ -54,11 +50,6 @@ typedef enum {
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
-
-- (BOOL)createIndex:(NSString *)name
-                 on:(id)fields
-            options:(NSUInteger)options
-              error:(NSError **)err;
 
 - (NSArray *)columns;
 

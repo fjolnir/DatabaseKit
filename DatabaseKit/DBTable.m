@@ -50,33 +50,6 @@
     return _name;
 }
 
-- (BOOL)createIndex:(NSString *)name
-                 on:(id)fields
-            options:(NSUInteger)options
-              error:(NSError **)err
-{
-    NSParameterAssert([fields isKindOfClass:[NSArray class]]
-                      || [fields isKindOfClass:[NSString class]]);
-    NSMutableString *query = [@"CREATE " mutableCopy];
-    if(options & DBKeyOptionUnique)
-        [query appendString:@"UNIQUE "];
-    if(options & DBCreationOptionUnlessExists)
-        [query appendString:@"INDEX IF NOT EXISTS "];
-    else
-        [query appendString:@"INDEX "];
-    [query appendString:name];
-    [query appendString:@" ON "];
-    [query appendString:_name];
-    [query appendString:@"("];
-    if([fields isKindOfClass:[NSArray class]])
-        [query appendString:[fields componentsJoinedByString:@", "]];
-    else
-        [query appendString:fields];
-    [query appendString:@")"];
-
-    return [_database.connection executeSQL:query substitutions:nil error:err] != nil;
-}
-
 - (NSArray *)columns
 {
     return [_database.connection columnsForTable:_name];

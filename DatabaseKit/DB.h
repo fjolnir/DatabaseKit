@@ -36,10 +36,6 @@
 
 @class DBTable;
 
-typedef enum {
-    DBCreationOptionUnlessExists = 1
-} DBCreationOptions;
-
 @interface DB : NSObject
 @property(readonly, strong) DBConnection *connection;
 
