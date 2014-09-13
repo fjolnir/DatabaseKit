@@ -145,6 +145,11 @@ static NSString *classPrefix = nil;
     return self;
 }
 
+- (DBQuery *)query
+{
+    return [_table where:@{ @"id": @(_databaseId) }];
+}
+
 #pragma mark -
 #pragma mark Accessors
 - (id)valueForKey:(NSString *)key

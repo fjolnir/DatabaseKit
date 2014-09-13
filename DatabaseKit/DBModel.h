@@ -96,6 +96,9 @@
 /*! Returns the relationship the record has. */
 + (NSMutableArray *)relationships;
 
+/*! Creates a query with a WHERE clause specifying the record */
+- (DBQuery *)query;
+
 // Accessors
 /*! Sets a value in the database. If caching is enabled, the cache for key will be updated\n
  * <b>Note: </b> Ignores delayedWriting, if you want to use that use setValue:forKey: instead
