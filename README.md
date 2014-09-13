@@ -10,7 +10,7 @@ Features:
  * Supported databases
   - SQLite 3
   - PostgreSQL
-  - And adding support for additional databases is trivial.
+  - And adding support for additional databases is very straightforward.
  * Query composition done purely in Objective-C.
  * Table relationships.
  * If you use a connection pool(Done transparently by default) then query objects are thread safe.
