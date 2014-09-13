@@ -3,6 +3,17 @@
 #import "DBTable.h"
 #import "DBModel+Private.h"
 
+NSString *const DBSelectAll = @"*";
+
+NSString *const DBOrderDescending = @" DESC";
+NSString *const DBOrderAscending  = @" ASC";
+
+NSString *const DBInnerJoin = @" INNER ";
+NSString *const DBLeftJoin  = @" LEFT ";
+
+NSString *const DBUnion    = @" UNION ";
+NSString *const DBUnionAll = @" UNION ALL ";
+
 @interface DBSelectQuery ()
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;

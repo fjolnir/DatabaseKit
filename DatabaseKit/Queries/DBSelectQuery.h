@@ -1,5 +1,16 @@
 #import <DatabaseKit/Queries/DBQuery.h>
 
+extern NSString *const DBSelectAll;
+
+extern NSString *const DBOrderDescending;
+extern NSString *const DBOrderAscending;
+
+extern NSString *const DBInnerJoin;
+extern NSString *const DBLeftJoin;
+
+extern NSString *const DBUnion;
+extern NSString *const DBUnionAll;
+
 @interface DBSelectQuery : DBQuery <NSFastEnumeration>
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;

@@ -4,18 +4,10 @@
 #import "DBModel+Private.h"
 #import "Debug.h"
 
-NSString *const DBSelectAll = @"*";
-
-NSString *const DBOrderDescending = @" DESC";
-NSString *const DBOrderAscending  = @" ASC";
-
-NSString *const DBInnerJoin = @" INNER ";
-NSString *const DBLeftJoin  = @" LEFT ";
-
-NSString *const DBUnion    = @" UNION ";
-NSString *const DBUnionAll = @" UNION ALL ";
-
 static NSString *const DBStringConditions = @"DBStringConditions";
+
+
+
 
 
 @implementation DBQuery
@@ -124,8 +116,10 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         [params addObject:[NSNull null]];
     else
         [params addObject:param];
+
     if(addToken)
         [query appendFormat:@"$%ld", (unsigned long)[params count]];
+    
     return YES;
 }
 

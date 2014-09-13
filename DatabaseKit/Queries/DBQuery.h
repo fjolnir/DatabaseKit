@@ -1,21 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/Connections/DBConnection.h>
 
-extern NSString *const DBSelectAll;
-
-extern NSString *const DBOrderDescending;
-extern NSString *const DBOrderAscending;
-
-extern NSString *const DBInnerJoin;
-extern NSString *const DBLeftJoin;
-
-extern NSString *const DBUnion;
-extern NSString *const DBUnionAll;
-
 @class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
 
 @interface DBQuery : NSObject <NSCopying>
-//@property(readonly, strong) NSString *type;
 @property(readonly, strong) DBTable *table;
 @property(readonly, strong) id fields;
 @property(readonly, strong) NSDictionary *where;
