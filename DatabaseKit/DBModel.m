@@ -252,33 +252,9 @@ static NSString *classPrefix = nil;
                                   range:NSMakeRange(0, [ret length])];
     }
     ret = (NSMutableString *)[[ret stringByDecapitalizingFirstLetter] pluralizedString];
-    if([[self class] namingStyle] == DBRailsNamingStyle)
-        return [ret underscoredString];
     return ret;
 }
 
-+ (NSString *)joinTableNameForModel:(Class)firstModel and:(Class)secondModel
-{
-    NSString *firstTableName  = [firstModel tableName];
-    NSString *secondTableName = [secondModel tableName];
-    if([firstTableName compare:secondTableName options:NSForcedOrderingSearch] == NSOrderedDescending) {
-        NSString *t = firstTableName;
-        firstTableName = secondTableName;
-        secondTableName = t;
-    }
-    NSMutableString *ret = [NSMutableString stringWithString:firstTableName];
-    [ret appendString:@"_"];
-    [ret appendString:secondTableName];
-    return ret;
-}
-- (BOOL)beginTransaction
-{
-    return [_table.database.connection beginTransaction];
-}
-- (BOOL)endTransaction
-{
-    return [_table.database.connection endTransaction];
-}
 
 #pragma mark - Cosmetics
 
