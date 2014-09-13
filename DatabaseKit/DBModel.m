@@ -4,15 +4,8 @@
 #import "DBModel+Private.h"
 #import "Debug.h"
 #import "Utilities/NSString+DBAdditions.h"
-#import "Relationships/DBRelationship.h"
-#import "Relationships/DBRelationshipColumn.h"
 #import <objc/runtime.h>
 #include <unistd.h>
-
-static BOOL enableCache  = YES;
-static BOOL delayWriting = NO;
-
-static void *relationshipAssocKey = NULL;
 
 static NSString *classPrefix = nil;
 
@@ -31,144 +24,59 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
-#pragma mark -
-#pragma mark Caching
-+ (BOOL)enableCache
-{
-    return enableCache;
-}
-+ (void)setEnableCache:(BOOL)flag
-{
-    enableCache = flag;
-}
-- (void)refreshCache
-{
-    id value = nil;
-    for(NSString *key in [_readCache allKeys])
-    {
-        value = [self valueForKey:key];
-        if(value)
-            _readCache[key] = value;
-        else
-            [_readCache removeObjectForKey:key];
-    }
-}
 
 #pragma mark -
 #pragma mark Delayed writing
-+ (BOOL)delayWriting
+
+- (void)didChangeValueForKey:(NSString *)key
 {
-    return delayWriting;
+    if([self.table.columns containsObject:key])
+        [_dirtyKeys addObject:key];
+    [super didChangeValueForKey:key];
 }
-+ (void)setDelayWriting:(BOOL)flag
-{
-    delayWriting = flag;
-}
+
 - (void)save
 {
-    [_table.database.connection beginTransaction];
-    NSString *key, *value;
-    for(int i = 0; i < [_writeCache count]; ++i) {
-        key = [_writeCache allKeys][i];
-        value = _writeCache[key];
-        [self sendValue:value forKey:key];
+    if([_dirtyKeys count] > 0) {
+        [[self query] update:[self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]]];
+        [_dirtyKeys removeAllObjects];
     }
-    [_table.database.connection endTransaction];
-    // purge the cache so we don't write it again
-    [_writeCache  removeAllObjects];
 }
 
 - (BOOL)destroy
 {
     @try {
-        [[[_table delete] where:@{ @"id": @(_databaseId) }] execute];
+        [[[_table delete] where:@{ @"identifier": _identifier }] execute];
         return YES;
     }
     @catch(NSException *e) {
-        DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.databaseId, e);
+        DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
     }
     return NO;
 }
 
-#pragma mark - Relationships
-+ (NSMutableArray *)relationships
-{
-    NSMutableArray *relationships = objc_getAssociatedObject(self, &relationshipAssocKey);
-    if(!relationships) {
-        @synchronized(self) {
-            if((relationships = objc_getAssociatedObject(self, &relationshipAssocKey)))
-                return relationships;
-            relationships = [NSMutableArray array];
-            objc_setAssociatedObject(self, &relationshipAssocKey, relationships, OBJC_ASSOCIATION_RETAIN);
-        }
-    }
-    return relationships;
-}
-
 #pragma mark - Entry retrieval
 
-- (id)initWithTable:(DBTable *)aTable databaseId:(NSUInteger)aDatabaseId
+- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier
 {
     if(!(self = [self init]))
         return nil;
-    NSParameterAssert(aTable && aDatabaseId > 0);
+    NSParameterAssert(aTable && aIdentifier > 0);
     self.table      = aTable;
-    self.databaseId = aDatabaseId;
+    self.identifier = aIdentifier;
 
-    _readCache   = [[NSMutableDictionary alloc] init];
-    _writeCache  = [[NSMutableDictionary alloc] init];
-    _addCache    = [[NSMutableArray alloc] init];
-    _removeCache = [[NSMutableArray alloc] init];
-
-    // Add the relationships
-    self.relationships = [NSMutableArray array];
-    DBRelationshipColumn *columnRelationship = [[DBRelationshipColumn alloc] initWithName:nil className:nil record:self];
-    [self.relationships addObject:columnRelationship];
-    for(__strong DBRelationship *relationship in [[self class] relationships]) {
-        relationship = [relationship copyUsingRecord:self];
-        [self.relationships addObject:relationship];
-    }
+    _dirtyKeys   = [NSMutableSet new];
 
     return self;
 }
 
 - (DBQuery *)query
 {
-    return [_table where:@{ @"id": @(_databaseId) }];
+    return [_table where:@{ @"identifier": _identifier }];
 }
 
 #pragma mark -
 #pragma mark Accessors
-- (id)valueForKey:(NSString *)key
-{
-    // Check if we have a cached value and if caching is enabled
-    id cached;
-    if(enableCache && (cached = _readCache[key]))
-        return cached;
-
-    // If not, we retrieve the value, return it and cache it if we should
-    id value = [[self relationshipForKey:key] retrieveRecordForKey:key];
-    if(value && [DBModel enableCache])
-        _readCache[key] = value;
-    return value;
-}
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-    if(delayWriting)
-        _writeCache[key] = value;
-    else
-        [self sendValue:value forKey:key];
-}
-
-- (void)sendValue:(id)value forKey:(NSString *)key
-{
-    if([DBModel enableCache])
-        _readCache[key] = value;
-
-    DBRelationship *relationship = [self relationshipForKey:key];
-    if(relationship)
-        [relationship sendRecord:value forKey:key];
-}
 
 - (id)objectForKeyedSubscript:(id)key
 {
@@ -180,55 +88,13 @@ static NSString *classPrefix = nil;
     [self setValue:obj forKey:(NSString *)key];
 }
 
-// Called by KVC when it doesn't find a property/ivar for a given key.
-- (id)valueForUndefinedKey:(NSString *)key
-{
-    return [self valueForKey:key];
-}
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-    [self setValue:value forKey:key];
-}
-
-
-// This accessor adds a record to either a has many or has and belongs to many relationship
-- (void)addRecord:(id)record forKey:(NSString *)key
-{
-    [self addRecord:record forKey:key ignoreCache:NO];
-}
-
-// This accessor removes a record from either a has many or has and belongs to many relationship
-- (void)removeRecord:(id)record forKey:(NSString *)key
-{
-    [self removeRecord:record forKey:key ignoreCache:NO];
-}
-
-- (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
-{
-    if([DBModel delayWriting] && !ignoreCache)
-        [_addCache addObject:@{@"key": key, @"record": record}];
-    else
-        [[self relationshipForKey:key] addRecord:record forKey:key];
-}
-- (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache
-{
-    if([DBModel delayWriting] && !ignoreCache)
-        [_removeCache addObject:@{@"key": key, @"record": record}];
-    else
-        [[self relationshipForKey:key] removeRecord:record forKey:key];
-}
 
 #pragma mark -
 #pragma mark Database interface
-- (NSArray *)columns
-{
-    if(!_columnCache)
-        _columnCache = [_table columns];
-    return _columnCache;
-}
+
 + (NSString *)idColumnForModel:(Class)modelClass
 {
-    return [NSString stringWithFormat:@"%@Id", [[modelClass tableName] singularizedString]];
+    return [NSString stringWithFormat:@"%@Identifier", [[modelClass tableName] singularizedString]];
 }
 + (NSString *)idColumn
 {
@@ -252,8 +118,9 @@ static NSString *classPrefix = nil;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self databaseId]];
-    for(NSString *column in [self columns]) {
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self identifier]];
+    for(NSString *column in self.table.columns) {
+        if(![column isEqualToString:@"identifier"] && ![column hasSuffix:@"Identifier"])
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
     [description appendString:@"}"];
@@ -263,7 +130,7 @@ static NSString *classPrefix = nil;
 {
     if(![anObject isMemberOfClass:[self class]])
         return NO;
-    if([anObject databaseId] != [self databaseId])
+    if([anObject identifier] != [self identifier])
         return NO;
     if(![[[anObject class] tableName] isEqualToString:[[self class] tableName]])
         return NO;

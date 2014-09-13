@@ -149,13 +149,17 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     if(!_rows || _dirty)
         _rows = [self execute];
+
     NSDictionary *row = _rows[idx];
     Class modelClass = [_table modelClass];
-    if(modelClass && row[@"id"]) {
+    if(modelClass && row[@"identifier"]) {
         DBModel *model = [[modelClass alloc] initWithTable:_table
-                                                databaseId:[row[@"id"] unsignedIntegerValue]];
-        if(_fields == nil && [DBModel enableCache])
-            model.readCache = [row mutableCopy];
+                                                identifier:row[@"identifier"]];
+        for(NSString *key in row) {
+            if(![key isEqualToString:@"identifier"] && ![key hasSuffix:@"Identifier"])
+                [model setValue:row[key] forKey:key];
+        }
+        [model.dirtyKeys removeAllObjects];
         return model;
     }
     return row;

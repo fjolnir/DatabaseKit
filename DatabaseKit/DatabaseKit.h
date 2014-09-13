@@ -43,9 +43,4 @@
 #import <DatabaseKit/Connections/DBSQLiteConnection.h>
 #import <DatabaseKit/Connections/DBPostgresConnection.h>
 
-#import <DatabaseKit/Relationships/DBRelationship.h>
-#import <DatabaseKit/Relationships/DBRelationshipHasMany.h>
-#import <DatabaseKit/Relationships/DBRelationshipHasOne.h>
-#import <DatabaseKit/Relationships/DBRelationshipColumn.h>
-
 #endif /* _ACTIVERECORD_H_ */

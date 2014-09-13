@@ -74,7 +74,7 @@ typedef id (^DBConnectionBlock)();
  * @code
  * [myConnection executeSQL:@"INSERT INTO mymodel(id, name) VALUES(:id, :name)"
  *            substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
- *                           myId, @"id",
+ *                           myId, @"identifier",
  *                           name, @"name"]];
  * @endcode
  */

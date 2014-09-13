@@ -11,51 +11,10 @@
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/DatabaseKit.h>
 #import "DBUnitTestUtilities.h"
+#import "DBModelTest.h"
 
 
 @class TEAnimal, TEPerson;
-
-@interface TEModel : DBModel
-@property(readwrite, strong) NSString *name, *info;
-@end
-@interface TEModel (Accessors)
-- (NSArray *)people;
-- (void)setPeople:(NSArray *)people;
-- (TEAnimal *)animal;
-- (void)setAnimal:(TEAnimal *)animal;
-@end
-
-@interface TEPerson : DBModel {
-    
-}
-@property(readwrite, weak) NSString *userName, *realName;
-@end
-@interface TEPerson (Accessors)
-- (NSArray *)animals;
-- (TEModel *)model;
-- (NSArray *)belgians;
-@end
-
-@interface TEBelgian : DBModel {
-    
-}
-@end
-@interface TEBelgian (Accessors)
-- (TEPerson *)person;
-@end
-
-
-@interface TEAnimal : DBModel {
-    
-}
-@end
-@interface TEAnimal (Accessors)
-- (NSString *)species;
-- (NSString *)nickname;
-- (TEModel *)model;
-- (void)setModel:(TEModel *)animal;
-- (NSArray *)people;
-@end
 
 
 @interface DBModelTest : XCTestCase {
@@ -94,9 +53,9 @@
 - (void)testDestroy
 {
     TEModel *model = [[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
-    NSUInteger theId = model.databaseId;
+    NSString *theId = model.identifier;
     XCTAssertTrue([model destroy], @"Couldn't delete record");
-    NSArray *result = [[[db[@"models"] select] where:@{ @"id": @(theId) }] execute];
+    NSArray *result = [[[db[@"models"] select] where:@{ @"identifier": theId }] execute];
     XCTAssertEqual([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 
@@ -119,72 +78,12 @@
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
 
-- (void)testHasMany
-{
-    // First test retrieving
-    TEModel *model = [[[db[@"models"] select] limit:@1] first];
-    NSArray *originalPeople = [model people];
-    XCTAssertTrue(([originalPeople count] == 2), @"TEModel should have 2 TEPeople but had %lu", [originalPeople count]);
-
-    // Then test sending
-    TEPerson *aPerson = [[[db[@"people"] insert:@{@"realName": @"frankenstein", @"userName": @"frank"}] execute] firstObject];
-    NSLog(@"inserted: %@ %@", aPerson, [aPerson class]);
-
-    model.people = [originalPeople arrayByAddingObjectsFromArray:@[aPerson]];
-    NSMutableArray *laterPeople = [originalPeople mutableCopy];
-    [laterPeople addObject:aPerson];
-
-    XCTAssertTrue([[model people] count] == [laterPeople count], @"person count should've been %lu but was %lu", [laterPeople count], [[model people] count]);
-
-    [model setPeople:@[aPerson]];
-    XCTAssertTrue([[model people] count] == 1, @"model should only have one person");
-    XCTAssertTrue([[model people][0] databaseId] == [aPerson databaseId], @"person id should've been %lu but was %lu", [aPerson databaseId], [[model people][0] databaseId]);
-}
-
-- (void)testHasOne
-{
-    TEModel *model = [[[db[@"models"] select] limit:@1] first];
-    TEAnimal *animal = [[[db[@"animals"] select] limit:@1] first];
-
-    XCTAssertTrue(([animal databaseId] == [[model animal] databaseId]), @"%@ != %@ !!", animal, [model animal]);
-    return;
-
-    // Then test sending
-    TEAnimal *anAnimal = [[[db[@"animals"] insert:@{@"species": @"Leopard", @"nickname": @"Godfried"}] execute] firstObject];
-
-    [model setAnimal:anAnimal];
-    XCTAssertTrue( ([[model animal] databaseId] == [anAnimal databaseId]), @"animal id was wrong (%lu != %lu)", [[model animal] databaseId], [anAnimal databaseId]);
-}
-
-- (void)testDelayedWriting
-{
-    [DBModel setDelayWriting:YES];
-    TEModel *model = [[[db[@"models"] select] limit:@1] first];
-    [model setName:@"delayed"];
-    XCTAssertEqualObjects(@"a name", [model name], @"model name was saved prematurely!");
-    [model save];
-    XCTAssertEqualObjects(@"delayed", [model name], @"model name was not saved!");
-    [DBModel setDelayWriting:NO];
-}
 @end
 
 @implementation TEModel
-@dynamic name, info;
-+ (void)initialize
-{
-    [[self relationships] addObject:[DBRelationshipHasMany relationshipWithName:@"people"]];
-    [[self relationships] addObject:[DBRelationshipHasOne relationshipWithName:@"animal"]];
-
-}
 @end
 
 @implementation TEPerson
-@dynamic userName, realName;
-+ (void)initialize
-{
-    [[self relationships] addObject:[DBRelationshipHasMany relationshipWithName:@"belgians"]];
-}
-
 @end
 
 @implementation TEAnimal

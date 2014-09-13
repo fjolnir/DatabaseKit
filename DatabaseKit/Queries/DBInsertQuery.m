@@ -12,6 +12,15 @@
     return @"INSERT ";
 }
 
+- (void)setFields:(id)fields
+{
+    if([_table modelClass] && !fields[@"identifier"]) {
+        fields = [fields mutableCopy];
+        fields[@"identifier"] = [[NSUUID UUID] UUIDString];
+    }
+    [super setFields:fields];
+}
+
 - (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
 {
     return aQuery.class == self.class
@@ -63,10 +72,9 @@
 
     // For inserts where a model class is available, we return the inserted object
     Class modelClass;
-    if(ret && (modelClass = [_table modelClass])) {
-       // Model classes require there to be an auto incremented id column so we just select the last id
-       return @[[[[_table select] order:DBOrderDescending by:@[@"id"]] limit:@1][0]];
-    } else
+    if(ret && (modelClass = [_table modelClass]))
+        return @[[[[_table select] where:@{ @"identifier": _fields[@"identifier"] }] first]];
+    else
         return ret;
 }
 

@@ -50,15 +50,14 @@
  */
 @interface DBModel : NSObject
 @property(readonly, strong) DBTable *table;
-@property(readwrite, strong) NSMutableArray *relationships;
-@property(readwrite) NSUInteger databaseId;
+@property(readwrite, copy) NSString *identifier;
 
 /*! Creates a reference to the record corresponding to id\n
  * Note: Does not check if the record exists
  * @param aConnection the connection to use
  * @param id The id of the record to retrieve
  */
-- (id)initWithTable:(DBTable *)aTable databaseId:(NSUInteger)aDatabaseId;
+- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n
@@ -68,62 +67,24 @@
 /*! Returns the class prefix for models */
 + (NSString *)classPrefix;
 
-/*! Returns wether DatabaseKit will cache records retrieved from the database */
-+ (BOOL)enableCache;
-/*! Sets wether DatabaseKit will cache records retrieved from the database */
-+ (void)setEnableCache:(BOOL)flag;
-/*! Refetches all cached values */
-- (void)refreshCache;
-
-/*! Returns wether DBModel and it's subclasses will hold off writing changes to the database until told to save */
-+ (BOOL)delayWriting;
-/*! Sets wether DBModel and it's subclasses will hold off writing changes to the database until told to save */
-+ (void)setDelayWriting:(BOOL)flag;
-/*! Saves queued changes \n
- * Does nothing if delayWriting is NO
+/*! Saves changes to the database
  */
 - (void)save;
 
-/*! Deletes a record from the database\n
- * Deletes instantly regardless of wether delayWriting is set to YES\n
- * If the record is successfully deleted the model object is released
+/*! Deletes a record from the database
  */
 - (BOOL)destroy;
 
 /*! Returns the table name of the record based on the class name by converting it to lowercase, pluralizing it and removing the class prefix if one is set. */
 + (NSString *)tableName;
 
-/*! Returns the relationship the record has. */
-+ (NSMutableArray *)relationships;
-
 /*! Creates a query with a WHERE clause specifying the record */
 - (DBQuery *)query;
 
-// Accessors
-/*! Sets a value in the database. If caching is enabled, the cache for key will be updated\n
- * <b>Note: </b> Ignores delayedWriting, if you want to use that use setValue:forKey: instead
- * @param key A valid key, can refer to either a column or a relationship
- * @param value The value to set, can be any object recognized by DBKit
- */
-- (void)sendValue:(id)value forKey:(NSString *)key;
-
-/*! Sets a value in the database. If caching is enabled, the cache for key will be updated\n
- * If delayedWriting is YES it will hold off writing changes to the database until told to save
- * @param key A valid key, can refer to either a column or a relationship
- * @param value The value to set, can be any object recognized by DBKit
- */
-- (void)setValue:(id)obj forKey:(NSString *)key;
-/*!
- * Retrieves a value from the database\n
- * If caching is enabled the method will check if the value for the specified key has been cached,
- * if it has, then the cached value is returned otherwise it will be fetched from the database
- * @param key A valid key, can refer to either a column or a relationship
- */
-- (id)valueForKey:(NSString *)key;
 /*!
  * Retrieves a value from the database\n
  * Same as retrieveValueForKey:
- * @param key A valid key, can refer to either a column or a relationship
+ * @param key A valid column
  */
 - (id)objectForKeyedSubscript:(id)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;

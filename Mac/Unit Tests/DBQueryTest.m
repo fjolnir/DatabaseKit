@@ -19,8 +19,8 @@
 
 - (void)testBuilding
 {
-    XCTAssertEqualObjects([[[[Q select] where:@{ @"foo": @1 }] order:DBOrderDescending by:@[@"id"]] toString],
-                          @"SELECT * FROM aTable WHERE \"foo\"=$1 ORDER BY \"id\" DESC", @"");
+    XCTAssertEqualObjects([[[[Q select] where:@{ @"foo": @1 }] order:DBOrderDescending by:@[@"index"]] toString],
+                          @"SELECT * FROM aTable WHERE \"foo\"=$1 ORDER BY \"index\" DESC", @"");
     
     NSArray *fields = @[@"a", @"b", @"c"];
     XCTAssertEqualObjects([[Q select:fields] toString],
