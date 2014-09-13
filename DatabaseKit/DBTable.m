@@ -123,6 +123,10 @@
 {
     return [[DBSelectQuery withTable:self] limit:limit];
 }
+- (DBRawQuery *)rawQuery:(NSString *)SQL
+{
+    return [[DBQuery withTable:self] rawQuery:SQL];
+}
 - (NSUInteger)count
 {
     return [[DBSelectQuery withTable:self] count];

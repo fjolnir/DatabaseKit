@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/Connections/DBConnection.h>
 
-@class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
+@class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
 
 @interface DBQuery : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
@@ -23,6 +23,7 @@
 - (DBInsertQuery *)insert:(NSDictionary *)fields;
 - (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
+- (DBRawQuery *)rawQuery:(NSString *)SQL;
 
 - (instancetype)where:(id)conds;
 - (instancetype)appendWhere:(id)conds;
@@ -46,3 +47,4 @@
 #import <DatabaseKit/Queries/DBSelectQuery.h>
 #import <DatabaseKit/Queries/DBInsertQuery.h>
 #import <DatabaseKit/Queries/DBDeleteQuery.h>
+#import <DatabaseKit/Queries/DBRawQuery.h>

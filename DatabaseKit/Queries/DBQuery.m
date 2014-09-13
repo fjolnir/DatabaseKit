@@ -97,6 +97,13 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     ret.fields = nil;
     return ret;
 }
+- (DBRawQuery *)rawQuery:(NSString *)SQL
+{
+    DBRawQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
+    [ret setValue:SQL forKey:@"SQL"];
+    return ret;
+}
+
 - (instancetype)where:(id)conds
 {
     NSParameterAssert(IsArr(conds) || IsDic(conds) || IsStr(conds));

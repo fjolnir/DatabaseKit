@@ -35,7 +35,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
 
-@class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
+@class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
 
 typedef enum {
     DBKeyOptionUnique = DBCreationOptionUnlessExists + 1
@@ -71,5 +71,7 @@ typedef enum {
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
 - (DBSelectQuery *)limit:(NSNumber *)limit;
+- (DBRawQuery *)rawQuery:(NSString *)SQL;
+
 - (NSUInteger)count;
 @end
