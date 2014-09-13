@@ -2,6 +2,7 @@
 #import "DBQuery+Private.h"
 #import "DBTable.h"
 #import "DBModel+Private.h"
+#import "DBUtilities.h"
 
 NSString *const DBSelectAll = @"*";
 
@@ -30,6 +31,34 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     return @"SELECT ";
 }
+
+- (BOOL)canCombineWithQuery:(DBSelectQuery * const)aQuery
+{
+    return aQuery.class == self.class
+        && DBEqual(_where, aQuery.where)
+        && DBEqual(_table,aQuery.table)
+        && DBEqual(_order, aQuery.order)
+        && DBEqual(_orderedBy, aQuery.orderedBy)
+        && DBEqual(_groupedBy, aQuery.groupedBy)
+        && DBEqual(_limit, aQuery.limit)
+        && DBEqual(_offset, aQuery.offset)
+        && !_unionQuery && !aQuery.unionType;
+}
+
+- (instancetype)combineWith:(DBQuery * const)aQuery
+{
+    NSParameterAssert([self canCombineWithQuery:aQuery]);
+
+    if([aQuery isEqual:self])
+        return self;
+
+    DBSelectQuery * const combined = [self copy];
+    NSMutableDictionary *fields = [_fields mutableCopy];
+    [fields addEntriesFromDictionary:aQuery.fields];
+    combined.fields = fields;
+    return combined;
+}
+
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {

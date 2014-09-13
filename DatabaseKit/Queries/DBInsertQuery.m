@@ -3,12 +3,34 @@
 #import "DBSelectQuery.h"
 #import "DBTable.h"
 #import "DBModel.h"
+#import "DBUtilities.h"
 
 @implementation DBInsertQuery
 
 + (NSString *)_queryType
 {
     return @"INSERT ";
+}
+
+- (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
+{
+    return aQuery.class == self.class
+        && DBEqual(_where, aQuery.where)
+        && DBEqual(_table, aQuery.table);
+}
+
+- (instancetype)combineWith:(DBQuery * const)aQuery
+{
+    NSParameterAssert([self canCombineWithQuery:aQuery]);
+
+    if([aQuery isEqual:self])
+        return self;
+
+    DBInsertQuery * const combined = [self copy];
+    NSMutableDictionary *fields = [_fields mutableCopy];
+    [fields addEntriesFromDictionary:aQuery.fields];
+    combined.fields = fields;
+    return combined;
 }
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p

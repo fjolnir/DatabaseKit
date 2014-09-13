@@ -7,10 +7,43 @@
 static NSString *const DBStringConditions = @"DBStringConditions";
 
 
-
-
-
 @implementation DBQuery
+
++ (NSArray *)combineQueries:(NSArray *)aQueries
+{
+    if([aQueries count] <= 1)
+        return aQueries;
+
+    NSMutableArray * const result = [aQueries mutableCopy];
+
+    NSUInteger leftIdx = 0;
+    while(leftIdx < [result count]) {
+        DBQuery * const leftQuery = result[leftIdx];
+        NSUInteger const rightIdx = [result indexOfObjectPassingTest:^BOOL(DBQuery *query, NSUInteger idx, BOOL *stop) {
+            return idx > leftIdx && [leftQuery canCombineWithQuery:query];
+        }];
+
+        if(rightIdx != NSNotFound) {
+            DBQuery * const combined = [leftQuery combineWith:result[rightIdx]];
+            [result replaceObjectAtIndex:leftIdx withObject:combined];
+            [result removeObjectAtIndex:rightIdx];
+        } else
+            ++leftIdx;
+    }
+    return result;
+}
+
+- (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
+{
+    return NO;
+}
+
+- (instancetype)combineWith:(DBQuery * const)aQuery
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented by %@", NSStringFromSelector(_cmd), [self class]];
+    return nil;
+}
 
 + (NSString *)_queryType
 {

@@ -10,6 +10,10 @@
 
 + (instancetype)withTable:(DBTable *)table;
 
++ (NSArray *)combineQueries:(NSArray *)aQueries;
+- (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
+- (instancetype)combineWith:(DBQuery *)aQuery;
+
 - (NSArray *)execute;
 - (NSArray *)execute:(NSError **)err;
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
