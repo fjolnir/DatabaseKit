@@ -14,9 +14,9 @@
 
 - (void)setFields:(id)fields
 {
-    if([_table modelClass] && !fields[@"identifier"]) {
+    if([_table modelClass] && !fields[kDBIdentifierColumn]) {
         fields = [fields mutableCopy];
-        fields[@"identifier"] = [[NSUUID UUID] UUIDString];
+        fields[kDBIdentifierColumn] = [[NSUUID UUID] UUIDString];
     }
     [super setFields:fields];
 }
@@ -73,7 +73,7 @@
     // For inserts where a model class is available, we return the inserted object
     Class modelClass;
     if(ret && (modelClass = [_table modelClass]))
-        return @[[[[_table select] where:@{ @"identifier": _fields[@"identifier"] }] first]];
+        return @[[[[_table select] where:@{ kDBIdentifierColumn: _fields[kDBIdentifierColumn] }] first]];
     else
         return ret;
 }

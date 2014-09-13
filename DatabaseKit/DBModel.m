@@ -46,7 +46,7 @@ static NSString *classPrefix = nil;
 - (BOOL)destroy
 {
     @try {
-        [[[_table delete] where:@{ @"identifier": _identifier }] execute];
+        [[[_table delete] where:@{ kDBIdentifierColumn: _identifier }] execute];
         return YES;
     }
     @catch(NSException *e) {
@@ -72,7 +72,7 @@ static NSString *classPrefix = nil;
 
 - (DBQuery *)query
 {
-    return [_table where:@{ @"identifier": _identifier }];
+    return [_table where:@{ kDBIdentifierColumn: _identifier }];
 }
 
 #pragma mark -
@@ -92,14 +92,6 @@ static NSString *classPrefix = nil;
 #pragma mark -
 #pragma mark Database interface
 
-+ (NSString *)idColumnForModel:(Class)modelClass
-{
-    return [NSString stringWithFormat:@"%@Identifier", [[modelClass tableName] singularizedString]];
-}
-+ (NSString *)idColumn
-{
-    return [self idColumnForModel:self];
-}
 + (NSString *)tableName
 {
     NSMutableString *ret = [[self className] mutableCopy];
@@ -120,23 +112,21 @@ static NSString *classPrefix = nil;
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self identifier]];
     for(NSString *column in self.table.columns) {
-        if(![column isEqualToString:@"identifier"] && ![column hasSuffix:@"Identifier"])
+        if(![column isEqualToString:kDBIdentifierColumn] && ![column hasSuffix:@"Identifier"])
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
     [description appendString:@"}"];
     return description;
 }
+
+- (NSUInteger)hash
+{
+    return [_table hash] ^ [_identifier hash];
+}
 - (BOOL)isEqual:(id)anObject
 {
-    if(![anObject isMemberOfClass:[self class]])
-        return NO;
-    if([anObject identifier] != [self identifier])
-        return NO;
-    if(![[[anObject class] tableName] isEqualToString:[[self class] tableName]])
-        return NO;
-    return YES;
+    return [anObject isMemberOfClass:[self class]]
+        && [[anObject identifier] isEqual:[self identifier]];
 }
-
-#pragma mark - Cleanup
 
 @end

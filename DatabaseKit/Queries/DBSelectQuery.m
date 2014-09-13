@@ -152,11 +152,11 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
     NSDictionary *row = _rows[idx];
     Class modelClass = [_table modelClass];
-    if(modelClass && row[@"identifier"]) {
+    if(modelClass && row[kDBIdentifierColumn]) {
         DBModel *model = [[modelClass alloc] initWithTable:_table
-                                                identifier:row[@"identifier"]];
+                                                identifier:row[kDBIdentifierColumn]];
         for(NSString *key in row) {
-            if(![key isEqualToString:@"identifier"] && ![key hasSuffix:@"Identifier"])
+            if(![key isEqualToString:kDBIdentifierColumn] && ![key hasSuffix:@"Identifier"])
                 [model setValue:row[key] forKey:key];
         }
         [model.dirtyKeys removeAllObjects];

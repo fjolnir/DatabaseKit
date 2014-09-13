@@ -36,16 +36,8 @@
 
 #import "DBModel.h"
 
-#pragma mark -
-#pragma mark Private method definitions
 @interface DBModel ()
 @property(readwrite, retain) NSMutableSet *dirtyKeys;
-
-// Returns the name of the id column (foreign) for a model DBModel would mean modelId
-+ (NSString *)idColumnForModel:(Class)modelClass;
-+ (NSString *)idColumn;
 @end
-
-/*! @endcond */
 
 #endif /* _DBBASEPRIVATE_H_ */

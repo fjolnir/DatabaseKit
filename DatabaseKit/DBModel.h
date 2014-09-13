@@ -38,6 +38,8 @@
 #import <DatabaseKit/DB.h>
 #import <DatabaseKit/Connections/DBConnection.h>
 
+static NSString * const kDBIdentifierColumn = @"identifier";
+
 @class DBTable;
 
 /*!
