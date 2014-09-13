@@ -61,8 +61,6 @@ typedef enum {
 // Returns the name of the id column (foreign) for a model DBModel would mean modelId
 + (NSString *)idColumnForModel:(Class)modelClass;
 + (NSString *)idColumn;
-// Returns the name of the join table for two models
-+ (NSString *)joinTableNameForModel:(Class)firstModel and:(Class)secondModel;
 
 - (void)addRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache;
 - (void)removeRecord:(id)record forKey:(NSString *)key ignoreCache:(BOOL)ignoreCache;

@@ -126,26 +126,6 @@
 - (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 - (void)addRecord:(id)record forKey:(NSString *)key;
 - (void)removeRecord:(id)record forKey:(NSString *)key;
-
-/*!
- * Retrieves a value from the database\n
- * Caching has not been implemented for this method.
- * @param key A valid key, can refer to either a column or a relationship
- * @param whereSQL A valid SQL WHERE statement (omitting the actual "WHERE")
- * @param orderSQL A valud SQL ORDER statement (omitting the actual "ORDER BY")
- * @param limit The maximum number of records to retrieve
- */
-- (id)retrieveRecordForKey:(NSString *)key
-                    filter:(id)conditions
-                     order:(NSString *)order
-                        by:(id)orderByFields
-                     limit:(NSNumber *)limit;
-
-// Transactions
-/*! Begins a database transaction */
-- (BOOL)beginTransaction;
-/*! Ends a database transaction */
-- (BOOL)endTransaction;
 @end
 
 #endif /* _DBBASE_H_ */

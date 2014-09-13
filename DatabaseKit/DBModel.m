@@ -155,7 +155,7 @@ static NSString *classPrefix = nil;
         return cached;
 
     // If not, we retrieve the value, return it and cache it if we should
-    id value = [self retrieveRecordForKey:key filter:nil order:nil by:nil limit:nil];
+    id value = [[self relationshipForKey:key] retrieveRecordForKey:key];
     if(value && [DBModel enableCache])
         _readCache[key] = value;
     return value;
@@ -168,18 +168,6 @@ static NSString *classPrefix = nil;
         [self sendValue:value forKey:key];
 }
 
-- (id)retrieveRecordForKey:(NSString *)key
-                    filter:(id)conditions
-                     order:(NSString *)order
-                        by:(id)orderByFields
-                     limit:(NSNumber *)limit
-{
-    return [[self relationshipForKey:key] retrieveRecordForKey:key
-                                                        filter:conditions
-                                                         order:order
-                                                            by:orderByFields
-                                                         limit:limit];
-}
 - (void)sendValue:(id)value forKey:(NSString *)key
 {
     if([DBModel enableCache])
