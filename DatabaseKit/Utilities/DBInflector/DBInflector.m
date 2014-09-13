@@ -26,8 +26,9 @@ static DBInflector *sharedInstance = nil;
     self.irregulars = @[
         #import "irregulars.inc"
     ];
-    self.uncountables = @[
+    self.uncountables = [NSSet setWithObjects:
         #import "uncountables.inc"
+        , nil
     ];
     self.plurals = @[
         #import "plurals.inc"
@@ -43,12 +44,10 @@ static DBInflector *sharedInstance = nil;
     NSString *pluralized = [pluralCache objectForKey:word];
     if(pluralized)
         return pluralized;
-    
-    for(NSDictionary *inflection in self.uncountables) {
-        if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
-            pluralized = word;
-            goto done;
-        }
+
+    if([self.uncountables containsObject:[word lowercaseString]]) {
+        pluralized = word;
+        goto done;
     }
     
     for(NSDictionary *inflection in self.irregulars) {
@@ -80,8 +79,8 @@ done:
     if(singularized)
         return singularized;
     
-    for(NSDictionary *inflection in self.uncountables) {
-        if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
+    for(NSString *pattern in self.uncountables) {
+        if([pattern isEqualToString:[word lowercaseString]]) {
             singularized = word;
             goto done;
         }

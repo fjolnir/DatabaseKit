@@ -40,13 +40,10 @@
  * by writing a plist configuration for it)
  */
 @interface DBInflector : NSObject {
-  NSArray *irregulars;
-  NSArray *uncountables;
-  NSArray *plurals;
-  NSArray *singulars;
   NSCache *singularCache, *pluralCache;
 }
-@property(readwrite, strong) NSArray *irregulars, *uncountables, *plurals, *singulars;
+@property(readwrite, strong) NSSet *uncountables;
+@property(readwrite, strong) NSArray *irregulars, *plurals, *singulars;
 
 /*! Returns the shared inflector object */
 + (DBInflector *)sharedInflector;

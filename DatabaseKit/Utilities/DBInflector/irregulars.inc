@@ -1,25 +1,20 @@
 @{
     @"pattern": @"move",
-    @"replacement": @"moves",
-    @"type": @"irregular"
+    @"replacement": @"moves"
 },
 @{
     @"pattern": @"sex",
-    @"replacement": @"sexes",
-    @"type": @"irregular"
+    @"replacement": @"sexes"
 },
 @{
     @"pattern": @"child",
-    @"replacement": @"children",
-    @"type": @"irregular"
+    @"replacement": @"children"
 },
 @{
     @"pattern": @"man",
-    @"replacement": @"men",
-    @"type": @"irregular"
+    @"replacement": @"men"
 },
 @{
     @"pattern": @"person",
-    @"replacement": @"people",
-    @"type": @"irregular"
+    @"replacement": @"people"
 }

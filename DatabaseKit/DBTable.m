@@ -14,9 +14,9 @@
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 {
-    DBTable *ret   = [self new];
-    ret.database   = database;
-    ret.name       = name;
+    DBTable *ret = [self new];
+    ret.database = database;
+    ret.name     = name;
     return ret;
 }
 
