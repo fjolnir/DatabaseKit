@@ -52,13 +52,6 @@
     return _name;
 }
 
-- (BOOL)isEqual:(id)object
-{
-    return [object isKindOfClass:[DBTable class]]
-        && [_name        isEqual:[(DBTable*)object name]]
-        && [_database    isEqual:[(DBTable*)object database]];
-}
-
 - (BOOL)createIndex:(NSString *)name
                  on:(id)fields
             options:(NSUInteger)options
@@ -133,6 +126,18 @@
 - (NSUInteger)count
 {
     return [[DBSelectQuery withTable:self] count];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    return [object isKindOfClass:[DBTable class]]
+        && [_name        isEqual:[(DBTable*)object name]]
+        && _database == [(DBTable *)object database];
+}
+
+- (NSUInteger)hash
+{
+    return [_name hash] ^ [_database hash];
 }
 
 @end
