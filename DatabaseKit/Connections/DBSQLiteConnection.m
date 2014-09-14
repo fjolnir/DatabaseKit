@@ -21,7 +21,9 @@
     sqlite3 *_connection;
     NSMutableDictionary *_cachedStatements;
 }
-- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outError;
+- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
+                             tail:(NSString **)outTail
+                            error:(NSError **)outError;
 - (void)finalizeQuery:(sqlite3_stmt *)query;
 - (NSArray *)columnsForQuery:(sqlite3_stmt *)query;
 - (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query;
@@ -69,7 +71,7 @@
                                    userInfo:@{NSLocalizedDescriptionKey: @(errStr),
                          NSFilePathErrorKey:_path}];
         }
-        return NULL;
+        return nil;
     }
     return self;
 }
@@ -93,7 +95,10 @@
                       isDict);
     DBLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
     // Prepare the query
-    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:sql error:outErr];
+    NSString *tail = nil;
+    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:sql
+                                                   tail:&tail
+                                                  error:outErr];
     if(!queryByteCode) {
         DBLog(@"Unable to prepare bytecode for SQLite query: '%@'", sql);
         return nil;
@@ -174,7 +179,12 @@
         }
     }
 
-    return rowArray;
+    if(tail)
+        return [self executeSQL:tail
+           substitutions:substitutions
+                   error:outErr];
+    else
+        return rowArray;
 }
 
 - (NSArray *)columnsForTable:(NSString *)tableName
@@ -182,7 +192,7 @@
     NSMutableString *query = [NSMutableString stringWithString:@"SELECT * FROM "];
     [query appendString:tableName];
     [query appendString:@" LIMIT 0"];
-    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:query error:NULL];
+    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:query tail:NULL error:NULL];
     if(!queryByteCode)
         return nil;
     return [self columnsForQuery:queryByteCode];
@@ -216,7 +226,9 @@
     }
     return columnNames;
 }
-- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query error:(NSError **)outErr
+- (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
+                             tail:(NSString **)aoTail
+                            error:(NSError **)outErr
 {
     if(LOG_QUERIES)
         DBDebugLog(@"Preparing query: %@", query);
@@ -228,12 +240,12 @@
         return queryByteCode;
     }
 
-    const char *tail;
+    const char *tailBuf = NULL;
     int err = sqlite3_prepare_v2(_connection,
                                  [query UTF8String],
-                                 [query lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+                                 (int)[query lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
                                  &queryByteCode,
-                                 &tail);
+                                 &tailBuf);
     if(err != SQLITE_OK || queryByteCode == NULL) {
         if(outErr)
             *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
@@ -243,7 +255,12 @@
         return NULL;
     }
 
+    NSString *tail = [[NSString stringWithUTF8String:tailBuf] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([tail length] == 0)
     _cachedStatements[query] = [NSValue valueWithPointer:queryByteCode];
+    else if(aoTail)
+        *aoTail = tail;
+
     return queryByteCode;
 }
 - (void)finalizeQuery:(sqlite3_stmt *)query
