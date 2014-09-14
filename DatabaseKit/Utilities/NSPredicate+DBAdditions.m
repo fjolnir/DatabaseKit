@@ -24,42 +24,38 @@
 - (NSString *)_db_sqlRepresentationWithParameters:(NSMutableArray *)aParameters
                                            negate:(BOOL)negate
 {
-    NSString *sql = nil;
-
-    NSCompoundPredicate *predicate = (id)self;
-    NSArray *subPredicates = [predicate subpredicates];
-    switch ([predicate compoundPredicateType]) {
+    switch([self compoundPredicateType]) {
         case NSNotPredicateType:
-        {
-            sql = [subPredicates[0] _db_sqlRepresentationWithParameters:aParameters
-                                                                 negate:!negate];
-            break;
-        }
-        case NSAndPredicateType:
-        {
-            for (NSUInteger i=0; i < [subPredicates count]; i++) {
-                NSString *subSql = [subPredicates[i] _db_sqlRepresentationWithParameters:aParameters
-                                                                                  negate:negate];
-                sql = [sql length] == 0
+            return [self.subpredicates[0] _db_sqlRepresentationWithParameters:aParameters
+                                                                       negate:!negate];
+        case NSAndPredicateType: {
+            __block NSString *sql = nil;
+            [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
+                NSString *subSql = [subPredicate _db_sqlRepresentationWithParameters:aParameters
+                                                                              negate:negate];
+                sql = !sql
                     ? subSql
                     : [NSString stringWithFormat:@"(%@) AND (%@)", sql, subSql];
-            }
-            
+            }];
+            return sql;
         }
             break;
-        case NSOrPredicateType:
-        {
-            for (NSUInteger i=0; i < [subPredicates count]; i++) {
-                NSString *subSql = [subPredicates[i] _db_sqlRepresentationWithParameters:aParameters
-                                                                                  negate:negate];
-                sql = [sql length] == 0
+        case NSOrPredicateType: {
+            __block NSString *sql = nil;
+            [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
+                NSString *subSql = [subPredicate _db_sqlRepresentationWithParameters:aParameters
+                                                                              negate:negate];
+                sql = !sql
                     ? subSql
                     : [NSString stringWithFormat:@"(%@) OR (%@)", sql, subSql];
-            }
+            }];
+            return sql;
         }
+        default:
+            return nil;
     }
-	return sql;
 }
+
 @end
 
 @implementation NSComparisonPredicate (DBAdditions)
@@ -71,70 +67,52 @@
                                      ? [self _negateOperator:[self predicateOperatorType]]
                                      : [self predicateOperatorType];
 
-    // The IN operator type corresponds to "foo contains'f'", but the expressions are reversed to look like "'f' IN foo" so we need a special case
-    NSString *attributeName = self.leftExpression.keyPath;
-
-    id searchValue = self.rightExpression.constantValue;
     switch(operator) {
         case NSLessThanPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return  [NSString stringWithFormat:@"%@ < $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return  [NSString stringWithFormat:@"%@ < $%d", self.leftExpression.keyPath, [parameters count]];
         case NSLessThanOrEqualToPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return  [NSString stringWithFormat:@"%@ <= $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return  [NSString stringWithFormat:@"%@ <= $%d", self.leftExpression.keyPath, [parameters count]];
         case NSGreaterThanPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return  [NSString stringWithFormat:@"%@ > $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return  [NSString stringWithFormat:@"%@ > $%d", self.leftExpression.keyPath, [parameters count]];
         case NSGreaterThanOrEqualToPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return  [NSString stringWithFormat:@"%@ >= $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return  [NSString stringWithFormat:@"%@ >= $%d", self.leftExpression.keyPath, [parameters count]];
         case NSEqualToPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return  [NSString stringWithFormat:@"%@ = $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return  [NSString stringWithFormat:@"%@ = $%d", self.leftExpression.keyPath, [parameters count]];
         case NSNotEqualToPredicateOperatorType:
-            [parameters addObject:searchValue];
-            return [NSString stringWithFormat:@"%@ <> $%d", attributeName, [parameters count]];
+            [parameters addObject:self.rightExpression.constantValue];
+            return [NSString stringWithFormat:@"%@ <> $%d", self.leftExpression.keyPath, [parameters count]];
         case NSInPredicateOperatorType: {
             NSMutableArray *tokens = [NSMutableArray new];
-            for(unsigned long i = [parameters count] + 1; i < [parameters count] + [searchValue count]; ++i) {
+            NSArray *options = self.rightExpression.constantValue;
+            for(unsigned long i = [parameters count] + 1; i < [parameters count] + [options count]; ++i) {
                 [tokens addObject:[NSString stringWithFormat:@"$%lu", i]];
             }
-            [parameters addObjectsFromArray:searchValue];
-            return [NSString stringWithFormat:@"%@ IN (%@)", attributeName, [tokens componentsJoinedByString:@", "]];
-            NSMutableArray *comparisons = [NSMutableArray new];
-            for(id value in searchValue) {
-                [comparisons addObject:[NSComparisonPredicate
-                                        predicateWithLeftExpression:[self leftExpression]
-                                        rightExpression:[NSExpression expressionForConstantValue:value]
-                                        modifier:NSDirectPredicateModifier
-                                        type:NSEqualToPredicateOperatorType
-                                        options:0]];
-            }
-            return [[NSCompoundPredicate orPredicateWithSubpredicates:comparisons]
-                    _db_sqlRepresentationWithParameters:parameters
-                    negate:negate];
+            [parameters addObjectsFromArray:options];
+            return [NSString stringWithFormat:@"%@ IN (%@)",
+                                              self.leftExpression.keyPath,
+                                              [tokens componentsJoinedByString:@", "]];
         } case NSLikePredicateOperatorType: {
-            [parameters addObject:[NSString stringWithFormat:@"%%%@%%", searchValue]];
+            [parameters addObject:[NSString stringWithFormat:@"%%%@%%", self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            return negate
-                ? [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, [parameters count]]
-                : [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
+                                              self.leftExpression.keyPath, operator, [parameters count]];
         }
         case NSBeginsWithPredicateOperatorType: {
-            [parameters addObject:[NSString stringWithFormat:@"%@%%",searchValue]];
+            [parameters addObject:[NSString stringWithFormat:@"%@%%",self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-
-            return negate
-                 ? [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, [parameters count]]
-                 : [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
+                                              self.leftExpression.keyPath, operator, [parameters count]];
         }
         case NSEndsWithPredicateOperatorType: {
-            [parameters addObject:[NSString stringWithFormat:@"%%%@",searchValue]];
+            [parameters addObject:[NSString stringWithFormat:@"%%%@",self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            
-            return negate
-                 ? [NSString stringWithFormat:@"%@ NOT %@ $%d", attributeName, operator, [parameters count]]
-                 : [NSString stringWithFormat:@"%@ %@ $%d",attributeName, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
+                                              self.leftExpression.keyPath, operator, [parameters count]];
         }
         default:
             return nil;

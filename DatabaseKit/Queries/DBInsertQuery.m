@@ -5,11 +5,22 @@
 #import "DBModel.h"
 #import "DBUtilities.h"
 
+@interface DBInsertQuery ()
+@property(nonatomic, readwrite) DBFallback fallback;
+@end
+
 @implementation DBInsertQuery
 
 + (NSString *)_queryType
 {
     return @"INSERT ";
+}
+
+- (instancetype)or:(DBFallback)aFallback
+{
+    DBInsertQuery *query = [self copy];
+    query.fallback = aFallback;
+    return query;
 }
 
 - (void)setFields:(id)fields
@@ -47,6 +58,22 @@
     NSParameterAssert(q && p);
     [q appendString:[[self class] _queryType]];
 
+    switch(_fallback) {
+        case DBInsertFallbackReplace:
+            [q appendString:@"OR REPLACE "];
+            break;
+        case DBInsertFallbackAbort:
+            [q appendString:@"OR ABORT "];
+            break;
+            case DBInsertFallbackFail:
+            [q appendString:@"OR FAIL "];
+            break;
+            case DBInsertFallbackIgnore:
+            [q appendString:@"OR IGNORE "];
+            break;
+        default: break;
+    }
+
     [q appendString:@"INTO "];
     [q appendString:[_table toString]];
     [q appendString:@"(\""];
@@ -73,7 +100,7 @@
     // For inserts where a model class is available, we return the inserted object
     Class modelClass;
     if(ret && (modelClass = [_table modelClass]))
-        return @[[[[_table select] where:@{ kDBIdentifierColumn: _fields[kDBIdentifierColumn] }] first]];
+        return @[[[[_table select] where:@{ kDBIdentifierColumn: _fields[kDBIdentifierColumn] }] firstObject]];
     else
         return ret;
 }
