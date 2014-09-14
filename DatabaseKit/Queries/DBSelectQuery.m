@@ -159,13 +159,13 @@ NSString *const DBUnionAll = @" UNION ALL ";
             if(![key isEqualToString:kDBIdentifierColumn] && ![key hasSuffix:@"Identifier"])
                 [model setValue:row[key] forKey:key];
         }
-        [model.dirtyKeys removeAllObjects];
+        [model _clearDirtyKeys];
         return model;
     }
     return row;
 }
 
-- (id)first
+- (id)firstObject
 {
     return [self count] > 0 ? self[0] : nil;
 }

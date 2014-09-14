@@ -36,8 +36,12 @@
 
 #import "DBModel.h"
 
-@interface DBModel ()
-@property(readwrite, retain) NSMutableSet *dirtyKeys;
+@interface DBModel () {
+    NSMutableSet *_dirtyKeys;
+}
+@property(readwrite, strong) DBTable *table;
+
+- (void)_clearDirtyKeys;
 @end
 
 #endif /* _DBBASEPRIVATE_H_ */

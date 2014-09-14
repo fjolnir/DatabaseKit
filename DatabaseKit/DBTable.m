@@ -27,16 +27,6 @@
     return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
 }
 
-- (id)objectAtIndexedSubscript:(NSUInteger)idx
-{
-    return [[[[DBQuery withTable:self] select] limit:@1] where:@{ kDBIdentifierColumn: @(idx) }][0];
-}
-
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
-{
-    [[[DBQuery withTable:self] update:obj] where:@{ kDBIdentifierColumn: @(idx) }];
-}
-
 - (id)objectForKeyedSubscript:(id)cond
 {
     return [[[[DBQuery withTable:self] select] limit:@1] where:cond];

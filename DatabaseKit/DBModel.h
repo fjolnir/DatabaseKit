@@ -53,6 +53,8 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 @interface DBModel : NSObject
 @property(readonly, strong) DBTable *table;
 @property(readwrite, copy) NSString *identifier;
+@property(readonly, retain) NSSet *dirtyKeys;
+
 
 /*! Creates a reference to the record corresponding to id\n
  * Note: Does not check if the record exists

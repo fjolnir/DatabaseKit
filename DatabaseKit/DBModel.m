@@ -1,17 +1,12 @@
-#import "DBModel.h"
+#import "DBModel+Private.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBModel+Private.h"
 #import "Debug.h"
 #import "Utilities/NSString+DBAdditions.h"
 #import <objc/runtime.h>
 #include <unistd.h>
 
 static NSString *classPrefix = nil;
-
-@interface DBModel ()
-@property(readwrite, strong) DBTable *table;
-@end
 
 @implementation DBModel
 
@@ -51,8 +46,13 @@ static NSString *classPrefix = nil;
     }
     @catch(NSException *e) {
         DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
+        return NO;
     }
-    return NO;
+}
+
+- (void)_clearDirtyKeys
+{
+    [_dirtyKeys removeAllObjects];
 }
 
 #pragma mark - Entry retrieval

@@ -34,7 +34,7 @@ extern NSString *const DBUnionAll;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 - (NSUInteger)count;
-- (id)first;
+- (id)firstObject;
 @end
 
 @interface DBJoin : NSObject

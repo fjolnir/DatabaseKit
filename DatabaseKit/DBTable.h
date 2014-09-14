@@ -46,8 +46,6 @@
 - (NSString *)toString;
 - (Class)modelClass;
 
-- (id)objectAtIndexedSubscript:(NSUInteger)idx;
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
 
