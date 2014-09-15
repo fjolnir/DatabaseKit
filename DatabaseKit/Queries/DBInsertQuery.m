@@ -93,18 +93,6 @@
     return [self _generateWhereString:q parameters:p];
 }
 
-- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
-{
-    NSArray *ret = [super executeOnConnection:connection error:outErr];
-
-    // For inserts where a model class is available, we return the inserted object
-    Class modelClass;
-    if(ret && (modelClass = [_table modelClass]))
-        return @[[[[_table select] where:@{ kDBIdentifierColumn: _fields[kDBIdentifierColumn] }] firstObject]];
-    else
-        return ret;
-}
-
 @end
 
 @implementation DBUpdateQuery
