@@ -56,6 +56,7 @@ static NSString *classPrefix = nil;
             continue;
         [keyPaths addObject:[NSString stringWithUTF8String:name]];
     }
+    [keyPaths addObject:kDBIdentifierColumn];
     free(properties);
     return keyPaths;
 }
@@ -107,7 +108,10 @@ static NSString *classPrefix = nil;
         NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
         [_dirtyKeys removeAllObjects];
 
-        return [[[self query] update:changedValues] execute:outErr];
+        if([changedValues.allKeys containsObject:kDBIdentifierColumn])
+            return [[[[self query] insert:changedValues] or:DBInsertFallbackReplace] execute:outErr];
+        else
+            return [[[self query] update:changedValues] execute:outErr];
     }
     return YES;
 }
