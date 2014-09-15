@@ -51,7 +51,7 @@ static NSString *classPrefix = nil;
 - (void)save
 {
     if([_dirtyKeys count] > 0) {
-        [[self query] update:[self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]]];
+        [[[self query] update:[self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]]] execute];
         [_dirtyKeys removeAllObjects];
     }
 }
