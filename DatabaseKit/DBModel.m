@@ -95,7 +95,9 @@ static NSString *classPrefix = nil;
 #pragma mark -
 #pragma mark Accessors
 
+- (void)setNilValueForKey:(NSString * const)aKey
 {
+    [self setValue:@0 forKey:aKey];
 }
 
 #pragma mark -
