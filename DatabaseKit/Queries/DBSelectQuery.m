@@ -19,7 +19,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
 @property(readwrite, strong) NSString *order;
-@property(readwrite, strong) NSNumber *limit, *offset;
+@property(readwrite)         NSUInteger limit, offset;
 @property(readwrite, strong) id join;
 @property(readwrite, strong) DBSelectQuery *unionQuery;
 @property(readwrite, strong) NSString *unionType;
@@ -40,8 +40,8 @@ NSString *const DBUnionAll = @" UNION ALL ";
         && DBEqual(_order, aQuery.order)
         && DBEqual(_orderedBy, aQuery.orderedBy)
         && DBEqual(_groupedBy, aQuery.groupedBy)
-        && DBEqual(_limit, aQuery.limit)
-        && DBEqual(_offset, aQuery.offset)
+        && _limit == aQuery.limit
+        && _offset == aQuery.offset
         && !_unionQuery && !aQuery.unionType;
 }
 
@@ -130,10 +130,10 @@ NSString *const DBUnionAll = @" UNION ALL ";
         [q appendString:_order];
     }
 
-    if([_limit unsignedIntegerValue] > 0)
-        [q appendFormat:@" LIMIT %ld", [_limit unsignedLongValue]];
-    if([_offset unsignedIntegerValue] > 0)
-        [q appendFormat:@" OFFSET %ld", [_offset unsignedLongValue]];
+    if(_limit > 0)
+        [q appendFormat:@" LIMIT %lu", (unsigned long)_limit];
+    if(_offset > 0)
+        [q appendFormat:@" OFFSET %lu", (unsigned long)_offset];
 
     return YES;
 }
@@ -199,14 +199,14 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return ret;
 }
 
-- (instancetype)limit:(NSNumber *)limit
+- (instancetype)limit:(NSUInteger)limit
 {
     DBSelectQuery *ret = [self copy];
     ret.limit = limit;
     return ret;
 }
 
-- (instancetype)offset:(NSNumber *)offset
+- (instancetype)offset:(NSUInteger)offset
 {
     DBSelectQuery *ret = [self copy];
     ret.offset = offset;

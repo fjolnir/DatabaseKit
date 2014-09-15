@@ -59,7 +59,7 @@
 - (DBQuery *)where:(id)conds;
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
-- (DBSelectQuery *)limit:(NSNumber *)limit;
+- (DBSelectQuery *)limit:(NSUInteger)limit;
 - (DBRawQuery *)rawQuery:(NSString *)SQL;
 
 - (NSUInteger)count;

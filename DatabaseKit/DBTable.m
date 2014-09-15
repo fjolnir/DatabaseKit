@@ -84,7 +84,7 @@
 {
     return [[DBSelectQuery withTable:self] orderBy:fields];
 }
-- (DBQuery *)limit:(NSNumber *)limit
+- (DBQuery *)limit:(NSUInteger)limit
 {
     return [[DBSelectQuery withTable:self] limit:limit];
 }
