@@ -23,15 +23,6 @@
     return query;
 }
 
-- (void)setFields:(id)fields
-{
-    if([_table modelClass] && !fields[kDBIdentifierColumn]) {
-        fields = [fields mutableCopy];
-        fields[kDBIdentifierColumn] = [[NSUUID UUID] UUIDString];
-    }
-    [super setFields:fields];
-}
-
 - (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
 {
     return aQuery.class == self.class
