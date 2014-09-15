@@ -240,8 +240,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
         if(outErr)
             *outErr = err;
         return nil;
-    }
-    return ret;
+    } else
+        return ret;
 }
 
 #pragma mark -

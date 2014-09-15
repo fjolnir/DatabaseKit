@@ -88,13 +88,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Creates a query with a WHERE clause specifying the record */
 - (DBQuery *)query;
 
-/*!
- * Retrieves a value from the database\n
- * Same as retrieveValueForKey:
- * @param key A valid column
- */
-- (id)objectForKeyedSubscript:(id)key;
-- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 @end
 
 #endif /* _DBBASE_H_ */

@@ -95,16 +95,8 @@ static NSString *classPrefix = nil;
 #pragma mark -
 #pragma mark Accessors
 
-- (id)objectForKeyedSubscript:(id)key
 {
-    return [self valueForKey:key];
 }
-- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
-{
-    NSParameterAssert([(NSObject*)key isKindOfClass:[NSString class]]);
-    [self setValue:obj forKey:(NSString *)key];
-}
-
 
 #pragma mark -
 #pragma mark Database interface
@@ -127,9 +119,8 @@ static NSString *classPrefix = nil;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self identifier]];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n", [self className], self, [self identifier]];
     for(NSString *column in self.table.columns) {
-        if(![column isEqualToString:kDBIdentifierColumn] && ![column hasSuffix:@"Identifier"])
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
     [description appendString:@"}"];
