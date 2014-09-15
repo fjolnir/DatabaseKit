@@ -19,6 +19,24 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
++ (char)typeForKey:(NSString *)key class:(Class *)outClass
+{
+    objc_property_t const property = class_getProperty([self class], [key UTF8String]);
+    NSAssert(property, @"Key %@ not found on %@", key, [self class]);
+
+    char * const type = property_copyAttributeValue(property, "T");
+    NSAssert(type, @"Unable to get type for key %@", key);
+
+    if(*type == _C_ID && outClass && type[1] == '"') {
+        NSScanner * const scanner = [NSScanner scannerWithString:[NSString stringWithUTF8String:type+2]];
+        NSString *className;
+        if([scanner scanUpToString:@"\"" intoString:&className])
+            *outClass = NSClassFromString(className);
+    }
+    char const result = *type;
+    free(type);
+    return result;
+}
 
 #pragma mark -
 #pragma mark Delayed writing

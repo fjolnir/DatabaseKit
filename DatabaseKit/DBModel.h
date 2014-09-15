@@ -71,6 +71,11 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Returns the class prefix for models */
 + (NSString *)classPrefix;
 
+/*!
+ * Returns the type of a key (along with the class if it is '@')
+ */
++ (char)typeForKey:(NSString *)key class:(Class *)outClass;
+
 /*! Saves changes to the database
  */
 - (void)save;
