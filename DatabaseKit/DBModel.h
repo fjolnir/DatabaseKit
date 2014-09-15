@@ -56,12 +56,10 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 @property(readonly, retain) NSSet *dirtyKeys;
 
 
-/*! Creates a reference to the record corresponding to id\n
- * Note: Does not check if the record exists
- * @param aConnection the connection to use
- * @param id The id of the record to retrieve
+/*! Returns a model object in the given database
+ *  You must set an identifier before saving
  */
-- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier;
+- (id)initWithDatabase:(DB *)aDB;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n

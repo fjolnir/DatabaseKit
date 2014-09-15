@@ -75,14 +75,13 @@ static NSString *classPrefix = nil;
 
 #pragma mark - Entry retrieval
 
-- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier
+- (id)initWithDatabase:(DB *)aDB
 {
+    NSParameterAssert(aDB);
     if(!(self = [self init]))
         return nil;
-    NSParameterAssert(aTable && aIdentifier > 0);
-    self.table      = aTable;
-    self.identifier = aIdentifier;
 
+    self.table      = aDB[[[self class] tableName]];
     _dirtyKeys   = [NSMutableSet new];
 
     return self;

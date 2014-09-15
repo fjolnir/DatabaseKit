@@ -150,19 +150,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(!_rows || _dirty)
         _rows = [self execute];
 
-    NSDictionary *row = _rows[idx];
-    Class modelClass = [_table modelClass];
-    if(modelClass && row[kDBIdentifierColumn]) {
-        DBModel *model = [[modelClass alloc] initWithTable:_table
-                                                identifier:row[kDBIdentifierColumn]];
-        for(NSString *key in row) {
-            if(![key isEqualToString:kDBIdentifierColumn] && ![key hasSuffix:@"Identifier"])
-                [model setValue:row[key] forKey:key];
-        }
-        [model _clearDirtyKeys];
-        return model;
-    }
-    return row;
+    return _rows[idx];
 }
 
 - (id)firstObject
@@ -255,6 +243,27 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return copy;
 }
 
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
+{
+    NSArray *results = [super executeOnConnection:connection error:outErr];
+    if([results count] > 0 && self.table.modelClass) {
+        NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
+        if([fieldNames isSubsetOfSet:self.table.columns]) {
+            NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
+            for(NSDictionary *result in results) {
+                DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
+                for(NSString *key in result) {
+                    id value = result[key];
+                    [model setValue:[[NSNull null] isEqual:value] ? nil : value
+                             forKey:key];
+                }
+                [modelObjects addObject:model];
+            }
+            return modelObjects;
+        }
+    }
+    return results;
+}
 @end
 
 @interface DBJoin ()
