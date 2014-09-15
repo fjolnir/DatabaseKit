@@ -49,11 +49,15 @@ static NSString *classPrefix = nil;
 }
 
 - (void)save
+- (BOOL)save:(NSError **)outErr
 {
     if([_dirtyKeys count] > 0) {
-        [[[self query] update:[self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]]] execute];
+        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
         [_dirtyKeys removeAllObjects];
+
+        return [[[self query] update:changedValues] execute:outErr];
     }
+    return YES;
 }
 
 - (BOOL)destroy
@@ -116,8 +120,7 @@ static NSString *classPrefix = nil;
     return ret;
 }
 
-
-#pragma mark - Cosmetics
+#pragma mark -
 
 - (NSString *)description
 {
