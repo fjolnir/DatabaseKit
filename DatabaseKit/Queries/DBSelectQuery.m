@@ -67,19 +67,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
     if(_fields == nil)
         [q appendString:DBSelectAll];
-    else {
-        int i = 0;
-        for(id field in _fields) {
-            if(__builtin_expect(i++ > 0, 1))
-                [q appendString:@", "];
-            if([field isKindOfClass:[NSString class]]) {
-                [q appendString:@"\""];
-                [q appendString:[field stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
-                [q appendString:@"\""];
-            } else
-                [q appendString:[field toString]];
-        }
-    }
+    else
+        [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
+
     [q appendString:@" FROM "];
     [q appendString:[_table toString]];
 
@@ -124,9 +114,8 @@ NSString *const DBUnionAll = @" UNION ALL ";
             return false;
     }
     if(_order && _orderedBy) {
-        [q appendString:@" ORDER BY \""];
-        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"\" %@, ", _order]]];
-        [q appendString:@"\""];
+        [q appendString:@" ORDER BY "];
+        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"%@, ", _order]]];
         [q appendString:_order];
     }
 
