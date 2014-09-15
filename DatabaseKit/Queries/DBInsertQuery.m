@@ -81,7 +81,7 @@
     }
     [q appendString:@")"];
 
-    return q;
+    return YES;
 }
 
 @end
