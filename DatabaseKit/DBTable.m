@@ -3,14 +3,13 @@
 #import "DBQuery.h"
 #import "Utilities/NSString+DBAdditions.h"
 
-@interface DBTable () {
-    NSArray *_columns;
-}
+@interface DBTable ()
 @property(readwrite, strong) NSString *name;
 @property(readwrite, strong) DB *database;
 @end
 
 @implementation DBTable
+@synthesize columns=_columns;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 {
@@ -42,10 +41,10 @@
     return _name;
 }
 
-- (NSArray *)columns
+- (NSSet *)columns
 {
     if(!_columns)
-        _columns = [_database.connection columnsForTable:_name];
+        _columns = [NSSet setWithArray:[_database.connection columnsForTable:_name]];
     return _columns;
 }
 

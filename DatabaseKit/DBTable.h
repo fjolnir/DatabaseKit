@@ -40,6 +40,7 @@
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
 @property(readonly, strong) DB *database;
+@property(readonly, strong) NSSet *columns;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 
@@ -48,8 +49,6 @@
 
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
-
-- (NSArray *)columns;
 
 - (DBSelectQuery *)select:(NSArray *)fields;
 - (DBSelectQuery *)select;
