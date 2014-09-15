@@ -106,7 +106,10 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 
 - (instancetype)where:(id)conds
 {
-    NSParameterAssert(IsArr(conds) || IsDic(conds) || IsStr(conds));
+    if(conds == self.where || [conds isEqual:self.where])
+        return self;
+    
+    NSParameterAssert(!conds || IsArr(conds) || IsDic(conds) || IsStr(conds));
     DBQuery *ret = [self copy];
 
     if(IsStr(conds))
