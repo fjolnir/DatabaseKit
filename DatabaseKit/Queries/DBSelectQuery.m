@@ -235,7 +235,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
 {
     NSArray *results = [super executeOnConnection:connection error:outErr];
-    if([results count] > 0 && self.table.modelClass) {
+    if(self.fields == nil && [results count] > 0 && self.table.modelClass) {
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
             NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
