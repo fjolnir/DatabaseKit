@@ -36,7 +36,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
 static NSString * const kDBIdentifierColumn = @"identifier";
 

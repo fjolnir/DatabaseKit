@@ -35,12 +35,12 @@
 #define _ACTIVERECORD_H_ 
 #import <DatabaseKit/DB.h>
 #import <DatabaseKit/DBTable.h>
-#import <DatabaseKit/Queries/DBQuery.h>
+#import <DatabaseKit/DBQuery.h>
 #import <DatabaseKit/DBModel.h>
 
-#import <DatabaseKit/Connections/DBConnection.h>
-#import <DatabaseKit/Connections/DBConnectionPool.h>
-#import <DatabaseKit/Connections/DBSQLiteConnection.h>
-#import <DatabaseKit/Connections/DBPostgresConnection.h>
+#import <DatabaseKit/DBConnection.h>
+#import <DatabaseKit/DBConnectionPool.h>
+#import <DatabaseKit/DBSQLiteConnection.h>
+#import <DatabaseKit/DBPostgresConnection.h>
 
 #endif /* _ACTIVERECORD_H_ */

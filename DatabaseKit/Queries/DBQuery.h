@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
 @class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
 
@@ -31,7 +31,7 @@
 - (NSString *)toString;
 @end
 
-#import <DatabaseKit/Queries/DBSelectQuery.h>
-#import <DatabaseKit/Queries/DBInsertQuery.h>
-#import <DatabaseKit/Queries/DBDeleteQuery.h>
-#import <DatabaseKit/Queries/DBRawQuery.h>
+#import <DatabaseKit/DBSelectQuery.h>
+#import <DatabaseKit/DBInsertQuery.h>
+#import <DatabaseKit/DBDeleteQuery.h>
+#import <DatabaseKit/DBRawQuery.h>

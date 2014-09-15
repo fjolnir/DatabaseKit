@@ -1,4 +1,4 @@
-#import <DatabaseKit/Queries/DBQuery.h>
+#import <DatabaseKit/DBQuery.h>
 
 extern NSString *const DBSelectAll;
 

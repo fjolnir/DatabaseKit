@@ -1,4 +1,4 @@
-#import <DatabaseKit/Queries/DBQuery.h>
+#import <DatabaseKit/DBQuery.h>
 
 typedef NS_ENUM(NSUInteger, DBFallback) {
     DBInsertFallbackNone,
