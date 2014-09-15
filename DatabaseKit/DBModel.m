@@ -39,7 +39,50 @@ static NSString *classPrefix = nil;
 }
 
 #pragma mark -
-#pragma mark Delayed writing
+
++ (NSSet *)keyPathsForValuesAffectingDirtyKeys
+{
+    unsigned int propertyCount;
+    objc_property_t *properties = class_copyPropertyList(self, &propertyCount);
+
+    NSMutableSet *keyPaths = [[self superclass] instancesRespondToSelector:_cmd]
+        ? [[super keyPathsForValuesAffectingValueForKey:@"dirtyKeys"] mutableCopy]
+        : [NSMutableSet setWithCapacity:propertyCount];
+
+    for(int i = 0; i < propertyCount; ++i) {
+        const char * const name = property_getName(properties[i]);
+        // If super also has it we're not interested
+        if(class_getProperty([self superclass], name))
+            continue;
+        [keyPaths addObject:[NSString stringWithUTF8String:name]];
+    }
+    free(properties);
+    return keyPaths;
+}
+
+- (instancetype)init
+{
+    if((self = [super init]))
+        // This is to coerce KVC into calling didChangeValueForKey:
+        // We don't actually take any action when dirtyKeys changes
+        [self addObserver:self
+               forKeyPath:@"dirtyKeys"
+                  options:0
+                  context:NULL];
+    return self;
+}
+
+- (id)initWithDatabase:(DB *)aDB
+{
+    NSParameterAssert(aDB);
+    if(!(self = [self init]))
+        return nil;
+
+    self.table      = aDB[[[self class] tableName]];
+    _dirtyKeys   = [NSMutableSet new];
+
+    return self;
+}
 
 - (void)didChangeValueForKey:(NSString *)key
 {
@@ -48,7 +91,16 @@ static NSString *classPrefix = nil;
     [super didChangeValueForKey:key];
 }
 
-- (void)save
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"dirtyKeys"];
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    // No action
+}
+
 - (BOOL)save:(NSError **)outErr
 {
     if([_dirtyKeys count] > 0) {
@@ -77,27 +129,12 @@ static NSString *classPrefix = nil;
     [_dirtyKeys removeAllObjects];
 }
 
-#pragma mark - Entry retrieval
-
-- (id)initWithDatabase:(DB *)aDB
-{
-    NSParameterAssert(aDB);
-    if(!(self = [self init]))
-        return nil;
-
-    self.table      = aDB[[[self class] tableName]];
-    _dirtyKeys   = [NSMutableSet new];
-
-    return self;
-}
+#pragma mark -
 
 - (DBQuery *)query
 {
     return [_table where:@{ kDBIdentifierColumn: _identifier }];
 }
-
-#pragma mark -
-#pragma mark Accessors
 
 - (void)setNilValueForKey:(NSString * const)aKey
 {
@@ -105,7 +142,6 @@ static NSString *classPrefix = nil;
 }
 
 #pragma mark -
-#pragma mark Database interface
 
 + (NSString *)tableName
 {
