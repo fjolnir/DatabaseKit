@@ -81,7 +81,7 @@
     }
     [q appendString:@")"];
 
-    return [self _generateWhereString:q parameters:p];
+    return q;
 }
 
 @end
