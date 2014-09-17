@@ -23,7 +23,8 @@
 {
     NSString *prefix    = [DBModel classPrefix];
     NSString *tableName = [[_name singularizedString] stringByCapitalizingFirstLetter];
-    return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
+    Class const klass = NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
+    return [klass isSubclassOfClass:[DBModel class]] ? klass : nil;
 }
 
 - (id)objectForKeyedSubscript:(id)cond
