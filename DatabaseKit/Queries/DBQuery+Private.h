@@ -5,9 +5,6 @@
     DBTable *_table;
     id _fields;
     NSDictionary *_where;
-
-    BOOL _dirty;
-    NSArray *_rows;
 }
 @property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) id fields;

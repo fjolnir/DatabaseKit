@@ -129,32 +129,25 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
 {
-    if(!_rows || _dirty)
-        _rows = [self execute];
-    return [_rows countByEnumeratingWithState:state objects:buffer count:len];
+    return [[self execute] countByEnumeratingWithState:state objects:buffer count:len];
 }
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    if(!_rows || _dirty)
-        _rows = [self execute];
-
-    return _rows[idx];
+    return [[[self offset:idx] limit:1] firstObject];
 }
 
 - (id)firstObject
 {
-    return [self count] > 0 ? self[0] : nil;
+    return [[[self limit:1] execute] firstObject];
 }
 
 - (NSUInteger)count
 {
-    if(_rows && !_dirty)
-        return [_rows count];
-    else if(_groupedBy || _offset || _limit || _unionQuery) {
+    if(_groupedBy || _offset || _limit || _unionQuery)
         return [[self execute] count];
-    }
-    return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
+    else
+        return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }
 
 - (instancetype)order:(NSString *)order by:(NSArray *)fields
