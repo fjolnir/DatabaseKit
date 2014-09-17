@@ -50,7 +50,7 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  * set the prefix you'll use in +load (along with the default connection if you want one)\n
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
-@interface DBModel : NSObject
+@interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
 @property(readwrite, copy) NSString *identifier;
 @property(readonly, retain) NSSet *dirtyKeys;
