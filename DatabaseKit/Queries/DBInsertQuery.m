@@ -108,9 +108,12 @@
         id obj = _fields[fieldName];
         if([obj isEqual:[NSNull null]])
             [q appendString:@"NULL"];
-        } else {
+        else if([obj isKindOfClass:[DBExpression class]]) {
+            [q appendString:@"("];
+            [q appendString:[obj toString]];
+            [q appendString:@")"];
+        } else
             [self _addParam:obj withToken:YES currentParams:p query:q];
-        }
     }
 
     return [self _generateWhereString:q parameters:p];

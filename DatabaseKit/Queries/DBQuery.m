@@ -281,3 +281,21 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return copy;
 }
 @end
+
+@interface DBExpression () {
+    NSString *_expressionString;
+}
+@end
+
+@implementation DBExpression : NSObject
++ (instancetype)withString:(NSString *)aString
+{
+    DBExpression *expr = [self new];
+    expr->_expressionString = [aString copy];
+    return expr;
+}
+- (NSString *)toString
+{
+    return _expressionString;
+}
+@end

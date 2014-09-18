@@ -31,6 +31,12 @@
 - (NSString *)toString;
 @end
 
+#define DBExpr(expr) [DBExpression withString:(expr)]
+@interface DBExpression : NSObject
++ (instancetype)withString:(NSString *)aString;
+- (NSString *)toString;
+@end
+
 #import <DatabaseKit/DBSelectQuery.h>
 #import <DatabaseKit/DBInsertQuery.h>
 #import <DatabaseKit/DBDeleteQuery.h>
