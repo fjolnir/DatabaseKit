@@ -199,12 +199,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
                 [q appendString:@" AND "];
             [q appendString:@"\""];
             [q appendString:fieldName];
-            if([[NSNull null] isEqual:_where[fieldName]])
-                [q appendString:@"\" IS NULL"];
-            else {
-                [q appendString:@"\"="];
-                [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
-            }
+            [q appendString:@"\" IS "];
+            [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
         }
     }
     return YES;
