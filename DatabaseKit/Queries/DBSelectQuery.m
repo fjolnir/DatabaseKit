@@ -16,6 +16,7 @@ NSString *const DBUnion    = @" UNION ";
 NSString *const DBUnionAll = @" UNION ALL ";
 
 @interface DBSelectQuery ()
+@property(readwrite, strong) DBSelectQuery *subQuery;
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
 @property(readwrite, strong) NSString *order;
@@ -30,6 +31,21 @@ NSString *const DBUnionAll = @" UNION ALL ";
 + (NSString *)_queryType
 {
     return @"SELECT ";
+}
+
++ (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery
+{
+    DBSelectQuery * const query = [self new];
+    query.table = aSubQuery.table;
+    query.subQuery = aSubQuery;
+    return query;
+}
+
+- (DBQuery *)select:(NSArray *)fields
+{
+    DBSelectQuery *ret = [self copy];
+    ret.fields = fields;
+    return ret;
 }
 
 - (BOOL)canCombineWithQuery:(DBSelectQuery * const)aQuery
@@ -70,8 +86,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
     else
         [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
 
-    [q appendString:@" FROM "];
-    [q appendString:[_table toString]];
+    [q appendString:@" FROM ("];
+    [q appendString:[(id)(_subQuery ?: _table) toString]];
+    [q appendString:@")"];
 
     if(_join) {
         if([_join isKindOfClass:[DBJoin class]]) {
@@ -222,6 +239,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     copy.join       = _join;
     copy.unionQuery = _unionQuery;
     copy.unionType  = _unionType;
+    copy.subQuery   = _subQuery;
     return copy;
 }
 

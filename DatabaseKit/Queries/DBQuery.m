@@ -67,9 +67,7 @@
 - (DBQuery *)select:(NSArray *)fields
 {
     DBQuery *ret = [self _copyWithSubclass:[DBSelectQuery class]];
-    ret.fields = !fields         ? nil
-                 : IsArr(fields) ? fields
-                                 : @[fields];
+    ret.fields = fields;
     return ret;
 }
 - (DBSelectQuery *)select
