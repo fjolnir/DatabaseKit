@@ -106,7 +106,7 @@
         [q appendString:fieldName];
         [q appendString:@"\"="];
         id obj = _fields[fieldName];
-        if(!obj || [obj isEqual:[NSNull null]]) {
+        if([obj isEqual:[NSNull null]])
             [q appendString:@"NULL"];
         } else {
             [self _addParam:obj withToken:YES currentParams:p query:q];
