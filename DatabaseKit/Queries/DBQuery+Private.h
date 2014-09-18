@@ -4,7 +4,7 @@
 @protected
     DBTable *_table;
     id _fields;
-    NSDictionary *_where;
+    id _where;
 }
 @property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) id fields;

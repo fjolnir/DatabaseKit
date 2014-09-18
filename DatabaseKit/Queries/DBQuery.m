@@ -3,9 +3,7 @@
 #import "DBModel.h"
 #import "DBModel+Private.h"
 #import "Debug.h"
-
-static NSString *const DBStringConditions = @"DBStringConditions";
-
+#import "NSPredicate+DBAdditions.h"
 
 @implementation DBQuery
 
@@ -109,37 +107,9 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     if(conds == self.where || [conds isEqual:self.where])
         return self;
     
-    NSParameterAssert(!conds || IsArr(conds) || IsDic(conds) || IsStr(conds));
+    NSParameterAssert(!conds || IsArr(conds) || IsDic(conds) || IsStr(conds) || [conds isKindOfClass:[NSPredicate class]]);
     DBQuery *ret = [self copy];
-
-    if(IsStr(conds))
-        ret.where = @{ DBStringConditions: [@[@[conds]] mutableCopy] };
-    else if(IsArr(conds))
-        ret.where = @{ DBStringConditions: [@[conds] mutableCopy] };
-    else
-        ret.where = conds;
-    return ret;
-}
-- (instancetype)appendWhere:(id)conds
-{
-    if(!_where)
-        return [self where:conds];
-    BOOL isStr = IsStr(conds);
-    NSParameterAssert(IsArr(conds) || IsDic(conds) || isStr);
-    DBQuery *ret = [self copy];
-
-    NSMutableDictionary *derivedConds = [_where mutableCopy];
-    derivedConds[DBStringConditions] = [_where[DBStringConditions] mutableCopy];
-    if(isStr) {
-        if(!derivedConds[DBStringConditions])
-            derivedConds[DBStringConditions] = [NSMutableArray new];
-        [derivedConds[DBStringConditions] addObject:@[conds]];
-    } else {
-        for(id key in conds) {
-            derivedConds[key] = conds[key];
-        }
-    }
-    ret.where = derivedConds;
+    ret.where = conds;
     return ret;
 }
 
@@ -170,31 +140,31 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 {
     NSParameterAssert(q && p);
 
-    if([_where count] == 0)
+    if(!_where)
         return YES;
-
+    
     [q appendString:@" WHERE "];
-    int i = 0;
-    for(NSString *fieldName in _where) {
 
-        if([fieldName isEqualToString:DBStringConditions]) {
-            for(NSArray *cond in _where[fieldName]) {
-                if(i++ > 0)
-                    [q appendString:@" AND "];
-
-                NSMutableString *condStr = [cond[0] mutableCopy];
-                for(int j = 1; j < [cond count]; ++j) {
-                    [self _addParam:cond[j] withToken:NO currentParams:p query:q];
-                    [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
-                                             withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
-                                                options:0
-                                                  range:(NSRange){ 0, [condStr length] }];
-                }
-                [q appendString:@"("];
-                [q appendString:condStr];
-                [q appendString:@") "];
-            }
-        } else {
+    if(IsStr(_where))
+        [q appendString:_where];
+    else if([_where isKindOfClass:[NSPredicate class]])
+        [q appendString:[_where db_sqlRepresentation:p]];
+    else if(IsArr(_where)) {
+        NSMutableString *condStr = [_where[0] mutableCopy];
+        for(int j = 1; j < [_where count]; ++j) {
+            [self _addParam:_where[j] withToken:NO currentParams:p query:q];
+            [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
+                                     withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
+                                        options:0
+                                          range:(NSRange){ 0, [condStr length] }];
+        }
+        [q appendString:@"("];
+        [q appendString:condStr];
+        [q appendString:@") "];
+    }
+    else if(IsDic(_where)) {
+        int i = 0;
+        for(NSString *fieldName in _where) {
             if(i++ > 0)
                 [q appendString:@" AND "];
             [q appendString:@"\""];
@@ -202,7 +172,8 @@ static NSString *const DBStringConditions = @"DBStringConditions";
             [q appendString:@"\" IS "];
             [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
         }
-    }
+    } else
+        return NO;
     return YES;
 }
 

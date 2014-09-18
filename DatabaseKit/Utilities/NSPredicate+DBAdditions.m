@@ -2,11 +2,8 @@
 
 @implementation NSPredicate (DBAdditions)
 
-- (NSString *)db_sqlRepresentation:(NSArray **)outParameters
+- (NSString *)db_sqlRepresentation:(NSMutableArray *)parameters
 {
-    NSMutableArray *parameters = [NSMutableArray new];
-    if(outParameters)
-        *outParameters = parameters;
     return [self _db_sqlRepresentationWithParameters:parameters negate:NO];
 
 }
@@ -82,7 +79,7 @@
             return  [NSString stringWithFormat:@"%@ >= $%d", self.leftExpression.keyPath, [parameters count]];
         case NSEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ = $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ IS $%d", self.leftExpression.keyPath, [parameters count]];
         case NSNotEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
             return [NSString stringWithFormat:@"%@ <> $%d", self.leftExpression.keyPath, [parameters count]];

@@ -26,7 +26,6 @@
 - (DBRawQuery *)rawQuery:(NSString *)SQL;
 
 - (instancetype)where:(id)conds;
-- (instancetype)appendWhere:(id)conds;
 
 - (NSString *)toString;
 @end
