@@ -239,6 +239,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
                     [model setValue:[[NSNull null] isEqual:value] ? nil : value
                              forKey:key];
                 }
+                model.savedIdentifier = result[kDBIdentifierColumn];
                 [model _clearDirtyKeys];
                 [modelObjects addObject:model];
             }
