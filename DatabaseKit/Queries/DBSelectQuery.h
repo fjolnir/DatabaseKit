@@ -12,6 +12,7 @@ extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
 @interface DBSelectQuery : DBQuery <NSFastEnumeration>
+@property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;
 @property(readonly, strong) NSString *order;
@@ -19,6 +20,8 @@ extern NSString *const DBUnionAll;
 @property(readonly, strong) id join;
 @property(readonly, strong) DBSelectQuery *unionQuery;
 @property(readonly, strong) NSString *unionType;
+
++ (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery;
 
 - (instancetype)order:(NSString *)order by:(NSArray *)fields;
 - (instancetype)orderBy:(NSArray *)fields;
