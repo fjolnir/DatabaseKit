@@ -97,7 +97,7 @@
                                                    tail:&tail
                                                   error:outErr];
     if(!queryByteCode) {
-        DBLog(@"Unable to prepare bytecode for SQLite query: '%@'", sql);
+        DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [*outErr localizedDescription]);
         return nil;
     }
     NSArray *columnNames = [self columnsForQuery:queryByteCode];
@@ -254,7 +254,7 @@
 
     NSString *tail = [[NSString stringWithUTF8String:tailBuf] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if([tail length] == 0)
-    _cachedStatements[query] = [NSValue valueWithPointer:queryByteCode];
+        _cachedStatements[query] = [NSValue valueWithPointer:queryByteCode];
     else if(aoTail)
         *aoTail = tail;
 
