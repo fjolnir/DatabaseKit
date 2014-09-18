@@ -102,16 +102,24 @@ static NSString *classPrefix = nil;
     // No action
 }
 
+- (BOOL)save
+{
+    return [self save:NULL];
+}
 - (BOOL)save:(NSError **)outErr
 {
     if([_dirtyKeys count] > 0) {
         NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
         [_dirtyKeys removeAllObjects];
 
-        if([changedValues.allKeys containsObject:kDBIdentifierColumn])
-            return [[[[self query] insert:changedValues] or:DBInsertFallbackReplace] execute:outErr] != nil;
-        else
-            return [[[self query] update:changedValues] execute:outErr] != nil;
+        DBQuery * const query = !_savedIdentifier
+            ? [[[self query] insert:changedValues] or:DBInsertFallbackReplace]
+            : [[self query] update:changedValues];
+        if([query execute:outErr]) {
+            _savedIdentifier = self.identifier;
+            return YES;
+        } else
+            return NO;
     }
     return YES;
 }
@@ -137,7 +145,7 @@ static NSString *classPrefix = nil;
 
 - (DBQuery *)query
 {
-    return [_table where:@{ kDBIdentifierColumn: _identifier }];
+    return [_table where:@{ kDBIdentifierColumn: _savedIdentifier ?: _identifier }];
 }
 
 - (void)setNilValueForKey:(NSString * const)aKey
@@ -164,7 +172,7 @@ static NSString *classPrefix = nil;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n", [self className], self, [self identifier]];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n", [self className], self, self.savedIdentifier];
     for(NSString *column in self.table.columns) {
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
@@ -186,7 +194,8 @@ static NSString *classPrefix = nil;
 {
     DBModel *copy = [[[self class] alloc] initWithDatabase:self.table.database];
     for(NSString *column in self.table.columns) {
-        [copy setValue:[self valueForKey:column] forKey:column];
+        if(![column isEqualToString:kDBIdentifierColumn])
+            [copy setValue:[self valueForKey:column] forKey:column];
     }
     return copy;
 }

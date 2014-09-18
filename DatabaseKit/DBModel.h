@@ -77,6 +77,7 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Saves changes to the database
  */
 - (BOOL)save:(NSError **)outErr;
+- (BOOL)save;
 
 /*! Deletes a record from the database
  */
