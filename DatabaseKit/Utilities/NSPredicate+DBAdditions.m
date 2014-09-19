@@ -67,22 +67,28 @@
     switch(operator) {
         case NSLessThanPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ < $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ < $%lu",
+                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSLessThanOrEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ <= $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ <= $%lu",
+                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSGreaterThanPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ > $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ > $%lu",
+                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSGreaterThanOrEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ >= $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ >= $%lu",
+                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return  [NSString stringWithFormat:@"%@ IS $%d", self.leftExpression.keyPath, [parameters count]];
+            return  [NSString stringWithFormat:@"%@ IS $%lu",
+                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSNotEqualToPredicateOperatorType:
             [parameters addObject:self.rightExpression.constantValue];
-            return [NSString stringWithFormat:@"%@ <> $%d", self.leftExpression.keyPath, [parameters count]];
+            return [NSString stringWithFormat:@"%@ <> $%lu",
+                    self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSInPredicateOperatorType: {
             NSMutableArray *tokens = [NSMutableArray new];
             NSArray *options = self.rightExpression.constantValue;
@@ -96,20 +102,20 @@
         } case NSLikePredicateOperatorType: {
             [parameters addObject:[NSString stringWithFormat:@"%%%@%%", self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
-                                              self.leftExpression.keyPath, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%lu" : @"%@ %@ $%lu"),
+                                              self.leftExpression.keyPath, operator, (unsigned long)[parameters count]];
         }
         case NSBeginsWithPredicateOperatorType: {
             [parameters addObject:[NSString stringWithFormat:@"%@%%",self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
-                                              self.leftExpression.keyPath, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%lu" : @"%@ %@ $%lu"),
+                                              self.leftExpression.keyPath, operator, (unsigned long)[parameters count]];
         }
         case NSEndsWithPredicateOperatorType: {
             [parameters addObject:[NSString stringWithFormat:@"%%%@",self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%d" : @"%@ %@ $%d"),
-                                              self.leftExpression.keyPath, operator, [parameters count]];
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%lu" : @"%@ %@ $%lu"),
+                                              self.leftExpression.keyPath, operator, (unsigned long)[parameters count]];
         }
         default:
             return nil;
