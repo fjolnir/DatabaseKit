@@ -21,3 +21,12 @@
 }
 
 @end
+
+@implementation DBQuery (DBDeleteQuery)
+- (DBDeleteQuery *)delete
+{
+    DBDeleteQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
+    ret.fields = nil;
+    return ret;
+}
+@end

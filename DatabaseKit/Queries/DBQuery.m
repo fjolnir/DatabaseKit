@@ -64,41 +64,6 @@
 #define IsStr(x) ([x isKindOfClass:[NSString class]])
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
-- (DBQuery *)select:(NSArray *)fields
-{
-    DBQuery *ret = [self _copyWithSubclass:[DBSelectQuery class]];
-    ret.fields = fields;
-    return ret;
-}
-- (DBSelectQuery *)select
-{
-    return [self select:nil];
-}
-
-- (DBInsertQuery *)insert:(NSDictionary *)fields
-{
-    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
-    ret.fields = fields;
-    return ret;
-}
-- (DBUpdateQuery *)update:(NSDictionary *)fields
-{
-    DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
-    ret.fields = fields;
-    return ret;
-}
-- (DBDeleteQuery *)delete
-{
-    DBDeleteQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
-    ret.fields = nil;
-    return ret;
-}
-- (DBRawQuery *)rawQuery:(NSString *)SQL
-{
-    DBRawQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
-    [ret setValue:SQL forKey:@"SQL"];
-    return ret;
-}
 
 - (instancetype)where:(id)conds
 {
@@ -182,39 +147,6 @@
     return YES;
 }
 
-#pragma mark - Execution
-
-- (NSArray *)execute
-{
-    NSError *err = nil;
-    NSArray *result = [self executeOnConnection:[self connection] error:&err];
-    if(err) {
-        DBLog(@"%@", err);
-        return nil;
-    }
-    return result;
-}
-
-- (NSArray *)execute:(NSError **)err
-{
-    return [self executeOnConnection:[self connection] error:err];
-}
-
-- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
-{
-    NSError *err = nil;
-    NSMutableString *query = [NSMutableString new];
-    NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-
-    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
-    if(!ret) {
-        if(outErr)
-            *outErr = err;
-        return nil;
-    } else
-        return ret;
-}
 
 #pragma mark -
 
@@ -247,6 +179,48 @@
     copy.table      = _table;
     copy.fields     = _fields;
     copy.where      = _where;
+    return copy;
+}
+@end
+
+@implementation DBReadQuery
+- (NSArray *)execute
+{
+    return [self execute:NULL];
+}
+- (NSArray *)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    return [connection executeSQL:query substitutions:params error:outErr];
+}
+@end
+
+@implementation DBWriteQuery
+- (BOOL)execute
+{
+    return [self execute:NULL];
+}
+- (BOOL)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+- (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    return [connection executeSQL:query substitutions:params error:outErr] != nil;
+}
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    DBInsertQuery *copy = [super copyWithZone:zone];
+    copy.values = _values;
     return copy;
 }
 @end

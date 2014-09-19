@@ -112,7 +112,7 @@ static NSString *classPrefix = nil;
         NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
         [_dirtyKeys removeAllObjects];
 
-        DBQuery * const query = !_savedIdentifier
+        DBWriteQuery * const query = !_savedIdentifier
             ? [[[self query] insert:changedValues] or:DBInsertFallbackReplace]
             : [[self query] update:changedValues];
         if([query execute:outErr]) {

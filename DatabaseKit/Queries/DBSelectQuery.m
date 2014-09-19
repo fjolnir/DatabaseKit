@@ -41,13 +41,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return query;
 }
 
-- (DBQuery *)select:(NSArray *)fields
-{
-    DBSelectQuery *ret = [self copy];
-    ret.fields = fields;
-    return ret;
-}
-
 - (BOOL)canCombineWithQuery:(DBSelectQuery * const)aQuery
 {
     return aQuery.class == self.class
@@ -69,9 +62,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         return self;
 
     DBSelectQuery * const combined = [self copy];
-    NSMutableDictionary *fields = [_fields mutableCopy];
-    [fields addEntriesFromDictionary:aQuery.fields];
-    combined.fields = fields;
+    combined.fields = [_fields arrayByAddingObjectsFromArray:aQuery.fields];
     return combined;
 }
 
@@ -320,4 +311,21 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     return [self toString];
 }
+@end
+
+@implementation DBQuery (DBSelectQuery)
+
+- (DBQuery *)select:(NSArray *)fields
+{
+    DBQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
+                 ? [self copy]
+                 : [self _copyWithSubclass:[DBSelectQuery class]];
+    ret.fields = fields;
+    return ret;
+}
+- (DBSelectQuery *)select
+{
+    return [self select:nil];
+}
+
 @end

@@ -7,11 +7,18 @@ typedef NS_ENUM(NSUInteger, DBFallback) {
     DBInsertFallbackFail,
     DBInsertFallbackIgnore
 };
-@interface DBInsertQuery : DBQuery
+@interface DBInsertQuery : DBWriteQuery
 @property(nonatomic, readonly) DBFallback fallback;
 
 - (instancetype)or:(DBFallback)aFallback;
 @end
 
 @interface DBUpdateQuery : DBInsertQuery
+@end
+
+@interface DBQuery (DBInsertQuery)
+- (DBInsertQuery *)insert:(NSDictionary *)pairs;
+@end
+@interface DBQuery (DBUpdateQuery)
+- (DBUpdateQuery *)update:(NSDictionary *)pairs;
 @end

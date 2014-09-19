@@ -37,16 +37,18 @@
     if([aQuery isEqual:self])
         return self;
 
-    DBInsertQuery * const combined = [self copy];
-    NSMutableDictionary *fields = [_fields mutableCopy];
-    [fields addEntriesFromDictionary:aQuery.fields];
-    combined.fields = fields;
+    DBInsertQuery *query = (id)aQuery;
+    DBInsertQuery *combined = [self copy];
+    combined.fields = [_fields arrayByAddingObjectsFromArray:query.fields];
+    combined.values = [_values arrayByAddingObjectsFromArray:query.values];
     return combined;
 }
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
+    NSAssert([self.fields count] == [self.values count],
+             @"Field/value count does not match");
     [q appendString:[[self class] _queryType]];
 
     switch(_fallback) {
@@ -68,15 +70,14 @@
     [q appendString:@"INTO "];
     [q appendString:[_table toString]];
     [q appendString:@"(\""];
-    [q appendString:[[_fields allKeys] componentsJoinedByString:@"\", \""]];
+    [q appendString:[_fields componentsJoinedByString:@"\", \""]];
     [q appendString:@"\") VALUES("];
     int i = 0;
-    for(id fieldName in _fields) {
+    for(id value in _values) {
         if(__builtin_expect(i++ > 0, 1))
             [q appendString:@", "];
 
-        id obj = _fields[fieldName];
-        [p addObject:obj ? obj : [NSNull null]];
+        [p addObject:value ?: [NSNull null]];
         [q appendFormat:@"$%lu", (unsigned long)[p count]];
     }
     [q appendString:@")"];
@@ -95,17 +96,20 @@
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
+    NSAssert([self.fields count] == [self.values count],
+             @"Field/value count does not match");
+
     [q appendString:[[self class] _queryType]];
 
     [q appendString:[_table toString]];
     [q appendString:@" SET \""];
-    int i = 0;
-    for(id fieldName in _fields) {
+
+    for(NSUInteger i = 0; i < [_fields count]; ++i) {
         if(__builtin_expect(i++ > 0, 1))
             [q appendString:@", \""];
-        [q appendString:fieldName];
+        [q appendString:_fields[i]];
         [q appendString:@"\"="];
-        id obj = _fields[fieldName];
+        id obj = _values[i];
         if([obj isEqual:[NSNull null]])
             [q appendString:@"NULL"];
         else if([obj isKindOfClass:[DBExpression class]]) {
@@ -117,6 +121,31 @@
     }
 
     return [self _generateWhereString:q parameters:p];
+}
+
+@end
+
+
+@implementation DBQuery (DBInsertQuery)
+
+- (DBInsertQuery *)insert:(NSDictionary *)pairs
+{
+    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
+    ret.fields = [pairs allKeys];
+    ret.values = [pairs objectsForKeys:ret.fields notFoundMarker:[NSNull null]];
+    return ret;
+}
+
+@end
+
+@implementation DBQuery (DBUpdateQuery)
+
+- (DBUpdateQuery *)update:(NSDictionary *)pairs
+{
+    DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
+    ret.fields = [pairs allKeys];
+    ret.values = [pairs objectsForKeys:ret.fields notFoundMarker:[NSNull null]];
+    return ret;
 }
 
 @end

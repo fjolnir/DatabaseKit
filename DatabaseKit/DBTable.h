@@ -35,7 +35,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
 
-@class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
+#import <DatabaseKit/DBQuery.h>
 
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
@@ -59,7 +59,6 @@
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
 - (DBSelectQuery *)limit:(NSUInteger)limit;
-- (DBRawQuery *)rawQuery:(NSString *)SQL;
 
 - (NSUInteger)count;
 @end

@@ -3,11 +3,11 @@
 @interface DBQuery () {
 @protected
     DBTable *_table;
-    id _fields;
+    NSArray *_fields;
     id _where;
 }
 @property(readwrite, strong) DBTable *table;
-@property(readwrite, strong) id fields;
+@property(readwrite, strong) NSArray *fields;
 @property(readwrite, strong) NSDictionary *where;
 
 + (NSString *)_queryType;
@@ -20,4 +20,11 @@
             query:(NSMutableString *)query;
 
 - (id)_copyWithSubclass:(Class)aClass;
+@end
+
+@interface DBWriteQuery () {
+@protected
+    NSArray *_values;
+}
+@property(nonatomic, readwrite) NSArray *values;
 @end

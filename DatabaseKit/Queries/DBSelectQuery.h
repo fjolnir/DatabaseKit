@@ -11,7 +11,7 @@ extern NSString *const DBLeftJoin;
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
-@interface DBSelectQuery : DBQuery <NSFastEnumeration>
+@interface DBSelectQuery : DBReadQuery <NSFastEnumeration>
 @property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;
@@ -51,4 +51,9 @@ extern NSString *const DBUnionAll;
 @property(readonly, strong) NSString *field, *alias;
 
 + (DBAs *)field:(NSString *)field alias:(NSString *)alias;
+@end
+
+@interface DBQuery (DBSelectQuery)
+- (DBSelectQuery *)select:(NSArray *)fields;
+- (DBSelectQuery *)select;
 @end
