@@ -105,7 +105,7 @@
     [q appendString:@" SET \""];
 
     for(NSUInteger i = 0; i < [_fields count]; ++i) {
-        if(__builtin_expect(i++ > 0, 1))
+        if(__builtin_expect(i > 0, 1))
             [q appendString:@", \""];
         [q appendString:_fields[i]];
         [q appendString:@"\"="];
