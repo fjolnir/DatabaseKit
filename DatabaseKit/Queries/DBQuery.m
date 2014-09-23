@@ -65,29 +65,28 @@
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
 
-- (instancetype)where:(id)conds, ...
+- (instancetype)where:(NSString *)format, ...
 {
     va_list args;
-    va_start(args, conds);
-    DBQuery *query = [self where:conds arguments:args];
+    va_start(args, format);
+    DBQuery *query = [self where:format arguments:args];
     va_end(args);
     return query;
 }
 
-- (instancetype)where:(id)conds arguments:(va_list)args
+- (instancetype)where:(NSString *)format arguments:(va_list)args
 {
-    if(conds == self.where || [conds isEqual:self.where])
-        return self;
-    
-    NSParameterAssert(!conds || IsArr(conds) || IsDic(conds) || IsStr(conds) || [conds isKindOfClass:[NSPredicate class]]);
-    DBQuery *ret = [self copy];
-    if([conds isKindOfClass:[NSString class]])
-        ret.where = [NSPredicate predicateWithFormat:conds arguments:args];
-    else
-        ret.where = conds;
-    return ret;
+    return [self withPredicate:[NSPredicate predicateWithFormat:format arguments:args]];
 }
 
+- (instancetype)withPredicate:(NSPredicate *)predicate
+{
+    if(predicate == self.where || [predicate isEqual:self.where])
+        return self;
+    DBQuery *ret = [self copy];
+    ret.where = predicate;
+    return ret;
+}
 
 #pragma mark -
 
@@ -108,47 +107,6 @@
     if(addToken)
         [query appendFormat:@"$%ld", (unsigned long)[params count]];
     
-    return YES;
-}
-
-- (BOOL)_generateWhereString:(NSMutableString *)q parameters:(NSMutableArray *)p
-{
-    NSParameterAssert(q && p);
-
-    if(!_where)
-        return YES;
-    
-    [q appendString:@" WHERE "];
-
-    if(IsStr(_where))
-        [q appendString:_where];
-    else if([_where isKindOfClass:[NSPredicate class]])
-        [q appendString:[_where db_sqlRepresentation:p]];
-    else if(IsArr(_where)) {
-        NSMutableString *condStr = [_where[0] mutableCopy];
-        for(int j = 1; j < [_where count]; ++j) {
-            [self _addParam:_where[j] withToken:NO currentParams:p query:q];
-            [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
-                                     withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
-                                        options:0
-                                          range:(NSRange){ 0, [condStr length] }];
-        }
-        [q appendString:@"("];
-        [q appendString:condStr];
-        [q appendString:@") "];
-    }
-    else if(IsDic(_where)) {
-        int i = 0;
-        for(NSString *fieldName in _where) {
-            if(i++ > 0)
-                [q appendString:@" AND "];
-            [q appendString:@"\""];
-            [q appendString:fieldName];
-            [q appendString:@"\" IS "];
-            [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
-        }
-    } else
-        return NO;
     return YES;
 }
 

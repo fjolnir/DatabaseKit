@@ -1,6 +1,7 @@
 #import "DBQuery+Private.h"
 #import "DBDeleteQuery.h"
 #import "DBTable.h"
+#import "NSPredicate+DBAdditions.h"
 
 @implementation DBDeleteQuery
 
@@ -17,7 +18,12 @@
     [q appendString:@"FROM "];
     [q appendString:[_table toString]];
 
-    return [self _generateWhereString:q parameters:p];
+    if(_where) {
+        [q appendString:@" WHERE "];
+        [q appendString:[_where db_sqlRepresentation:p]];
+    }
+
+    return q;
 }
 
 @end

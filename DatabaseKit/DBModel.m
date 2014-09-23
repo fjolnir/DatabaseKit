@@ -128,7 +128,7 @@ static NSString *classPrefix = nil;
 - (BOOL)destroy
 {
     @try {
-        [[[_table delete] where:@{ kDBIdentifierColumn: _identifier }] execute];
+        [[[_table delete] where:@"%K = %@", kDBIdentifierColumn, _identifier] execute];
         return YES;
     }
     @catch(NSException *e) {
@@ -151,7 +151,7 @@ static NSString *classPrefix = nil;
 
 - (DBQuery *)query
 {
-    return [_table where:@{ kDBIdentifierColumn: _savedIdentifier ?: _identifier }];
+    return [_table where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
 }
 
 - (void)setNilValueForKey:(NSString * const)aKey

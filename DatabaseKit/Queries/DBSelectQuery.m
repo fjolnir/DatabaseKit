@@ -3,6 +3,7 @@
 #import "DBTable.h"
 #import "DBModel+Private.h"
 #import "DBUtilities.h"
+#import "NSPredicate+DBAdditions.h"
 
 NSString *const DBSelectAll = @"*";
 
@@ -113,8 +114,10 @@ NSString *const DBUnionAll = @" UNION ALL ";
         }
     }
 
-    [self _generateWhereString:q parameters:p];
-
+    if(_where) {
+        [q appendString:@" WHERE "];
+        [q appendString:[_where db_sqlRepresentation:p]];
+    }
     if(_groupedBy) {
         [q appendString:@" GROUP BY "];
         [q appendString:[_groupedBy componentsJoinedByString:@", "]];

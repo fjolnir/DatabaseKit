@@ -4,6 +4,7 @@
 #import "DBTable.h"
 #import "DBModel.h"
 #import "DBUtilities.h"
+#import "NSPredicate+DBAdditions.h"
 
 @interface DBInsertQuery ()
 @property(nonatomic, readwrite) DBFallback fallback;
@@ -119,8 +120,12 @@
         } else
             [self _addParam:obj withToken:YES currentParams:p query:q];
     }
+    if(_where) {
+        [q appendString:@" WHERE "];
+        [q appendString:[_where db_sqlRepresentation:p]];
+    }
 
-    return [self _generateWhereString:q parameters:p];
+    return YES;
 }
 
 @end
