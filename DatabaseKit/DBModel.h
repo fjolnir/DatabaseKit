@@ -53,6 +53,7 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 @interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
 @property(readwrite, copy) NSString *identifier;
+@property(readonly, getter=isInserted) BOOL inserted;
 @property(readonly, retain) NSSet *dirtyKeys;
 
 

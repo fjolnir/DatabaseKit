@@ -9,6 +9,7 @@
 static NSString *classPrefix = nil;
 
 @implementation DBModel
+@dynamic inserted;
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
@@ -134,6 +135,11 @@ static NSString *classPrefix = nil;
         DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
         return NO;
     }
+}
+
+- (BOOL)isInserted
+{
+    return _savedIdentifier != nil;
 }
 
 - (void)_clearDirtyKeys
