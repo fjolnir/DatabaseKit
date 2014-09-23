@@ -7,7 +7,7 @@
 @interface DBQuery : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
 @property(readonly, strong) NSArray *fields;
-@property(readonly, strong) NSDictionary *where;
+@property(readonly, strong) id where;
 
 + (instancetype)withTable:(DBTable *)table;
 
@@ -15,7 +15,8 @@
 - (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
 - (instancetype)combineWith:(DBQuery *)aQuery;
 
-- (instancetype)where:(id)conds;
+- (instancetype)where:(id)conds, ...;
+- (instancetype)where:(id)conds arguments:(va_list)args;
 
 - (NSString *)toString;
 @end

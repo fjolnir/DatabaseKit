@@ -64,29 +64,30 @@
                                      ? [self _negateOperator:[self predicateOperatorType]]
                                      : [self predicateOperatorType];
 
+    id value = self.rightExpression.constantValue ?: [NSNull null];
     switch(operator) {
         case NSLessThanPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return  [NSString stringWithFormat:@"%@ < $%lu",
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSLessThanOrEqualToPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return  [NSString stringWithFormat:@"%@ <= $%lu",
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSGreaterThanPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return  [NSString stringWithFormat:@"%@ > $%lu",
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSGreaterThanOrEqualToPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return  [NSString stringWithFormat:@"%@ >= $%lu",
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSEqualToPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return  [NSString stringWithFormat:@"%@ IS $%lu",
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSNotEqualToPredicateOperatorType:
-            [parameters addObject:self.rightExpression.constantValue];
+            [parameters addObject:value];
             return [NSString stringWithFormat:@"%@ <> $%lu",
                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSInPredicateOperatorType: {

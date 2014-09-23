@@ -65,14 +65,26 @@
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
 
-- (instancetype)where:(id)conds
+- (instancetype)where:(id)conds, ...
+{
+    va_list args;
+    va_start(args, conds);
+    DBQuery *query = [self where:conds arguments:args];
+    va_end(args);
+    return query;
+}
+
+- (instancetype)where:(id)conds arguments:(va_list)args
 {
     if(conds == self.where || [conds isEqual:self.where])
         return self;
     
     NSParameterAssert(!conds || IsArr(conds) || IsDic(conds) || IsStr(conds) || [conds isKindOfClass:[NSPredicate class]]);
     DBQuery *ret = [self copy];
-    ret.where = conds;
+    if([conds isKindOfClass:[NSString class]])
+        ret.where = [NSPredicate predicateWithFormat:conds arguments:args];
+    else
+        ret.where = conds;
     return ret;
 }
 

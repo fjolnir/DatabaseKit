@@ -8,7 +8,7 @@
 }
 @property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) NSArray *fields;
-@property(readwrite, strong) NSDictionary *where;
+@property(readwrite, strong) id where;
 
 + (NSString *)_queryType;
 

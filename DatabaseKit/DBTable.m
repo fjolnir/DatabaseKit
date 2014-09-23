@@ -72,9 +72,13 @@
 {
     return [[DBQuery withTable:self] delete];
 }
-- (DBQuery *)where:(id)conds
+- (DBQuery *)where:(id)conds, ...
 {
-    return [[DBQuery withTable:self] where:conds];
+    va_list args;
+    va_start(args, conds);
+    DBQuery *query = [[DBQuery withTable:self] where:conds arguments:args];
+    va_end(args);
+    return query;
 }
 - (DBQuery *)order:(NSString *)order by:(id)fields
 {
