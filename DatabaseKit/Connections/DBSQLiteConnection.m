@@ -93,11 +93,13 @@
     DBLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
     // Prepare the query
     NSString *tail = nil;
+    NSError *prepareErr;
     sqlite3_stmt *queryByteCode = [self prepareQuerySQL:sql
                                                    tail:&tail
-                                                  error:outErr];
+                                                  error:&prepareErr];
     if(!queryByteCode) {
-        DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [*outErr localizedDescription]);
+        if(outErr) *outErr = prepareErr;
+        DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [prepareErr localizedDescription]);
         return nil;
     }
     NSArray *columnNames = [self columnsForQuery:queryByteCode];
