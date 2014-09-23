@@ -101,7 +101,11 @@
                                               self.leftExpression.keyPath,
                                               [tokens componentsJoinedByString:@", "]];
         } case NSLikePredicateOperatorType: {
-            [parameters addObject:[NSString stringWithFormat:@"%%%@%%", self.rightExpression.constantValue]];
+            if([value isKindOfClass:[NSString class]]) {
+                value = [value stringByReplacingOccurrencesOfString:@"*" withString:@"%"];
+                value = [value stringByReplacingOccurrencesOfString:@"?" withString:@"_"];
+            }
+            [parameters addObject:value];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%lu" : @"%@ %@ $%lu"),
                                               self.leftExpression.keyPath, operator, (unsigned long)[parameters count]];
