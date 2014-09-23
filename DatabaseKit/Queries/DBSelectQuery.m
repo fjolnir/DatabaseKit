@@ -78,7 +78,10 @@ NSString *const DBUnionAll = @" UNION ALL ";
         [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
 
     [q appendString:@" FROM ("];
-    [q appendString:[(id)(_subQuery ?: _table) toString]];
+    if(_subQuery)
+        [_subQuery _generateString:q parameters:p];
+    else
+        [q appendString:[_table toString]];
     [q appendString:@")"];
 
     if(_join) {
