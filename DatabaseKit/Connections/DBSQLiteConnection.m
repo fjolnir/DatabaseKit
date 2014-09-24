@@ -70,6 +70,9 @@
         }
         return nil;
     }
+
+    [self executeSQL:@"PRAGMA foreign_keys = ON" substitutions:nil error:NULL];
+
     return self;
 }
 
