@@ -97,7 +97,7 @@
                 [tokens addObject:[NSString stringWithFormat:@"$%lu", i]];
             }
             [parameters addObjectsFromArray:options];
-            return [NSString stringWithFormat:@"%@ IN (%@)",
+            return [NSString stringWithFormat:negate ? @"%@ NOT IN (%@)" : @"%@ IN (%@)",
                                               self.leftExpression.keyPath,
                                               [tokens componentsJoinedByString:@", "]];
         } case NSLikePredicateOperatorType: {
