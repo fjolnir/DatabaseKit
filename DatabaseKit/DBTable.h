@@ -55,7 +55,7 @@
 - (DBInsertQuery *)insert:(NSDictionary *)fields;
 - (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
-- (DBQuery *)where:(id)conds, ...;
+- (DBSelectQuery *)where:(id)conds, ...;
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
 - (DBSelectQuery *)limit:(NSUInteger)limit;

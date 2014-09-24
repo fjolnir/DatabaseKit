@@ -72,11 +72,11 @@
 {
     return [[DBQuery withTable:self] delete];
 }
-- (DBQuery *)where:(id)conds, ...
+- (DBSelectQuery *)where:(id)conds, ...
 {
     va_list args;
     va_start(args, conds);
-    DBQuery *query = [[DBQuery withTable:self] where:conds arguments:args];
+    DBSelectQuery *query = [[DBSelectQuery withTable:self] where:conds arguments:args];
     va_end(args);
     return query;
 }
