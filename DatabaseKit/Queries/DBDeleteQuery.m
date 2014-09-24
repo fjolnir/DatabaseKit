@@ -23,7 +23,7 @@
         [q appendString:[_where db_sqlRepresentation:p]];
     }
 
-    return q;
+    return YES;
 }
 
 @end
