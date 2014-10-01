@@ -88,13 +88,13 @@
                      self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSNotEqualToPredicateOperatorType:
             [parameters addObject:value];
-            return [NSString stringWithFormat:@"%@ <> $%lu",
+            return [NSString stringWithFormat:@"%@ IS NOT $%lu",
                     self.leftExpression.keyPath, (unsigned long)[parameters count]];
         case NSInPredicateOperatorType: {
             NSMutableArray *tokens = [NSMutableArray new];
             NSArray *options = self.rightExpression.constantValue;
-            for(unsigned long i = [parameters count] + 1; i < [parameters count] + [options count]; ++i) {
-                [tokens addObject:[NSString stringWithFormat:@"$%lu", i]];
+            for(unsigned long i = [parameters count]; i < [parameters count] + [options count]; ++i) {
+                [tokens addObject:[NSString stringWithFormat:@"$%lu", i+1]];
             }
             [parameters addObjectsFromArray:options];
             return [NSString stringWithFormat:negate ? @"%@ NOT IN (%@)" : @"%@ IN (%@)",
