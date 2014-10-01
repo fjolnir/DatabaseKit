@@ -75,22 +75,23 @@ id DBConnectionRollback = @"DBConnectionRollback";
     return NO;
 }
 
-- (id)transaction:(DBConnectionBlock)block
+- (BOOL)transaction:(DBTransactionBlock)aBlock
 {
-    [self beginTransaction];
-    id ret;
     @try {
-        ret = block();
-        if(ret == DBConnectionRollback) {
-            ret = nil;
-            [self rollBack];
-        } else
-            [self endTransaction];
-    } @catch(NSException *e) {
-        [self rollBack];
-        [e raise];
-        return nil;
+        if(![self beginTransaction])
+            return NO;
+        switch(aBlock()) {
+            case DBTransactionRollBack:
+                return [self rollBack];
+            case DBTransactionCommit:
+                return [self endTransaction];
+        }
     }
-    return ret;
+    @catch(NSException *_) {
+        [self rollBack];
+        return NO;
+    }
+    return YES;
 }
+
 @end

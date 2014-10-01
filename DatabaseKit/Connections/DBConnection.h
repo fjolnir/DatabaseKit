@@ -40,7 +40,16 @@
 extern id DBConnectionRollback;
 
 @class DBQuery;
-typedef id (^DBConnectionBlock)();
+
+/*!
+ * A block for executing database statements in a transaction
+ * return DBTransactionRollBack to trigger a rollback
+ */
+typedef NS_ENUM(NSUInteger, DBTransactionOperation) {
+    DBTransactionRollBack,
+    DBTransactionCommit
+};
+typedef DBTransactionOperation (^DBTransactionBlock)();
 
 #define DBConnectionErrorDomain @"com.databasekit.connection"
 
@@ -97,7 +106,7 @@ typedef id (^DBConnectionBlock)();
 - (BOOL)rollBack;
 /*! Ends a transaction */
 - (BOOL)endTransaction;
-/*! Wraps the passed block in a transaction and calls it */
-- (id)transaction:(DBConnectionBlock)block;
+/*! Executes a block wrapped in a transaction */
+- (BOOL)transaction:(DBTransactionBlock)aBlock;
 
 @end
