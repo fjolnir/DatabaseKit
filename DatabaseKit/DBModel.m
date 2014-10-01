@@ -127,14 +127,16 @@ static NSString *classPrefix = nil;
 
 - (BOOL)destroy
 {
-    @try {
-        [[[_table delete] where:@"%K = %@", kDBIdentifierColumn, _identifier] execute];
-        return YES;
-    }
-    @catch(NSException *e) {
-        DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
+    if(self.isInserted) {
+        @try {
+            return [[[self query] delete] execute];
+        }
+        @catch(NSException *e) {
+            DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
+            return NO;
+        }
+    } else
         return NO;
-    }
 }
 
 - (BOOL)isInserted
