@@ -43,22 +43,19 @@ static NSString *classPrefix = nil;
 
 + (NSSet *)keyPathsForValuesAffectingDirtyKeys
 {
-    unsigned int propertyCount;
-    objc_property_t *properties = class_copyPropertyList(self, &propertyCount);
+    NSMutableSet *keyPaths = [NSMutableSet new];
 
-    NSMutableSet *keyPaths = [[self superclass] instancesRespondToSelector:_cmd]
-        ? [[super keyPathsForValuesAffectingValueForKey:@"dirtyKeys"] mutableCopy]
-        : [NSMutableSet setWithCapacity:propertyCount];
-
-    for(int i = 0; i < propertyCount; ++i) {
-        const char * const name = property_getName(properties[i]);
-        // If super also has it we're not interested
-        if(class_getProperty([self superclass], name))
-            continue;
-        [keyPaths addObject:[NSString stringWithUTF8String:name]];
-    }
-    [keyPaths addObject:kDBIdentifierColumn];
-    free(properties);
+    Class klass = self;
+    do {
+        unsigned int propertyCount;
+        objc_property_t *properties = class_copyPropertyList(klass, &propertyCount);
+        for(int i = 0; i < propertyCount; ++i) {
+            [keyPaths addObject:@(property_getName(properties[i]))];
+        }
+        [keyPaths addObject:kDBIdentifierColumn];
+        free(properties);
+    } while((klass = [klass superclass]) != [DBModel class]);
+    
     return keyPaths;
 }
 
