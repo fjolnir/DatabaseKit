@@ -5,11 +5,6 @@
 #import "DBUtilities.h"
 #import "NSPredicate+DBAdditions.h"
 
-NSString *const DBSelectAll = @"*";
-
-NSString *const DBOrderDescending = @" DESC";
-NSString *const DBOrderAscending  = @" ASC";
-
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
 
@@ -20,7 +15,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @property(readwrite, strong) DBSelectQuery *subQuery;
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
-@property(readwrite, strong) NSString *order;
+@property(readwrite)         DBOrder order;
 @property(readwrite)         NSUInteger limit, offset;
 @property(readwrite, strong) id join;
 @property(readwrite, strong) DBSelectQuery *unionQuery;
@@ -47,9 +42,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return aQuery.class == self.class
         && DBEqual(_where, aQuery.where)
         && DBEqual(_table,aQuery.table)
-        && DBEqual(_order, aQuery.order)
         && DBEqual(_orderedBy, aQuery.orderedBy)
         && DBEqual(_groupedBy, aQuery.groupedBy)
+        && _order == aQuery.order
         && _limit == aQuery.limit
         && _offset == aQuery.offset
         && !_unionQuery && !aQuery.unionType;
@@ -74,7 +69,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     [q appendString:[[self class] _queryType]];
 
     if(_fields == nil)
-        [q appendString:DBSelectAll];
+        [q appendString:@"*"];
     else
         [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
 
@@ -127,10 +122,21 @@ NSString *const DBUnionAll = @" UNION ALL ";
         if(![self _addParam:_unionQuery withToken:NO currentParams:p query:q])
             return false;
     }
-    if(_order && _orderedBy) {
+    if(_orderedBy) {
         [q appendString:@" ORDER BY "];
-        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"%@, ", _order]]];
-        [q appendString:_order];
+        switch (_order) {
+            case DBOrderAscending:
+                [q appendString:[_orderedBy componentsJoinedByString:@" ASC, "]];
+                [q appendString:@" ASC"];
+                break;
+            case DBOrderDescending:
+                [q appendString:[_orderedBy componentsJoinedByString:@" DESC, "]];
+                [q appendString:@" DESC"];
+                break;
+            default:
+                [NSException raise:NSInternalInconsistencyException
+                            format:@"Invalid order"];
+        }
     }
 
     if(_limit > 0)
@@ -164,7 +170,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }
 
-- (instancetype)order:(NSString *)order by:(NSArray *)fields
+- (instancetype)order:(DBOrder)order by:(NSArray *)fields
 {
     DBSelectQuery *ret = [self copy];
     ret.order = order;

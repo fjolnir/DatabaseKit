@@ -1,21 +1,21 @@
 #import <DatabaseKit/DBQuery.h>
 
-extern NSString *const DBSelectAll;
-
-extern NSString *const DBOrderDescending;
-extern NSString *const DBOrderAscending;
-
 extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
 
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
+typedef NS_ENUM(NSUInteger, DBOrder) {
+    DBOrderAscending = 1,
+    DBOrderDescending
+};
+
 @interface DBSelectQuery : DBReadQuery <NSFastEnumeration>
 @property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;
-@property(readonly, strong) NSString *order;
+@property(readonly)         DBOrder order;
 @property(readonly)         NSUInteger limit, offset;
 @property(readonly, strong) id join;
 @property(readonly, strong) DBSelectQuery *unionQuery;
@@ -23,7 +23,7 @@ extern NSString *const DBUnionAll;
 
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery;
 
-- (instancetype)order:(NSString *)order by:(NSArray *)fields;
+- (instancetype)order:(DBOrder)order by:(NSArray *)fields;
 - (instancetype)orderBy:(NSArray *)fields;
 - (instancetype)groupBy:(NSArray *)fields;
 - (instancetype)limit:(NSUInteger)limit;
