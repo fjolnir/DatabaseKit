@@ -20,6 +20,7 @@
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
     NSMutableDictionary *_cachedStatements;
+    NSMutableArray *_savePointStack;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
                              tail:(NSString **)outTail
@@ -319,38 +320,54 @@
 #pragma mark Transactions
 - (BOOL)beginTransaction
 {
+    NSString * const savePointName = [[NSUUID UUID] UUIDString];
     char *errorMessage;
-    int err = sqlite3_exec(_connection, "BEGIN TRANSACTION", NULL, NULL, &errorMessage);
+    int err = sqlite3_exec(_connection,
+                           [[NSString stringWithFormat:@"SAVEPOINT '%@'", savePointName] UTF8String],
+                           NULL, NULL, &errorMessage);
     if(err != SQLITE_OK)
     {
         [NSException raise:@"SQLite error"
                     format:@"Couldn't start transaction, Details: %@", @(errorMessage)];
         return NO;
     }
+    
+    if(!_savePointStack)
+        _savePointStack = [NSMutableArray arrayWithObject:savePointName];
+    else
+        [_savePointStack addObject:savePointName];
     return YES;
 }
 - (BOOL)rollBack
 {
+    NSAssert([_savePointStack count] > 0, @"Not in a transaction");
     char *errorMessage;
-    int err = sqlite3_exec(_connection, "ROLLBACK", NULL, NULL, &errorMessage);
+    int err = sqlite3_exec(_connection,
+                           [[NSString stringWithFormat:@"ROLLBACK TO SAVEPOINT '%@'", [_savePointStack lastObject]] UTF8String],
+                           NULL, NULL, &errorMessage);
     if(err != SQLITE_OK)
     {
         [NSException raise:@"SQLite error"
                     format:@"Couldn't roll back transaction, Details: %@", @(errorMessage)];
         return NO;
     }
+    [_savePointStack removeLastObject];
     return YES;
 }
 - (BOOL)endTransaction
 {
+    NSAssert([_savePointStack count] > 0, @"Not in a transaction");
     char *errorMessage;
-    int err = sqlite3_exec(_connection, "END TRANSACTION", NULL, NULL, &errorMessage);
+    int err = sqlite3_exec(_connection,
+                           [[NSString stringWithFormat:@"RELEASE SAVEPOINT '%@'", [_savePointStack lastObject]] UTF8String],
+                           NULL, NULL, &errorMessage);
     if(err != SQLITE_OK)
     {
         [NSException raise:@"SQLite error" 
                     format:@"Couldn't end transaction, Details: %@", @(errorMessage)];
         return NO;
     }
+    [_savePointStack removeLastObject];
     return YES;
 }
 
