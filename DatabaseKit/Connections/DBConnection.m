@@ -4,7 +4,6 @@
 #define NOT_IMPLEMENTED [NSException raise:@"Unimplemented" format:@"DBConnection can not be used directly!"]
 
 static NSMutableArray *_ConnectionClasses;
-id DBConnectionRollback = @"DBConnectionRollback";
 
 @interface DBConnection ()
 @property(readwrite, retain) NSURL *URL;

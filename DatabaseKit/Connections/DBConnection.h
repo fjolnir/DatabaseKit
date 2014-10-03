@@ -37,8 +37,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern id DBConnectionRollback;
-
 @class DBQuery;
 
 /*!
