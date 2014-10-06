@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
     DBOrderDescending
 };
 
-@interface DBSelectQuery : DBReadQuery <NSFastEnumeration>
+@interface DBSelectQuery : DBReadQuery
 @property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;

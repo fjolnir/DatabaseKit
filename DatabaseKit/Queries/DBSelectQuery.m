@@ -147,11 +147,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return YES;
 }
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
-{
-    return [[self execute] countByEnumeratingWithState:state objects:buffer count:len];
-}
-
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
     return [[[self offset:idx] limit:1] firstObject];
