@@ -28,6 +28,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @property(readwrite, strong) DBJoin *join;
 @property(readwrite, strong) DBSelectQuery *unionQuery;
 @property(readwrite, strong) NSString *unionType;
+@property(readwrite)         BOOL distinct;
 @end
 
 @implementation DBSelectQuery
@@ -75,6 +76,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     NSParameterAssert(q && p);
     [q appendString:[[self class] _queryType]];
+
+    if(_distinct)
+        [q appendString:@"DISTINCT "];
 
     if(_fields == nil)
         [q appendString:@"*"];
@@ -179,8 +183,10 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return ret;
 }
 
+- (instancetype)distinct:(BOOL)distinct
 {
     DBSelectQuery *ret = [self copy];
+    ret.distinct = distinct;
     return ret;
 }
 
@@ -232,6 +238,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     copy.unionQuery = _unionQuery;
     copy.unionType  = _unionType;
     copy.subQuery   = _subQuery;
+    copy.distinct   = _distinct;
     return copy;
 }
 

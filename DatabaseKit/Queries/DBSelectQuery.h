@@ -22,6 +22,7 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
 @property(readonly, strong) DBJoin *join;
 @property(readonly, strong) DBSelectQuery *unionQuery;
 @property(readonly, strong) NSString *unionType;
+@property(readonly)         BOOL distinct;
 
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery;
 
@@ -30,6 +31,7 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
 - (instancetype)groupBy:(NSArray *)fields;
 - (instancetype)limit:(NSUInteger)limit;
 - (instancetype)offset:(NSUInteger)offset;
+- (instancetype)distinct:(BOOL)distinct;
 
 - (instancetype)join:(DBJoin *)join;
 - (instancetype)innerJoin:(id)table on:(NSString *)format, ...;
