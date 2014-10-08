@@ -221,7 +221,18 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type
 {
     DBSelectQuery *ret = [self copy];
-    ret.unionQuery = otherQuery;
+    if(otherQuery.orderedBy) {
+        if(!ret.orderedBy)
+            ret.order = otherQuery.order;
+
+        NSMutableArray * const orderedBy = [ret.orderedBy mutableCopy] ?: [NSMutableArray new];
+        for(NSString *field in otherQuery.orderedBy) {
+            if(![orderedBy containsObject:field])
+                [orderedBy addObject:field];
+        }
+        ret.orderedBy = orderedBy;
+    }
+    ret.unionQuery = [otherQuery orderBy:nil];
     ret.unionType  = type;
     return ret;
 }
