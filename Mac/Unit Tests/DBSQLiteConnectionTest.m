@@ -35,7 +35,7 @@
 - (void)testFetchColumns
 {
     // Test if we fetch correct columns
-    NSArray *columnsFromDb = [db.connection columnsForTable:@"foo"];
+    NSArray *columnsFromDb = [[db.connection columnsForTable:@"foo"] allKeys];
     NSArray *columnsFixture = @[kDBIdentifierColumn, @"bar", @"baz", @"integer"];
     for(NSString *fixture in columnsFixture)
     {
