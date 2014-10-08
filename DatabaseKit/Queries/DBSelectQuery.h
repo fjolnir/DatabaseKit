@@ -1,5 +1,7 @@
 #import <DatabaseKit/DBQuery.h>
 
+@class DBAs, DBJoin;
+
 extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
 
@@ -17,7 +19,7 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
 @property(readonly, strong) NSArray *groupedBy;
 @property(readonly)         DBOrder order;
 @property(readonly)         NSUInteger limit, offset;
-@property(readonly, strong) id join;
+@property(readonly, strong) DBJoin *join;
 @property(readonly, strong) DBSelectQuery *unionQuery;
 @property(readonly, strong) NSString *unionType;
 
@@ -29,9 +31,9 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
 - (instancetype)limit:(NSUInteger)limit;
 - (instancetype)offset:(NSUInteger)offset;
 
-- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields;
-- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields;
-- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields;
+- (instancetype)join:(DBJoin *)join;
+- (instancetype)innerJoin:(id)table on:(NSString *)format, ...;
+- (instancetype)leftJoin:(id)table on:(NSString *)format, ...;
 - (instancetype)union:(DBSelectQuery *)otherQuery;
 - (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type;
 
@@ -42,9 +44,9 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
 
 @interface DBJoin : NSObject
 @property(readonly, strong) NSString *type;
-@property(readonly, strong) id table;
-@property(readonly, strong) NSDictionary *fields;
-+ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields;
+@property(readonly, strong) DBTable *table;
+@property(readonly, strong) NSPredicate *predicate;
++ (DBJoin *)withType:(NSString *)type table:(id)table predicate:(NSPredicate *)aPredicate;
 @end
 
 @interface DBAs : NSObject

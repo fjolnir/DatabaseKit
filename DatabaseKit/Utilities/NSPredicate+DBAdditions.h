@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+@class DBQuery;
+
 @interface NSPredicate (DBAdditions)
-- (NSString *)db_sqlRepresentation:(NSMutableArray *)parameters;
+- (NSString *)db_sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 @end

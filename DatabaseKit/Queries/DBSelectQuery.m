@@ -11,13 +11,21 @@ NSString *const DBLeftJoin  = @" LEFT ";
 NSString *const DBUnion    = @" UNION ";
 NSString *const DBUnionAll = @" UNION ALL ";
 
+@interface DBJoin ()
+@property(readwrite, strong) NSString *type;
+@property(readwrite, strong) DBTable *table;
+@property(readwrite, strong) NSPredicate *predicate;
+
+- (BOOL)_generateString:(NSMutableString *)q query:(DBSelectQuery *)query parameters:(NSMutableArray *)p;
+@end
+
 @interface DBSelectQuery ()
 @property(readwrite, strong) DBSelectQuery *subQuery;
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
 @property(readwrite)         DBOrder order;
 @property(readwrite)         NSUInteger limit, offset;
-@property(readwrite, strong) id join;
+@property(readwrite, strong) DBJoin *join;
 @property(readwrite, strong) DBSelectQuery *unionQuery;
 @property(readwrite, strong) NSString *unionType;
 @end
@@ -80,38 +88,11 @@ NSString *const DBUnionAll = @" UNION ALL ";
         [q appendString:[_table toString]];
     [q appendString:@")"];
 
-    if(_join) {
-        if([_join isKindOfClass:[DBJoin class]]) {
-            DBJoin *join = _join;
-            NSString *tableName     = [_table toString];
-            NSString *joinTableName = [join.table toString];
-            NSDictionary *joinFields = join.fields;
-            [q appendString:join.type];
-            [q appendString:@" JOIN "];
-            [q appendString:joinTableName];
-            [q appendString:@" ON "];
-            int i = 0;
-            for(id key in join.fields) {
-                if(i++ > 0)
-                    [q appendString:@" AND "];
-                [q appendString:joinTableName];
-                [q appendString:@".\""];
-                [q appendString:joinFields[key]];
-                [q appendString:@"\"="];
-                [q appendString:tableName];
-                [q appendString:@".\""];
-                [q appendString:key];
-                [q appendString:@"\""];
-            }
-        } else {
-            [q appendString:@" "];
-            [q appendString:[_join toString]];
-        }
-    }
+    [_join _generateString:q query:self parameters:p];
 
     if(_where) {
         [q appendString:@" WHERE "];
-        [q appendString:[_where db_sqlRepresentation:p]];
+        [q appendString:[_where db_sqlRepresentationForQuery:self withParameters:p]];
     }
     if(_groupedBy) {
         [q appendString:@" GROUP BY "];
@@ -198,19 +179,32 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return ret;
 }
 
-- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields
 {
     DBSelectQuery *ret = [self copy];
-    ret.join = [DBJoin withType:type table:table fields:fields];
     return ret;
 }
-- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields
+
+- (instancetype)join:(DBJoin * const)join
 {
-    return [self join:DBInnerJoin withTable:table on:fields];
+    DBSelectQuery *ret = [self copy];
+    ret.join = join;
+    return ret;
 }
-- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields
+- (instancetype)innerJoin:(id)table on:(NSString *)format, ...
 {
-    return [self join:DBLeftJoin withTable:table on:fields];
+    va_list args;
+    va_start(args, format);
+    NSPredicate * const predicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+    return [self join:[DBJoin withType:DBInnerJoin table:table predicate:predicate]];
+}
+- (instancetype)leftJoin:(id)table on:(NSString *)format, ...
+{
+    va_list args;
+    va_start(args, format);
+    NSPredicate * const predicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+    return [self join:[DBJoin withType:DBLeftJoin table:table predicate:predicate]];
 }
 
 - (instancetype)union:(DBSelectQuery *)otherQuery
@@ -266,32 +260,29 @@ NSString *const DBUnionAll = @" UNION ALL ";
 }
 @end
 
-@interface DBJoin ()
-@property(readwrite, strong) NSString *type;
-@property(readwrite, strong) id table;
-@property(readwrite, strong) NSDictionary *fields;
-@end
+
 @implementation DBJoin
-+ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields
++ (DBJoin *)withType:(NSString *)type table:(DBTable *)table predicate:(NSPredicate *)predicate
 {
     NSParameterAssert([table respondsToSelector:@selector(toString)]);
     DBJoin *ret = [self new];
     ret.type   = type;
     ret.table  = table;
-    ret.fields = fields;
+    ret.predicate = predicate;
     return ret;
 }
-- (NSString *)toString
+- (BOOL)_generateString:(NSMutableString *)q query:(DBSelectQuery *)query parameters:(NSMutableArray *)p
 {
-    NSMutableString *ret = [NSMutableString stringWithString:_type];
-    [ret appendString:@" JOIN "];
-    [ret appendString:[_table toString]];
-    [ret appendString:@" ON "];
-    return ret;
+    [q appendString:_type];
+    [q appendString:@" JOIN "];
+    [q appendString:[_table toString]];
+    [q appendString:@" ON "];
+    [q appendString:[_predicate db_sqlRepresentationForQuery:query withParameters:p]];
+    return YES;
 }
 - (NSString *)description
 {
-    return [self toString];
+    return [NSString stringWithFormat:@"%@ JOIN %@ ON %@", _type, _table, _predicate];
 }
 @end
 

@@ -1,15 +1,18 @@
 #import "NSPredicate+DBAdditions.h"
+#import "DBTable.h"
+#import "DBQuery.h"
 
 @implementation NSPredicate (DBAdditions)
 
-- (NSString *)db_sqlRepresentation:(NSMutableArray *)parameters
+- (NSString *)db_sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
-    return [self _db_sqlRepresentationWithParameters:parameters negate:NO];
+    return [self _db_sqlRepresentationForQuery:query withParameters:parameters negate:NO];
 
 }
 
-- (NSString *)_db_sqlRepresentationWithParameters:(NSMutableArray *)aParameters
-                                           negate:(BOOL)negate
+- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+                             withParameters:(NSMutableArray *)parameters
+                                     negate:(BOOL)negate
 {
     return nil;
 }
@@ -18,18 +21,21 @@
 
 @implementation NSCompoundPredicate (DBAdditions)
 
-- (NSString *)_db_sqlRepresentationWithParameters:(NSMutableArray *)aParameters
-                                           negate:(BOOL)negate
+- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+                             withParameters:(NSMutableArray *)parameters
+                                     negate:(BOOL)negate
 {
     switch([self compoundPredicateType]) {
         case NSNotPredicateType:
-            return [self.subpredicates[0] _db_sqlRepresentationWithParameters:aParameters
-                                                                       negate:!negate];
+            return [self.subpredicates[0] _db_sqlRepresentationForQuery:query
+                                                         withParameters:parameters
+                                                                 negate:!negate];
         case NSAndPredicateType: {
             __block NSString *sql = nil;
             [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
-                NSString *subSql = [subPredicate _db_sqlRepresentationWithParameters:aParameters
-                                                                              negate:negate];
+                NSString *subSql = [subPredicate _db_sqlRepresentationForQuery:query
+                                                                withParameters:parameters
+                                                                        negate:negate];
                 sql = !sql
                     ? subSql
                     : [NSString stringWithFormat:@"(%@) AND (%@)", sql, subSql];
@@ -40,8 +46,9 @@
         case NSOrPredicateType: {
             __block NSString *sql = nil;
             [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
-                NSString *subSql = [subPredicate _db_sqlRepresentationWithParameters:aParameters
-                                                                              negate:negate];
+                NSString *subSql = [subPredicate _db_sqlRepresentationForQuery:query
+                                                                withParameters:parameters
+                                                                        negate:negate];
                 sql = !sql
                     ? subSql
                     : [NSString stringWithFormat:@"(%@) OR (%@)", sql, subSql];
@@ -57,8 +64,9 @@
 
 @implementation NSComparisonPredicate (DBAdditions)
 
-- (NSString *)_db_sqlRepresentationWithParameters:(NSMutableArray *)parameters
-                                           negate:(BOOL)negate
+- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+                             withParameters:(NSMutableArray *)parameters
+                                     negate:(BOOL)negate
 {
     NSPredicateOperatorType operator = negate
                                      ? [self _negateOperator:[self predicateOperatorType]]

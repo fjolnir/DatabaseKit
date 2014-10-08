@@ -122,7 +122,7 @@
     }
     if(_where) {
         [q appendString:@" WHERE "];
-        [q appendString:[_where db_sqlRepresentation:p]];
+        [q appendString:[_where db_sqlRepresentationForQuery:self withParameters:p]];
     }
 
     return YES;
