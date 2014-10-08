@@ -93,10 +93,10 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  */
 - (BOOL)closeConnection;
 /*!
- * Returns an array of strings containing the column names for the given table
+ * Returns a dictionary of column types keyed by column names
  * @param tableName Name of the table to retrieve columns for
  */
-- (NSArray *)columnsForTable:(NSString *)tableName;
+- (NSDictionary *)columnsForTable:(NSString *)tableName;
 
 /*! Begins a transaction */
 - (BOOL)beginTransaction;

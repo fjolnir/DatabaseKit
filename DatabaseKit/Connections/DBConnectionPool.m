@@ -80,7 +80,7 @@ static void _connectionCloser(void *ptr)
         return ret;
     }
 }
-- (NSArray *)columnsForTable:(NSString *)tableName
+- (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     return [[self _getConnection:NULL] columnsForTable:tableName];
 }

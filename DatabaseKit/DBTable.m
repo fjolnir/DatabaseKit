@@ -8,7 +8,9 @@
 @property(readwrite, strong) DB *database;
 @end
 
-@implementation DBTable
+@implementation DBTable {
+    NSMutableDictionary *_columnTypes;
+}
 @synthesize columns=_columns;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
@@ -45,8 +47,29 @@
 - (NSSet *)columns
 {
     if(!_columns)
-        _columns = [NSSet setWithArray:[_database.connection columnsForTable:_name]];
+        _columns = [NSSet setWithArray:[[_database.connection columnsForTable:_name] allKeys]];
     return _columns;
+}
+
+- (DBColumnType)typeOfColumn:(NSString *)column
+{
+    if(!_columnTypes) {
+        NSDictionary * const types = [self.database.connection columnsForTable:self.name];
+        _columnTypes = [NSMutableDictionary dictionaryWithCapacity:[types count]];
+        for(NSString *column in types) {
+            // TODO: support more types
+            NSString *type = types[column];
+            if([[type lowercaseString] isEqualToString:@"text"])
+                _columnTypes[column] = @(DBColumnTypeText);
+            else if([[type lowercaseString] isEqualToString:@"integer"])
+                _columnTypes[column] = @(DBColumnTypeInteger);
+            else if([[type lowercaseString] isEqualToString:@"numeric"])
+                _columnTypes[column] = @(DBColumnTypeFloat);
+            else if([[type lowercaseString] isEqualToString:@"date"])
+                _columnTypes[column] = @(DBColumnTypeDate);
+        }
+    }
+    return [_columnTypes[column] unsignedIntegerValue];
 }
 
 #pragma mark - Query generators

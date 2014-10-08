@@ -190,15 +190,13 @@
         return rowArray;
 }
 
-- (NSArray *)columnsForTable:(NSString *)tableName
+- (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    NSMutableString *query = [NSMutableString stringWithString:@"SELECT * FROM "];
-    [query appendString:tableName];
-    [query appendString:@" LIMIT 0"];
-    sqlite3_stmt *queryByteCode = [self prepareQuerySQL:query tail:NULL error:NULL];
-    if(!queryByteCode)
-        return nil;
-    return [self columnsForQuery:queryByteCode];
+    NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
+                          substitutions:@[tableName]
+                                  error:NULL];
+    return [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
+                                       forKeys:[results valueForKey:@"name"]];
 }
 
 - (BOOL)closeConnection

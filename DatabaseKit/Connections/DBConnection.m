@@ -53,7 +53,7 @@ static NSMutableArray *_ConnectionClasses;
     NOT_IMPLEMENTED;
     return NO;
 }
-- (NSArray *)columnsForTable:(NSString *)tableName
+- (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     NOT_IMPLEMENTED;
     return nil;

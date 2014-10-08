@@ -37,6 +37,16 @@
 
 #import <DatabaseKit/DBQuery.h>
 
+typedef NS_ENUM(NSUInteger, DBColumnType) {
+    DBColumnTypeInvalid,
+    DBColumnTypeUnknown,
+    DBColumnTypeInteger,
+    DBColumnTypeFloat,
+    DBColumnTypeText,
+    DBColumnTypeBlob,
+    DBColumnTypeDate
+};
+
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
 @property(readonly, strong) DB *database;
@@ -61,4 +71,6 @@
 - (DBSelectQuery *)limit:(NSUInteger)limit;
 
 - (NSUInteger)count;
+
+- (DBColumnType)typeOfColumn:(NSString *)column;
 @end
