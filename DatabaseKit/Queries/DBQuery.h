@@ -17,6 +17,8 @@
 
 - (instancetype)where:(NSString *)format, ...;
 - (instancetype)where:(id)format arguments:(va_list)args;
+- (instancetype)narrow:(NSString *)format, ...;
+
 - (instancetype)withPredicate:(NSPredicate *)predicate;
 
 - (NSString *)toString;

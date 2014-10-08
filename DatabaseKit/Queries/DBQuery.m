@@ -79,6 +79,16 @@
     return [self withPredicate:[NSPredicate predicateWithFormat:format arguments:args]];
 }
 
+- (instancetype)narrow:(NSString *)format, ...
+{
+    va_list args;
+    va_start(args, format);
+    NSPredicate *supplementalPredicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+
+    return [self withPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[self.where, supplementalPredicate]]];
+}
+
 - (instancetype)withPredicate:(NSPredicate *)predicate
 {
     if(predicate == self.where || [predicate isEqual:self.where])
