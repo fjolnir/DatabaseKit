@@ -111,7 +111,6 @@
                                      ? [self _negateOperator:[self predicateOperatorType]]
                                      : [self predicateOperatorType];
 
-    id value = self.rightExpression.constantValue ?: [NSNull null];
     switch(operator) {
         case NSLessThanPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ < %@",
@@ -157,10 +156,42 @@
                                               [[NSExpression expressionForConstantValue:pattern] _db_sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSBeginsWithPredicateOperatorType: {
-            [parameters addObject:[NSString stringWithFormat:@"%@%%",self.rightExpression.constantValue]];
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
-            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ $%lu" : @"%@ %@ $%lu"),
-                                              self.leftExpression.keyPath, operator, (unsigned long)[parameters count]];
+
+            if(!(self.options & NSCaseInsensitivePredicateOption) &&
+               self.leftExpression.expressionType == NSKeyPathExpressionType &&
+               self.rightExpression.expressionType == NSConstantValueExpressionType &&
+               [self.rightExpression.constantValue isKindOfClass:[NSString class]] &&
+               [self.rightExpression.constantValue length] > 0)
+            {
+                // If case is not an issue we can express this as an inequality which will make use of indices
+                // But only if the column being checked against is of a textual type
+                NSUInteger dotIdx = [self.leftExpression.keyPath rangeOfString:@"."].location;
+                DBTable   * table = (dotIdx == NSNotFound || [self.leftExpression.keyPath hasPrefix:[query.table.name stringByAppendingString:@"."]])
+                                  ? query.table
+                                  : query.table.database[[self.leftExpression.keyPath substringToIndex:dotIdx]];
+                NSString  *column = dotIdx == NSNotFound
+                                  ? self.leftExpression.keyPath
+                                  : [self.leftExpression.keyPath substringFromIndex:dotIdx+1];
+
+                if([table typeOfColumn:column] == DBColumnTypeText) {
+                    NSString * const prefix      = self.rightExpression.constantValue;
+                    unichar const incremented    = [prefix characterAtIndex:[prefix length] - 1] + 1;
+                    NSString * const upperBounds = [prefix
+                                                    stringByReplacingCharactersInRange:(NSRange) { [prefix length] - 1, 1 }
+                                                    withString:[NSString stringWithCharacters:&incremented length:1]];
+                    NSString * const left  = [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                             * const right = [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                      * const rightPlusOne = [[NSExpression expressionForConstantValue:upperBounds] _db_sqlRepresentationForQuery:query
+                                                                                                                   withParameters:parameters];
+                    return [NSString stringWithFormat:negate ? @"(%@ < %@) OR (%@ >= %@)" : @"(%@ >= %@) AND (%@ < %@)",
+                            left, right, left, rightPlusOne];
+                }
+            }
+            return [NSString stringWithFormat:(negate ? @"%@ NOT %@ %@||'%%'" : @"%@ %@ %@||'%%'"),
+                                              [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                                              operator,
+                                              [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSEndsWithPredicateOperatorType: {
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
