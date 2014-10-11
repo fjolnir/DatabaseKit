@@ -280,7 +280,6 @@
     });
 
     int columnType = sqlite3_column_type(query, colIndex);
-    const char *declType, *strVal;
     switch(columnType)
     {
         case SQLITE_INTEGER:
@@ -296,19 +295,14 @@
         case SQLITE_NULL:
             return [NSNull null];
             break;
-        case SQLITE_TEXT:
-            declType = sqlite3_column_decltype(query, colIndex);
-            strVal = (const char *)sqlite3_column_text(query, colIndex);
-            if(declType && strncmp("date", declType, 4) == 0) {
-                NSString *dateStr = [[NSString alloc] initWithBytesNoCopy:(void*)strVal
-                                                                   length:strlen(strVal)
-                                                                 encoding:NSUTF8StringEncoding
-                                                             freeWhenDone:NO];
-                return [dateFormatter dateFromString:dateStr];
-            }
-            return @(strVal);
+        case SQLITE_TEXT: {
+            const char *declType = sqlite3_column_decltype(query, colIndex);
+            if(declType && strncmp("date", declType, 4) == 0)
+                return [dateFormatter dateFromString:@((char *)sqlite3_column_text(query, colIndex))];
+            else
+                return @((char *)sqlite3_column_text(query, colIndex));
             break;
-        default:
+        } default:
             // It really shouldn't ever come to this.
             break;
     }
