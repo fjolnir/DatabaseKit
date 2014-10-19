@@ -19,7 +19,7 @@
 /*! @cond IGNORE */
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
-    NSMutableDictionary *_cachedStatements;
+    NSMutableDictionary *_cachedStatements, *_cachedColumnNames;
     NSMutableArray *_savePointStack;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
@@ -53,7 +53,8 @@
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
     _path = URL ? URL.path : @":memory:";
-    _cachedStatements = [NSMutableDictionary new];
+    _cachedStatements  = [NSMutableDictionary new];
+    _cachedColumnNames = [NSMutableDictionary new];
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
@@ -193,11 +194,17 @@
 
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
-                          substitutions:@[tableName]
-                                  error:NULL];
-    return [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
-                                       forKeys:[results valueForKey:@"name"]];
+    id columns = _cachedColumnNames[tableName];
+    if(!columns) {
+        NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
+                              substitutions:@[tableName]
+                                      error:NULL];
+        columns = [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
+                                              forKeys:[results valueForKey:@"name"]];
+        _cachedColumnNames[tableName] = columns;
+
+    }
+    return columns;
 }
 
 - (BOOL)closeConnection
