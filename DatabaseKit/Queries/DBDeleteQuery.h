@@ -1,4 +1,8 @@
-#import <DatabaseKit/Queries/DBQuery.h>
+#import <DatabaseKit/DBQuery.h>
 
-@interface DBDeleteQuery : DBQuery
+@interface DBDeleteQuery : DBWriteQuery
+@end
+
+@interface DBQuery (DBDeleteQuery)
+- (DBDeleteQuery *)delete;
 @end

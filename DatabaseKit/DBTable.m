@@ -3,14 +3,15 @@
 #import "DBQuery.h"
 #import "Utilities/NSString+DBAdditions.h"
 
-@interface DBTable () {
-    NSArray *_columns;
-}
+@interface DBTable ()
 @property(readwrite, strong) NSString *name;
 @property(readwrite, strong) DB *database;
 @end
 
-@implementation DBTable
+@implementation DBTable {
+    NSMutableDictionary *_columnTypes;
+}
+@synthesize columns=_columns;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 {
@@ -24,17 +25,8 @@
 {
     NSString *prefix    = [DBModel classPrefix];
     NSString *tableName = [[_name singularizedString] stringByCapitalizingFirstLetter];
-    return NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
-}
-
-- (id)objectAtIndexedSubscript:(NSUInteger)idx
-{
-    return [[[[DBQuery withTable:self] select] limit:@1] where:@{ kDBIdentifierColumn: @(idx) }][0];
-}
-
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
-{
-    [[[DBQuery withTable:self] update:obj] where:@{ kDBIdentifierColumn: @(idx) }];
+    Class const klass = NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
+    return [klass isSubclassOfClass:[DBModel class]] ? klass : nil;
 }
 
 - (id)objectForKeyedSubscript:(id)cond
@@ -52,11 +44,32 @@
     return _name;
 }
 
-- (NSArray *)columns
+- (NSSet *)columns
 {
     if(!_columns)
-        _columns = [_database.connection columnsForTable:_name];
+        _columns = [NSSet setWithArray:[[_database.connection columnsForTable:_name] allKeys]];
     return _columns;
+}
+
+- (DBColumnType)typeOfColumn:(NSString *)column
+{
+    if(!_columnTypes) {
+        NSDictionary * const types = [self.database.connection columnsForTable:self.name];
+        _columnTypes = [NSMutableDictionary dictionaryWithCapacity:[types count]];
+        for(NSString *column in types) {
+            // TODO: support more types
+            NSString *type = types[column];
+            if([[type lowercaseString] isEqualToString:@"text"])
+                _columnTypes[column] = @(DBColumnTypeText);
+            else if([[type lowercaseString] isEqualToString:@"integer"])
+                _columnTypes[column] = @(DBColumnTypeInteger);
+            else if([[type lowercaseString] isEqualToString:@"numeric"])
+                _columnTypes[column] = @(DBColumnTypeFloat);
+            else if([[type lowercaseString] isEqualToString:@"date"])
+                _columnTypes[column] = @(DBColumnTypeDate);
+        }
+    }
+    return [_columnTypes[column] unsignedIntegerValue];
 }
 
 #pragma mark - Query generators
@@ -82,9 +95,13 @@
 {
     return [[DBQuery withTable:self] delete];
 }
-- (DBQuery *)where:(id)conds
+- (DBSelectQuery *)where:(id)conds, ...
 {
-    return [[DBQuery withTable:self] where:conds];
+    va_list args;
+    va_start(args, conds);
+    DBSelectQuery *query = [[DBSelectQuery withTable:self] where:conds arguments:args];
+    va_end(args);
+    return query;
 }
 - (DBQuery *)order:(NSString *)order by:(id)fields
 {
@@ -94,13 +111,9 @@
 {
     return [[DBSelectQuery withTable:self] orderBy:fields];
 }
-- (DBQuery *)limit:(NSNumber *)limit
+- (DBQuery *)limit:(NSUInteger)limit
 {
     return [[DBSelectQuery withTable:self] limit:limit];
-}
-- (DBRawQuery *)rawQuery:(NSString *)SQL
-{
-    return [[DBQuery withTable:self] rawQuery:SQL];
 }
 - (NSUInteger)count
 {

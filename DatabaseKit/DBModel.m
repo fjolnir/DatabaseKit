@@ -1,7 +1,6 @@
-#import "DBModel.h"
+#import "DBModel+Private.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBModel+Private.h"
 #import "Debug.h"
 #import "Utilities/NSString+DBAdditions.h"
 #import <objc/runtime.h>
@@ -9,11 +8,8 @@
 
 static NSString *classPrefix = nil;
 
-@interface DBModel ()
-@property(readwrite, strong) DBTable *table;
-@end
-
 @implementation DBModel
+@dynamic inserted;
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
@@ -24,9 +20,68 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
++ (char)typeForKey:(NSString *)key class:(Class *)outClass
+{
+    objc_property_t const property = class_getProperty([self class], [key UTF8String]);
+    NSAssert(property, @"Key %@ not found on %@", key, [self class]);
+
+    char * const type = property_copyAttributeValue(property, "T");
+    NSAssert(type, @"Unable to get type for key %@", key);
+
+    if(*type == _C_ID && outClass && type[1] == '"') {
+        NSScanner * const scanner = [NSScanner scannerWithString:[NSString stringWithUTF8String:type+2]];
+        NSString *className;
+        if([scanner scanUpToString:@"\"" intoString:&className])
+            *outClass = NSClassFromString(className);
+    }
+    char const result = *type;
+    free(type);
+    return result;
+}
 
 #pragma mark -
-#pragma mark Delayed writing
+
++ (NSSet *)keyPathsForValuesAffectingDirtyKeys
+{
+    NSMutableSet *keyPaths = [NSMutableSet new];
+
+    Class klass = self;
+    do {
+        unsigned int propertyCount;
+        objc_property_t *properties = class_copyPropertyList(klass, &propertyCount);
+        for(int i = 0; i < propertyCount; ++i) {
+            [keyPaths addObject:@(property_getName(properties[i]))];
+        }
+        [keyPaths addObject:kDBIdentifierColumn];
+        free(properties);
+    } while((klass = [klass superclass]) != [DBModel class]);
+    
+    return keyPaths;
+}
+
+- (instancetype)init
+{
+    if((self = [super init]))
+        // This is to coerce KVC into calling didChangeValueForKey:
+        // We don't actually take any action when dirtyKeys changes
+        [self addObserver:self
+               forKeyPath:@"dirtyKeys"
+                  options:0
+                  context:NULL];
+    return self;
+}
+
+- (id)initWithDatabase:(DB *)aDB
+{
+    NSParameterAssert(aDB);
+    if(!(self = [self init]))
+        return nil;
+
+    self.table      = aDB[[[self class] tableName]];
+    _dirtyKeys   = [NSMutableSet new];
+
+    return self;
+}
 
 - (void)didChangeValueForKey:(NSString *)key
 {
@@ -35,62 +90,75 @@ static NSString *classPrefix = nil;
     [super didChangeValueForKey:key];
 }
 
-- (void)save
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"dirtyKeys"];
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    // No action
+}
+
+- (BOOL)save
+{
+    return [self save:NULL];
+}
+- (BOOL)save:(NSError **)outErr
 {
     if([_dirtyKeys count] > 0) {
-        [[self query] update:[self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]]];
+        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
         [_dirtyKeys removeAllObjects];
+
+        DBWriteQuery * const query = !_savedIdentifier
+            ? [[[self query] insert:changedValues] or:DBInsertFallbackReplace]
+            : [[self query] update:changedValues];
+        if([query execute:outErr]) {
+            _savedIdentifier = self.identifier;
+            return YES;
+        } else
+            return NO;
     }
+    return YES;
 }
 
 - (BOOL)destroy
 {
-    @try {
-        [[[_table delete] where:@{ kDBIdentifierColumn: _identifier }] execute];
-        return YES;
-    }
-    @catch(NSException *e) {
-        DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
-    }
-    return NO;
+    if(self.isInserted) {
+        @try {
+            return [[[self query] delete] execute];
+        }
+        @catch(NSException *e) {
+            DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
+            return NO;
+        }
+    } else
+        return NO;
 }
 
-#pragma mark - Entry retrieval
-
-- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier
+- (BOOL)isInserted
 {
-    if(!(self = [self init]))
-        return nil;
-    NSParameterAssert(aTable && aIdentifier > 0);
-    self.table      = aTable;
-    self.identifier = aIdentifier;
-
-    _dirtyKeys   = [NSMutableSet new];
-
-    return self;
+    return _savedIdentifier != nil;
 }
+
+- (void)_clearDirtyKeys
+{
+    [_dirtyKeys removeAllObjects];
+}
+
+#pragma mark -
 
 - (DBQuery *)query
 {
-    return [_table where:@{ kDBIdentifierColumn: _identifier }];
+    return [_table where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
+}
+
+- (void)setNilValueForKey:(NSString * const)aKey
+{
+    [self setValue:@0 forKey:aKey];
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-- (id)objectForKeyedSubscript:(id)key
-{
-    return [self valueForKey:key];
-}
-- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
-{
-    NSParameterAssert([(NSObject*)key isKindOfClass:[NSString class]]);
-    [self setValue:obj forKey:(NSString *)key];
-}
-
-
-#pragma mark -
-#pragma mark Database interface
 
 + (NSString *)tableName
 {
@@ -105,14 +173,12 @@ static NSString *classPrefix = nil;
     return ret;
 }
 
-
-#pragma mark - Cosmetics
+#pragma mark -
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %ld) {\n", [self className], self, (unsigned long)[self identifier]];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n", [self className], self, self.savedIdentifier];
     for(NSString *column in self.table.columns) {
-        if(![column isEqualToString:kDBIdentifierColumn] && ![column hasSuffix:@"Identifier"])
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }
     [description appendString:@"}"];
@@ -127,6 +193,16 @@ static NSString *classPrefix = nil;
 {
     return [anObject isMemberOfClass:[self class]]
         && [[anObject identifier] isEqual:[self identifier]];
+}
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    DBModel *copy = [[[self class] alloc] initWithDatabase:self.table.database];
+    for(NSString *column in self.table.columns) {
+        if(![column isEqualToString:kDBIdentifierColumn])
+            [copy setValue:[self valueForKey:column] forKey:column];
+    }
+    return copy;
 }
 
 @end

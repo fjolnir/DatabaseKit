@@ -35,34 +35,42 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
 
-@class DBQuery, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
+#import <DatabaseKit/DBQuery.h>
+
+typedef NS_ENUM(NSUInteger, DBColumnType) {
+    DBColumnTypeInvalid,
+    DBColumnTypeUnknown,
+    DBColumnTypeInteger,
+    DBColumnTypeFloat,
+    DBColumnTypeText,
+    DBColumnTypeBlob,
+    DBColumnTypeDate
+};
 
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
 @property(readonly, strong) DB *database;
+@property(readonly, strong) NSSet *columns;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 
 - (NSString *)toString;
 - (Class)modelClass;
 
-- (id)objectAtIndexedSubscript:(NSUInteger)idx;
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
-
-- (NSArray *)columns;
 
 - (DBSelectQuery *)select:(NSArray *)fields;
 - (DBSelectQuery *)select;
 - (DBInsertQuery *)insert:(NSDictionary *)fields;
 - (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
-- (DBQuery *)where:(id)conds;
+- (DBSelectQuery *)where:(id)conds, ...;
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
-- (DBSelectQuery *)limit:(NSNumber *)limit;
-- (DBRawQuery *)rawQuery:(NSString *)SQL;
+- (DBSelectQuery *)limit:(NSUInteger)limit;
 
 - (NSUInteger)count;
+
+- (DBColumnType)typeOfColumn:(NSString *)column;
 @end

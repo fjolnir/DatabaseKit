@@ -3,11 +3,7 @@
 #import "DBTable.h"
 #import "DBModel+Private.h"
 #import "DBUtilities.h"
-
-NSString *const DBSelectAll = @"*";
-
-NSString *const DBOrderDescending = @" DESC";
-NSString *const DBOrderAscending  = @" ASC";
+#import "NSPredicate+DBAdditions.h"
 
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
@@ -15,14 +11,24 @@ NSString *const DBLeftJoin  = @" LEFT ";
 NSString *const DBUnion    = @" UNION ";
 NSString *const DBUnionAll = @" UNION ALL ";
 
+@interface DBJoin ()
+@property(readwrite, strong) NSString *type;
+@property(readwrite, strong) DBTable *table;
+@property(readwrite, strong) NSPredicate *predicate;
+
+- (BOOL)_generateString:(NSMutableString *)q query:(DBSelectQuery *)query parameters:(NSMutableArray *)p;
+@end
+
 @interface DBSelectQuery ()
+@property(readwrite, strong) DBSelectQuery *subQuery;
 @property(readwrite, strong) NSArray *orderedBy;
 @property(readwrite, strong) NSArray *groupedBy;
-@property(readwrite, strong) NSString *order;
-@property(readwrite, strong) NSNumber *limit, *offset;
-@property(readwrite, strong) id join;
+@property(readwrite)         DBOrder order;
+@property(readwrite)         NSUInteger limit, offset;
+@property(readwrite, strong) DBJoin *join;
 @property(readwrite, strong) DBSelectQuery *unionQuery;
 @property(readwrite, strong) NSString *unionType;
+@property(readwrite)         BOOL distinct;
 @end
 
 @implementation DBSelectQuery
@@ -32,16 +38,24 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return @"SELECT ";
 }
 
++ (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery
+{
+    DBSelectQuery * const query = [self new];
+    query.table = aSubQuery.table;
+    query.subQuery = aSubQuery;
+    return query;
+}
+
 - (BOOL)canCombineWithQuery:(DBSelectQuery * const)aQuery
 {
     return aQuery.class == self.class
         && DBEqual(_where, aQuery.where)
         && DBEqual(_table,aQuery.table)
-        && DBEqual(_order, aQuery.order)
         && DBEqual(_orderedBy, aQuery.orderedBy)
         && DBEqual(_groupedBy, aQuery.groupedBy)
-        && DBEqual(_limit, aQuery.limit)
-        && DBEqual(_offset, aQuery.offset)
+        && _order == aQuery.order
+        && _limit == aQuery.limit
+        && _offset == aQuery.offset
         && !_unionQuery && !aQuery.unionType;
 }
 
@@ -53,9 +67,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         return self;
 
     DBSelectQuery * const combined = [self copy];
-    NSMutableDictionary *fields = [_fields mutableCopy];
-    [fields addEntriesFromDictionary:aQuery.fields];
-    combined.fields = fields;
+    combined.fields = [_fields arrayByAddingObjectsFromArray:aQuery.fields];
     return combined;
 }
 
@@ -65,55 +77,27 @@ NSString *const DBUnionAll = @" UNION ALL ";
     NSParameterAssert(q && p);
     [q appendString:[[self class] _queryType]];
 
+    if(_distinct)
+        [q appendString:@"DISTINCT "];
+
     if(_fields == nil)
-        [q appendString:DBSelectAll];
-    else {
-        int i = 0;
-        for(id field in _fields) {
-            if(__builtin_expect(i++ > 0, 1))
-                [q appendString:@", "];
-            if([field isKindOfClass:[NSString class]]) {
-                [q appendString:@"\""];
-                [q appendString:[field stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
-                [q appendString:@"\""];
-            } else
-                [q appendString:[field toString]];
-        }
+        [q appendString:@"*"];
+    else
+        [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
+
+    [q appendString:@" FROM ("];
+    if(_subQuery)
+        [_subQuery _generateString:q parameters:p];
+    else
+        [q appendString:[_table toString]];
+    [q appendString:@")"];
+
+    [_join _generateString:q query:self parameters:p];
+
+    if(_where) {
+        [q appendString:@" WHERE "];
+        [q appendString:[_where db_sqlRepresentationForQuery:self withParameters:p]];
     }
-    [q appendString:@" FROM "];
-    [q appendString:[_table toString]];
-
-    if(_join) {
-        if([_join isKindOfClass:[DBJoin class]]) {
-            DBJoin *join = _join;
-            NSString *tableName     = [_table toString];
-            NSString *joinTableName = [join.table toString];
-            NSDictionary *joinFields = join.fields;
-            [q appendString:join.type];
-            [q appendString:@" JOIN "];
-            [q appendString:joinTableName];
-            [q appendString:@" ON "];
-            int i = 0;
-            for(id key in join.fields) {
-                if(i++ > 0)
-                    [q appendString:@" AND "];
-                [q appendString:joinTableName];
-                [q appendString:@".\""];
-                [q appendString:joinFields[key]];
-                [q appendString:@"\"="];
-                [q appendString:tableName];
-                [q appendString:@".\""];
-                [q appendString:key];
-                [q appendString:@"\""];
-            }
-        } else {
-            [q appendString:@" "];
-            [q appendString:[_join toString]];
-        }
-    }
-
-    [self _generateWhereString:q parameters:p];
-
     if(_groupedBy) {
         [q appendString:@" GROUP BY "];
         [q appendString:[_groupedBy componentsJoinedByString:@", "]];
@@ -123,64 +107,50 @@ NSString *const DBUnionAll = @" UNION ALL ";
         if(![self _addParam:_unionQuery withToken:NO currentParams:p query:q])
             return false;
     }
-    if(_order && _orderedBy) {
-        [q appendString:@" ORDER BY \""];
-        [q appendString:[_orderedBy componentsJoinedByString:[NSString stringWithFormat:@"\" %@, ", _order]]];
-        [q appendString:@"\""];
-        [q appendString:_order];
+    if(_orderedBy) {
+        [q appendString:@" ORDER BY "];
+        switch (_order) {
+            case DBOrderAscending:
+                [q appendString:[_orderedBy componentsJoinedByString:@" ASC, "]];
+                [q appendString:@" ASC"];
+                break;
+            case DBOrderDescending:
+                [q appendString:[_orderedBy componentsJoinedByString:@" DESC, "]];
+                [q appendString:@" DESC"];
+                break;
+            default:
+                [NSException raise:NSInternalInconsistencyException
+                            format:@"Invalid order"];
+        }
     }
 
-    if([_limit unsignedIntegerValue] > 0)
-        [q appendFormat:@" LIMIT %ld", [_limit unsignedLongValue]];
-    if([_offset unsignedIntegerValue] > 0)
-        [q appendFormat:@" OFFSET %ld", [_offset unsignedLongValue]];
+    if(_limit > 0)
+        [q appendFormat:@" LIMIT %lu", (unsigned long)_limit];
+    if(_offset > 0)
+        [q appendFormat:@" OFFSET %lu", (unsigned long)_offset];
 
     return YES;
 }
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
-{
-    if(!_rows || _dirty)
-        _rows = [self execute];
-    return [_rows countByEnumeratingWithState:state objects:buffer count:len];
-}
-
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    if(!_rows || _dirty)
-        _rows = [self execute];
-
-    NSDictionary *row = _rows[idx];
-    Class modelClass = [_table modelClass];
-    if(modelClass && row[kDBIdentifierColumn]) {
-        DBModel *model = [[modelClass alloc] initWithTable:_table
-                                                identifier:row[kDBIdentifierColumn]];
-        for(NSString *key in row) {
-            if(![key isEqualToString:kDBIdentifierColumn] && ![key hasSuffix:@"Identifier"])
-                [model setValue:row[key] forKey:key];
-        }
-        [model.dirtyKeys removeAllObjects];
-        return model;
-    }
-    return row;
+    return [[[self offset:idx] limit:1] firstObject];
 }
 
-- (id)first
+- (id)firstObject
 {
-    return [self count] > 0 ? self[0] : nil;
+    return [[[self limit:1] execute] firstObject];
 }
 
 - (NSUInteger)count
 {
-    if(_rows && !_dirty)
-        return [_rows count];
-    else if(_groupedBy || _offset || _limit || _unionQuery) {
+    if(_groupedBy || _offset || _limit || _unionQuery)
         return [[self execute] count];
-    }
-    return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
+    else
+        return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }
 
-- (instancetype)order:(NSString *)order by:(NSArray *)fields
+- (instancetype)order:(DBOrder)order by:(NSArray *)fields
 {
     DBSelectQuery *ret = [self copy];
     ret.order = order;
@@ -199,33 +169,48 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return ret;
 }
 
-- (instancetype)limit:(NSNumber *)limit
+- (instancetype)limit:(NSUInteger)limit
 {
     DBSelectQuery *ret = [self copy];
     ret.limit = limit;
     return ret;
 }
 
-- (instancetype)offset:(NSNumber *)offset
+- (instancetype)offset:(NSUInteger)offset
 {
     DBSelectQuery *ret = [self copy];
     ret.offset = offset;
     return ret;
 }
 
-- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields
+- (instancetype)distinct:(BOOL)distinct
 {
     DBSelectQuery *ret = [self copy];
-    ret.join = [DBJoin withType:type table:table fields:fields];
+    ret.distinct = distinct;
     return ret;
 }
-- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields
+
+- (instancetype)join:(DBJoin * const)join
 {
-    return [self join:DBInnerJoin withTable:table on:fields];
+    DBSelectQuery *ret = [self copy];
+    ret.join = join;
+    return ret;
 }
-- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields
+- (instancetype)innerJoin:(id)table on:(NSString *)format, ...
 {
-    return [self join:DBLeftJoin withTable:table on:fields];
+    va_list args;
+    va_start(args, format);
+    NSPredicate * const predicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+    return [self join:[DBJoin withType:DBInnerJoin table:table predicate:predicate]];
+}
+- (instancetype)leftJoin:(id)table on:(NSString *)format, ...
+{
+    va_list args;
+    va_start(args, format);
+    NSPredicate * const predicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+    return [self join:[DBJoin withType:DBLeftJoin table:table predicate:predicate]];
 }
 
 - (instancetype)union:(DBSelectQuery *)otherQuery
@@ -236,7 +221,18 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type
 {
     DBSelectQuery *ret = [self copy];
-    ret.unionQuery = otherQuery;
+    if(otherQuery.orderedBy) {
+        if(!ret.orderedBy)
+            ret.order = otherQuery.order;
+
+        NSMutableArray * const orderedBy = [ret.orderedBy mutableCopy] ?: [NSMutableArray new];
+        for(NSString *field in otherQuery.orderedBy) {
+            if(![orderedBy containsObject:field])
+                [orderedBy addObject:field];
+        }
+        ret.orderedBy = orderedBy;
+    }
+    ret.unionQuery = [otherQuery orderBy:nil];
     ret.unionType  = type;
     return ret;
 }
@@ -252,37 +248,62 @@ NSString *const DBUnionAll = @" UNION ALL ";
     copy.join       = _join;
     copy.unionQuery = _unionQuery;
     copy.unionType  = _unionType;
+    copy.subQuery   = _subQuery;
+    copy.distinct   = _distinct;
     return copy;
 }
 
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
+{
+    NSArray *results = [super executeOnConnection:connection error:outErr];
+
+    BOOL const selectingEntireTable = self.fields == nil
+                                   || [self.fields isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
+    if(selectingEntireTable && [results count] > 0 && self.table.modelClass) {
+        NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
+        if([fieldNames isSubsetOfSet:self.table.columns]) {
+            NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
+            for(NSDictionary *result in results) {
+                DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
+                for(NSString *key in result) {
+                    id value = result[key];
+                    [model setValue:[[NSNull null] isEqual:value] ? nil : value
+                             forKey:key];
+                }
+                model.savedIdentifier = result[kDBIdentifierColumn];
+                [model _clearDirtyKeys];
+                [modelObjects addObject:model];
+            }
+            return modelObjects;
+        }
+    }
+    return results;
+}
 @end
 
-@interface DBJoin ()
-@property(readwrite, strong) NSString *type;
-@property(readwrite, strong) id table;
-@property(readwrite, strong) NSDictionary *fields;
-@end
+
 @implementation DBJoin
-+ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields
++ (DBJoin *)withType:(NSString *)type table:(DBTable *)table predicate:(NSPredicate *)predicate
 {
     NSParameterAssert([table respondsToSelector:@selector(toString)]);
     DBJoin *ret = [self new];
     ret.type   = type;
     ret.table  = table;
-    ret.fields = fields;
+    ret.predicate = predicate;
     return ret;
 }
-- (NSString *)toString
+- (BOOL)_generateString:(NSMutableString *)q query:(DBSelectQuery *)query parameters:(NSMutableArray *)p
 {
-    NSMutableString *ret = [NSMutableString stringWithString:_type];
-    [ret appendString:@" JOIN "];
-    [ret appendString:[_table toString]];
-    [ret appendString:@" ON "];
-    return ret;
+    [q appendString:_type];
+    [q appendString:@" JOIN "];
+    [q appendString:[_table toString]];
+    [q appendString:@" ON "];
+    [q appendString:[_predicate db_sqlRepresentationForQuery:query withParameters:p]];
+    return YES;
 }
 - (NSString *)description
 {
-    return [self toString];
+    return [NSString stringWithFormat:@"%@ JOIN %@ ON %@", _type, _table, _predicate];
 }
 @end
 
@@ -309,4 +330,21 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     return [self toString];
 }
+@end
+
+@implementation DBQuery (DBSelectQuery)
+
+- (DBQuery *)select:(NSArray *)fields
+{
+    DBQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
+                 ? [self copy]
+                 : [self _copyWithSubclass:[DBSelectQuery class]];
+    ret.fields = fields;
+    return ret;
+}
+- (DBSelectQuery *)select
+{
+    return [self select:nil];
+}
+
 @end

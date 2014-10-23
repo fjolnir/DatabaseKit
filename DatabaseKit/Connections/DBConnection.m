@@ -4,7 +4,6 @@
 #define NOT_IMPLEMENTED [NSException raise:@"Unimplemented" format:@"DBConnection can not be used directly!"]
 
 static NSMutableArray *_ConnectionClasses;
-id DBConnectionRollback = @"DBConnectionRollback";
 
 @interface DBConnection ()
 @property(readwrite, retain) NSURL *URL;
@@ -54,7 +53,7 @@ id DBConnectionRollback = @"DBConnectionRollback";
     NOT_IMPLEMENTED;
     return NO;
 }
-- (NSArray *)columnsForTable:(NSString *)tableName
+- (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     NOT_IMPLEMENTED;
     return nil;
@@ -75,22 +74,23 @@ id DBConnectionRollback = @"DBConnectionRollback";
     return NO;
 }
 
-- (id)transaction:(DBConnectionBlock)block
+- (BOOL)transaction:(DBTransactionBlock)aBlock
 {
-    [self beginTransaction];
-    id ret;
     @try {
-        ret = block();
-        if(ret == DBConnectionRollback) {
-            ret = nil;
-            [self rollBack];
-        } else
-            [self endTransaction];
-    } @catch(NSException *e) {
-        [self rollBack];
-        [e raise];
-        return nil;
+        if(![self beginTransaction])
+            return NO;
+        switch(aBlock()) {
+            case DBTransactionRollBack:
+                return [self rollBack];
+            case DBTransactionCommit:
+                return [self endTransaction];
+        }
     }
-    return ret;
+    @catch(NSException *_) {
+        [self rollBack];
+        return NO;
+    }
+    return YES;
 }
+
 @end

@@ -1,12 +1,13 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
-@class DBTable, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBRawQuery;
+@class DBTable;
+
 
 @interface DBQuery : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
-@property(readonly, strong) id fields;
-@property(readonly, strong) NSDictionary *where;
+@property(readonly, strong) NSArray *fields;
+@property(readonly, strong) NSPredicate *where;
 
 + (instancetype)withTable:(DBTable *)table;
 
@@ -14,24 +15,35 @@
 - (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
 - (instancetype)combineWith:(DBQuery *)aQuery;
 
-- (NSArray *)execute;
-- (NSArray *)execute:(NSError **)err;
-- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
+- (instancetype)where:(NSString *)format, ...;
+- (instancetype)where:(id)format arguments:(va_list)args;
+- (instancetype)narrow:(NSString *)format, ...;
 
-- (DBSelectQuery *)select:(NSArray *)fields;
-- (DBSelectQuery *)select;
-- (DBInsertQuery *)insert:(NSDictionary *)fields;
-- (DBUpdateQuery *)update:(NSDictionary *)fields;
-- (DBDeleteQuery *)delete;
-- (DBRawQuery *)rawQuery:(NSString *)SQL;
-
-- (instancetype)where:(id)conds;
-- (instancetype)appendWhere:(id)conds;
+- (instancetype)withPredicate:(NSPredicate *)predicate;
 
 - (NSString *)toString;
 @end
 
-#import <DatabaseKit/Queries/DBSelectQuery.h>
-#import <DatabaseKit/Queries/DBInsertQuery.h>
-#import <DatabaseKit/Queries/DBDeleteQuery.h>
-#import <DatabaseKit/Queries/DBRawQuery.h>
+@interface DBReadQuery : DBQuery
+- (NSArray *)execute;
+- (NSArray *)execute:(NSError **)err;
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
+@end
+
+@interface DBWriteQuery : DBQuery
+@property(readonly, strong) NSArray *values;
+
+- (BOOL)execute;
+- (BOOL)execute:(NSError **)err;
+- (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
+@end
+
+#define DBExpr(expr) [DBExpression withString:(expr)]
+@interface DBExpression : NSObject
++ (instancetype)withString:(NSString *)aString;
+- (NSString *)toString;
+@end
+
+#import <DatabaseKit/DBSelectQuery.h>
+#import <DatabaseKit/DBInsertQuery.h>
+#import <DatabaseKit/DBDeleteQuery.h>

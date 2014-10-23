@@ -36,7 +36,7 @@
 #define _DBSQLITECONNECTION_H_
 
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
 typedef enum  {
   DBSQLiteDatabaseNotFoundErrorCode = 0

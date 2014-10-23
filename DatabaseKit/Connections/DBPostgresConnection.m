@@ -235,22 +235,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
     return rowArray;
 }
 
-- (NSArray *)columnsForTable:(NSString *)tableName
-{
-    NSMutableString *query = [NSMutableString stringWithString:@"SELECT * FROM "];
-    [query appendString:tableName];
-    [query appendString:@" LIMIT 0"];
-    PGresult *result = PQexec(_connection, [query UTF8String]);
-    switch (PQresultStatus(result)) {
-        case PGRES_BAD_RESPONSE:
-        case PGRES_FATAL_ERROR:
-            return nil;
-        default: break;
-    }
-    NSArray *columns = [self columnsForResult:result];
-    PQclear(result);
-    return columns;
-}
+// TODO: implement columnsForTable
 
 
 #pragma mark Private

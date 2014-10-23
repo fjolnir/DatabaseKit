@@ -36,7 +36,7 @@
 #define _DBPGCONNECTION_H_
 
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
 typedef enum  {
     DBPostgreDatabaseNotFoundErrorCode = 0,

@@ -1,9 +1,6 @@
-#import <DatabaseKit/Queries/DBQuery.h>
+#import <DatabaseKit/DBQuery.h>
 
-extern NSString *const DBSelectAll;
-
-extern NSString *const DBOrderDescending;
-extern NSString *const DBOrderAscending;
+@class DBAs, DBJoin;
 
 extern NSString *const DBInnerJoin;
 extern NSString *const DBLeftJoin;
@@ -11,41 +8,56 @@ extern NSString *const DBLeftJoin;
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
-@interface DBSelectQuery : DBQuery <NSFastEnumeration>
+typedef NS_ENUM(NSUInteger, DBOrder) {
+    DBOrderAscending = 1,
+    DBOrderDescending
+};
+
+@interface DBSelectQuery : DBReadQuery
+@property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;
-@property(readonly, strong) NSString *order;
-@property(readonly, strong) NSNumber *limit, *offset;
-@property(readonly, strong) id join;
+@property(readonly)         DBOrder order;
+@property(readonly)         NSUInteger limit, offset;
+@property(readonly, strong) DBJoin *join;
 @property(readonly, strong) DBSelectQuery *unionQuery;
 @property(readonly, strong) NSString *unionType;
+@property(readonly)         BOOL distinct;
 
-- (instancetype)order:(NSString *)order by:(NSArray *)fields;
++ (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery;
+
+- (instancetype)order:(DBOrder)order by:(NSArray *)fields;
 - (instancetype)orderBy:(NSArray *)fields;
 - (instancetype)groupBy:(NSArray *)fields;
-- (instancetype)limit:(NSNumber *)limit;
-- (instancetype)offset:(NSNumber *)offset;
+- (instancetype)limit:(NSUInteger)limit;
+- (instancetype)offset:(NSUInteger)offset;
+- (instancetype)distinct:(BOOL)distinct;
 
-- (instancetype)join:(NSString *)type withTable:(id)table on:(NSDictionary *)fields;
-- (instancetype)innerJoin:(id)table on:(NSDictionary *)fields;
-- (instancetype)leftJoin:(id)table on:(NSDictionary *)fields;
+- (instancetype)join:(DBJoin *)join;
+- (instancetype)innerJoin:(id)table on:(NSString *)format, ...;
+- (instancetype)leftJoin:(id)table on:(NSString *)format, ...;
 - (instancetype)union:(DBSelectQuery *)otherQuery;
 - (instancetype)union:(DBSelectQuery *)otherQuery type:(NSString *)type;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 - (NSUInteger)count;
-- (id)first;
+- (id)firstObject;
 @end
 
 @interface DBJoin : NSObject
 @property(readonly, strong) NSString *type;
-@property(readonly, strong) id table;
-@property(readonly, strong) NSDictionary *fields;
-+ (DBJoin *)withType:(NSString *)type table:(id)table fields:(NSDictionary *)fields;
+@property(readonly, strong) DBTable *table;
+@property(readonly, strong) NSPredicate *predicate;
++ (DBJoin *)withType:(NSString *)type table:(id)table predicate:(NSPredicate *)aPredicate;
 @end
 
 @interface DBAs : NSObject
 @property(readonly, strong) NSString *field, *alias;
 
 + (DBAs *)field:(NSString *)field alias:(NSString *)alias;
+@end
+
+@interface DBQuery (DBSelectQuery)
+- (DBSelectQuery *)select:(NSArray *)fields;
+- (DBSelectQuery *)select;
 @end

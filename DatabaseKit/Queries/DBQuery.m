@@ -3,9 +3,7 @@
 #import "DBModel.h"
 #import "DBModel+Private.h"
 #import "Debug.h"
-
-static NSString *const DBStringConditions = @"DBStringConditions";
-
+#import "NSPredicate+DBAdditions.h"
 
 @implementation DBQuery
 
@@ -66,80 +64,39 @@ static NSString *const DBStringConditions = @"DBStringConditions";
 #define IsStr(x) ([x isKindOfClass:[NSString class]])
 #define IsAS(x)  ([x isKindOfClass:[DBAs class]])
 
-- (DBQuery *)select:(NSArray *)fields
+
+- (instancetype)where:(NSString *)format, ...
 {
-    DBQuery *ret = [self _copyWithSubclass:[DBSelectQuery class]];
-    ret.fields = !fields         ? nil
-                 : IsArr(fields) ? fields
-                                 : @[fields];
-    return ret;
-}
-- (DBSelectQuery *)select
-{
-    return [self select:nil];
+    va_list args;
+    va_start(args, format);
+    DBQuery *query = [self where:format arguments:args];
+    va_end(args);
+    return query;
 }
 
-- (DBInsertQuery *)insert:(NSDictionary *)fields
+- (instancetype)where:(NSString *)format arguments:(va_list)args
 {
-    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
-    ret.fields = fields;
-    return ret;
-}
-- (DBUpdateQuery *)update:(NSDictionary *)fields
-{
-    DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
-    ret.fields = fields;
-    return ret;
-}
-- (DBDeleteQuery *)delete
-{
-    DBDeleteQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
-    ret.fields = nil;
-    return ret;
-}
-- (DBRawQuery *)rawQuery:(NSString *)SQL
-{
-    DBRawQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
-    [ret setValue:SQL forKey:@"SQL"];
-    return ret;
+    return [self withPredicate:[NSPredicate predicateWithFormat:format arguments:args]];
 }
 
-- (instancetype)where:(id)conds
+- (instancetype)narrow:(NSString *)format, ...
 {
-    NSParameterAssert(IsArr(conds) || IsDic(conds) || IsStr(conds));
+    va_list args;
+    va_start(args, format);
+    NSPredicate *supplementalPredicate = [NSPredicate predicateWithFormat:format arguments:args];
+    va_end(args);
+
+    return [self withPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[self.where, supplementalPredicate]]];
+}
+
+- (instancetype)withPredicate:(NSPredicate *)predicate
+{
+    if(predicate == self.where || [predicate isEqual:self.where])
+        return self;
     DBQuery *ret = [self copy];
-
-    if(IsStr(conds))
-        ret.where = @{ DBStringConditions: [@[@[conds]] mutableCopy] };
-    else if(IsArr(conds))
-        ret.where = @{ DBStringConditions: [@[conds] mutableCopy] };
-    else
-        ret.where = conds;
+    ret.where = predicate;
     return ret;
 }
-- (instancetype)appendWhere:(id)conds
-{
-    if(!_where)
-        return [self where:conds];
-    BOOL isStr = IsStr(conds);
-    NSParameterAssert(IsArr(conds) || IsDic(conds) || isStr);
-    DBQuery *ret = [self copy];
-
-    NSMutableDictionary *derivedConds = [_where mutableCopy];
-    derivedConds[DBStringConditions] = [_where[DBStringConditions] mutableCopy];
-    if(isStr) {
-        if(!derivedConds[DBStringConditions])
-            derivedConds[DBStringConditions] = [NSMutableArray new];
-        [derivedConds[DBStringConditions] addObject:@[conds]];
-    } else {
-        for(id key in conds) {
-            derivedConds[key] = conds[key];
-        }
-    }
-    ret.where = derivedConds;
-    return ret;
-}
-
 
 #pragma mark -
 
@@ -163,46 +120,6 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return YES;
 }
 
-- (BOOL)_generateWhereString:(NSMutableString *)q parameters:(NSMutableArray *)p
-{
-    NSParameterAssert(q && p);
-
-    if([_where count] == 0)
-        return YES;
-
-    [q appendString:@" WHERE "];
-    int i = 0;
-    for(NSString *fieldName in _where) {
-
-        if([fieldName isEqualToString:DBStringConditions]) {
-            for(NSArray *cond in _where[fieldName]) {
-                if(i++ > 0)
-                    [q appendString:@" AND "];
-
-                NSMutableString *condStr = [cond[0] mutableCopy];
-                for(int j = 1; j < [cond count]; ++j) {
-                    [self _addParam:cond[j] withToken:NO currentParams:p query:q];
-                    [condStr replaceOccurrencesOfString:[NSString stringWithFormat:@"$%d", j]
-                                             withString:[NSString stringWithFormat:@"$%lu", (unsigned long)[p count]]
-                                                options:0
-                                                  range:(NSRange){ 0, [condStr length] }];
-                }
-                [q appendString:@"("];
-                [q appendString:condStr];
-                [q appendString:@") "];
-            }
-        } else {
-            if(i++ > 0)
-                [q appendString:@" AND "];
-            [q appendString:@"\""];
-            [q appendString:fieldName];
-            [q appendString:@"\"="];
-            [self _addParam:_where[fieldName] withToken:YES currentParams:p query:q];
-        }
-    }
-    return YES;
-}
-
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
@@ -210,39 +127,6 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     return YES;
 }
 
-#pragma mark - Execution
-
-- (NSArray *)execute
-{
-    NSError *err = nil;
-    NSArray *result = [self executeOnConnection:[self connection] error:&err];
-    if(err) {
-        DBLog(@"%@", err);
-        return nil;
-    }
-    return result;
-}
-
-- (NSArray *)execute:(NSError **)err
-{
-    return [self executeOnConnection:[self connection] error:err];
-}
-
-- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
-{
-    NSError *err = nil;
-    NSMutableString *query = [NSMutableString new];
-    NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-
-    NSArray *ret = [connection executeSQL:query substitutions:params error:&err];
-    if(!ret) {
-        if(outErr)
-            *outErr = err;
-        return nil;
-    }
-    return ret;
-}
 
 #pragma mark -
 
@@ -276,5 +160,65 @@ static NSString *const DBStringConditions = @"DBStringConditions";
     copy.fields     = _fields;
     copy.where      = _where;
     return copy;
+}
+@end
+
+@implementation DBReadQuery
+- (NSArray *)execute
+{
+    return [self execute:NULL];
+}
+- (NSArray *)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+- (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    return [connection executeSQL:query substitutions:params error:outErr];
+}
+@end
+
+@implementation DBWriteQuery
+- (BOOL)execute
+{
+    return [self execute:NULL];
+}
+- (BOOL)execute:(NSError **)err
+{
+    return [self executeOnConnection:[self connection] error:err];
+}
+- (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    return [connection executeSQL:query substitutions:params error:outErr] != nil;
+}
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    DBInsertQuery *copy = [super copyWithZone:zone];
+    copy.values = _values;
+    return copy;
+}
+@end
+
+@interface DBExpression () {
+    NSString *_expressionString;
+}
+@end
+
+@implementation DBExpression : NSObject
++ (instancetype)withString:(NSString *)aString
+{
+    DBExpression *expr = [self new];
+    expr->_expressionString = [aString copy];
+    return expr;
+}
+- (NSString *)toString
+{
+    return _expressionString;
 }
 @end

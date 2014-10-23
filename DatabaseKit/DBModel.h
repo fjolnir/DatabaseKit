@@ -36,7 +36,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DB.h>
-#import <DatabaseKit/Connections/DBConnection.h>
+#import <DatabaseKit/DBConnection.h>
 
 static NSString * const kDBIdentifierColumn = @"identifier";
 
@@ -50,16 +50,17 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  * set the prefix you'll use in +load (along with the default connection if you want one)\n
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
-@interface DBModel : NSObject
+@interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DBTable *table;
 @property(readwrite, copy) NSString *identifier;
+@property(readonly, getter=isInserted) BOOL inserted;
+@property(readonly, retain) NSSet *dirtyKeys;
 
-/*! Creates a reference to the record corresponding to id\n
- * Note: Does not check if the record exists
- * @param aConnection the connection to use
- * @param id The id of the record to retrieve
+
+/*! Returns a model object in the given database
+ *  You must set an identifier before saving
  */
-- (id)initWithTable:(DBTable *)aTable identifier:(NSString *)aIdentifier;
+- (id)initWithDatabase:(DB *)aDB;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n
@@ -69,9 +70,15 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Returns the class prefix for models */
 + (NSString *)classPrefix;
 
+/*!
+ * Returns the type of a key (along with the class if it is '@')
+ */
++ (char)typeForKey:(NSString *)key class:(Class *)outClass;
+
 /*! Saves changes to the database
  */
-- (void)save;
+- (BOOL)save:(NSError **)outErr;
+- (BOOL)save;
 
 /*! Deletes a record from the database
  */
@@ -83,13 +90,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Creates a query with a WHERE clause specifying the record */
 - (DBQuery *)query;
 
-/*!
- * Retrieves a value from the database\n
- * Same as retrieveValueForKey:
- * @param key A valid column
- */
-- (id)objectForKeyedSubscript:(id)key;
-- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 @end
 
 #endif /* _DBBASE_H_ */
