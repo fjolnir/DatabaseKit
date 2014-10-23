@@ -12,7 +12,6 @@ Features:
   - PostgreSQL
   - And adding support for additional databases is very straightforward.
  * Query composition done purely in Objective-C.
- * Table relationships.
  * If you use a connection pool(Done transparently by default) then query objects are thread safe.
  * If you provide a model class, then results from it's corresponding table will automatically be returned as instances of that class.
  * Almost no code required.
