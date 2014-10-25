@@ -169,9 +169,10 @@
     NSParameterAssert([aClass isSubclassOfClass:[DBQuery class]]);
     DBQuery *copy   = [aClass new];
     if(copy) {
-        copy->_table  = _table;
-        copy->_fields = _fields;
-        copy->_where  = _where;
+        copy->_database = _database;
+        copy->_table    = _table;
+        copy->_fields   = _fields;
+        copy->_where    = _where;
     }
     return copy;
 }
