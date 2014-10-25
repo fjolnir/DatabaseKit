@@ -76,7 +76,16 @@
     NSError *err;
     [db migrateModelClasses:@[[TECar class], [TEDoor class]] error:&err];
     NSLog(@"%@", [db.connection columnsForTable:[TECar tableName]]);
+    NSDictionary *carCols = [db.connection columnsForTable:[TECar tableName]];
+    XCTAssertEqualObjects(carCols[@"identifier"], @"TEXT");
+    XCTAssertEqualObjects(carCols[@"brandName"], @"TEXT");
+    XCTAssertEqualObjects(carCols[@"yearBuilt"], @"INTEGER");
+    NSDictionary *doorCols = [db.connection columnsForTable:[TEDoor tableName]];
+    XCTAssertEqualObjects(doorCols[@"identifier"], @"TEXT");
+    XCTAssertEqualObjects(doorCols[@"carIdentifier"], @"TEXT");
+    XCTAssertEqualObjects(doorCols[@"side"], @"INTEGER");
 }
+
 @end
 
 @implementation TEModel

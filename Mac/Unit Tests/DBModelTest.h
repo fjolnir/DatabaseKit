@@ -31,5 +31,10 @@
 @property(nonatomic, copy) NSSet *doors;
 @end
 
+typedef NS_ENUM(NSUInteger, TEDoorSide) {
+    TELeft,
+    TERight
+};
 @interface TEDoor : DBModel
+@property(nonatomic) TEDoorSide side;
 @end
