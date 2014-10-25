@@ -36,7 +36,9 @@
         [DBColumn columnWithName:@"identifier"
                             type:@"TEXT"
                      constraints:@[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending autoIncrement:NO onConflict:DBConflictActionFail]]],
-        [DBColumn columnWithName:@"name" type:@"TEXT" constraints:@[[DBNotNullConstraint new]]]
+        [DBColumn columnWithName:@"name"
+                            type:@"TEXT"
+                     constraints:@[[DBNotNullConstraint new]]]
                          ];
     XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columns] toString],
                           @"CREATE TABLE tbl(identifier TEXT PRIMARY KEY ASC ON CONFLICT FAIL, name TEXT NOT NULL)", @"");
