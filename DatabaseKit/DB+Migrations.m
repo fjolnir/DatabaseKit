@@ -18,7 +18,13 @@
                 return DBTransactionRollBack;
             } else {
                 // Begin by adding all the simple columns (foreign keys handled later)
-                NSMutableArray *columns = [NSMutableArray new];
+                NSMutableArray *columns = [NSMutableArray arrayWithObject:
+                                           [DBColumn columnWithName:@"identifier"
+                                                               type:@"TEXT"
+                                                        constraints:@[[DBPrimaryKeyConstraint
+                                                                       primaryKeyConstraintWithOrder:DBOrderAscending
+                                                                       autoIncrement:NO
+                                                                       onConflict:DBConflictActionFail]]]];
                 for(NSString *key in [klass savedKeys]) {
                     NSString *type = nil;
                     Class keyClass = nil;
