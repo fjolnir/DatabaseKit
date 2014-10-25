@@ -1,5 +1,6 @@
 #import "DBConnection.h"
 #import <dispatch/dispatch.h>
+#import <objc/runtime.h>
 
 #define NOT_IMPLEMENTED [NSException raise:@"Unimplemented" format:@"DBConnection can not be used directly!"]
 
@@ -93,4 +94,42 @@ static NSMutableArray *_ConnectionClasses;
     return YES;
 }
 
+
+#pragma mark -
+
++ (NSString *)typeForObjCScalarEncoding:(char)encoding
+{
+    switch(encoding) {
+        case _C_CHR:
+        case _C_UCHR:
+        case _C_SHT:
+        case _C_USHT:
+        case _C_INT:
+        case _C_UINT:
+        case _C_LNG:
+        case _C_ULNG:
+        case _C_LNG_LNG:
+        case _C_ULNG_LNG:
+            return @"INTEGER";
+        case _C_FLT:
+        case _C_DBL:
+            return @"REAL";
+        case _C_BOOL:
+            return @"BOOL";
+        default:
+            return nil;
+    }
+}
+
++ (NSString *)typeForClass:(Class)klass
+{
+    if([klass isSubclassOfClass:[NSData class]])
+        return @"BLOB";
+    else if([klass isSubclassOfClass:[NSString class]])
+        return @"TEXT";
+    else if([klass isSubclassOfClass:[NSNumber class]])
+        return @"REAL";
+    else
+        return nil;
+}
 @end

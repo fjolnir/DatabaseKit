@@ -75,4 +75,8 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 /*! Executes a block wrapped in a transaction */
 - (BOOL)transaction:(DBTransactionBlock)aBlock;
 
+/*! Returns a SQL type string or nil for a given Objective-C scalar type encoding */
++ (NSString *)typeForObjCScalarEncoding:(char)encoding;
+/*! Returns a SQL type string or nil for a given class*/
++ (NSString *)typeForClass:(Class)klass;
 @end
