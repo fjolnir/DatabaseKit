@@ -20,6 +20,28 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
++ (NSSet *)excludedKeys
+{
+    return nil;
+}
+
++ (NSSet *)savedKeys
+{
+    unsigned int propertyCount;
+    objc_property_t * properties = class_copyPropertyList(self, &propertyCount);
+    if(properties) {
+        NSSet *excludedKeys = [self excludedKeys];
+        NSMutableSet *result = [NSMutableSet setWithCapacity:propertyCount];
+        for(NSUInteger i = 0; i < propertyCount; ++i) {
+            NSString *key = @(property_getName(properties[i]));
+            if(![excludedKeys containsObject:key])
+                [result addObject:key];
+        }
+        return result;
+    } else
+        return nil;
+}
+
 + (char)typeForKey:(NSString *)key class:(Class *)outClass
 {
     objc_property_t const property = class_getProperty([self class], [key UTF8String]);
@@ -38,6 +60,12 @@ static NSString *classPrefix = nil;
     free(type);
     return result;
 }
+
++ (NSArray *)constraintsForKey:(NSString *)key
+{
+    return nil;
+}
+
 
 #pragma mark -
 

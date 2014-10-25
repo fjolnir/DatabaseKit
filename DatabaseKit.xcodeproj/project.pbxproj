@@ -107,6 +107,10 @@
 		C7F6FD4919FA3FD400C77AC6 /* DBColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD4519FA3FD400C77AC6 /* DBColumn.m */; };
 		C7F6FD4C19FBC54B00C77AC6 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F6FD4B19FBC54B00C77AC6 /* DBSQLRepresentable.h */; };
 		C7F6FD4D19FBC54B00C77AC6 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F6FD4B19FBC54B00C77AC6 /* DBSQLRepresentable.h */; };
+		C7F6FD5019FBDAC600C77AC6 /* DBModel+Relationships.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F6FD4E19FBDAC600C77AC6 /* DBModel+Relationships.h */; };
+		C7F6FD5119FBDAC600C77AC6 /* DBModel+Relationships.h in Headers */ = {isa = PBXBuildFile; fileRef = C7F6FD4E19FBDAC600C77AC6 /* DBModel+Relationships.h */; };
+		C7F6FD5219FBDAC600C77AC6 /* DBModel+Relationships.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD4F19FBDAC600C77AC6 /* DBModel+Relationships.m */; };
+		C7F6FD5319FBDAC600C77AC6 /* DBModel+Relationships.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD4F19FBDAC600C77AC6 /* DBModel+Relationships.m */; };
 		F87B106B0E06F74C00580499 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B106A0E06F74C00580499 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
@@ -205,6 +209,8 @@
 		C7F6FD4419FA3FD400C77AC6 /* DBColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBColumn.h; path = DatabaseKit/DBColumn.h; sourceTree = SOURCE_ROOT; };
 		C7F6FD4519FA3FD400C77AC6 /* DBColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBColumn.m; path = DatabaseKit/DBColumn.m; sourceTree = SOURCE_ROOT; };
 		C7F6FD4B19FBC54B00C77AC6 /* DBSQLRepresentable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBSQLRepresentable.h; path = DatabaseKit/DBSQLRepresentable.h; sourceTree = SOURCE_ROOT; };
+		C7F6FD4E19FBDAC600C77AC6 /* DBModel+Relationships.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DBModel+Relationships.h"; path = "DatabaseKit/DBModel+Relationships.h"; sourceTree = SOURCE_ROOT; };
+		C7F6FD4F19FBDAC600C77AC6 /* DBModel+Relationships.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DBModel+Relationships.m"; path = "DatabaseKit/DBModel+Relationships.m"; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		F87B106A0E06F74C00580499 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		F87B106D0E06F76300580499 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
@@ -465,6 +471,8 @@
 				C71CE98219B3839600C77150 /* DBModel.h */,
 				C799312E19C580210094C090 /* DBModel+Private.h */,
 				C71CE98319B3839600C77150 /* DBModel.m */,
+				C7F6FD4E19FBDAC600C77AC6 /* DBModel+Relationships.h */,
+				C7F6FD4F19FBDAC600C77AC6 /* DBModel+Relationships.m */,
 				C71CE98919B3839600C77150 /* DBTable.h */,
 				C71CE98A19B3839600C77150 /* DBTable.m */,
 				C7F6FD4B19FBC54B00C77AC6 /* DBSQLRepresentable.h */,
@@ -498,6 +506,7 @@
 				C7F6FD4619FA3FD400C77AC6 /* DBColumn.h in Headers */,
 				C7F6FD3419FA22AF00C77AC6 /* DB+Migrations.h in Headers */,
 				C799312F19C580210094C090 /* DBModel+Private.h in Headers */,
+				C7F6FD5019FBDAC600C77AC6 /* DBModel+Relationships.h in Headers */,
 				C71CE9AC19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9C319B3839600C77150 /* DBModel.h in Headers */,
 				C71CE9B519B3839600C77150 /* DBPostgresConnection.h in Headers */,
@@ -530,6 +539,7 @@
 				C71CE9C419B3839600C77150 /* DBModel.h in Headers */,
 				C7F6FD4719FA3FD400C77AC6 /* DBColumn.h in Headers */,
 				C7772C7A19C5B5F800A7D42A /* DBQuery.h in Headers */,
+				C7F6FD5119FBDAC600C77AC6 /* DBModel+Relationships.h in Headers */,
 				C7772C7B19C5B5F800A7D42A /* DBDeleteQuery.h in Headers */,
 				C7772C7C19C5B5F800A7D42A /* DBInsertQuery.h in Headers */,
 				C7772C7D19C5B5F800A7D42A /* DBSelectQuery.h in Headers */,
@@ -662,6 +672,7 @@
 				C7F6FD3C19FA3B2C00C77AC6 /* DBCreateQuery.m in Sources */,
 				C76774C119C2032B00B9B687 /* DBQuery.m in Sources */,
 				C76774BE19C2032B00B9B687 /* DBInsertQuery.m in Sources */,
+				C7F6FD5219FBDAC600C77AC6 /* DBModel+Relationships.m in Sources */,
 				C71CEA0719B3839600C77150 /* ISO8601DateFormatter.m in Sources */,
 				C71CE9F519B3839600C77150 /* Base64Extensions.m in Sources */,
 				C7772C7819C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m in Sources */,
@@ -700,6 +711,7 @@
 				C7F6FD3D19FA3B2C00C77AC6 /* DBCreateQuery.m in Sources */,
 				C71CEA0819B3839600C77150 /* ISO8601DateFormatter.m in Sources */,
 				C71CE9F619B3839600C77150 /* Base64Extensions.m in Sources */,
+				C7F6FD5319FBDAC600C77AC6 /* DBModel+Relationships.m in Sources */,
 				C71CE9AF19B3839600C77150 /* DBConnection.m in Sources */,
 				C71CE9BC19B3839600C77150 /* DBSQLiteConnection.m in Sources */,
 				C7772C7919C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m in Sources */,

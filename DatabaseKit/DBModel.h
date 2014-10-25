@@ -56,6 +56,15 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 @property(readonly, getter=isInserted) BOOL inserted;
 @property(readonly, retain) NSSet *dirtyKeys;
 
+/*!
+ * Returns the set of keys that should be saved to the database
+ */
++ (NSSet *)savedKeys;
+/*!
+ * Returns the set of keys that should NOT be saved to the database
+ * (Used by +savedKeys)
+ */
++ (NSSet *)excludedKeys;
 
 /*! Returns a model object in the given database
  *  You must set an identifier before saving
@@ -74,6 +83,11 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  * Returns the type of a key (along with the class if it is '@')
  */
 + (char)typeForKey:(NSString *)key class:(Class *)outClass;
+
+/*!
+ * Returns an array of constraints for a key
+ */
++ (NSArray *)constraintsForKey:(NSString *)key;
 
 /*! Saves changes to the database
  */
