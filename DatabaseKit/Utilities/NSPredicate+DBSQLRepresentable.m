@@ -1,16 +1,16 @@
-#import "NSPredicate+DBAdditions.h"
+#import "NSPredicate+DBSQLRepresentable.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 
-@implementation NSPredicate (DBAdditions)
+@implementation NSPredicate (DBSQLRepresentable)
 
-- (NSString *)db_sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
+- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
-    return [self _db_sqlRepresentationForQuery:query withParameters:parameters negate:NO];
+    return [self _sqlRepresentationForQuery:query withParameters:parameters negate:NO];
 
 }
 
-- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+- (NSString *)_sqlRepresentationForQuery:(DBQuery *)query
                              withParameters:(NSMutableArray *)parameters
                                      negate:(BOOL)negate
 {
@@ -19,21 +19,21 @@
 
 @end
 
-@implementation NSCompoundPredicate (DBAdditions)
+@implementation NSCompoundPredicate (DBSQLRepresentable)
 
-- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+- (NSString *)_sqlRepresentationForQuery:(DBQuery *)query
                              withParameters:(NSMutableArray *)parameters
                                      negate:(BOOL)negate
 {
     switch([self compoundPredicateType]) {
         case NSNotPredicateType:
-            return [self.subpredicates[0] _db_sqlRepresentationForQuery:query
+            return [self.subpredicates[0] _sqlRepresentationForQuery:query
                                                          withParameters:parameters
                                                                  negate:!negate];
         case NSAndPredicateType: {
             __block NSString *sql = nil;
             [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
-                NSString *subSql = [subPredicate _db_sqlRepresentationForQuery:query
+                NSString *subSql = [subPredicate _sqlRepresentationForQuery:query
                                                                 withParameters:parameters
                                                                         negate:negate];
                 sql = !sql
@@ -46,7 +46,7 @@
         case NSOrPredicateType: {
             __block NSString *sql = nil;
             [self.subpredicates enumerateObjectsUsingBlock:^(NSPredicate *subPredicate, NSUInteger idx, BOOL *stop) {
-                NSString *subSql = [subPredicate _db_sqlRepresentationForQuery:query
+                NSString *subSql = [subPredicate _sqlRepresentationForQuery:query
                                                                 withParameters:parameters
                                                                         negate:negate];
                 sql = !sql
@@ -62,14 +62,14 @@
 
 @end
 
-@interface NSExpression (DBAdditions)
-- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+@interface NSExpression (DBSQLRepresentable)
+- (NSString *)_sqlRepresentationForQuery:(DBQuery *)query
                              withParameters:(NSMutableArray *)parameters;
 @end
 
-@implementation NSExpression (DBAdditions)
+@implementation NSExpression (DBSQLRepresentable)
 
-- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+- (NSString *)_sqlRepresentationForQuery:(DBQuery<DBTableQuery> *)query
                              withParameters:(NSMutableArray *)parameters
 {
     switch(self.expressionType) {
@@ -101,9 +101,9 @@
 
 @end
 
-@implementation NSComparisonPredicate (DBAdditions)
+@implementation NSComparisonPredicate (DBSQLRepresentable)
 
-- (NSString *)_db_sqlRepresentationForQuery:(DBQuery *)query
+- (NSString *)_sqlRepresentationForQuery:(DBQuery<DBTableQuery> *)query
                              withParameters:(NSMutableArray *)parameters
                                      negate:(BOOL)negate
 {
@@ -114,32 +114,32 @@
     switch(operator) {
         case NSLessThanPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ < %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSLessThanOrEqualToPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ <= %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSGreaterThanPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ > %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSGreaterThanOrEqualToPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ >= %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSEqualToPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ IS %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSNotEqualToPredicateOperatorType:
             return [NSString stringWithFormat:@"%@ IS NOT %@",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         case NSInPredicateOperatorType: {
             return [NSString stringWithFormat:negate ? @"%@ NOT IN (%@)" : @"%@ IN (%@)",
-                    [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                    [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                    [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                    [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         } case NSLikePredicateOperatorType: {
             NSAssert(self.rightExpression.expressionType == NSConstantValueExpressionType &&
                      [self.rightExpression.constantValue isKindOfClass:[NSString class]],
@@ -151,9 +151,9 @@
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
             
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ %@" : @"%@ %@ %@"),
-                                              [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                                              [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
                                               operator,
-                                              [[NSExpression expressionForConstantValue:pattern] _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                                              [[NSExpression expressionForConstantValue:pattern] _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSBeginsWithPredicateOperatorType: {
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
@@ -180,25 +180,25 @@
                     NSString * const upperBounds = [prefix
                                                     stringByReplacingCharactersInRange:(NSRange) { [prefix length] - 1, 1 }
                                                     withString:[NSString stringWithCharacters:&incremented length:1]];
-                    NSString * const left  = [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                             * const right = [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
-                      * const rightPlusOne = [[NSExpression expressionForConstantValue:upperBounds] _db_sqlRepresentationForQuery:query
+                    NSString * const left  = [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                             * const right = [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters],
+                      * const rightPlusOne = [[NSExpression expressionForConstantValue:upperBounds] _sqlRepresentationForQuery:query
                                                                                                                    withParameters:parameters];
                     return [NSString stringWithFormat:negate ? @"(%@ < %@) OR (%@ >= %@)" : @"(%@ >= %@) AND (%@ < %@)",
                             left, right, left, rightPlusOne];
                 }
             }
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ %@||'%%'" : @"%@ %@ %@||'%%'"),
-                                              [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                                              [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
                                               operator,
-                                              [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                                              [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSEndsWithPredicateOperatorType: {
             NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ '%%'||%@" : @"%@ %@ '%%'||%@"),
-                                              [self.leftExpression _db_sqlRepresentationForQuery:query withParameters:parameters],
+                                              [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
                                               operator,
-                                              [self.rightExpression _db_sqlRepresentationForQuery:query withParameters:parameters]];
+                                              [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         default:
             return nil;

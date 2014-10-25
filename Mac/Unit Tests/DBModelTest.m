@@ -42,26 +42,19 @@
                  @"TEModel's table name shouldn't be: %@", [TEModel tableName]);
 }
 
-- (void)testCreate
-{
-    TEModel *model = [[[db[@"models"] insert:@{@"name": @"Foobar", @"info": @"This is great!"}] execute] firstObject];
-
-    XCTAssertEqualObjects(@"Foobar", [model name], @"Couldn't create model!");
-    XCTAssertEqualObjects(@"This is great!", [model info], @"Couldn't create model!");
-}
-
 - (void)testDestroy
 {
-    TEModel *model = [[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
+    TEModel *model = [[db[@"models"] select] firstObject];
+    //[[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
     NSString *theId = model.identifier;
     XCTAssertTrue([model destroy], @"Couldn't delete record");
-    NSArray *result = [[[db[@"models"] select] where:@{ kDBIdentifierColumn: theId }] execute];
+    NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBIdentifierColumn, theId] execute];
     XCTAssertEqual([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 
 - (void)testFindFirst
 {
-    TEModel *first = [[[db[@"models"] select] limit:@1] first];
+    TEModel *first = [[db[@"models"] select] firstObject];
 
     XCTAssertNotNil(first, @"No result for first entry!");
     XCTAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
@@ -69,7 +62,7 @@
 
 - (void)testModifying
 {
-    TEModel *first = [[[db[@"models"] select] limit:@1] first];
+    TEModel *first = [[db[@"models"] select] firstObject];
     [first.table.database.connection beginTransaction];
     NSString *newName = @"NOT THE SAME NAME!";
     //[first setName:newName];

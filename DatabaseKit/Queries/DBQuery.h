@@ -1,25 +1,32 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
 
-@class DBTable;
+@class DBTable, DB;
 
-
-@interface DBQuery : NSObject <NSCopying>
-@property(readonly, strong) DBTable *table;
-@property(readonly, strong) NSArray *fields;
+@protocol DBFilterableQuery
 @property(readonly, strong) NSPredicate *where;
-
-+ (instancetype)withTable:(DBTable *)table;
-
-+ (NSArray *)combineQueries:(NSArray *)aQueries;
-- (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
-- (instancetype)combineWith:(DBQuery *)aQuery;
 
 - (instancetype)where:(NSString *)format, ...;
 - (instancetype)where:(id)format arguments:(va_list)args;
 - (instancetype)narrow:(NSString *)format, ...;
 
 - (instancetype)withPredicate:(NSPredicate *)predicate;
+@end
+
+@protocol DBTableQuery <NSObject>
+@property(readonly, strong) DBTable *table;
++ (instancetype)withTable:(DBTable *)table;
+@end
+
+@interface DBQuery : NSObject <NSCopying>
+@property(readonly, strong) DB *database;
+@property(readonly, strong) NSArray *fields;
+
++ (instancetype)withDatabase:(DB *)database;
+
++ (NSArray *)combineQueries:(NSArray *)aQueries;
+- (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
+- (instancetype)combineWith:(DBQuery *)aQuery;
 
 - (NSString *)toString;
 @end
@@ -44,6 +51,7 @@
 - (NSString *)toString;
 @end
 
+#import <DatabaseKit/DBCreateQuery.h>
 #import <DatabaseKit/DBSelectQuery.h>
 #import <DatabaseKit/DBInsertQuery.h>
 #import <DatabaseKit/DBDeleteQuery.h>

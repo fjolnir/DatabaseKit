@@ -1,12 +1,12 @@
 #import "DBQuery.h"
 
-@interface DBQuery () {
+@interface DBQuery () <DBTableQuery, DBFilterableQuery> {
 @protected
+    DB *_database;
     DBTable *_table;
     NSArray *_fields;
     id _where;
 }
-@property(readwrite, strong) DBTable *table;
 @property(readwrite, strong) NSArray *fields;
 @property(readwrite, strong) NSPredicate *where;
 

@@ -1,7 +1,7 @@
 #import "DBQuery+Private.h"
 #import "DBDeleteQuery.h"
 #import "DBTable.h"
-#import "NSPredicate+DBAdditions.h"
+#import "NSPredicate+DBSQLRepresentable.h"
 
 @implementation DBDeleteQuery
 
@@ -20,7 +20,7 @@
 
     if(_where) {
         [q appendString:@" WHERE "];
-        [q appendString:[_where db_sqlRepresentationForQuery:self withParameters:p]];
+        [q appendString:[_where sqlRepresentationForQuery:self withParameters:p]];
     }
 
     return YES;

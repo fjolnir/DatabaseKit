@@ -8,21 +8,13 @@
 
 #import <DatabaseKit/DatabaseKit.h>
 
-@class TEAnimal;
-@class TEPerson;
-@class DB;
-
 @interface TEModel : DBModel
 @property(readwrite, strong) NSString *name, *info;
-@property(nonatomic, strong) NSArray *belgians, *people;
-@property(nonatomic, strong) TEAnimal *animal;
 
 @end
 
 @interface TEPerson : DBModel
 @property(readwrite, weak) NSString *userName, *realName;
-@property(nonatomic, strong) NSArray *animals, *belgians;
-
 @end
 
 @interface TEBelgian : DBModel
@@ -31,7 +23,11 @@
 
 @interface TEAnimal : DBModel
 @property(nonatomic, strong) NSString *species, *nickname;
-@property(nonatomic, strong) NSArray *people;
-@property(nonatomic, strong) TEModel *model;
 @end
 
+@interface TECar : DBModel
+@property(nonatomic, copy) NSSet *doors;
+@end
+
+@interface TEDoor : DBModel
+@end

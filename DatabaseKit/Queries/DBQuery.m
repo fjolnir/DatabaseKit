@@ -3,9 +3,10 @@
 #import "DBModel.h"
 #import "DBModel+Private.h"
 #import "Debug.h"
-#import "NSPredicate+DBAdditions.h"
+#import "NSPredicate+DBSQLRepresentable.h"
 
 @implementation DBQuery
+@synthesize table=_table;
 
 + (NSArray *)combineQueries:(NSArray *)aQueries
 {
@@ -50,10 +51,17 @@
     return nil;
 }
 
++ (instancetype)withDatabase:(DB *)database
+{
+    DBQuery *ret = [self new];
+    ret->_database = database;
+    return ret;
+}
+
 + (instancetype)withTable:(DBTable *)table
 {
     DBQuery *ret = [self new];
-    ret.table    = table;
+    ret->_table  = table;
     return ret;
 }
 
@@ -132,9 +140,13 @@
 
 - (DBConnection *)connection
 {
-    return _table.database.connection;
+    return self.database.connection;
 }
 
+- (DB *)database
+{
+    return _database ?: _table.database;
+}
 - (NSString *)toString
 {
     NSMutableString *ret = [NSMutableString new];
@@ -156,9 +168,11 @@
 {
     NSParameterAssert([aClass isSubclassOfClass:[DBQuery class]]);
     DBQuery *copy   = [aClass new];
-    copy.table      = _table;
-    copy.fields     = _fields;
-    copy.where      = _where;
+    if(copy) {
+        copy->_table  = _table;
+        copy->_fields = _fields;
+        copy->_where  = _where;
+    }
     return copy;
 }
 @end

@@ -3,7 +3,7 @@
 #import "DBTable.h"
 #import "DBModel+Private.h"
 #import "DBUtilities.h"
-#import "NSPredicate+DBAdditions.h"
+#import "NSPredicate+DBSQLRepresentable.h"
 
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
@@ -41,8 +41,8 @@ NSString *const DBUnionAll = @" UNION ALL ";
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery
 {
     DBSelectQuery * const query = [self new];
-    query.table = aSubQuery.table;
-    query.subQuery = aSubQuery;
+    query->_table = aSubQuery.table;
+    query->_subQuery = aSubQuery;
     return query;
 }
 
@@ -96,7 +96,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
     if(_where) {
         [q appendString:@" WHERE "];
-        [q appendString:[_where db_sqlRepresentationForQuery:self withParameters:p]];
+        [q appendString:[_where sqlRepresentationForQuery:self withParameters:p]];
     }
     if(_groupedBy) {
         [q appendString:@" GROUP BY "];
@@ -240,16 +240,16 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (instancetype)copyWithZone:(NSZone *)zone
 {
     DBSelectQuery *copy   = [super copyWithZone:zone];
-    copy.orderedBy  = _orderedBy;
-    copy.groupedBy  = _groupedBy;
-    copy.order      = _order;
-    copy.offset     = _offset;
-    copy.limit      = _limit;
-    copy.join       = _join;
-    copy.unionQuery = _unionQuery;
-    copy.unionType  = _unionType;
-    copy.subQuery   = _subQuery;
-    copy.distinct   = _distinct;
+    copy->_orderedBy  = _orderedBy;
+    copy->_groupedBy  = _groupedBy;
+    copy->_order      = _order;
+    copy->_offset     = _offset;
+    copy->_limit      = _limit;
+    copy->_join       = _join;
+    copy->_unionQuery = _unionQuery;
+    copy->_unionType  = _unionType;
+    copy->_subQuery   = _subQuery;
+    copy->_distinct   = _distinct;
     return copy;
 }
 
@@ -298,7 +298,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     [q appendString:@" JOIN "];
     [q appendString:[_table toString]];
     [q appendString:@" ON "];
-    [q appendString:[_predicate db_sqlRepresentationForQuery:query withParameters:p]];
+    [q appendString:[_predicate sqlRepresentationForQuery:query withParameters:p]];
     return YES;
 }
 - (NSString *)description

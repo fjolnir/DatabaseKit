@@ -1,5 +1,6 @@
 #import "DB.h"
 #import "DBTable.h"
+#import "DBCreateQuery.h"
 
 @interface DB ()
 @property(readwrite, strong) DBConnection *connection;
@@ -19,7 +20,7 @@
 
 - (id)initWithConnection:(DBConnection *)aConnection
 {
-    if((self = [super init]))
+    if((self = [self init]))
         _connection = aConnection;
     return self && _connection ? self : nil;
 }
@@ -29,6 +30,11 @@
 {
     NSParameterAssert([key isKindOfClass:[NSString class]]);
     return [DBTable withDatabase:self name:key];
+}
+
+- (DBCreateQuery *)create
+{
+    return [DBCreateQuery withDatabase:self];
 }
 
 @end

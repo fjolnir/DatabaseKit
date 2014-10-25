@@ -8,12 +8,7 @@ extern NSString *const DBLeftJoin;
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
-typedef NS_ENUM(NSUInteger, DBOrder) {
-    DBOrderAscending = 1,
-    DBOrderDescending
-};
-
-@interface DBSelectQuery : DBReadQuery
+@interface DBSelectQuery : DBReadQuery <DBTableQuery, DBFilterableQuery>
 @property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;

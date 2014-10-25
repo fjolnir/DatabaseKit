@@ -31,12 +31,12 @@
 
 - (id)objectForKeyedSubscript:(id)cond
 {
-    return [[[[DBQuery withTable:self] select] limit:@1] where:cond];
+    return [[[DBSelectQuery withTable:self] limit:@1] where:cond];
 }
 
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond
 {
-    [[[DBQuery withTable:self] update:obj] where:cond];
+    [[[DBUpdateQuery withTable:self] update:obj] where:cond];
 }
 
 - (NSString *)toString
@@ -76,24 +76,24 @@
 
 - (DBSelectQuery *)select:(NSArray *)fields
 {
-    return [[DBQuery withTable:self] select:fields];
+    return [[DBSelectQuery withTable:self] select:fields];
 }
 - (DBSelectQuery *)select
 {
-    return [[DBQuery withTable:self] select];
+    return [DBSelectQuery withTable:self];
 }
 
 - (DBInsertQuery *)insert:(id)fields
 {
-    return [[DBQuery withTable:self] insert:fields];
+    return [[DBInsertQuery withTable:self] insert:fields];
 }
 - (DBUpdateQuery *)update:(id)fields
 {
-    return [[DBQuery withTable:self] update:fields];
+    return [[DBUpdateQuery withTable:self] update:fields];
 }
 - (DBDeleteQuery *)delete
 {
-    return [[DBQuery withTable:self] delete];
+    return [DBDeleteQuery withTable:self];
 }
 - (DBSelectQuery *)where:(id)conds, ...
 {

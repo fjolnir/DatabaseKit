@@ -14,7 +14,7 @@
 		<string>https://github.com/fjolnir/DatabaseKit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DatabaseKit.xcodeproj/project.xcworkspace</string>
+	<string>DatabaseKit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0E7E9BCD34026107E32E4262AF5599E870E7A7EC</key>
