@@ -1,14 +1,3 @@
-//
-//  Debug.h
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 7/4/11.
-//  Copyright 2011 Fjölnir Ásgeirsson. All rights reserved.
-//
-
-#ifndef DatabaseKit_Debug_h
-#define DatabaseKit_Debug_h
-
 #include <unistd.h>
 
 // Some debug stuff
@@ -26,6 +15,4 @@ getpid(),\
 #define DBDebugLog(...) printf("%s: warning: %s\n", [[NSString stringWithFormat:@"%s:%u", [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__] UTF8String], [[NSString stringWithFormat:__VA_ARGS__] UTF8String])
 #else
 # define DBDebugLog(...) 
-#endif
-
 #endif
