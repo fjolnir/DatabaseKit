@@ -26,6 +26,8 @@
 @end
 
 @interface TECar : DBModel
+@property(nonatomic, strong) NSString *brandName;
+@property(nonatomic) NSUInteger yearBuilt;
 @property(nonatomic, copy) NSSet *doors;
 @end
 

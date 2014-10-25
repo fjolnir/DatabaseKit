@@ -71,6 +71,12 @@
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
 
+- (void)testTableInitialization
+{
+    NSError *err;
+    [db migrateModelClasses:@[[TECar class], [TEDoor class]] error:&err];
+    NSLog(@"%@", [db.connection columnsForTable:[TECar tableName]]);
+}
 @end
 
 @implementation TEModel
@@ -83,4 +89,17 @@
 @end
 
 @implementation TEBelgian
+@end
+
+@implementation TECar
++ (NSArray *)constraintsForKey:(NSString *)key
+{
+    if([key isEqualToString:@"brandName"])
+        return @[[DBNotNullConstraint new]];
+    else
+        return nil;
+}
+@end
+
+@implementation TEDoor
 @end
