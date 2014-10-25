@@ -46,11 +46,11 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @end
 
 @interface DBForeignKeyConstraint : DBConstraint
-@property(readonly, nonatomic) DBTable *table;
+@property(readonly, nonatomic) NSString *tableName;
 @property(readonly, nonatomic) NSString *columnName;
 @property(readonly, nonatomic) DBForeignKeyAction deleteAction, updateAction;
 
-+ (instancetype)foreignKeyConstraintWithTable:(DBTable *)table
++ (instancetype)foreignKeyConstraintWithTable:(NSString *)tableName
                                    columnName:(NSString *)columnName
                                      onDelete:(DBForeignKeyAction)onDelete
                                      onUpdate:(DBForeignKeyAction)onUpdate;

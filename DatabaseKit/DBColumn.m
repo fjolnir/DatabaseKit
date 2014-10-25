@@ -103,13 +103,13 @@
 @end
 
 @implementation DBForeignKeyConstraint
-+ (instancetype)foreignKeyConstraintWithTable:(DBTable *)table
++ (instancetype)foreignKeyConstraintWithTable:(NSString *)tableName
                                    columnName:(NSString *)columnName
                                      onDelete:(DBForeignKeyAction)onDelete
                                      onUpdate:(DBForeignKeyAction)onUpdate
 {
     DBForeignKeyConstraint *constr = [self new];
-    constr->_table        = table;
+    constr->_tableName    = tableName;
     constr->_columnName   = columnName;
     constr->_deleteAction = onDelete;
     constr->_updateAction = onUpdate;
@@ -123,7 +123,7 @@
 
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 {
-    NSMutableString *sql = [NSMutableString stringWithFormat:@"REFERENCES %@(%@)", _table.name, _columnName];
+    NSMutableString *sql = [NSMutableString stringWithFormat:@"REFERENCES %@(%@)", _tableName, _columnName];
     switch(_deleteAction) {
         case DBForeignKeyActionRestrict:
             [sql appendString:@" ON DELETE RESTRICT_"];
