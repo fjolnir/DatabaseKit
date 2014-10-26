@@ -20,11 +20,11 @@
 - (void)testBuilding
 {
     XCTAssertEqualObjects([[[[Q(Select) select] where:@"foo = 1"] order:DBOrderDescending by:@[@"index"]] toString],
-                          @"SELECT * FROM (aTable) WHERE aTable.foo IS $1 ORDER BY index DESC", @"");
+                          @"SELECT * FROM `aTable` WHERE aTable.`foo` IS $1 ORDER BY `index` DESC", @"");
     
     NSArray *fields = @[@"a", @"b", @"c"];
     XCTAssertEqualObjects([[Q(Select) select:fields] toString],
-                          @"SELECT a, b, c FROM (aTable)", @"");
+                          @"SELECT a, b, c FROM `aTable`", @"");
     
     NSDictionary *update = @{ @"a": @1, @"b": @2, @"c": @3 };
     XCTAssertEqualObjects([[Q(Update) update:update] toString],
@@ -41,7 +41,7 @@
                      constraints:@[[DBNotNullConstraint new]]]
                          ];
     XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columns] toString],
-                          @"CREATE TABLE tbl(identifier TEXT PRIMARY KEY ASC ON CONFLICT FAIL, name TEXT NOT NULL)", @"");
+                          @"CREATE TABLE `tbl`(`identifier` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
 }
 
 @end

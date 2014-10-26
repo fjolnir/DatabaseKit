@@ -12,8 +12,9 @@
 
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
-    NSMutableString *sql = [_name mutableCopy];
-    [sql appendString:@" "];
+    NSMutableString *sql = [@"`" mutableCopy];
+    [sql appendString:[_name mutableCopy]];
+    [sql appendString:@"` "];
     [sql appendString:_type];
     [sql appendString:@" "];
 

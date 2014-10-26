@@ -47,8 +47,10 @@
     NSAssert(_columns || _queryToDeriveFrom,
              @"CREATE query requires either columns or a query to create AS");
     [q appendString:[[self class] _queryType]];
+    [q appendString:@"`"];
     [q appendString:_tableName];
-
+    [q appendString:@"`"];
+    
     if(_columns) {
         [q appendString:@"("];
         for(NSUInteger i = 0; i < [_columns count]; ++i) {
