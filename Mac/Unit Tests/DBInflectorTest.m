@@ -1,11 +1,3 @@
-//
-//  DBInflectorTest.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 9.8.2007.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/Utilities/DBInflector/DBInflector.h>
 #import <DatabaseKit/Utilities/NSString+DBAdditions.h>

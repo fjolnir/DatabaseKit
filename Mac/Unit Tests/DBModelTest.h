@@ -1,11 +1,3 @@
-//
-//  DBModelTest.h
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import <DatabaseKit/DatabaseKit.h>
 
 @interface TEModel : DBModel

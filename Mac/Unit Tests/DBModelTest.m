@@ -1,13 +1,3 @@
-//
-//  DBModelTest.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  CopyriXCTt 2007 Fjölnir Ásgeirsson. All riXCTts reserved.
-//
-
-// TODO: Reset database for each test. (maybe use in memory database and fixtures)
-
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/DatabaseKit.h>
 #import "DBUnitTestUtilities.h"
@@ -41,7 +31,7 @@
         NSLog(@"Failed to initialize models: %@", err);
     }
 
-    TEModel *testModel = [[TEModel alloc]initWithDatabase:db];
+    TEModel *testModel = [[TEModel alloc] initWithDatabase:db];
     testModel.name = @"Foobar";
     testModel.info = @"lorem ipsum";
     [testModel save];
