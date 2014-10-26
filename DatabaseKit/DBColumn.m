@@ -10,6 +10,23 @@
     return col;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [self init])) {
+        _name = [aDecoder decodeObjectForKey:@"name"];
+        _type = [aDecoder decodeObjectForKey:@"type"];
+        _constraints = [aDecoder decodeObjectForKey:@"constraints"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_name forKey:@"name"];
+    [aCoder encodeObject:_type forKey:@"type"];
+    [aCoder encodeObject:_constraints forKey:@"constraints"];
+}
+
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
     NSMutableString *sql = [@"`" mutableCopy];
@@ -27,7 +44,7 @@
 @end
 
 @implementation DBConstraint : NSObject
-+ (NSUInteger)_priority
++ (NSUInteger)priority
 {
     return 0;
 }

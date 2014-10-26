@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @end
 
 @interface DBConstraint : NSObject <DBSQLRepresentable>
++ (NSUInteger)priority;
 @end
 
 @interface DBNotNullConstraint : DBConstraint
