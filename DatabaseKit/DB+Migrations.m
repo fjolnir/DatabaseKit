@@ -5,6 +5,7 @@
 #import "NSString+DBAdditions.h"
 #import <objc/runtime.h>
 
+static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
 @implementation DB (Migrations)
 
 - (BOOL)migrateModelClasses:(NSArray *)classes error:(NSError **)outErr
@@ -92,6 +93,13 @@
         for(NSString *tableName in creates) {
             if(![(DBCreateQuery *)creates[tableName] execute:outErr])
                 return DBTransactionRollBack;
+            DBInsertQuery *migration = [[[self migrationTable]
+             insert:@{
+                 @"table": tableName,
+                 @"columns": [NSArchiver archivedDataWithRootObject:[creates valueForKey:@"columns"]]
+             }] or:DBInsertFallbackReplace];
+            if(![migration execute:outErr])
+                return DBTransactionRollBack;
         }
         return DBTransactionCommit;
     }];
@@ -99,14 +107,16 @@
 
 - (DBTable *)migrationTable
 {
-    if(![self.connection columnsForTable:@"_DBKitSchemaInfo"]) {
-        DBCreateQuery *migrationCreate = [[[self create] table:@"_DBKitSchemaInfo"] columns:@[
-            [DBColumn columnWithName:@"table" type:@"TEXT" constraints:@[[DBNotNullConstraint new]]]
+    if(![self.connection columnsForTable:kCYMigrationTableName]) {
+        DBCreateQuery *migrationCreate = [[[self create] table:kCYMigrationTableName] columns:@[
+            [DBColumn columnWithName:@"table" type:@"TEXT" constraints:@[[DBNotNullConstraint new], [DBUniqueConstraint new]]],
+            [DBColumn columnWithName:@"columns" type:@"BLOB" constraints:@[[DBNotNullConstraint new]]]
         ]];
-        if(![migrationCreate execute])
+        NSError *err;
+        if(![migrationCreate execute:&err])
             return nil;
     }
-    return self[@"_DBKitSchemaInfo"];
+    return self[kCYMigrationTableName];
 }
 
 - (NSDictionary *)currentMigrationForModelClass:(Class)klass error:(NSError **)outErr
