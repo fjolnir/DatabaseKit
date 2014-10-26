@@ -1,11 +1,3 @@
-//
-//  DBCreateQuery.h
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 10/24/14.
-//
-//
-
 #import <DatabaseKit/DatabaseKit.h>
 
 @class DBSelectQuery;
@@ -15,8 +7,9 @@
 @property(readonly, nonatomic) NSArray *columns;
 @property(readonly, nonatomic) DBSelectQuery *queryToDeriveFrom;
 
-
 - (instancetype)table:(NSString *)tableName;
 - (instancetype)columns:(NSArray *)columns;
 - (instancetype)as:(DBSelectQuery *)queryToDeriveFrom;
+
+- (BOOL)hasColumnNamed:(NSString *)name;
 @end

@@ -134,15 +134,22 @@ static NSString *classPrefix = nil;
 }
 - (BOOL)save:(NSError **)outErr
 {
-    if([_dirtyKeys count] > 0) {
-        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
-        [_dirtyKeys removeAllObjects];
+    if(!self.isInserted) {
+        NSMutableDictionary *values = [[self dictionaryWithValuesForKeys:[[[self class] savedKeys] allObjects]] mutableCopy];
+        if(!_savedIdentifier)
+            values[@"identifier"] = [[NSUUID UUID] UUIDString];
 
-        DBWriteQuery * const query = !_savedIdentifier
-            ? [[[self query] insert:changedValues] or:DBInsertFallbackReplace]
-            : [[self query] update:changedValues];
+        DBInsertQuery * const query = [[[self query] insert:values]
+or:DBInsertFallbackFail];
         if([query execute:outErr]) {
-            _savedIdentifier = self.identifier;
+            _savedIdentifier = values[@"identifier"];
+            return YES;
+        } else
+            return YES;
+    } else if([_dirtyKeys count] > 0) {
+        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
+        if([[[self query] update:changedValues] execute:outErr]) {
+            [_dirtyKeys removeAllObjects];
             return YES;
         } else
             return NO;

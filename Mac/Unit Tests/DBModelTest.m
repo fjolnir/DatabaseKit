@@ -34,6 +34,17 @@
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();
+
+    NSError *err;
+    if(![db migrateModelClasses:@[[TEModel class], [TEPerson class], [TEBelgian class], [TEAnimal class]]
+                          error:&err]) {
+        NSLog(@"Failed to initialize models: %@", err);
+    }
+
+    TEModel *testModel = [[TEModel alloc]initWithDatabase:db];
+    testModel.name = @"Foobar";
+    testModel.info = @"lorem ipsum";
+    [testModel save];
 }
 
 - (void)testTableName
@@ -57,7 +68,7 @@
     TEModel *first = [[db[@"models"] select] firstObject];
 
     XCTAssertNotNil(first, @"No result for first entry!");
-    XCTAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
+    XCTAssertEqualObjects(@"Foobar", [first name] , @"The name of the first entry should be 'Foobar'");
 }
 
 - (void)testModifying

@@ -34,9 +34,9 @@
                     else
                         type = [[self.connection class] typeForObjCScalarEncoding:enc];
                     if(!type) {
-                        if([keyClass isSubclassOfClass:[NSSet class]]) {
+                        if([keyClass isSubclassOfClass:[NSSet class]]) { // To many
                             Class counterpart = [klass relatedClassForKey:key];
-                            if(counterpart) {
+                            if(counterpart && ![creates[[counterpart tableName]] hasColumnNamed:[klass foreignKeyName]]) {
                                 DBColumn *foreignKeyCol = [DBColumn
                                                            columnWithName:[klass foreignKeyName]
                                                            type:@"TEXT"
@@ -50,11 +50,33 @@
                                 else {
                                     DBCreateQuery *q = creates[[klass tableName]];
                                     creates[[counterpart tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
-                                }                            }
+                                }
+                            }
+                        } else if([keyClass isSubclassOfClass:[DBModel class]]) { // To one
+                            Class counterpart = [klass relatedClassForKey:key];
+                            if(counterpart && ![creates[[klass tableName]] hasColumnNamed:[counterpart foreignKeyName]]) {
+                                DBColumn *foreignKeyCol = [DBColumn
+                                                           columnWithName:[counterpart foreignKeyName]
+                                                           type:@"TEXT"
+                                                           constraints:@[[DBForeignKeyConstraint
+                                                                          foreignKeyConstraintWithTable:[counterpart tableName]
+                                                                          columnName:@"identifier"
+                                                                          onDelete:DBForeignKeyActionCascade
+                                                                          onUpdate:DBForeignKeyActionCascade]]];
+                                if(!creates[[klass tableName]])
+                                    creates[[counterpart tableName]] = [[[self create] table:[counterpart tableName]] columns:@[foreignKeyCol]];
+                                else {
+                                    DBCreateQuery *q = creates[[klass tableName]];
+                                    creates[[klass tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
+                                }
+                            }
                         }
                         continue;
                     }
 
+                    NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumn *col, NSUInteger _, BOOL *__) {
+                        return [col.name isEqualToString:key];
+                    }], @"Duplicate column %@", key);
                     [columns addObject:[DBColumn columnWithName:key
                                                            type:type
                                                     constraints:[klass constraintsForKey:key]]];

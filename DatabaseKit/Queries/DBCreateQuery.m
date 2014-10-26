@@ -29,6 +29,16 @@
     return query;
 }
 
+- (BOOL)hasColumnNamed:(NSString *)name
+{
+    if(!_columns)
+        return NO;
+    else
+        return [_columns indexOfObjectPassingTest:^BOOL(DBColumn *col, NSUInteger idx, BOOL *stop) {
+            return [name isEqualToString:col.name];
+        }] != NSNotFound;
+}
+
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
