@@ -199,9 +199,12 @@
         NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
                               substitutions:@[tableName]
                                       error:NULL];
-        columns = [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
-                                              forKeys:[results valueForKey:@"name"]];
-        _cachedColumnNames[tableName] = columns;
+        if([results count] > 0) {
+            columns = [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
+                                                  forKeys:[results valueForKey:@"name"]];
+            _cachedColumnNames[tableName] = columns;
+        } else
+            return nil;
 
     }
     return columns;
