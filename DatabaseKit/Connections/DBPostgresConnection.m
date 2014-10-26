@@ -211,7 +211,7 @@ static NSDate *NSDateFromPostgresTimestamp(NSString *timestamp);
             DBDebugLog(@"Query error: %@", [NSString stringWithUTF8String:PQresultErrorMessage(result)]);
             if(outErr)
                 *outErr = [[NSError alloc] initWithDomain:DBConnectionErrorDomain
-                                                     code:DBPostgreQueryFailed
+                                                     code:DBPostgresQueryFailed
                                                  userInfo:@{ NSLocalizedDescriptionKey: @(PQresultErrorMessage(result)) }];
             return nil;
         default:

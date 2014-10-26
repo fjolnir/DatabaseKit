@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnection.h>
 
-typedef enum  {
+typedef NS_ENUM(NSUInteger, DBSQLiteErrorCode)  {
   DBSQLiteDatabaseNotFoundErrorCode = 0
-} DBSQLiteErrorCode;
+};
 
 @interface DBSQLiteConnection : DBConnection
 @property(readonly, retain) NSString *path;
