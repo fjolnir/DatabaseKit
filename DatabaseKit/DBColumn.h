@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
     DBConflictActionReplace,
 };
 
-@interface DBColumn : NSObject <DBSQLRepresentable>
+@interface DBColumn : NSObject <DBSQLRepresentable, NSCoding>
 @property(readonly, nonatomic) NSString *name;
 @property(readonly, nonatomic) NSString *type;
 @property(readonly, nonatomic) NSArray *constraints;
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 + (instancetype)columnWithName:(NSString *)name type:(NSString *)type constraints:(NSArray *)constraints;
 @end
 
-@interface DBConstraint : NSObject <DBSQLRepresentable>
+@interface DBConstraint : NSObject <DBSQLRepresentable, NSCoding>
 + (NSUInteger)priority;
 @end
 
