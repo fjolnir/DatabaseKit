@@ -126,7 +126,7 @@
             continue;
         else if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
             sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
-        else if([sub isMemberOfClass:[NSData class]])
+        else if([sub isKindOfClass:[NSData class]])
             sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_STATIC); // Not sure if we should make this transient
         else if([sub isKindOfClass:[NSNumber class]]) {
             switch (*[sub objCType]) {
