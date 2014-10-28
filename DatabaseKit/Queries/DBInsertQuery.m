@@ -12,11 +12,6 @@
 
 @implementation DBInsertQuery
 
-+ (NSString *)_queryType
-{
-    return @"INSERT ";
-}
-
 - (instancetype)or:(DBFallback)aFallback
 {
     DBInsertQuery *query = [self copy];
@@ -50,7 +45,7 @@
     NSParameterAssert(q && p);
     NSAssert([self.fields count] == [self.values count],
              @"Field/value count does not match");
-    [q appendString:[[self class] _queryType]];
+    [q appendString:@"INSERT "];
 
     switch(_fallback) {
         case DBInsertFallbackReplace:
@@ -90,26 +85,20 @@
 
 @implementation DBUpdateQuery
 
-+ (NSString *)_queryType
-{
-    return @"UPDATE ";
-}
-
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSAssert([self.fields count] == [self.values count],
              @"Field/value count does not match");
 
-    [q appendString:[[self class] _queryType]];
-
+    [q appendString:@"UPDATE `"];
     [q appendString:[_table toString]];
-    [q appendString:@" SET \""];
+    [q appendString:@"` SET `"];
 
     for(NSUInteger i = 0; i < [_fields count]; ++i) {
         if(__builtin_expect(i > 0, 1))
-            [q appendString:@", \""];
+            [q appendString:@", `"];
         [q appendString:_fields[i]];
-        [q appendString:@"\"="];
+        [q appendString:@"`="];
         id obj = _values[i];
         if([obj isEqual:[NSNull null]])
             [q appendString:@"NULL"];

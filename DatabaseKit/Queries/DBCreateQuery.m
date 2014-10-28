@@ -2,10 +2,6 @@
 #import "DBCreateQuery.h"
 
 @implementation DBCreateQuery
-+ (NSString *)_queryType
-{
-    return @"CREATE TABLE ";
-}
 
 - (instancetype)table:(NSString *)tableName
 {
@@ -42,12 +38,10 @@
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    if(!_tableName)
+    if(!_tableName || (!_columns && !_queryToDeriveFrom))
         return NO;
-    NSAssert(_columns || _queryToDeriveFrom,
-             @"CREATE query requires either columns or a query to create AS");
-    [q appendString:[[self class] _queryType]];
-    [q appendString:@"`"];
+
+    [q appendString:@"CREATE TABLE `"];
     [q appendString:_tableName];
     [q appendString:@"`"];
     

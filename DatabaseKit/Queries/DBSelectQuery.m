@@ -33,11 +33,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 @implementation DBSelectQuery
 
-+ (NSString *)_queryType
-{
-    return @"SELECT ";
-}
-
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery
 {
     DBSelectQuery * const query = [self new];
@@ -75,7 +70,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    [q appendString:[[self class] _queryType]];
+    [q appendString:@"SELECT "];
 
     if(_distinct)
         [q appendString:@"DISTINCT "];
