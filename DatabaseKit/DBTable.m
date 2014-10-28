@@ -115,6 +115,16 @@
 {
     return [[DBSelectQuery withTable:self] limit:limit];
 }
+
+- (DBAlterQuery *)alter
+{
+    return [DBAlterQuery withTable:self];
+}
+- (DBDropQuery *)drop
+{
+    return [DBDropQuery withTable:self];
+}
+
 - (NSUInteger)count
 {
     return [[DBSelectQuery withTable:self] count];
