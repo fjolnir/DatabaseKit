@@ -143,7 +143,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
 
 - (DBTable *)migrationTable
 {
-    if(![self.connection columnsForTable:kCYMigrationTableName]) {
+    if(![self.connection tableExists:kCYMigrationTableName]) {
         DBCreateQuery *migrationCreate = [[[self create] table:kCYMigrationTableName] columns:@[
             [DBColumnDefinition columnWithName:@"table" type:DBTypeText constraints:@[[DBNotNullConstraint new], [DBUniqueConstraint new]]],
             [DBColumnDefinition columnWithName:@"columns" type:DBTypeBlob constraints:@[[DBNotNullConstraint new]]]
