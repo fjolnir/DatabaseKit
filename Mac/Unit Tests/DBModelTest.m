@@ -90,13 +90,18 @@
 - (void)testMigrating
 {
     NSError *err;
-    if(![db migrateModelClasses:@[[TECar class], [TEDoor class]]
-                          error:&err])
-        NSLog(@"Failed to initialize models: %@", err);
+    NSArray *old = @[[TECar class], [TEDoor class]];
+    NSArray *new  = @[[TECarChanged class], [TEDoor class]];
+    XCTAssert([db migrateModelClasses:old error:&err],
+              @"Failed to initialize models: %@", err);
 
-    if(![db migrateModelClasses:@[[TECarChanged class], [TEDoor class]]
-                          error:&err])
-        NSLog(@"Failed to initialize models: %@", err);
+    XCTAssert([db migrateModelClasses:new error:&err],
+              @"Failed to initialize models: %@", err);
+
+    NSSet *migratedColumns = [NSSet setWithObjects:@"identifier", @"color", @"yearBuilt", nil];
+    XCTAssertEqualObjects([NSSet setWithArray:[[db.connection columnsForTable:[TECar tableName]] allKeys]],
+                          migratedColumns);
+
 }
 
 @end

@@ -90,53 +90,50 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
     return [self.connection transaction:^{
         NSMutableDictionary *creates = [[self tableCreationQueriesForClasses:classes] mutableCopy];
         for(Class klass in classes) {
-            DBCreateQuery *createQuery = creates[[klass tableName]];
+            NSString *tableName = [klass tableName];
+            DBCreateQuery *createQuery = creates[tableName];
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
-            if(!lastMigration)
-                continue;
+            if(lastMigration) {
+                NSArray *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
+                NSArray *columnsToRemove = [currentColumns
+                                            filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
+                    return ![[creates[tableName] columns] containsObject:col];
+                }]];
+                if([columnsToRemove count] > 0) {
+                    if(![self.connection executeSQL:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr])
+                        return DBTransactionRollBack;
 
-            NSArray *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
-            NSArray *columnsToRemove = [currentColumns
-                                        filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
-                return ![[creates[[klass tableName]] columns] containsObject:col];
-            }]];
-            if([columnsToRemove count] > 0) {
-                if(![self.connection executeSQL:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr])
-                    return DBTransactionRollBack;
+                    // Create the new table using a temporary name
+                    NSString *tempTableName = [@"_DBKitMigration_tmp_" stringByAppendingString:tableName];
+                    if(![[createQuery table:tempTableName] execute:outErr])
+                        return DBTransactionRollBack;
 
-                // Create the new table using a temporary name
-                NSString *tempTableName = [@"_DBKitMigration_tmp_" stringByAppendingString:[klass tableName]];
-                if(![[createQuery table:tempTableName] execute:outErr])
-                    return DBTransactionRollBack;
+                    // Copy over the existing data
+                    NSMutableArray *leftoverColumns = [currentColumns mutableCopy];
+                    [leftoverColumns removeObjectsInArray:columnsToRemove];
+                    DBSelectQuery *sourceQuery = [self[tableName] select:[leftoverColumns valueForKey:@"name"]];
+                    if(![[self[tempTableName] insertUsingSelect:sourceQuery] execute:outErr])
+                        return DBTransactionRollBack;
 
-                // Copy over the existing data
-                NSMutableArray *leftoverColumns = [currentColumns mutableCopy];
-                [leftoverColumns removeObjectsInArray:columnsToRemove];
-                DBSelectQuery *sourceQuery = [self[[klass tableName]] select:[leftoverColumns valueForKey:@"name"]];
-                if(![[self[tempTableName] insertUsingSelect:sourceQuery] execute:outErr])
-                    return DBTransactionRollBack;
+                    // Drop old, and rename new
+                    if(![[self[tableName] drop] execute:outErr])
+                        return DBTransactionRollBack;
+                    if(![[[self[tempTableName] alter] rename:tableName] execute:outErr])
+                        return DBTransactionRollBack;
 
-                // Drop old, and rename new
-                if(![[self[[klass tableName]] drop] execute:outErr])
-                    return DBTransactionRollBack;
-                if(![[[self[tempTableName] alter] rename:[klass tableName]] execute:outErr])
-                    return DBTransactionRollBack;
-
-                if(![self.connection executeSQL:@"PRAGMA foreign_keys = ON" substitutions:nil error:outErr])
+                    if(![self.connection executeSQL:@"PRAGMA foreign_keys = ON" substitutions:nil error:outErr])
+                        return DBTransactionRollBack;
+                }
+            } else {
+                if(![(DBCreateQuery *)creates[tableName] execute:outErr])
                     return DBTransactionRollBack;
             }
-            [creates removeObjectForKey:[klass tableName]];
-        }
-
-        for(NSString *tableName in creates) {
-            if(![(DBCreateQuery *)creates[tableName] execute:outErr])
-                return DBTransactionRollBack;
 
             DBInsertQuery *migration = [[[self migrationTable]
              insert:@{
                  @"table": tableName,
                  @"columns": [NSKeyedArchiver archivedDataWithRootObject:[creates[tableName] valueForKey:@"columns"]]
-             }] or:DBInsertFallbackAbort];
+             }] or:DBInsertFallbackReplace];
             if(![migration execute:outErr])
                 return DBTransactionRollBack;
         }
