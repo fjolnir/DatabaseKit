@@ -1,11 +1,3 @@
-//
-//  DBSQLiteConnection.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #define LOG_QUERIES NO
 
 #import "DBSQLiteConnection.h"
@@ -138,7 +130,7 @@
         else if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
             sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
         else if([sub isKindOfClass:[NSData class]])
-            sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_STATIC); // Not sure if we should make this transient
+            sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_TRANSIENT);
         else if([sub isKindOfClass:[NSNumber class]]) {
             switch (*[sub objCType]) {
                 case 'd':
