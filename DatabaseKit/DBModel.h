@@ -30,6 +30,11 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  */
 + (NSSet *)excludedKeys;
 
+/*!
+ * Returns an array of DBIndices for the model
+ */
++ (NSArray *)indices;
+
 /*! Returns a model object in the given database
  *  You must set an identifier before saving
  */

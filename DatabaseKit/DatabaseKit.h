@@ -2,6 +2,7 @@
 #import <DatabaseKit/DBTable.h>
 #import <DatabaseKit/DBQuery.h>
 #import <DatabaseKit/DBModel.h>
+#import <DatabaseKit/DBIndex.h>
 
 #import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBConnectionPool.h>

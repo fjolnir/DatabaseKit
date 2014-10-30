@@ -57,7 +57,7 @@
 		C71CEA1019B3839600C77150 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */; };
 		C71CEA1219B383AD00C77150 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CEA1119B383AD00C77150 /* Debug.h */; };
 		C71CEA1319B383AD00C77150 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CEA1119B383AD00C77150 /* Debug.h */; };
-		C76774BB19C2032B00B9B687 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B219C2032B00B9B687 /* DBDeleteQuery.h */; };
+		C76774BB19C2032B00B9B687 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B219C2032B00B9B687 /* DBDeleteQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76774BC19C2032B00B9B687 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B319C2032B00B9B687 /* DBDeleteQuery.m */; };
 		C76774BD19C2032B00B9B687 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B419C2032B00B9B687 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76774BE19C2032B00B9B687 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B519C2032B00B9B687 /* DBInsertQuery.m */; };
@@ -77,6 +77,10 @@
 		C7772C7C19C5B5F800A7D42A /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B419C2032B00B9B687 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7772C7D19C5B5F800A7D42A /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B919C2032B00B9B687 /* DBSelectQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7772C7F19C5B5FA00A7D42A /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B619C2032B00B9B687 /* DBQuery+Private.h */; };
+		C77C10721A02040400F215C5 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C77C10701A02040400F215C5 /* DBIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C77C10731A02040400F215C5 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C77C10701A02040400F215C5 /* DBIndex.h */; };
+		C77C10741A02040400F215C5 /* DBIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = C77C10711A02040400F215C5 /* DBIndex.m */; };
+		C77C10751A02040400F215C5 /* DBIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = C77C10711A02040400F215C5 /* DBIndex.m */; };
 		C799312F19C580210094C090 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C799312E19C580210094C090 /* DBModel+Private.h */; };
 		C79C0EC217D9BC3400E538B9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C79C0EC117D9BC3400E538B9 /* XCTest.framework */; };
 		C7A5077A13F01B1200301981 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
@@ -182,6 +186,8 @@
 		C7759E0017D9BE1B000334EF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C7772C7419C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPredicate+DBSQLRepresentable.h"; sourceTree = "<group>"; };
 		C7772C7519C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSPredicate+DBSQLRepresentable.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		C77C10701A02040400F215C5 /* DBIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBIndex.h; sourceTree = SOURCE_ROOT; };
+		C77C10711A02040400F215C5 /* DBIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBIndex.m; sourceTree = SOURCE_ROOT; };
 		C799312E19C580210094C090 /* DBModel+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DBModel+Private.h"; path = "DatabaseKit/DBModel+Private.h"; sourceTree = SOURCE_ROOT; };
 		C79B66E119B3811800B15FDD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		C79B66E319B3811C00B15FDD /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
@@ -494,6 +500,8 @@
 				C7F6FD4B19FBC54B00C77AC6 /* DBSQLRepresentable.h */,
 				C7F6FD4419FA3FD400C77AC6 /* DBColumnDefinition.h */,
 				C7F6FD4519FA3FD400C77AC6 /* DBColumnDefinition.m */,
+				C77C10701A02040400F215C5 /* DBIndex.h */,
+				C77C10711A02040400F215C5 /* DBIndex.m */,
 				C76774B119C2032B00B9B687 /* Queries */,
 				C71CE98B19B3839600C77150 /* Debug.h */,
 				C71CE99B19B3839600C77150 /* Utilities */,
@@ -518,6 +526,8 @@
 				C71CE9D119B3839600C77150 /* DBTable.h in Headers */,
 				C71CE9BF19B3839600C77150 /* DB.h in Headers */,
 				C76774BD19C2032B00B9B687 /* DBInsertQuery.h in Headers */,
+				C77C10721A02040400F215C5 /* DBIndex.h in Headers */,
+				C76774BB19C2032B00B9B687 /* DBDeleteQuery.h in Headers */,
 				C7F6FD5C19FE031800C77AC6 /* DBAlterQuery.h in Headers */,
 				C7F6FD5619FE030D00C77AC6 /* DBDropQuery.h in Headers */,
 				C76774C019C2032B00B9B687 /* DBQuery.h in Headers */,
@@ -532,7 +542,6 @@
 				C7F6FD4C19FBC54B00C77AC6 /* DBSQLRepresentable.h in Headers */,
 				C71CE9F319B3839600C77150 /* Base64Extensions.h in Headers */,
 				C71CEA0519B3839600C77150 /* ISO8601DateFormatter.h in Headers */,
-				C76774BB19C2032B00B9B687 /* DBDeleteQuery.h in Headers */,
 				C71CE9D519B3839600C77150 /* Debug.h in Headers */,
 				C71CEA1219B383AD00C77150 /* Debug.h in Headers */,
 				C71CE9F719B3839600C77150 /* DBInflector.h in Headers */,
@@ -543,6 +552,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77C10731A02040400F215C5 /* DBIndex.h in Headers */,
 				C71CE9C019B3839600C77150 /* DB.h in Headers */,
 				C7772C7719C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h in Headers */,
 				C71CE9BA19B3839600C77150 /* DBSQLiteConnection.h in Headers */,
@@ -709,6 +719,7 @@
 				C7F6FD5E19FE031800C77AC6 /* DBAlterQuery.m in Sources */,
 				C71CE9C119B3839600C77150 /* DB.m in Sources */,
 				C71CE9F919B3839600C77150 /* DBInflector.m in Sources */,
+				C77C10741A02040400F215C5 /* DBIndex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +761,7 @@
 				C7F6FD5F19FE031800C77AC6 /* DBAlterQuery.m in Sources */,
 				C71CE9C219B3839600C77150 /* DB.m in Sources */,
 				C71CE9FA19B3839600C77150 /* DBInflector.m in Sources */,
+				C77C10751A02040400F215C5 /* DBIndex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

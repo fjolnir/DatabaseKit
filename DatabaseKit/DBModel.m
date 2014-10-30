@@ -20,11 +20,6 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
-+ (NSSet *)excludedKeys
-{
-    return nil;
-}
-
 + (NSSet *)savedKeys
 {
     unsigned int propertyCount;
@@ -40,6 +35,16 @@ static NSString *classPrefix = nil;
         return result;
     } else
         return nil;
+}
+
++ (NSSet *)excludedKeys
+{
+    return nil;
+}
+
++ (NSArray *)indices
+{
+    return nil;
 }
 
 + (char)typeForKey:(NSString *)key class:(Class *)outClass

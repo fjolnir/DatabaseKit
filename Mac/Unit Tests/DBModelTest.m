@@ -126,12 +126,21 @@
     else
         return nil;
 }
++ (NSArray *)indices
+{
+    return @[[DBIndex indexWithName:@"brandIdx" onColumns:@[@"brandName"] unique:YES]];
+}
 @end
 @implementation TECarChanged
 
 + (NSString *)tableName
 {
     return @"cars";
+}
+
++ (NSArray *)indices
+{
+    return @[[DBIndex indexWithName:@"colorIdx" onColumns:@[@"color"] unique:NO]];
 }
 
 @end

@@ -128,6 +128,11 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                     return DBTransactionRollBack;
             }
 
+            for(DBIndex *idx in [klass indices]) {
+                if(![idx addToTable:self[tableName] error:outErr])
+                    return DBTransactionRollBack;
+            }
+
             DBInsertQuery *migration = [[[self migrationTable]
              insert:@{
                  @"table": tableName,
