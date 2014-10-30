@@ -86,6 +86,9 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 
 /*! Returns a SQL type string for a type */
 + (NSString *)sqlForType:(DBType)type;
+/*! Inverse of `sqlForType:` */
++ (DBType)typeForSql:(NSString *)type;
+
 /*! Returns a SQL type for a given Objective-C scalar type encoding */
 + (DBType)typeForObjCScalarEncoding:(char)encoding;
 /*! Returns a SQL type for a given class*/

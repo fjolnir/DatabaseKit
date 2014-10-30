@@ -109,11 +109,29 @@ static NSMutableArray *_ConnectionClasses;
         case DBTypeText:
             return @"TEXT";
         case DBTypeBlob:
-            return @"REAL";
+            return @"BLOB";
         default:
             return nil;
     }
 }
+
++ (DBType)typeForSql:(NSString *)type
+{
+    type = [type uppercaseString];
+    if([type isEqualToString:@"INTEGER"])
+        return DBTypeInteger;
+    else if([type isEqualToString:@"REAL"])
+        return DBTypeReal;
+    else if([type isEqualToString:@"BOOL"])
+        return DBTypeBoolean;
+    else if([type isEqualToString:@"TEXT"])
+        return DBTypeText;
+    else if([type isEqualToString:@"BLOB"])
+        return DBTypeBlob;
+    else
+        return DBTypeUnknown;
+}
+
 + (DBType)typeForObjCScalarEncoding:(char)encoding
 {
     switch(encoding) {
