@@ -54,6 +54,11 @@ static NSMutableArray *_ConnectionClasses;
     NOT_IMPLEMENTED;
     return NO;
 }
+- (BOOL)tableExists:(NSString *)tableName
+{
+    NOT_IMPLEMENTED;
+    return NO;
+}
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     NOT_IMPLEMENTED;

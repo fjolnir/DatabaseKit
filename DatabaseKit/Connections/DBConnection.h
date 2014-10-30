@@ -70,6 +70,11 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  */
 - (BOOL)closeConnection;
 /*!
+ * Returns a whether a given table exists
+ * @param tableName Name of the table to check
+ */
+- (BOOL)tableExists:(NSString *)tableName;
+/*!
  * Returns a dictionary of column types keyed by column names
  * @param tableName Name of the table to retrieve columns for
  */

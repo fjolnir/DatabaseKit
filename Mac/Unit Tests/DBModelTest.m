@@ -76,15 +76,15 @@
 {
     NSError *err;
     [db migrateModelClasses:@[[TECar class], [TEDoor class]] error:&err];
-    NSLog(@"%@", [db.connection columnsForTable:[TECar tableName]]);
+    
     NSDictionary *carCols = [db.connection columnsForTable:[TECar tableName]];
-    XCTAssertEqualObjects(carCols[@"identifier"], @"TEXT");
-    XCTAssertEqualObjects(carCols[@"brandName"], @"TEXT");
-    XCTAssertEqualObjects(carCols[@"yearBuilt"], @"INTEGER");
+    XCTAssertEqual([carCols[@"identifier"] intValue], DBTypeText);
+    XCTAssertEqual([carCols[@"brandName"] intValue], DBTypeText);
+    XCTAssertEqual([carCols[@"yearBuilt"] intValue], DBTypeInteger);
     NSDictionary *doorCols = [db.connection columnsForTable:[TEDoor tableName]];
-    XCTAssertEqualObjects(doorCols[@"identifier"], @"TEXT");
-    XCTAssertEqualObjects(doorCols[@"carIdentifier"], @"TEXT");
-    XCTAssertEqualObjects(doorCols[@"side"], @"INTEGER");
+    XCTAssertEqual([doorCols[@"identifier"] intValue], DBTypeText);
+    XCTAssertEqual([doorCols[@"carIdentifier"] intValue],DBTypeText);
+    XCTAssertEqual([doorCols[@"side"] intValue], DBTypeInteger);
 }
 
 - (void)testMigrating

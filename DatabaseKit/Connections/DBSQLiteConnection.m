@@ -192,22 +192,26 @@
         return rowArray;
 }
 
+- (BOOL)tableExists:(NSString *)tableName
+{
+    return [[self executeSQL:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
+               substitutions:@[tableName]
+                       error:NULL] count] > 0;
+}
+
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    id columns = _cachedColumnNames[tableName];
-    if(!columns) {
-        NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
-                              substitutions:@[tableName]
-                                      error:NULL];
-        if([results count] > 0) {
-            columns = [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
-                                                  forKeys:[results valueForKey:@"name"]];
-            _cachedColumnNames[tableName] = columns;
-        } else
-            return nil;
-
-    }
-    return columns;
+    NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
+                          substitutions:@[tableName]
+                                  error:NULL];
+    if([results count] > 0) {
+        NSMutableArray *types = [NSMutableArray arrayWithCapacity:[results count]];
+        for(NSString *typeStr in [results valueForKey:@"type"]) {
+            [types addObject:@([[self class] typeForSql:typeStr])];
+        }
+        return [NSDictionary dictionaryWithObjects:types forKeys:[results valueForKey:@"name"]];
+    } else
+        return nil;
 }
 
 - (BOOL)closeConnection
