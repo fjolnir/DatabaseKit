@@ -7,13 +7,11 @@ DatabaseKit is an unbelievably straight-forward to use database framework for Ob
 
 Features:
 =========
- * Supported databases
-  - SQLite 3
-  - PostgreSQL
-  - And adding support for additional databases is very straightforward.
+ * Supports SQLite, but is built to make it easy to add support for additional SQL databases, just subclass `DBConnection`.
  * Query composition done purely in Objective-C.
  * If you use a connection pool(Done transparently by default) then query objects are thread safe.
  * If you provide a model class, then results from it's corresponding table will automatically be returned as instances of that class.
+ * Supports creating and migrating tables for model classes at runtime.
  * Almost no code required.
 
 Examples
@@ -23,11 +21,6 @@ Examples
 
     // Open a SQLite database
     DB *db = [DB withURL:[NSURL URLWithString:@"sqlite://myDb.sqlite"]];
-
-    // Alternatively; to open a Postgres database (This time with error handling)    
-    NSURL *pgURL = [NSURL URLWithString:@"postgres://username:password@server/database"];
-    NSError *err = nil;
-    DB *db = [DB withURL:pgURL error:&err];
     if(err)
         NSLog(@"Error connecting to %@: %@", pgURL, [err localizedDescription]);
 
@@ -37,15 +30,15 @@ Examples
 
     // Get the names of every person in our database
     DBTable *people = db[@"people"];
-    ARQuery *names = [people select:@"name"];
+    DBSelectQuery *names = [people select:@"name"];
     
-    for(NSDictionary *row in [names limit:@100]) {
+    for(NSDictionary *row in [[names limit:100] execute]) {
         NSLog(@"Name: %@", row[@"name"]);
     }
 
 ---
     // Delete really old people
-    [[people delete] where:@"bornOn < %@", [NSDate distantPast]];
+    [[[people delete] where:@"bornOn < %@", [NSDate distantPast]] execute];
 ---
     // Change the name of everyone called John
     [[[people update:@{ @"name": @"Percie" }] where:@"name = %@", @"John"] execute];
