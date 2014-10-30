@@ -204,7 +204,7 @@ static NSString *classPrefix = nil;
 
 + (NSString *)tableName
 {
-    NSMutableString *ret = [[self className] mutableCopy];
+    NSMutableString *ret = [NSStringFromClass(self) mutableCopy];
     if([DBModel classPrefix]) {
         [ret replaceOccurrencesOfString:[DBModel classPrefix]
                              withString:@""
@@ -219,7 +219,8 @@ static NSString *classPrefix = nil;
 
 - (NSString *)description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n", [self className], self, self.savedIdentifier];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n",
+                                                                     [self class], self, self.savedIdentifier];
     for(NSString *column in self.table.columns) {
         [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
     }

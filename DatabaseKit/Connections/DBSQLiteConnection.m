@@ -127,7 +127,7 @@
         
         if(!sub)
             continue;
-        else if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
+        else if([sub isKindOfClass:[NSString class]])
             sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
         else if([sub isKindOfClass:[NSData class]])
             sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_TRANSIENT);
@@ -155,7 +155,8 @@
             NSData *serialized = [NSKeyedArchiver archivedDataWithRootObject:sub];
             sqlite3_bind_blob(queryByteCode, i+1, serialized.bytes, (int)serialized.length, SQLITE_TRANSIENT);
         } else
-            [NSException raise:@"Unrecognized object type" format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
+            [NSException raise:@"Unrecognized object type"
+                        format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub class]];
     }
 
     DBResult *result = [DBSQLiteResult resultWithStatement:queryByteCode query:tail ? nil : sql connection:self];
