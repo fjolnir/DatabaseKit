@@ -28,26 +28,8 @@ DB *DBSQLiteDatabaseForTesting()
     for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
     {
         err = nil;
-        [db.connection executeSQL:query substitutions:nil error:&err];
-        if(err)
-            NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
-    }
-    return db;
-}
-
-DB *DBPostgresDatabaseForTesting()
-{
-    NSError *err = nil;
-    NSURL *url = [NSURL URLWithString:@"postgres://localhost/dbkit_test"];
-    DBPostgresConnection *connection = [[DBPostgresConnection alloc] initWithURL:url
-                                                                         error:&err];
-    NSCAssert(connection, @"Please create a postgres database called 'dbkit_test' on localhost");
-    DB *db = [[DB alloc] initWithConnection:connection];
-    NSString *fixtures = [FixtureGetter fixturesForDatabase:@"postgres"];
-    for(NSString *query in [fixtures componentsSeparatedByString:@"\n"])
-    {
-        err = nil;
-        [db.connection executeSQL:query substitutions:nil error:&err];
+        DBResult *result = [db.connection execute:query substitutions:nil error:&err];
+        while([result step:&err] == DBResultStateNotAtEnd);
         if(err)
             NSLog(@"FIXTUREFAIL!(%@): %@", query,err);
     }

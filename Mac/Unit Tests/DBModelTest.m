@@ -131,6 +131,7 @@
     return @[[DBIndex indexWithName:@"brandIdx" onColumns:@[@"brandName"] unique:YES]];
 }
 @end
+
 @implementation TECarChanged
 
 + (NSString *)tableName
@@ -144,5 +145,6 @@
 }
 
 @end
+
 @implementation TEDoor
 @end

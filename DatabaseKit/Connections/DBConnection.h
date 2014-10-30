@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@class DBQuery;
+@class DBQuery, DBResult;
 
 typedef NS_ENUM(NSUInteger, DBOrder) {
     DBOrderNone,
@@ -15,6 +15,13 @@ typedef NS_ENUM(NSUInteger, DBType) {
     DBTypeBoolean,
     DBTypeText,
     DBTypeBlob
+};
+
+typedef NS_ENUM(NSUInteger, DBResultState) {
+    DBResultStateReady,
+    DBResultStateNotAtEnd,
+    DBResultStateAtEnd,
+    DBResultStateError
 };
 
 /*!
@@ -51,25 +58,33 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 /*! @copydoc openConnectionWithURL:error: */
 - (id)initWithURL:(NSURL *)URL error:(NSError **)err;
 /*!
- * Executes the given SQL string after making substitutions(optional, pass nil if none should be made).
- * Substitutions should be used for values, not column/table names since
- * they're formatted as values
+ * Executes the given SQL query, returning a result set
  *
  * Example usage:
  * @code
- * [myConnection executeSQL:@"INSERT INTO mymodel(id, name) VALUES(:id, :name)"
- *            substitutions:[NSDictionary dictionaryWithObjectsAndKeys:
- *                           myId, kDBIdentifierColumn,
- *                           name, @"name"]];
+ * [myConnection execute:@"SELECT *FROM mymodel WHERE id = $1"
+ *            substitutions:@[@1]];
  * @endcode
  */
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
+- (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
+
+/*!
+ * Executes the given SQL query returning whether or not it was successful.
+ *
+ * Example usage:
+ * @code
+ * [myConnection executeUpdate:@"INSERT INTO mymodel(id, name) VALUES($1, $2)"
+ *            substitutions:@[@2, @"foobar"]];
+ * @endcode
+ */
+- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
 
 /*!
  * Closes the connection\n
  * does <b>not</b> release the object object itself
  */
 - (BOOL)closeConnection;
+
 /*!
  * Returns a whether a given table exists
  * @param tableName Name of the table to check
@@ -99,4 +114,24 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 + (DBType)typeForObjCScalarEncoding:(char)encoding;
 /*! Returns a SQL type for a given class*/
 + (DBType)typeForClass:(Class)klass;
+@end
+
+
+@interface DBResult : NSObject {
+@protected
+    DBResultState _state;
+}
+@property DBResultState state;
+
+- (NSUInteger)indexOfColumnNamed:(NSString *)name;
+- (NSArray *)toArray:(NSError **)outErr;
+- (NSDictionary *)dictionaryForCurrentRow;
+- (NSArray *)columns;
+
+// Abstract:
+- (DBResultState)step:(NSError **)outErr;
+- (NSUInteger)columnCount;
+- (NSString *)nameOfColumnAtIndex:(NSUInteger)idx;
+- (id)valueOfColumnAtIndex:(NSUInteger)idx;
+- (id)valueOfColumnNamed:(NSString *)columnName;
 @end

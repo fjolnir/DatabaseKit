@@ -257,27 +257,33 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     NSArray *results = [super executeOnConnection:connection error:outErr];
 
+    NSMutableString *query = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    DBResult *result = [connection execute:query substitutions:params error:outErr];
+
     BOOL const selectingEntireTable = self.columns == nil
                                    || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
     if(selectingEntireTable && [results count] > 0 && self.table.modelClass) {
+        NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
-            NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
-            for(NSDictionary *result in results) {
+            NSArray *columns = result.columns;
+            while([result step:outErr] == DBResultStateNotAtEnd) {
                 DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
-                for(NSString *key in result) {
-                    id value = result[key];
+                for(NSUInteger i = 0; i < [columns count]; ++i) {
+                    id value = [result valueOfColumnAtIndex:i];
                     [model setValue:[[NSNull null] isEqual:value] ? nil : value
-                             forKey:key];
+                             forKey:columns[i]];
                 }
-                model.savedIdentifier = result[kDBIdentifierColumn];
+                model.savedIdentifier = [result valueOfColumnNamed:@"identifier"];
                 [model _clearDirtyKeys];
                 [modelObjects addObject:model];
             }
-            return modelObjects;
+            return result.state == DBResultStateAtEnd ? modelObjects : nil;
         }
     }
-    return results;
+    return [result toArray:outErr];
 }
 @end
 

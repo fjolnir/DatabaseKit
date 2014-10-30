@@ -8,4 +8,3 @@
 #import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBConnectionPool.h>
 #import <DatabaseKit/DBSQLiteConnection.h>
-#import <DatabaseKit/DBPostgresConnection.h>

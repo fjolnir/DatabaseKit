@@ -3,4 +3,3 @@
 @class DB;
 
 DB *DBSQLiteDatabaseForTesting();
-DB *DBPostgresDatabaseForTesting();
