@@ -19,7 +19,7 @@
 /*! @cond IGNORE */
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
-    NSMutableDictionary *_cachedStatements, *_cachedColumnNames;
+    NSMutableDictionary *_cachedStatements;
     NSMutableArray *_savePointStack;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
@@ -54,7 +54,6 @@
         return nil;
     _path = URL ? URL.path : @":memory:";
     _cachedStatements  = [NSMutableDictionary new];
-    _cachedColumnNames = [NSMutableDictionary new];
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
@@ -107,7 +106,6 @@
         DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [prepareErr localizedDescription]);
         return nil;
     }
-    NSArray *columnNames = [self columnsForQuery:queryByteCode];
 
     const char *keyCstring;
     NSString *key;
@@ -175,10 +173,8 @@
         {
             // construct the dictionary for the row
             columns = [NSMutableDictionary dictionary];
-            int i = 0;
-            for(NSString *columnName in columnNames) {
-                columns[columnName] = [self valueForColumn:i query:queryByteCode];
-                ++i;
+            for(int i = 0; i < sqlite3_data_count(queryByteCode); ++i) {
+                columns[@(sqlite3_column_name(queryByteCode, i))] = [self valueForColumn:i query:queryByteCode];
             }
             [rowArray addObject:columns];
         }
