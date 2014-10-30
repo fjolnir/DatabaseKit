@@ -54,6 +54,11 @@ static NSMutableArray *_ConnectionClasses;
     NOT_IMPLEMENTED;
     return NO;
 }
+- (BOOL)tableExists:(NSString *)tableName
+{
+    NOT_IMPLEMENTED;
+    return NO;
+}
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     NOT_IMPLEMENTED;
@@ -97,7 +102,42 @@ static NSMutableArray *_ConnectionClasses;
 
 #pragma mark -
 
-+ (NSString *)typeForObjCScalarEncoding:(char)encoding
++ (NSString *)sqlForType:(DBType)type
+{
+    switch(type) {
+        case DBTypeInteger:
+            return @"INTEGER";
+        case DBTypeReal:
+            return @"REAL";
+        case DBTypeBoolean:
+            return @"BOOL";
+        case DBTypeText:
+            return @"TEXT";
+        case DBTypeBlob:
+            return @"BLOB";
+        default:
+            return nil;
+    }
+}
+
++ (DBType)typeForSql:(NSString *)type
+{
+    type = [type uppercaseString];
+    if([type isEqualToString:@"INTEGER"])
+        return DBTypeInteger;
+    else if([type isEqualToString:@"REAL"])
+        return DBTypeReal;
+    else if([type isEqualToString:@"BOOL"])
+        return DBTypeBoolean;
+    else if([type isEqualToString:@"TEXT"])
+        return DBTypeText;
+    else if([type isEqualToString:@"BLOB"])
+        return DBTypeBlob;
+    else
+        return DBTypeUnknown;
+}
+
++ (DBType)typeForObjCScalarEncoding:(char)encoding
 {
     switch(encoding) {
         case _C_CHR:
@@ -110,26 +150,26 @@ static NSMutableArray *_ConnectionClasses;
         case _C_ULNG:
         case _C_LNG_LNG:
         case _C_ULNG_LNG:
-            return @"INTEGER";
+            return DBTypeInteger;
         case _C_FLT:
         case _C_DBL:
-            return @"REAL";
+            return DBTypeReal;
         case _C_BOOL:
-            return @"BOOL";
+            return DBTypeBoolean;
         default:
             return nil;
     }
 }
 
-+ (NSString *)typeForClass:(Class)klass
++ (DBType)typeForClass:(Class)klass
 {
     if([klass isSubclassOfClass:[NSData class]])
-        return @"BLOB";
+        return DBTypeBlob;
     else if([klass isSubclassOfClass:[NSString class]])
-        return @"TEXT";
+        return DBTypeText;
     else if([klass isSubclassOfClass:[NSNumber class]])
-        return @"REAL";
+        return DBTypeReal;
     else
-        return nil;
+        return DBTypeUnknown;
 }
 @end

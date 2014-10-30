@@ -1,11 +1,3 @@
-//
-//  DBModelTest.h
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import <DatabaseKit/DatabaseKit.h>
 
 @interface TEModel : DBModel
@@ -26,8 +18,22 @@
 @end
 
 @interface TECar : DBModel
+@property(nonatomic, strong) NSString *brandName;
+@property(nonatomic) NSUInteger yearBuilt;
 @property(nonatomic, copy) NSSet *doors;
 @end
 
+
+@interface TECarChanged : DBModel
+@property(nonatomic, strong) NSString *color;
+@property(nonatomic) NSUInteger yearBuilt;
+@property(nonatomic, copy) NSSet *doors;
+@end
+
+typedef NS_ENUM(NSUInteger, TEDoorSide) {
+    TELeft,
+    TERight
+};
 @interface TEDoor : DBModel
+@property(nonatomic) TEDoorSide side;
 @end

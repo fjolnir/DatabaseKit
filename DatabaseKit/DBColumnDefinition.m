@@ -1,34 +1,86 @@
-#import "DBColumn.h"
+#import "DBColumnDefinition.h"
 
-@implementation DBColumn
-+ (instancetype)columnWithName:(NSString *)name type:(NSString *)type constraints:(NSArray *)constraints
+@implementation DBColumnDefinition
++ (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
 {
-    DBColumn *col = [self new];
+    DBColumnDefinition *col = [self new];
     col->_name        = name;
     col->_type        = type;
     col->_constraints = constraints;
     return col;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [self init])) {
+        _name = [aDecoder decodeObjectForKey:@"name"];
+        _type = [aDecoder decodeObjectForKey:@"type"];
+        _constraints = [aDecoder decodeObjectForKey:@"constraints"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_name forKey:@"name"];
+    [aCoder encodeInteger:_type forKey:@"type"];
+    [aCoder encodeObject:_constraints forKey:@"constraints"];
+}
+
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
-    NSMutableString *sql = [_name mutableCopy];
-    [sql appendString:@" "];
-    [sql appendString:_type];
+    NSMutableString *sql = [@"`" mutableCopy];
+    [sql appendString:[_name mutableCopy]];
+    [sql appendString:@"` "];
+    [sql appendString:[[query.database.connection class] ?: [DBConnection class] sqlForType:_type]];
     [sql appendString:@" "];
 
-    NSSortDescriptor *prioritySort = [NSSortDescriptor sortDescriptorWithKey:@"_priority" ascending:NO];
-    for(DBConstraint *constr in [_constraints sortedArrayUsingDescriptors:@[prioritySort]]) {
-        [sql appendString:[constr sqlRepresentationForQuery:query withParameters:parameters]];
+    NSArray *sortedConstraints = [_constraints sortedArrayUsingComparator:^(DBConstraint *a, DBConstraint *b) {
+        return [@([[a class] priority]) compare:@([[b class] priority])];
+    }];
+    for(NSUInteger i = 0; i < [sortedConstraints count]; ++i) {
+        if(i > 0)
+            [sql appendString:@" "];
+        [sql appendString:[sortedConstraints[i] sqlRepresentationForQuery:query withParameters:parameters]];
     }
     return sql;
+}
+
+- (NSUInteger)hash
+{
+    return [_name hash];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if([object isKindOfClass:[self class]])
+        return [_name isEqual:[object name]];
+    else
+        return NO;
 }
 @end
 
 @implementation DBConstraint : NSObject
-+ (NSUInteger)_priority
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    return (self = [self init]);
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    // Nothing to encode
+}
+
++ (NSUInteger)priority
 {
     return 0;
+}
+
+- (BOOL)addToColumn:(NSString *)column inTable:(DBTable *)table error:(NSError **)outErr
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return NO;
 }
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
@@ -44,7 +96,7 @@
 @end
 
 @implementation DBUniqueConstraint
-+ (NSUInteger)_priority
++ (NSUInteger)priority
 {
     return 2;
 }
@@ -64,6 +116,23 @@
     constr->_autoIncrement  = autoIncrement;
     constr->_conflictAction = onConflict;
     return constr;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [self init])) {
+        _order = [aDecoder decodeIntegerForKey:@"order"];
+        _autoIncrement  = [aDecoder decodeBoolForKey:@"autoIncrement"];
+        _conflictAction = [aDecoder decodeIntegerForKey:@"conflictAction"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeInteger:_order forKey:@"order"];
+    [aCoder encodeBool:_autoIncrement forKey:@"autoIncrement"];
+    [aCoder encodeInteger:_conflictAction forKey:@"conflictAction"];
 }
 
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
@@ -100,6 +169,7 @@
         [sql appendString:@" AUTOINCREMENT"];
     return sql;
 }
+
 @end
 
 @implementation DBForeignKeyConstraint
@@ -116,7 +186,7 @@
     return constr;
 }
 
-+ (NSUInteger)_priority
++ (NSUInteger)priority
 {
     return 1;
 }

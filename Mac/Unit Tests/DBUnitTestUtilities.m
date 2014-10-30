@@ -1,11 +1,3 @@
-//
-//  SenTestCase+Fixtures.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 1.4.2008.
-//  Copyright 2008 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import "DBUnitTestUtilities.h"
 #import <DatabaseKit/DatabaseKit.h>
 

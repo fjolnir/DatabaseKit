@@ -2,9 +2,9 @@
 #import <DatabaseKit/DB.h>
 
 #import <DatabaseKit/DBQuery.h>
-#import <DatabaseKit/DBColumn.h>
+#import <DatabaseKit/DBColumnDefinition.h>
 
-@class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery;
+@class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterQuery, DBDropQuery;
 
 typedef NS_ENUM(NSUInteger, DBColumnType) {
     DBColumnTypeInvalid,
@@ -32,12 +32,17 @@ typedef NS_ENUM(NSUInteger, DBColumnType) {
 - (DBSelectQuery *)select:(NSArray *)fields;
 - (DBSelectQuery *)select;
 - (DBInsertQuery *)insert:(NSDictionary *)fields;
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery;
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns;
 - (DBUpdateQuery *)update:(NSDictionary *)fields;
 - (DBDeleteQuery *)delete;
 - (DBSelectQuery *)where:(id)conds, ...;
 - (DBSelectQuery *)order:(NSString *)order by:(id)fields;
 - (DBSelectQuery *)orderBy:(id)fields;
 - (DBSelectQuery *)limit:(NSUInteger)limit;
+
+- (DBAlterQuery *)alter;
+- (DBDropQuery *)drop;
 
 - (NSUInteger)count;
 

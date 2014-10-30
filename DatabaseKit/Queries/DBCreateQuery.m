@@ -2,10 +2,6 @@
 #import "DBCreateQuery.h"
 
 @implementation DBCreateQuery
-+ (NSString *)_queryType
-{
-    return @"CREATE TABLE ";
-}
 
 - (instancetype)table:(NSString *)tableName
 {
@@ -29,16 +25,26 @@
     return query;
 }
 
+- (BOOL)hasColumnNamed:(NSString *)name
+{
+    if(!_columns)
+        return NO;
+    else
+        return [_columns indexOfObjectPassingTest:^BOOL(DBColumnDefinition *col, NSUInteger idx, BOOL *stop) {
+            return [name isEqualToString:col.name];
+        }] != NSNotFound;
+}
+
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    if(!_tableName)
+    if(!_tableName || (!_columns && !_queryToDeriveFrom))
         return NO;
-    NSAssert(_columns || _queryToDeriveFrom,
-             @"CREATE query requires either columns or a query to create AS");
-    [q appendString:[[self class] _queryType]];
-    [q appendString:_tableName];
 
+    [q appendString:@"CREATE TABLE `"];
+    [q appendString:_tableName];
+    [q appendString:@"`"];
+    
     if(_columns) {
         [q appendString:@"("];
         for(NSUInteger i = 0; i < [_columns count]; ++i) {
@@ -48,10 +54,9 @@
         }
         [q appendString:@")"];
     } else if(_queryToDeriveFrom) {
-        [q appendString:@" AS ("];
+        [q appendString:@" AS "];
         if(![_queryToDeriveFrom _generateString:q parameters:p])
             return NO;
-        [q appendString:@")"];
     }
     return YES;
 }

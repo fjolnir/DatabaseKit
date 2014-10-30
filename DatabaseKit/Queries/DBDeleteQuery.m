@@ -5,18 +5,12 @@
 
 @implementation DBDeleteQuery
 
-+ (NSString *)_queryType
-{
-    return @"DELETE ";
-}
-
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    [q appendString:[[self class] _queryType]];
-
-    [q appendString:@"FROM "];
+    [q appendString:@"DELETE FROM `"];
     [q appendString:[_table toString]];
+    [q appendString:@"`"];
 
     if(_where) {
         [q appendString:@" WHERE "];

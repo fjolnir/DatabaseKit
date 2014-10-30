@@ -19,7 +19,7 @@
 /*! @cond IGNORE */
 @interface DBSQLiteConnection () {  
     sqlite3 *_connection;
-    NSMutableDictionary *_cachedStatements, *_cachedColumnNames;
+    NSMutableDictionary *_cachedStatements;
     NSMutableArray *_savePointStack;
 }
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
@@ -54,7 +54,6 @@
         return nil;
     _path = URL ? URL.path : @":memory:";
     _cachedStatements  = [NSMutableDictionary new];
-    _cachedColumnNames = [NSMutableDictionary new];
 
     int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
@@ -107,7 +106,6 @@
         DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [prepareErr localizedDescription]);
         return nil;
     }
-    NSArray *columnNames = [self columnsForQuery:queryByteCode];
 
     const char *keyCstring;
     NSString *key;
@@ -126,7 +124,7 @@
             continue;
         else if([sub isKindOfClass:[NSString class]] || [[sub className] isEqualToString:@"NSCFString"])
             sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
-        else if([sub isMemberOfClass:[NSData class]])
+        else if([sub isKindOfClass:[NSData class]])
             sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_STATIC); // Not sure if we should make this transient
         else if([sub isKindOfClass:[NSNumber class]]) {
             switch (*[sub objCType]) {
@@ -175,10 +173,8 @@
         {
             // construct the dictionary for the row
             columns = [NSMutableDictionary dictionary];
-            int i = 0;
-            for(NSString *columnName in columnNames) {
-                columns[columnName] = [self valueForColumn:i query:queryByteCode];
-                ++i;
+            for(int i = 0; i < sqlite3_data_count(queryByteCode); ++i) {
+                columns[@(sqlite3_column_name(queryByteCode, i))] = [self valueForColumn:i query:queryByteCode];
             }
             [rowArray addObject:columns];
         }
@@ -192,19 +188,26 @@
         return rowArray;
 }
 
+- (BOOL)tableExists:(NSString *)tableName
+{
+    return [[self executeSQL:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
+               substitutions:@[tableName]
+                       error:NULL] count] > 0;
+}
+
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    id columns = _cachedColumnNames[tableName];
-    if(!columns) {
-        NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
-                              substitutions:@[tableName]
-                                      error:NULL];
-        columns = [NSDictionary dictionaryWithObjects:[results valueForKey:@"type"]
-                                              forKeys:[results valueForKey:@"name"]];
-        _cachedColumnNames[tableName] = columns;
-
-    }
-    return columns;
+    NSArray *results = [self executeSQL:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
+                          substitutions:@[tableName]
+                                  error:NULL];
+    if([results count] > 0) {
+        NSMutableArray *types = [NSMutableArray arrayWithCapacity:[results count]];
+        for(NSString *typeStr in [results valueForKey:@"type"]) {
+            [types addObject:@([[self class] typeForSql:typeStr])];
+        }
+        return [NSDictionary dictionaryWithObjects:types forKeys:[results valueForKey:@"name"]];
+    } else
+        return nil;
 }
 
 - (BOOL)closeConnection

@@ -1,13 +1,3 @@
-//
-//  DBModelTest.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  CopyriXCTt 2007 Fjölnir Ásgeirsson. All riXCTts reserved.
-//
-
-// TODO: Reset database for each test. (maybe use in memory database and fixtures)
-
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/DatabaseKit.h>
 #import "DBUnitTestUtilities.h"
@@ -34,6 +24,17 @@
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();
+
+    NSError *err;
+    if(![db migrateModelClasses:@[[TEModel class], [TEPerson class], [TEBelgian class], [TEAnimal class]]
+                          error:&err]) {
+        NSLog(@"Failed to initialize models: %@", err);
+    }
+
+    TEModel *testModel = [[TEModel alloc] initWithDatabase:db];
+    testModel.name = @"Foobar";
+    testModel.info = @"lorem ipsum";
+    [testModel save];
 }
 
 - (void)testTableName
@@ -57,7 +58,7 @@
     TEModel *first = [[db[@"models"] select] firstObject];
 
     XCTAssertNotNil(first, @"No result for first entry!");
-    XCTAssertEqualObjects(@"a name", [first name] , @"The name of the first entry should be 'a name'");
+    XCTAssertEqualObjects(@"Foobar", [first name] , @"The name of the first entry should be 'Foobar'");
 }
 
 - (void)testModifying
@@ -69,6 +70,38 @@
     first.name = @"NOT THE SAME NAME!";
     [first.table.database.connection endTransaction];
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
+}
+
+- (void)testTableInitialization
+{
+    NSError *err;
+    [db migrateModelClasses:@[[TECar class], [TEDoor class]] error:&err];
+    
+    NSDictionary *carCols = [db.connection columnsForTable:[TECar tableName]];
+    XCTAssertEqual([carCols[@"identifier"] intValue], DBTypeText);
+    XCTAssertEqual([carCols[@"brandName"] intValue], DBTypeText);
+    XCTAssertEqual([carCols[@"yearBuilt"] intValue], DBTypeInteger);
+    NSDictionary *doorCols = [db.connection columnsForTable:[TEDoor tableName]];
+    XCTAssertEqual([doorCols[@"identifier"] intValue], DBTypeText);
+    XCTAssertEqual([doorCols[@"carIdentifier"] intValue],DBTypeText);
+    XCTAssertEqual([doorCols[@"side"] intValue], DBTypeInteger);
+}
+
+- (void)testMigrating
+{
+    NSError *err;
+    NSArray *old = @[[TECar class], [TEDoor class]];
+    NSArray *new  = @[[TECarChanged class], [TEDoor class]];
+    XCTAssert([db migrateModelClasses:old error:&err],
+              @"Failed to initialize models: %@", err);
+
+    XCTAssert([db migrateModelClasses:new error:&err],
+              @"Failed to initialize models: %@", err);
+
+    NSSet *migratedColumns = [NSSet setWithObjects:@"identifier", @"color", @"yearBuilt", nil];
+    XCTAssertEqualObjects([NSSet setWithArray:[[db.connection columnsForTable:[TECar tableName]] allKeys]],
+                          migratedColumns);
+
 }
 
 @end
@@ -83,4 +116,24 @@
 @end
 
 @implementation TEBelgian
+@end
+
+@implementation TECar
++ (NSArray *)constraintsForKey:(NSString *)key
+{
+    if([key isEqualToString:@"brandName"])
+        return @[[DBNotNullConstraint new]];
+    else
+        return nil;
+}
+@end
+@implementation TECarChanged
+
++ (NSString *)tableName
+{
+    return @"cars";
+}
+
+@end
+@implementation TEDoor
 @end

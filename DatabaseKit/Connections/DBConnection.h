@@ -7,6 +7,15 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
     DBOrderDescending
 };
 
+typedef NS_ENUM(NSUInteger, DBType) {
+    DBTypeUnknown,
+    DBTypeInteger,
+    DBTypeReal,
+    DBTypeBoolean,
+    DBTypeText,
+    DBTypeBlob
+};
+
 /*!
  * A block for executing database statements in a transaction
  * return DBTransactionRollBack to trigger a rollback
@@ -61,6 +70,11 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  */
 - (BOOL)closeConnection;
 /*!
+ * Returns a whether a given table exists
+ * @param tableName Name of the table to check
+ */
+- (BOOL)tableExists:(NSString *)tableName;
+/*!
  * Returns a dictionary of column types keyed by column names
  * @param tableName Name of the table to retrieve columns for
  */
@@ -75,8 +89,13 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 /*! Executes a block wrapped in a transaction */
 - (BOOL)transaction:(DBTransactionBlock)aBlock;
 
-/*! Returns a SQL type string or nil for a given Objective-C scalar type encoding */
-+ (NSString *)typeForObjCScalarEncoding:(char)encoding;
-/*! Returns a SQL type string or nil for a given class*/
-+ (NSString *)typeForClass:(Class)klass;
+/*! Returns a SQL type string for a type */
++ (NSString *)sqlForType:(DBType)type;
+/*! Inverse of `sqlForType:` */
++ (DBType)typeForSql:(NSString *)type;
+
+/*! Returns a SQL type for a given Objective-C scalar type encoding */
++ (DBType)typeForObjCScalarEncoding:(char)encoding;
+/*! Returns a SQL type for a given class*/
++ (DBType)typeForClass:(Class)klass;
 @end

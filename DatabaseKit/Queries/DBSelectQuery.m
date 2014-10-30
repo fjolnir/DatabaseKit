@@ -33,11 +33,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 @implementation DBSelectQuery
 
-+ (NSString *)_queryType
-{
-    return @"SELECT ";
-}
-
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery
 {
     DBSelectQuery * const query = [self new];
@@ -75,7 +70,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    [q appendString:[[self class] _queryType]];
+    [q appendString:@"SELECT "];
 
     if(_distinct)
         [q appendString:@"DISTINCT "];
@@ -85,12 +80,16 @@ NSString *const DBUnionAll = @" UNION ALL ";
     else
         [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
 
-    [q appendString:@" FROM ("];
-    if(_subQuery)
+    [q appendString:@" FROM "];
+    if(_subQuery) {
+        [q appendString:@"("];
         [_subQuery _generateString:q parameters:p];
-    else
+        [q appendString:@")"];
+    } else {
+        [q appendString:@"`"];
         [q appendString:[_table toString]];
-    [q appendString:@")"];
+        [q appendString:@"`"];
+    }
 
     [_join _generateString:q query:self parameters:p];
 
@@ -99,8 +98,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
         [q appendString:[_where sqlRepresentationForQuery:self withParameters:p]];
     }
     if(_groupedBy) {
-        [q appendString:@" GROUP BY "];
-        [q appendString:[_groupedBy componentsJoinedByString:@", "]];
+        [q appendString:@" GROUP BY `"];
+        [q appendString:[_groupedBy componentsJoinedByString:@"`, "]];
+        [q appendString:@"`"];
     }
     if(_unionQuery) {
         [q appendString:_unionType];
@@ -108,15 +108,15 @@ NSString *const DBUnionAll = @" UNION ALL ";
             return false;
     }
     if(_orderedBy) {
-        [q appendString:@" ORDER BY "];
+        [q appendString:@" ORDER BY `"];
         switch (_order) {
             case DBOrderAscending:
-                [q appendString:[_orderedBy componentsJoinedByString:@" ASC, "]];
-                [q appendString:@" ASC"];
+                [q appendString:[_orderedBy componentsJoinedByString:@"` ASC, "]];
+                [q appendString:@"` ASC"];
                 break;
             case DBOrderDescending:
-                [q appendString:[_orderedBy componentsJoinedByString:@" DESC, "]];
-                [q appendString:@" DESC"];
+                [q appendString:[_orderedBy componentsJoinedByString:@"` DESC, "]];
+                [q appendString:@"` DESC"];
                 break;
             default:
                 [NSException raise:NSInternalInconsistencyException
@@ -295,9 +295,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (BOOL)_generateString:(NSMutableString *)q query:(DBSelectQuery *)query parameters:(NSMutableArray *)p
 {
     [q appendString:_type];
-    [q appendString:@" JOIN "];
+    [q appendString:@" JOIN `"];
     [q appendString:[_table toString]];
-    [q appendString:@" ON "];
+    [q appendString:@"` ON "];
     [q appendString:[_predicate sqlRepresentationForQuery:query withParameters:p]];
     return YES;
 }

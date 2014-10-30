@@ -44,13 +44,6 @@
     return nil;
 }
 
-+ (NSString *)_queryType
-{
-    [NSException raise:NSInternalInconsistencyException
-                format:@"DBQuery does not implement SQL generation."];
-    return nil;
-}
-
 + (instancetype)withDatabase:(DB *)database
 {
     DBQuery *ret = [self new];
@@ -130,9 +123,7 @@
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
-    NSParameterAssert(q && p);
-    [q appendString:[[self class] _queryType]];
-    return YES;
+    return NO;
 }
 
 

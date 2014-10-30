@@ -8,14 +8,10 @@
 
 @interface DBInsertQuery ()
 @property(nonatomic, readwrite) DBFallback fallback;
+@property(nonatomic, readwrite) DBSelectQuery *sourceQuery;
 @end
 
 @implementation DBInsertQuery
-
-+ (NSString *)_queryType
-{
-    return @"INSERT ";
-}
 
 - (instancetype)or:(DBFallback)aFallback
 {
@@ -48,9 +44,9 @@
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    NSAssert([self.fields count] == [self.values count],
+    NSAssert(_sourceQuery || ([self.fields count] == [self.values count]),
              @"Field/value count does not match");
-    [q appendString:[[self class] _queryType]];
+    [q appendString:@"INSERT "];
 
     switch(_fallback) {
         case DBInsertFallbackReplace:
@@ -70,19 +66,27 @@
 
     [q appendString:@"INTO "];
     [q appendString:[_table toString]];
-    [q appendString:@"(\""];
-    [q appendString:[_fields componentsJoinedByString:@"\", \""]];
-    [q appendString:@"\") VALUES("];
-    int i = 0;
-    for(id value in _values) {
-        if(__builtin_expect(i++ > 0, 1))
-            [q appendString:@", "];
-
-        [p addObject:value ?: [NSNull null]];
-        [q appendFormat:@"$%lu", (unsigned long)[p count]];
+    if(_fields) {
+        [q appendString:@"(\""];
+        [q appendString:[_fields componentsJoinedByString:@"\", \""]];
+        [q appendString:@"\")"];
     }
-    [q appendString:@")"];
+    if(_sourceQuery) {
+        [q appendString:@" "];
+        if(![_sourceQuery _generateString:q parameters:p])
+            return NO;
+    } else {
+        [q appendString:@" VALUES("];
+        int i = 0;
+        for(id value in _values) {
+            if(__builtin_expect(i++ > 0, 1))
+                [q appendString:@", "];
 
+            [p addObject:value ?: [NSNull null]];
+            [q appendFormat:@"$%lu", (unsigned long)[p count]];
+        }
+        [q appendString:@")"];
+    }
     return YES;
 }
 
@@ -90,26 +94,20 @@
 
 @implementation DBUpdateQuery
 
-+ (NSString *)_queryType
-{
-    return @"UPDATE ";
-}
-
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSAssert([self.fields count] == [self.values count],
              @"Field/value count does not match");
 
-    [q appendString:[[self class] _queryType]];
-
+    [q appendString:@"UPDATE `"];
     [q appendString:[_table toString]];
-    [q appendString:@" SET \""];
+    [q appendString:@"` SET `"];
 
     for(NSUInteger i = 0; i < [_fields count]; ++i) {
         if(__builtin_expect(i > 0, 1))
-            [q appendString:@", \""];
+            [q appendString:@", `"];
         [q appendString:_fields[i]];
-        [q appendString:@"\"="];
+        [q appendString:@"`="];
         id obj = _values[i];
         if([obj isEqual:[NSNull null]])
             [q appendString:@"NULL"];
@@ -141,6 +139,17 @@
     return ret;
 }
 
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)fields
+{
+    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
+    ret.sourceQuery = sourceQuery;
+    ret.fields = fields;
+    return ret;
+}
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery
+{
+    return [self insertUsingSelect:sourceQuery intoColumns:sourceQuery.fields];
+}
 @end
 
 @implementation DBQuery (DBUpdateQuery)

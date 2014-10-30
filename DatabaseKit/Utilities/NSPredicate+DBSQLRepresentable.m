@@ -73,13 +73,14 @@
                              withParameters:(NSMutableArray *)parameters
 {
     switch(self.expressionType) {
-        case NSKeyPathExpressionType:
+        case NSKeyPathExpressionType: {
+            NSString *quotedKeyPath = [NSString stringWithFormat:@"`%@`", self.keyPath];
             if(query.table && [self.keyPath rangeOfString:@"."].location == NSNotFound)
-                return [query.table.name stringByAppendingFormat:@".%@", self.keyPath];
+                return [query.table.name stringByAppendingFormat:@".%@", quotedKeyPath];
             else
-                return self.keyPath;
+                return quotedKeyPath;
             break;
-        case NSConstantValueExpressionType:
+        } case NSConstantValueExpressionType:
             if([self.constantValue isKindOfClass:[NSArray class]]) {
                 NSMutableArray *bindings = [NSMutableArray new];
                 for(NSUInteger i = 1; i <= [self.constantValue count]; ++i) {

@@ -55,3 +55,5 @@
 #import <DatabaseKit/DBSelectQuery.h>
 #import <DatabaseKit/DBInsertQuery.h>
 #import <DatabaseKit/DBDeleteQuery.h>
+#import <DatabaseKit/DBAlterQuery.h>
+#import <DatabaseKit/DBDropQuery.h>

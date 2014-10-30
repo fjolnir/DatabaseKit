@@ -20,6 +20,28 @@ static NSString *classPrefix = nil;
     return classPrefix ? classPrefix : @"";
 }
 
++ (NSSet *)excludedKeys
+{
+    return nil;
+}
+
++ (NSSet *)savedKeys
+{
+    unsigned int propertyCount;
+    objc_property_t * properties = class_copyPropertyList(self, &propertyCount);
+    if(properties) {
+        NSSet *excludedKeys = [self excludedKeys];
+        NSMutableSet *result = [NSMutableSet setWithCapacity:propertyCount];
+        for(NSUInteger i = 0; i < propertyCount; ++i) {
+            NSString *key = @(property_getName(properties[i]));
+            if(![excludedKeys containsObject:key])
+                [result addObject:key];
+        }
+        return result;
+    } else
+        return nil;
+}
+
 + (char)typeForKey:(NSString *)key class:(Class *)outClass
 {
     objc_property_t const property = class_getProperty([self class], [key UTF8String]);
@@ -38,6 +60,12 @@ static NSString *classPrefix = nil;
     free(type);
     return result;
 }
+
++ (NSArray *)constraintsForKey:(NSString *)key
+{
+    return nil;
+}
+
 
 #pragma mark -
 
@@ -106,15 +134,22 @@ static NSString *classPrefix = nil;
 }
 - (BOOL)save:(NSError **)outErr
 {
-    if([_dirtyKeys count] > 0) {
-        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
-        [_dirtyKeys removeAllObjects];
+    if(!self.isInserted) {
+        NSMutableDictionary *values = [[self dictionaryWithValuesForKeys:[[[self class] savedKeys] allObjects]] mutableCopy];
+        if(!_savedIdentifier)
+            values[@"identifier"] = [[NSUUID UUID] UUIDString];
 
-        DBWriteQuery * const query = !_savedIdentifier
-            ? [[[self query] insert:changedValues] or:DBInsertFallbackReplace]
-            : [[self query] update:changedValues];
+        DBInsertQuery * const query = [[[self query] insert:values]
+or:DBInsertFallbackFail];
         if([query execute:outErr]) {
-            _savedIdentifier = self.identifier;
+            _savedIdentifier = values[@"identifier"];
+            return YES;
+        } else
+            return YES;
+    } else if([_dirtyKeys count] > 0) {
+        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
+        if([[[self query] update:changedValues] execute:outErr]) {
+            [_dirtyKeys removeAllObjects];
             return YES;
         } else
             return NO;

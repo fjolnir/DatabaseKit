@@ -10,8 +10,6 @@
 @property(readwrite, strong) NSArray *fields;
 @property(readwrite, strong) NSPredicate *where;
 
-+ (NSString *)_queryType;
-
 - (BOOL)_generateString:(NSMutableString *)query parameters:(NSMutableArray *)parameters;
 - (BOOL)_addParam:(id)param
         withToken:(BOOL)addToken
