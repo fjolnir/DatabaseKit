@@ -107,7 +107,7 @@
                       [substitutions isKindOfClass:[NSArray class]]        ||
                       [substitutions isKindOfClass:[NSPointerArray class]] ||
                       isDict);
-    DBLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
+    DBDebugLog(@"Executing SQL: %@ subs: %@", sql, substitutions);
     // Prepare the query
     NSString *tail = nil;
     NSError *prepareErr;
