@@ -147,8 +147,7 @@ static NSString *classPrefix = nil;
         if(!_savedIdentifier)
             values[@"identifier"] = [[NSUUID UUID] UUIDString];
 
-        DBInsertQuery * const query = [[[self query] insert:values]
-or:DBInsertFallbackFail];
+        DBInsertQuery * const query = [[[self query] insert:values] or:DBInsertFallbackFail];
         if([query execute:outErr]) {
             _savedIdentifier = values[@"identifier"];
             return YES;
