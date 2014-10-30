@@ -183,7 +183,7 @@
     NSMutableString *query = [NSMutableString new];
     NSMutableArray  *params = [NSMutableArray new];
     NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-    return [connection executeSQL:query substitutions:params error:outErr];
+    return [[connection execute:query substitutions:params error:outErr] toArray:outErr];
 }
 @end
 
@@ -201,7 +201,7 @@
     NSMutableString *query = [NSMutableString new];
     NSMutableArray  *params = [NSMutableArray new];
     NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-    return [connection executeSQL:query substitutions:params error:outErr] != nil;
+    return [[connection execute:query substitutions:params error:outErr] step:outErr] == DBResultStateAtEnd;
 }
 - (instancetype)copyWithZone:(NSZone *)zone
 {

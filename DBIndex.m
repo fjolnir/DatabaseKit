@@ -49,7 +49,7 @@
     [q appendString:[_columns componentsJoinedByString:@"`, `"]];
     [q appendString:@"`)"];
 
-    return [table.database.connection executeSQL:q substitutions:nil error:outErr];
+    return [[table.database.connection execute:q substitutions:nil error:outErr] step:NULL] == DBResultStateAtEnd;
 }
 
 @end

@@ -101,7 +101,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 }]];
 
                 if(![currentColumns isEqual:untouchedColumns]) {
-                    if(![self.connection executeSQL:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr])
+                    if([[self.connection execute:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr] step:outErr] != DBResultStateAtEnd)
                         return DBTransactionRollBack;
 
                     // Create the new table using a temporary name
@@ -120,7 +120,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                     if(![[[self[tempTableName] alter] rename:tableName] execute:outErr])
                         return DBTransactionRollBack;
 
-                    if(![self.connection executeSQL:@"PRAGMA foreign_keys = ON" substitutions:nil error:outErr])
+                    if([[self.connection execute:@"PRAGMA foreign_keys = ON" substitutions:nil error:outErr] step:outErr] != DBResultStateAtEnd)
                         return DBTransactionRollBack;
                 }
             } else {
@@ -164,47 +164,5 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
     NSParameterAssert(klass != [DBModel class] && [klass isSubclassOfClass:[DBModel class]]);
     return [[[[self migrationTable]  select] where:@"table=%@", [klass tableName]] firstObject];
 }
-//
-//- (BOOL)migrateInDatabase:(DB *)db error:(NSError **)outErr
-//{
-//    return [db.connection transaction:^{
-//        NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
-//        if(!lastMigration)
-//            return DBTransactionRollBack;
-//
-//        NSDictionary *existingCols = [db.connection columnsForTable:[self tableName]];
-//        NSLog(@"%@", existingCols);
-//        if([existingCols count] > 0) {
-//            // TODO
-////            NSUInteger version = [lastMigration[@"version"] unsignedIntegerValue];
-//            return DBTransactionRollBack;
-//        } else {
-//                if(![self createTableInDatabase:db error:outErr])
-//                    return DBTransactionRollBack;
-//                if(![[db[@"_DBKitSchemaInfo"] insert:@{ @"table": [self tableName], @"version": @0 }] execute:outErr])
-//                   return DBTransactionRollBack;
-//               return DBTransactionCommit;
-//        }
-//    }];
-//}
-//
-//- (BOOL)createTableInDatabase:(DB *)db error:(NSError **)outErr
-//{
-//    NSParameterAssert([[db.connection columnsForTable:[self tableName]] count] == 0);
-//
-//    NSMutableArray *cols = [NSMutableArray arrayWithObject:@"identifier TEXT PRIMARY KEY ASC"];
-//    for(NSString *key in [self savedKeys]) {
-//        DBConstraints constr = [self constraintsForKey:key];
-//        NSString *type = [self _sqlTypeForKey:key connection:db.connection];
-//        if(!type) continue;
-//
-//        [cols addObject:[NSString stringWithFormat:
-//                         @"%@ %@%@%@", key, type,
-//                         (constr & DBUniqueConstraint) ? @" UNIQUE" : @"",
-//                         (constr & DBNotNullConstraint) ? @" NOT NULL" : @""]];
-//    }
-//    NSMutableString *query = [NSMutableString stringWithFormat:@"CREATE TABLE %@(%@)", [self tableName], [cols componentsJoinedByString:@", "]];
-//    return [db.connection executeSQL:query substitutions:nil error:outErr];
-//}
 
 @end

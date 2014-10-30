@@ -61,9 +61,9 @@ static void _connectionCloser(void *ptr)
 
 #pragma mark - Forwarders
 
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
+- (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
-    return [[self _getConnection:outErr] executeSQL:sql substitutions:substitutions error:outErr];
+    return [[self _getConnection:outErr] execute:sql substitutions:substitutions error:outErr];
 }
 - (BOOL)closeConnection
 {

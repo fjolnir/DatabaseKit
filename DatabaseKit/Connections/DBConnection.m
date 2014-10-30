@@ -44,16 +44,22 @@ static NSMutableArray *_ConnectionClasses;
     self.URL = URL;
     return self;
 }
-- (NSArray *)executeSQL:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
+- (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
     NOT_IMPLEMENTED;
     return nil;
+}
+- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
+{
+    NOT_IMPLEMENTED;
+    return NO;
 }
 - (BOOL)closeConnection
 {
     NOT_IMPLEMENTED;
     return NO;
 }
+
 - (BOOL)tableExists:(NSString *)tableName
 {
     NOT_IMPLEMENTED;
@@ -172,4 +178,79 @@ static NSMutableArray *_ConnectionClasses;
     else
         return DBTypeUnknown;
 }
+@end
+
+
+@implementation DBResult
+
+- (DBResultState)step:(NSError **)outErr
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return nil;
+}
+
+- (NSUInteger)columnCount
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return 0;
+}
+
+- (NSString *)nameOfColumnAtIndex:(NSUInteger)idx
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return nil;
+}
+- (NSUInteger)indexOfColumnNamed:(NSString *)name
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return NSNotFound;
+}
+
+- (id)valueOfColumnAtIndex:(NSUInteger)idx
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return nil;
+}
+
+- (id)valueOfColumnNamed:(NSString *)columnName
+{
+    NSUInteger idx = [self indexOfColumnNamed:columnName];
+    if(idx != NSNotFound)
+        return [self valueOfColumnAtIndex:idx];
+    else
+        return nil;
+}
+
+- (NSArray *)toArray:(NSError **)outErr
+{
+    NSMutableArray * const array = [NSMutableArray new];
+    while([self step:outErr] == DBResultStateNotAtEnd) {
+        [array addObject:[self dictionaryForCurrentRow]];
+    }
+    return array;
+}
+
+- (NSDictionary *)dictionaryForCurrentRow
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:self.columnCount];
+    for(NSUInteger i = 0; i < self.columnCount; ++i) {
+        dict[[self nameOfColumnAtIndex:i]] = [self valueOfColumnAtIndex:i];
+    }
+    return dict;
+}
+- (NSArray *)columns
+{
+    NSUInteger count = self.columnCount;
+    NSMutableArray *columns = [NSMutableArray arrayWithCapacity:count];
+    for(NSUInteger i = 0; i < count; ++i) {
+        [columns addObject:[self nameOfColumnAtIndex:i]];
+    }
+    return columns;
+}
+
 @end
