@@ -83,9 +83,9 @@
     return [DBSelectQuery withTable:self];
 }
 
-- (DBInsertQuery *)insert:(id)fields
+- (DBInsertQuery *)insert:(id)columns
 {
-    return [[DBInsertQuery withTable:self] insert:fields];
+    return [[DBInsertQuery withTable:self] insert:columns];
 }
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns
 {

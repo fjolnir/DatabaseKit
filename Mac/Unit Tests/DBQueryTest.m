@@ -22,8 +22,8 @@
     XCTAssertEqualObjects([[[[Q(Select) select] where:@"foo = 1"] order:DBOrderDescending by:@[@"index"]] toString],
                           @"SELECT * FROM `aTable` WHERE aTable.`foo` IS $1 ORDER BY `index` DESC");
     
-    NSArray *fields = @[@"a", @"b", @"c"];
-    XCTAssertEqualObjects([[Q(Select) select:fields] toString],
+    NSArray *columns = @[@"a", @"b", @"c"];
+    XCTAssertEqualObjects([[Q(Select) select:columns] toString],
                           @"SELECT a, b, c FROM `aTable`", @"");
     
     NSDictionary *update = @{ @"a": @1, @"b": @2, @"c": @3 };
@@ -32,7 +32,7 @@
     
     XCTAssertEqualObjects([[Q(Delete) delete] toString], @"DELETE FROM `aTable`", @"");
 
-    NSArray *columns = @[
+    NSArray *columnDefinitions = @[
         [DBColumnDefinition columnWithName:@"identifier"
                             type:DBTypeText
                      constraints:@[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending autoIncrement:NO onConflict:DBConflictActionFail]]],
@@ -40,7 +40,7 @@
                             type:DBTypeText
                      constraints:@[[DBNotNullConstraint new]]]
                          ];
-    XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columns] toString],
+    XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columnDefinitions] toString],
                           @"CREATE TABLE `tbl`(`identifier` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
 
     XCTAssertEqualObjects([Q(Drop) toString], @"DROP TABLE `aTable`");

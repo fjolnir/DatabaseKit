@@ -20,7 +20,7 @@
 
 @interface DBQuery : NSObject <NSCopying>
 @property(readonly, strong) DB *database;
-@property(readonly, strong) NSArray *fields;
+@property(readonly, strong) NSArray *columns;
 
 + (instancetype)withDatabase:(DB *)database;
 

@@ -26,7 +26,7 @@
 - (DBDeleteQuery *)delete
 {
     DBDeleteQuery *ret = [self _copyWithSubclass:[DBDeleteQuery class]];
-    ret.fields = nil;
+    ret.columns = nil;
     return ret;
 }
 @end

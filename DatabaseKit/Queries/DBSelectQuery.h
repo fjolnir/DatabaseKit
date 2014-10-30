@@ -21,9 +21,9 @@ extern NSString *const DBUnionAll;
 
 + (instancetype)fromSubquery:(DBSelectQuery *)aSubQuery;
 
-- (instancetype)order:(DBOrder)order by:(NSArray *)fields;
-- (instancetype)orderBy:(NSArray *)fields;
-- (instancetype)groupBy:(NSArray *)fields;
+- (instancetype)order:(DBOrder)order by:(NSArray *)columns;
+- (instancetype)orderBy:(NSArray *)columns;
+- (instancetype)groupBy:(NSArray *)columns;
 - (instancetype)limit:(NSUInteger)limit;
 - (instancetype)offset:(NSUInteger)offset;
 - (instancetype)distinct:(BOOL)distinct;
@@ -53,6 +53,6 @@ extern NSString *const DBUnionAll;
 @end
 
 @interface DBQuery (DBSelectQuery)
-- (DBSelectQuery *)select:(NSArray *)fields;
+- (DBSelectQuery *)select:(NSArray *)columns;
 - (DBSelectQuery *)select;
 @end

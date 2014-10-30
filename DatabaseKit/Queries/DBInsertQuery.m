@@ -36,7 +36,7 @@
 
     DBInsertQuery *query = (id)aQuery;
     DBInsertQuery *combined = [self copy];
-    combined.fields = [_fields arrayByAddingObjectsFromArray:query.fields];
+    combined.columns = [_columns arrayByAddingObjectsFromArray:query.columns];
     combined.values = [_values arrayByAddingObjectsFromArray:query.values];
     return combined;
 }
@@ -44,7 +44,7 @@
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    NSAssert(_sourceQuery || ([self.fields count] == [self.values count]),
+    NSAssert(_sourceQuery || ([self.columns count] == [self.values count]),
              @"Field/value count does not match");
     [q appendString:@"INSERT "];
 
@@ -66,9 +66,9 @@
 
     [q appendString:@"INTO "];
     [q appendString:[_table toString]];
-    if(_fields) {
+    if(_columns) {
         [q appendString:@"(\""];
-        [q appendString:[_fields componentsJoinedByString:@"\", \""]];
+        [q appendString:[_columns componentsJoinedByString:@"\", \""]];
         [q appendString:@"\")"];
     }
     if(_sourceQuery) {
@@ -96,17 +96,17 @@
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
-    NSAssert([self.fields count] == [self.values count],
+    NSAssert([self.columns count] == [self.values count],
              @"Field/value count does not match");
 
     [q appendString:@"UPDATE `"];
     [q appendString:[_table toString]];
     [q appendString:@"` SET `"];
 
-    for(NSUInteger i = 0; i < [_fields count]; ++i) {
+    for(NSUInteger i = 0; i < [_columns count]; ++i) {
         if(__builtin_expect(i > 0, 1))
             [q appendString:@", `"];
-        [q appendString:_fields[i]];
+        [q appendString:_columns[i]];
         [q appendString:@"`="];
         id obj = _values[i];
         if([obj isEqual:[NSNull null]])
@@ -134,21 +134,21 @@
 - (DBInsertQuery *)insert:(NSDictionary *)pairs
 {
     DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
-    ret.fields = [pairs allKeys];
-    ret.values = [pairs objectsForKeys:ret.fields notFoundMarker:[NSNull null]];
+    ret.columns = [pairs allKeys];
+    ret.values = [pairs objectsForKeys:ret.columns notFoundMarker:[NSNull null]];
     return ret;
 }
 
-- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)fields
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns
 {
     DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
     ret.sourceQuery = sourceQuery;
-    ret.fields = fields;
+    ret.columns = columns;
     return ret;
 }
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery
 {
-    return [self insertUsingSelect:sourceQuery intoColumns:sourceQuery.fields];
+    return [self insertUsingSelect:sourceQuery intoColumns:sourceQuery.columns];
 }
 @end
 
@@ -157,8 +157,8 @@
 - (DBUpdateQuery *)update:(NSDictionary *)pairs
 {
     DBUpdateQuery *ret = [self _copyWithSubclass:[DBUpdateQuery class]];
-    ret.fields = [pairs allKeys];
-    ret.values = [pairs objectsForKeys:ret.fields notFoundMarker:[NSNull null]];
+    ret.columns = [pairs allKeys];
+    ret.values = [pairs objectsForKeys:ret.columns notFoundMarker:[NSNull null]];
     return ret;
 }
 

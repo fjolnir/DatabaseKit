@@ -162,7 +162,7 @@
     if(copy) {
         copy->_database = _database;
         copy->_table    = _table;
-        copy->_fields   = _fields;
+        copy->_columns   = _columns;
         copy->_where    = _where;
     }
     return copy;

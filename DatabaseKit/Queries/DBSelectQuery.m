@@ -62,7 +62,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         return self;
 
     DBSelectQuery * const combined = [self copy];
-    combined.fields = [_fields arrayByAddingObjectsFromArray:aQuery.fields];
+    combined.columns = [_columns arrayByAddingObjectsFromArray:aQuery.columns];
     return combined;
 }
 
@@ -75,10 +75,10 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(_distinct)
         [q appendString:@"DISTINCT "];
 
-    if(_fields == nil)
+    if(_columns == nil)
         [q appendString:@"*"];
     else
-        [q appendString:[[_fields valueForKey:@"toString"] componentsJoinedByString:@", "]];
+        [q appendString:[[_columns valueForKey:@"toString"] componentsJoinedByString:@", "]];
 
     [q appendString:@" FROM "];
     if(_subQuery) {
@@ -150,22 +150,22 @@ NSString *const DBUnionAll = @" UNION ALL ";
         return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }
 
-- (instancetype)order:(DBOrder)order by:(NSArray *)fields
+- (instancetype)order:(DBOrder)order by:(NSArray *)columns
 {
     DBSelectQuery *ret = [self copy];
     ret.order = order;
-    ret.orderedBy = fields;
+    ret.orderedBy = columns;
     return ret;
 }
-- (instancetype)orderBy:(id)fields
+- (instancetype)orderBy:(id)columns
 {
-    return [self order:DBOrderAscending by:fields];
+    return [self order:DBOrderAscending by:columns];
 }
 
-- (instancetype)groupBy:(NSArray *)fields
+- (instancetype)groupBy:(NSArray *)columns
 {
     DBSelectQuery *ret = [self copy];
-    ret.groupedBy = fields;
+    ret.groupedBy = columns;
     return ret;
 }
 
@@ -226,9 +226,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
             ret.order = otherQuery.order;
 
         NSMutableArray * const orderedBy = [ret.orderedBy mutableCopy] ?: [NSMutableArray new];
-        for(NSString *field in otherQuery.orderedBy) {
-            if(![orderedBy containsObject:field])
-                [orderedBy addObject:field];
+        for(NSString *column in otherQuery.orderedBy) {
+            if(![orderedBy containsObject:column])
+                [orderedBy addObject:column];
         }
         ret.orderedBy = orderedBy;
     }
@@ -257,8 +257,8 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     NSArray *results = [super executeOnConnection:connection error:outErr];
 
-    BOOL const selectingEntireTable = self.fields == nil
-                                   || [self.fields isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
+    BOOL const selectingEntireTable = self.columns == nil
+                                   || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
     if(selectingEntireTable && [results count] > 0 && self.table.modelClass) {
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
@@ -334,12 +334,12 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 @implementation DBQuery (DBSelectQuery)
 
-- (DBQuery *)select:(NSArray *)fields
+- (DBQuery *)select:(NSArray *)columns
 {
     DBQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
                  ? [self copy]
                  : [self _copyWithSubclass:[DBSelectQuery class]];
-    ret.fields = fields;
+    ret.columns = columns;
     return ret;
 }
 - (DBSelectQuery *)select

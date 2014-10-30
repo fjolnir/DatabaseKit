@@ -29,16 +29,16 @@ typedef NS_ENUM(NSUInteger, DBColumnType) {
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
 
-- (DBSelectQuery *)select:(NSArray *)fields;
+- (DBSelectQuery *)select:(NSArray *)columns;
 - (DBSelectQuery *)select;
-- (DBInsertQuery *)insert:(NSDictionary *)fields;
+- (DBInsertQuery *)insert:(NSDictionary *)columns;
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery;
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns;
-- (DBUpdateQuery *)update:(NSDictionary *)fields;
+- (DBUpdateQuery *)update:(NSDictionary *)columns;
 - (DBDeleteQuery *)delete;
 - (DBSelectQuery *)where:(id)conds, ...;
-- (DBSelectQuery *)order:(NSString *)order by:(id)fields;
-- (DBSelectQuery *)orderBy:(id)fields;
+- (DBSelectQuery *)order:(NSString *)order by:(id)columns;
+- (DBSelectQuery *)orderBy:(id)columns;
 - (DBSelectQuery *)limit:(NSUInteger)limit;
 
 - (DBAlterQuery *)alter;

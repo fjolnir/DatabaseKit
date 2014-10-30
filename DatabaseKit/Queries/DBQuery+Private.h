@@ -4,10 +4,10 @@
 @protected
     DB *_database;
     DBTable *_table;
-    NSArray *_fields;
+    NSArray *_columns;
     id _where;
 }
-@property(readwrite, strong) NSArray *fields;
+@property(readwrite, strong) NSArray *columns;
 @property(readwrite, strong) NSPredicate *where;
 
 - (BOOL)_generateString:(NSMutableString *)query parameters:(NSMutableArray *)parameters;
