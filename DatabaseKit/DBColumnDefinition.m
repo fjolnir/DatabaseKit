@@ -145,6 +145,8 @@
         case DBOrderDescending:
             [sql appendString:@" DESC"];
             break;
+        default:
+            break;
     }
     switch(_conflictAction) {
         case DBConflictActionRollback:

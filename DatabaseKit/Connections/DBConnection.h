@@ -3,7 +3,8 @@
 @class DBQuery;
 
 typedef NS_ENUM(NSUInteger, DBOrder) {
-    DBOrderAscending = 1,
+    DBOrderNone,
+    DBOrderAscending,
     DBOrderDescending
 };
 
