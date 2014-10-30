@@ -87,6 +87,18 @@
     XCTAssertEqualObjects(doorCols[@"side"], @"INTEGER");
 }
 
+- (void)testMigrating
+{
+    NSError *err;
+    if(![db migrateModelClasses:@[[TECar class], [TEDoor class]]
+                          error:&err])
+        NSLog(@"Failed to initialize models: %@", err);
+
+    if(![db migrateModelClasses:@[[TECarChanged class], [TEDoor class]]
+                          error:&err])
+        NSLog(@"Failed to initialize models: %@", err);
+}
+
 @end
 
 @implementation TEModel
@@ -110,6 +122,13 @@
         return nil;
 }
 @end
+@implementation TECarChanged
 
++ (NSString *)tableName
+{
+    return @"cars";
+}
+
+@end
 @implementation TEDoor
 @end

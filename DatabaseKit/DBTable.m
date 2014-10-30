@@ -74,9 +74,9 @@
 
 #pragma mark - Query generators
 
-- (DBSelectQuery *)select:(NSArray *)fields
+- (DBSelectQuery *)select:(NSArray *)columns
 {
-    return [[DBSelectQuery withTable:self] select:fields];
+    return [[DBSelectQuery withTable:self] select:columns];
 }
 - (DBSelectQuery *)select
 {
@@ -87,9 +87,17 @@
 {
     return [[DBInsertQuery withTable:self] insert:fields];
 }
-- (DBUpdateQuery *)update:(id)fields
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns
 {
-    return [[DBUpdateQuery withTable:self] update:fields];
+    return [[DBInsertQuery withTable:self] insertUsingSelect:sourceQuery intoColumns:columns];
+}
+- (DBInsertQuery *)insertUsingSelect:(id)sourceQuery
+{
+    return [[DBInsertQuery withTable:self] insertUsingSelect:sourceQuery];
+}
+- (DBUpdateQuery *)update:(id)columns
+{
+    return [[DBUpdateQuery withTable:self] update:columns];
 }
 - (DBDeleteQuery *)delete
 {
@@ -103,13 +111,13 @@
     va_end(args);
     return query;
 }
-- (DBQuery *)order:(NSString *)order by:(id)fields
+- (DBQuery *)order:(NSString *)order by:(id)columns
 {
-    return [[DBSelectQuery withTable:self] order:order by:fields];
+    return [[DBSelectQuery withTable:self] order:order by:columns];
 }
-- (DBQuery *)orderBy:(id)fields
+- (DBQuery *)orderBy:(id)columns
 {
-    return [[DBSelectQuery withTable:self] orderBy:fields];
+    return [[DBSelectQuery withTable:self] orderBy:columns];
 }
 - (DBQuery *)limit:(NSUInteger)limit
 {

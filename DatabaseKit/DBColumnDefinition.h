@@ -18,12 +18,12 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
     DBConflictActionReplace,
 };
 
-@interface DBColumn : NSObject <DBSQLRepresentable, NSCoding>
+@interface DBColumnDefinition : NSObject <DBSQLRepresentable, NSCoding>
 @property(readonly, nonatomic) NSString *name;
-@property(readonly, nonatomic) NSString *type;
+@property(readonly, nonatomic) DBType type;
 @property(readonly, nonatomic) NSArray *constraints;
 
-+ (instancetype)columnWithName:(NSString *)name type:(NSString *)type constraints:(NSArray *)constraints;
++ (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints;
 @end
 
 @interface DBConstraint : NSObject <DBSQLRepresentable, NSCoding>

@@ -23,6 +23,13 @@
 @property(nonatomic, copy) NSSet *doors;
 @end
 
+
+@interface TECarChanged : DBModel
+@property(nonatomic, strong) NSString *color;
+@property(nonatomic) NSUInteger yearBuilt;
+@property(nonatomic, copy) NSSet *doors;
+@end
+
 typedef NS_ENUM(NSUInteger, TEDoorSide) {
     TELeft,
     TERight

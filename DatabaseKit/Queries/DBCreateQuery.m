@@ -30,7 +30,7 @@
     if(!_columns)
         return NO;
     else
-        return [_columns indexOfObjectPassingTest:^BOOL(DBColumn *col, NSUInteger idx, BOOL *stop) {
+        return [_columns indexOfObjectPassingTest:^BOOL(DBColumnDefinition *col, NSUInteger idx, BOOL *stop) {
             return [name isEqualToString:col.name];
         }] != NSNotFound;
 }
@@ -54,10 +54,9 @@
         }
         [q appendString:@")"];
     } else if(_queryToDeriveFrom) {
-        [q appendString:@" AS ("];
+        [q appendString:@" AS "];
         if(![_queryToDeriveFrom _generateString:q parameters:p])
             return NO;
-        [q appendString:@")"];
     }
     return YES;
 }

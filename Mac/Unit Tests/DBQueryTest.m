@@ -13,7 +13,7 @@
 
 @end
 
-#define Q(type) [DB##type##Query withTable:[DBTable withDatabase:nil name:@"aTable"]]
+#define Q(type) [DB##type##Query withTable:[DBTable withDatabase:[DB new] name:@"aTable"]]
 
 @implementation DBQueryTest
 
@@ -33,11 +33,11 @@
     XCTAssertEqualObjects([[Q(Delete) delete] toString], @"DELETE FROM `aTable`", @"");
 
     NSArray *columns = @[
-        [DBColumn columnWithName:@"identifier"
-                            type:@"TEXT"
+        [DBColumnDefinition columnWithName:@"identifier"
+                            type:DBTypeText
                      constraints:@[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending autoIncrement:NO onConflict:DBConflictActionFail]]],
-        [DBColumn columnWithName:@"name"
-                            type:@"TEXT"
+        [DBColumnDefinition columnWithName:@"name"
+                            type:DBTypeText
                      constraints:@[[DBNotNullConstraint new]]]
                          ];
     XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columns] toString],
@@ -45,7 +45,7 @@
 
     XCTAssertEqualObjects([Q(Drop) toString], @"DROP TABLE `aTable`");
 
-    DBAlterQuery *alter = [Q(Alter) appendColumns:@[[DBColumn columnWithName:@"test" type:@"TEXT" constraints:@[[DBNotNullConstraint new]]]]];
+    DBAlterQuery *alter = [Q(Alter) appendColumns:@[[DBColumnDefinition columnWithName:@"test" type:DBTypeText constraints:@[[DBNotNullConstraint new]]]]];
     XCTAssertEqualObjects([alter toString], @"ALTER TABLE `aTable` ADD COLUMN `test` TEXT NOT NULL");
 }
 

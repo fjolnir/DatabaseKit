@@ -13,14 +13,14 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
     NSMutableDictionary *creates = [NSMutableDictionary dictionaryWithCapacity:[classes count]];
     for(Class klass in classes) {
         NSMutableArray *columns = [NSMutableArray arrayWithObject:
-                                   [DBColumn columnWithName:@"identifier"
-                                                       type:@"TEXT"
+                                   [DBColumnDefinition columnWithName:@"identifier"
+                                                       type:DBTypeText
                                                 constraints:@[[DBPrimaryKeyConstraint
                                                                primaryKeyConstraintWithOrder:DBOrderAscending
                                                                autoIncrement:NO
                                                                onConflict:DBConflictActionFail]]]];
         for(NSString *key in [klass savedKeys]) {
-            NSString *type = nil;
+            DBType type = DBTypeUnknown;
             Class keyClass = nil;
             char enc = [klass typeForKey:key class:&keyClass];
             if(enc == _C_ID)
@@ -31,9 +31,9 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 if([keyClass isSubclassOfClass:[NSSet class]]) { // To many
                     Class counterpart = [klass relatedClassForKey:key];
                     if(counterpart && ![creates[[counterpart tableName]] hasColumnNamed:[klass foreignKeyName]]) {
-                        DBColumn *foreignKeyCol = [DBColumn
+                        DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
                                                    columnWithName:[klass foreignKeyName]
-                                                   type:@"TEXT"
+                                                   type:DBTypeText
                                                    constraints:@[[DBForeignKeyConstraint
                                                                   foreignKeyConstraintWithTable:[klass tableName]
                                                                   columnName:@"identifier"
@@ -49,7 +49,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 } else if([keyClass isSubclassOfClass:[DBModel class]]) { // To one
                     Class counterpart = [klass relatedClassForKey:key];
                     if(counterpart && ![creates[[klass tableName]] hasColumnNamed:[counterpart foreignKeyName]]) {
-                        DBColumn *foreignKeyCol = [DBColumn
+                        DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
                                                    columnWithName:[counterpart foreignKeyName]
                                                    type:@"TEXT"
                                                    constraints:@[[DBForeignKeyConstraint
@@ -68,10 +68,10 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 continue;
             }
 
-            NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumn *col, NSUInteger _, BOOL *__) {
+            NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumnDefinition *col, NSUInteger _, BOOL *__) {
                 return [col.name isEqualToString:key];
             }], @"Duplicate column %@", key);
-            [columns addObject:[DBColumn columnWithName:key
+            [columns addObject:[DBColumnDefinition columnWithName:key
                                                    type:type
                                             constraints:[klass constraintsForKey:key]]];
         }
@@ -90,21 +90,42 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
     return [self.connection transaction:^{
         NSMutableDictionary *creates = [[self tableCreationQueriesForClasses:classes] mutableCopy];
         for(Class klass in classes) {
+            DBCreateQuery *createQuery = creates[[klass tableName]];
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
             if(!lastMigration)
                 continue;
 
             NSArray *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
-            NSArray *columnsToAdd = [[creates[[klass tableName]] columns]
-                                     filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumn *col, NSDictionary *bindings) {
-                return ![[currentColumns valueForKey:@"name"] containsObject:col.name];
+            NSArray *columnsToRemove = [currentColumns
+                                        filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
+                return ![[creates[[klass tableName]] columns] containsObject:col];
             }]];
-            if([columnsToAdd count] > 0) {
-                DBAlterQuery *alter = [[self[[klass tableName]] alter] appendColumns:columnsToAdd];
-                if(![alter execute:outErr])
+            if([columnsToRemove count] > 0) {
+                if(![self.connection executeSQL:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr])
+                    return DBTransactionRollBack;
+
+                // Create the new table using a temporary name
+                NSString *tempTableName = [@"_DBKitMigration_tmp_" stringByAppendingString:[klass tableName]];
+                if(![[createQuery table:tempTableName] execute:outErr])
+                    return DBTransactionRollBack;
+
+                // Copy over the existing data
+                NSMutableArray *leftoverColumns = [currentColumns mutableCopy];
+                [leftoverColumns removeObjectsInArray:columnsToRemove];
+                DBSelectQuery *sourceQuery = [self[[klass tableName]] select:[leftoverColumns valueForKey:@"name"]];
+                if(![[self[tempTableName] insertUsingSelect:sourceQuery] execute:outErr])
+                    return DBTransactionRollBack;
+
+                // Drop old, and rename new
+                if(![[self[[klass tableName]] drop] execute:outErr])
+                    return DBTransactionRollBack;
+                if(![[[self[tempTableName] alter] rename:[klass tableName]] execute:outErr])
+                    return DBTransactionRollBack;
+
+                if(![self.connection executeSQL:@"PRAGMA foreign_keys = ON" substitutions:nil error:outErr])
                     return DBTransactionRollBack;
             }
-            return DBTransactionRollBack;
+            [creates removeObjectForKey:[klass tableName]];
         }
 
         for(NSString *tableName in creates) {
@@ -127,8 +148,8 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
 {
     if(![self.connection columnsForTable:kCYMigrationTableName]) {
         DBCreateQuery *migrationCreate = [[[self create] table:kCYMigrationTableName] columns:@[
-            [DBColumn columnWithName:@"table" type:@"TEXT" constraints:@[[DBNotNullConstraint new], [DBUniqueConstraint new]]],
-            [DBColumn columnWithName:@"columns" type:@"BLOB" constraints:@[[DBNotNullConstraint new]]]
+            [DBColumnDefinition columnWithName:@"table" type:DBTypeText constraints:@[[DBNotNullConstraint new], [DBUniqueConstraint new]]],
+            [DBColumnDefinition columnWithName:@"columns" type:DBTypeBlob constraints:@[[DBNotNullConstraint new]]]
         ]];
         NSError *err;
         if(![migrationCreate execute:&err])

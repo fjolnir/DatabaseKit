@@ -1,9 +1,9 @@
-#import "DBColumn.h"
+#import "DBColumnDefinition.h"
 
-@implementation DBColumn
-+ (instancetype)columnWithName:(NSString *)name type:(NSString *)type constraints:(NSArray *)constraints
+@implementation DBColumnDefinition
++ (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
 {
-    DBColumn *col = [self new];
+    DBColumnDefinition *col = [self new];
     col->_name        = name;
     col->_type        = type;
     col->_constraints = constraints;
@@ -23,7 +23,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:_name forKey:@"name"];
-    [aCoder encodeObject:_type forKey:@"type"];
+    [aCoder encodeInteger:_type forKey:@"type"];
     [aCoder encodeObject:_constraints forKey:@"constraints"];
 }
 
@@ -32,7 +32,7 @@
     NSMutableString *sql = [@"`" mutableCopy];
     [sql appendString:[_name mutableCopy]];
     [sql appendString:@"` "];
-    [sql appendString:_type];
+    [sql appendString:[[query.database.connection class] ?: [DBConnection class] sqlForType:_type]];
     [sql appendString:@" "];
 
     NSArray *sortedConstraints = [_constraints sortedArrayUsingComparator:^(DBConstraint *a, DBConstraint *b) {
@@ -44,6 +44,19 @@
         [sql appendString:[sortedConstraints[i] sqlRepresentationForQuery:query withParameters:parameters]];
     }
     return sql;
+}
+
+- (NSUInteger)hash
+{
+    return [_name hash];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if([object isKindOfClass:[self class]])
+        return [_name isEqual:[object name]];
+    else
+        return NO;
 }
 @end
 
@@ -61,6 +74,13 @@
 + (NSUInteger)priority
 {
     return 0;
+}
+
+- (BOOL)addToColumn:(NSString *)column inTable:(DBTable *)table error:(NSError **)outErr
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    return NO;
 }
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
@@ -149,6 +169,7 @@
         [sql appendString:@" AUTOINCREMENT"];
     return sql;
 }
+
 @end
 
 @implementation DBForeignKeyConstraint

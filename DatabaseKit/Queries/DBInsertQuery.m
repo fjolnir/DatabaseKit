@@ -8,6 +8,7 @@
 
 @interface DBInsertQuery ()
 @property(nonatomic, readwrite) DBFallback fallback;
+@property(nonatomic, readwrite) DBSelectQuery *sourceQuery;
 @end
 
 @implementation DBInsertQuery
@@ -43,7 +44,7 @@
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    NSAssert([self.fields count] == [self.values count],
+    NSAssert(_sourceQuery || ([self.fields count] == [self.values count]),
              @"Field/value count does not match");
     [q appendString:@"INSERT "];
 
@@ -65,19 +66,27 @@
 
     [q appendString:@"INTO "];
     [q appendString:[_table toString]];
-    [q appendString:@"(\""];
-    [q appendString:[_fields componentsJoinedByString:@"\", \""]];
-    [q appendString:@"\") VALUES("];
-    int i = 0;
-    for(id value in _values) {
-        if(__builtin_expect(i++ > 0, 1))
-            [q appendString:@", "];
-
-        [p addObject:value ?: [NSNull null]];
-        [q appendFormat:@"$%lu", (unsigned long)[p count]];
+    if(_fields) {
+        [q appendString:@"(\""];
+        [q appendString:[_fields componentsJoinedByString:@"\", \""]];
+        [q appendString:@"\")"];
     }
-    [q appendString:@")"];
+    if(_sourceQuery) {
+        [q appendString:@" "];
+        if(![_sourceQuery _generateString:q parameters:p])
+            return NO;
+    } else {
+        [q appendString:@" VALUES("];
+        int i = 0;
+        for(id value in _values) {
+            if(__builtin_expect(i++ > 0, 1))
+                [q appendString:@", "];
 
+            [p addObject:value ?: [NSNull null]];
+            [q appendFormat:@"$%lu", (unsigned long)[p count]];
+        }
+        [q appendString:@")"];
+    }
     return YES;
 }
 
@@ -130,6 +139,17 @@
     return ret;
 }
 
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)fields
+{
+    DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
+    ret.sourceQuery = sourceQuery;
+    ret.fields = fields;
+    return ret;
+}
+- (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery
+{
+    return [self insertUsingSelect:sourceQuery intoColumns:sourceQuery.fields];
+}
 @end
 
 @implementation DBQuery (DBUpdateQuery)

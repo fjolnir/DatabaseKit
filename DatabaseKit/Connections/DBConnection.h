@@ -7,6 +7,15 @@ typedef NS_ENUM(NSUInteger, DBOrder) {
     DBOrderDescending
 };
 
+typedef NS_ENUM(NSUInteger, DBType) {
+    DBTypeUnknown,
+    DBTypeInteger,
+    DBTypeReal,
+    DBTypeBoolean,
+    DBTypeText,
+    DBTypeBlob
+};
+
 /*!
  * A block for executing database statements in a transaction
  * return DBTransactionRollBack to trigger a rollback
@@ -75,8 +84,10 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 /*! Executes a block wrapped in a transaction */
 - (BOOL)transaction:(DBTransactionBlock)aBlock;
 
-/*! Returns a SQL type string or nil for a given Objective-C scalar type encoding */
-+ (NSString *)typeForObjCScalarEncoding:(char)encoding;
-/*! Returns a SQL type string or nil for a given class*/
-+ (NSString *)typeForClass:(Class)klass;
+/*! Returns a SQL type string for a type */
++ (NSString *)sqlForType:(DBType)type;
+/*! Returns a SQL type for a given Objective-C scalar type encoding */
++ (DBType)typeForObjCScalarEncoding:(char)encoding;
+/*! Returns a SQL type for a given class*/
++ (DBType)typeForClass:(Class)klass;
 @end
