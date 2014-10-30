@@ -16,9 +16,6 @@
 		C71CE9B119B3839600C77150 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97819B3839600C77150 /* DBConnectionPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9B219B3839600C77150 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97919B3839600C77150 /* DBConnectionPool.m */; };
 		C71CE9B319B3839600C77150 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97919B3839600C77150 /* DBConnectionPool.m */; };
-		C71CE9B519B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71CE9B619B3839600C77150 /* DBPostgresConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97B19B3839600C77150 /* DBPostgresConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C71CE9B719B3839600C77150 /* DBPostgresConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97C19B3839600C77150 /* DBPostgresConnection.m */; };
 		C71CE9B919B3839600C77150 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9BA19B3839600C77150 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9BB19B3839600C77150 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97E19B3839600C77150 /* DBSQLiteConnection.m */; };
@@ -146,8 +143,6 @@
 		C71CE97719B3839600C77150 /* DBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnection.m; sourceTree = "<group>"; };
 		C71CE97819B3839600C77150 /* DBConnectionPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConnectionPool.h; sourceTree = "<group>"; };
 		C71CE97919B3839600C77150 /* DBConnectionPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnectionPool.m; sourceTree = "<group>"; };
-		C71CE97B19B3839600C77150 /* DBPostgresConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPostgresConnection.h; sourceTree = "<group>"; };
-		C71CE97C19B3839600C77150 /* DBPostgresConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBPostgresConnection.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSQLiteConnection.h; sourceTree = "<group>"; };
 		C71CE97E19B3839600C77150 /* DBSQLiteConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBSQLiteConnection.m; sourceTree = "<group>"; };
 		C71CE97F19B3839600C77150 /* DatabaseKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabaseKit.h; path = DatabaseKit/DatabaseKit.h; sourceTree = SOURCE_ROOT; };
@@ -336,8 +331,6 @@
 				C71CE97719B3839600C77150 /* DBConnection.m */,
 				C71CE97819B3839600C77150 /* DBConnectionPool.h */,
 				C71CE97919B3839600C77150 /* DBConnectionPool.m */,
-				C71CE97B19B3839600C77150 /* DBPostgresConnection.h */,
-				C71CE97C19B3839600C77150 /* DBPostgresConnection.m */,
 				C71CE97D19B3839600C77150 /* DBSQLiteConnection.h */,
 				C71CE97E19B3839600C77150 /* DBSQLiteConnection.m */,
 			);
@@ -537,7 +530,6 @@
 				C7F6FD5019FBDAC600C77AC6 /* DBModel+Relationships.h in Headers */,
 				C71CE9AC19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9C319B3839600C77150 /* DBModel.h in Headers */,
-				C71CE9B519B3839600C77150 /* DBPostgresConnection.h in Headers */,
 				C71CEA0D19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
 				C7F6FD4C19FBC54B00C77AC6 /* DBSQLRepresentable.h in Headers */,
 				C71CE9F319B3839600C77150 /* Base64Extensions.h in Headers */,
@@ -563,7 +555,6 @@
 				C71CE9AD19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9F819B3839600C77150 /* DBInflector.h in Headers */,
 				C71CE9B119B3839600C77150 /* DBConnectionPool.h in Headers */,
-				C71CE9B619B3839600C77150 /* DBPostgresConnection.h in Headers */,
 				C71CEA0E19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
 				C7F6FD3519FA22AF00C77AC6 /* DB+Migrations.h in Headers */,
 				C71CE9C419B3839600C77150 /* DBModel.h in Headers */,
@@ -714,7 +705,6 @@
 				C71CE9B219B3839600C77150 /* DBConnectionPool.m in Sources */,
 				C7F6FD3619FA22AF00C77AC6 /* DB+Migrations.m in Sources */,
 				C71CE9D319B3839600C77150 /* DBTable.m in Sources */,
-				C71CE9B719B3839600C77150 /* DBPostgresConnection.m in Sources */,
 				C76774C319C2032B00B9B687 /* DBSelectQuery.m in Sources */,
 				C7F6FD5E19FE031800C77AC6 /* DBAlterQuery.m in Sources */,
 				C71CE9C119B3839600C77150 /* DB.m in Sources */,
