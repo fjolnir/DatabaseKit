@@ -94,12 +94,13 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             DBCreateQuery *createQuery = creates[tableName];
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
             if(lastMigration) {
-                NSArray *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
-                NSArray *columnsToRemove = [currentColumns
-                                            filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
-                    return ![[creates[tableName] columns] containsObject:col];
+                NSSet *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
+                NSSet *untouchedColumns = [currentColumns
+                                                   filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
+                    return [[creates[tableName] columns] containsObject:col];
                 }]];
-                if([columnsToRemove count] > 0) {
+
+                if(![currentColumns isEqual:untouchedColumns]) {
                     if(![self.connection executeSQL:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr])
                         return DBTransactionRollBack;
 
@@ -109,9 +110,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                         return DBTransactionRollBack;
 
                     // Copy over the existing data
-                    NSMutableArray *leftoverColumns = [currentColumns mutableCopy];
-                    [leftoverColumns removeObjectsInArray:columnsToRemove];
-                    DBSelectQuery *sourceQuery = [self[tableName] select:[leftoverColumns valueForKey:@"name"]];
+                    DBSelectQuery *sourceQuery = [self[tableName] select:[[untouchedColumns valueForKey:@"name"] allObjects]];
                     if(![[self[tempTableName] insertUsingSelect:sourceQuery] execute:outErr])
                         return DBTransactionRollBack;
 
@@ -132,7 +131,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             DBInsertQuery *migration = [[[self migrationTable]
              insert:@{
                  @"table": tableName,
-                 @"columns": [NSKeyedArchiver archivedDataWithRootObject:[creates[tableName] valueForKey:@"columns"]]
+                 @"columns": [NSKeyedArchiver archivedDataWithRootObject:[NSSet setWithArray:[creates[tableName] valueForKey:@"columns"]]]
              }] or:DBInsertFallbackReplace];
             if(![migration execute:outErr])
                 return DBTransactionRollBack;

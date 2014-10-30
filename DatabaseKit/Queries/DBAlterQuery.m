@@ -25,12 +25,6 @@
     if([_columnsToAppend count] == 0 && !_nameToRenameTo)
         return NO;
 
-    for(NSString *columnName in columnNames) {
-        if([columnNames countForObject:columnName] != 1)
-            return NO;
-    }
-
-
     [q appendString:@"ALTER TABLE `"];
     [q appendString:self.table.name];
     [q appendString:@"`"];
