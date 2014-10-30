@@ -26,7 +26,7 @@
     db = DBSQLiteDatabaseForTesting();
 
     NSError *err;
-    if(![db migrateModelClasses:@[[TEModel class], [TEPerson class], [TEBelgian class], [TEAnimal class]]
+    if(![db migrateModelClasses:@[[TEModel class], [TEPerson class], [TEWebSite class], [TEAnimal class]]
                           error:&err]) {
         NSLog(@"Failed to initialize models: %@", err);
     }
@@ -87,6 +87,14 @@
     XCTAssertEqual([doorCols[@"side"] intValue], DBTypeInteger);
 }
 
+- (void)testNSCoding
+{
+    TEWebSite *site = [[TEWebSite alloc] initWithDatabase:db];
+    site.url = [NSURL URLWithString:@"http://google.com"];
+    XCTAssert([site save], @"Unable to save NSCoding compliant object to database");
+    TEWebSite *retrievedSite = [[db[[TEWebSite tableName]] select] firstObject];
+    XCTAssertEqualObjects(site.url, retrievedSite.url);
+}
 - (void)testMigrating
 {
     NSError *err;
@@ -115,7 +123,7 @@
 @implementation TEAnimal
 @end
 
-@implementation TEBelgian
+@implementation TEWebSite
 @end
 
 @implementation TECar

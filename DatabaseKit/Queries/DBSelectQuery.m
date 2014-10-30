@@ -1,3 +1,4 @@
+#import <objc/runtime.h>
 #import "DBSelectQuery.h"
 #import "DBQuery+Private.h"
 #import "DBTable.h"
@@ -273,6 +274,12 @@ NSString *const DBUnionAll = @" UNION ALL ";
                 DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
                 for(NSUInteger i = 0; i < [columns count]; ++i) {
                     id value = [result valueOfColumnAtIndex:i];
+                    if([value isKindOfClass:[NSData class]]) {
+                        Class klass;
+                        char encoding = [[model class] typeForKey:columns[i] class:&klass];
+                        if(encoding == _C_ID && ![klass isSubclassOfClass:[NSData class]])
+                            value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
+                    }
                     [model setValue:[[NSNull null] isEqual:value] ? nil : value
                              forKey:columns[i]];
                 }

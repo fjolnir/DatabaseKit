@@ -27,6 +27,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 type = [[self.connection class] typeForClass:keyClass];
             else
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
+
             if(!type) {
                 if([keyClass isSubclassOfClass:[NSSet class]]) { // To many
                     Class counterpart = [klass relatedClassForKey:key];
@@ -46,6 +47,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                             creates[[counterpart tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
                         }
                     }
+                    continue;
                 } else if([keyClass isSubclassOfClass:[DBModel class]]) { // To one
                     Class counterpart = [klass relatedClassForKey:key];
                     if(counterpart && ![creates[[klass tableName]] hasColumnNamed:[counterpart foreignKeyName]]) {
@@ -64,9 +66,12 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                             creates[[klass tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
                         }
                     }
+                    continue;
                 }
-                continue;
             }
+
+            if(type == DBTypeUnknown && [keyClass conformsToProtocol:@protocol(NSCoding)])
+                type = DBColumnTypeBlob;
 
             NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumnDefinition *col, NSUInteger _, BOOL *__) {
                 return [col.name isEqualToString:key];

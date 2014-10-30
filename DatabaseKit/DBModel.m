@@ -29,7 +29,10 @@ static NSString *classPrefix = nil;
         NSMutableSet *result = [NSMutableSet setWithCapacity:propertyCount];
         for(NSUInteger i = 0; i < propertyCount; ++i) {
             NSString *key = @(property_getName(properties[i]));
-            if(![excludedKeys containsObject:key])
+            Class klass;
+            char encoding = [self typeForKey:key class:&klass];
+            if(![excludedKeys containsObject:key] &&
+               (encoding != _C_ID || [klass conformsToProtocol:@protocol(NSCoding)]))
                 [result addObject:key];
         }
         return result;

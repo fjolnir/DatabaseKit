@@ -159,7 +159,10 @@
             sqlite3_bind_null(queryByteCode, i+1);
         else if([sub isKindOfClass:[NSDate class]])
             sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT);
-        else
+        else if([sub conformsToProtocol:@protocol(NSCoding)]) {
+            NSData *serialized = [NSKeyedArchiver archivedDataWithRootObject:sub];
+            sqlite3_bind_blob(queryByteCode, i+1, serialized.bytes, (int)serialized.length, SQLITE_TRANSIENT);
+        } else
             [NSException raise:@"Unrecognized object type" format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub className]];
     }
 
