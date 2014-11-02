@@ -1,10 +1,7 @@
 #import "DBModel.h"
 
-@interface DBModel () {
-    NSMutableSet *_dirtyKeys;
-}
+@interface DBModel ()
 @property(readwrite, strong) NSString *savedIdentifier;
-@property(readwrite, strong) DBTable *table;
 
 - (void)_clearDirtyKeys;
 @end

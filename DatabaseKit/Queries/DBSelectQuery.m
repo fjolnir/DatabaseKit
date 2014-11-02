@@ -346,7 +346,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @end
 
 @implementation DBQuery (DBSelectQuery)
-
 - (DBQuery *)select:(NSArray *)columns
 {
     DBQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
@@ -359,5 +358,4 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     return [self select:nil];
 }
-
 @end

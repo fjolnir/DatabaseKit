@@ -31,7 +31,7 @@
 
 - (id)objectForKeyedSubscript:(id)cond
 {
-    return [[[DBSelectQuery withTable:self] limit:@1] where:cond];
+    return [[[DBSelectQuery withTable:self] limit:1] where:cond];
 }
 
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond

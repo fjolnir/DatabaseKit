@@ -8,7 +8,9 @@
 
 static NSString *classPrefix = nil;
 
-@implementation DBModel
+@implementation DBModel{
+    NSMutableSet *_dirtyKeys;
+}
 @dynamic inserted;
 
 + (void)setClassPrefix:(NSString *)aPrefix
@@ -119,8 +121,8 @@ static NSString *classPrefix = nil;
     if(!(self = [self init]))
         return nil;
 
-    self.table      = aDB[[[self class] tableName]];
-    _dirtyKeys   = [NSMutableSet new];
+    _table     = aDB[[[self class] tableName]];
+    _dirtyKeys = [NSMutableSet new];
 
     return self;
 }

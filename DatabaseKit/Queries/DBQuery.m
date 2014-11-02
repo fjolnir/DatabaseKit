@@ -1,7 +1,6 @@
 #import "DBQuery+Private.h"
 #import "DBTable.h"
 #import "DBModel.h"
-#import "DBModel+Private.h"
 #import "Debug.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
