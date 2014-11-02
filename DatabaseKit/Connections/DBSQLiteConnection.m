@@ -277,45 +277,6 @@
     return queryByteCode;
 }
 
-// You have to step through the *query yourself,
-- (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query
-{
-    static dispatch_once_t onceToken;
-    static ISO8601DateFormatter *dateFormatter;
-    dispatch_once(&onceToken, ^{
-        dateFormatter = [ISO8601DateFormatter new];
-    });
-
-    int columnType = sqlite3_column_type(query, colIndex);
-    switch(columnType)
-    {
-        case SQLITE_INTEGER:
-            return @(sqlite3_column_int(query, colIndex));
-            break;
-        case SQLITE_FLOAT:
-            return @(sqlite3_column_double(query, colIndex));
-            break;
-        case SQLITE_BLOB:
-            return [NSData dataWithBytes:sqlite3_column_blob(query, colIndex)
-                                  length:sqlite3_column_bytes(query, colIndex)];
-            break;
-        case SQLITE_NULL:
-            return [NSNull null];
-            break;
-        case SQLITE_TEXT: {
-            const char *declType = sqlite3_column_decltype(query, colIndex);
-            if(declType && strncmp("date", declType, 4) == 0)
-                return [dateFormatter dateFromString:@((char *)sqlite3_column_text(query, colIndex))];
-            else
-                return @((char *)sqlite3_column_text(query, colIndex));
-            break;
-        } default:
-            // It really shouldn't ever come to this.
-            break;
-    }
-    return nil;
-}
-
 #pragma mark -
 #pragma mark Transactions
 - (BOOL)beginTransaction
