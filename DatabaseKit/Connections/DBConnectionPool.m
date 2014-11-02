@@ -80,6 +80,11 @@ static void _connectionCloser(void *ptr)
         return ret;
     }
 }
+
+- (BOOL)tableExists:(NSString *)tableName
+{
+    return [[self _getConnection:NULL] tableExists:tableName];
+}
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
     return [[self _getConnection:NULL] columnsForTable:tableName];
