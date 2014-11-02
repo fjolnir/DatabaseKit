@@ -1,11 +1,3 @@
-//
-//  DBSQLiteConnectionTest.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 8.8.2007.
-//  CopyriXCTt 2007 Fjölnir Ásgeirsson. All riXCTts reserved.
-//
-
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/DatabaseKit.h>
 #import "DBUnitTestUtilities.h"

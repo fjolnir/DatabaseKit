@@ -1,11 +1,3 @@
-//
-//  DBQueryTest.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 9/6/13.
-//
-//
-
 #import <XCTest/XCTest.h>
 #import <DatabaseKit/DatabaseKit.h>
 
