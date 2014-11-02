@@ -3,14 +3,12 @@
 #import "DBUnitTestUtilities.h"
 #import "DBModelTest.h"
 
-
 @class TEAnimal, TEPerson;
 
 
 @interface DBModelTest : XCTestCase {
     DB *db;
 }
-
 @end
 
 @implementation DBModel (PrefixSetter)
@@ -127,13 +125,11 @@
 @end
 
 @implementation TECar
-+ (NSArray *)constraintsForKey:(NSString *)key
++ (NSArray *)constraintsForBrandName
 {
-    if([key isEqualToString:@"brandName"])
-        return @[[DBNotNullConstraint new]];
-    else
-        return nil;
+    return @[[DBNotNullConstraint new]];
 }
+
 + (NSArray *)indices
 {
     return @[[DBIndex indexWithName:@"brandIdx" onColumns:@[@"brandName"] unique:YES]];

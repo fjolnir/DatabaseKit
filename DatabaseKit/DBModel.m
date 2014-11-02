@@ -71,7 +71,13 @@ static NSString *classPrefix = nil;
 
 + (NSArray *)constraintsForKey:(NSString *)key
 {
-    return nil;
+    // Check if we respond to the selector `constraintsFor<Key>`
+    SEL selector = NSSelectorFromString([@"constraintsFor" stringByAppendingString:[key stringByCapitalizingFirstLetter]]);
+    if([self respondsToSelector:selector]) {
+        id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
+        return imp(self, selector);
+    } else
+        return nil;
 }
 
 

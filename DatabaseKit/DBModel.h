@@ -55,6 +55,8 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 
 /*!
  * Returns an array of constraints for a key
+ * NOTE: Rather than overriding `constraintsForKey:`
+ * you should define a method with a name like: `constraintsForMyKey`, `[kls constraintsForKey:@"myKey"]` will automatically call through to it.
  */
 + (NSArray *)constraintsForKey:(NSString *)key;
 
