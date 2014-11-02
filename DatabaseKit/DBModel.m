@@ -205,6 +205,9 @@ static NSString *classPrefix = nil;
 + (NSString *)tableName
 {
     NSMutableString *ret = [NSStringFromClass(self) mutableCopy];
+    NSUInteger dotLocation = [ret rangeOfString:@"."].location;
+    if(dotLocation != NSNotFound)
+        [ret deleteCharactersInRange:(NSRange) { 0, dotLocation+1 }];
     if([DBModel classPrefix]) {
         [ret replaceOccurrencesOfString:[DBModel classPrefix]
                              withString:@""
