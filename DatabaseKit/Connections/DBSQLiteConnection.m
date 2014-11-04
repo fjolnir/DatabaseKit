@@ -30,8 +30,6 @@
                              tail:(NSString **)outTail
                             error:(NSError **)outError;
 
-- (NSArray *)columnsForQuery:(sqlite3_stmt *)query;
-- (id)valueForColumn:(unsigned int)colIndex query:(sqlite3_stmt *)query;
 - (void)_resultWasDeallocated:(DBSQLiteResult *)result;
 @end
 /*! @endcond */
@@ -50,8 +48,8 @@
     return [[URL scheme] isEqualToString:@"sqlite"];
 }
 
-#pragma mark -
-#pragma mark Initialization
+
+#pragma mark - Initialization
 
 - (id)initWithURL:(NSURL *)URL error:(NSError **)err;
 {
@@ -82,8 +80,9 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark SQL Executing
+
+#pragma mark - SQL Executing
+
 - (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
     static dispatch_once_t onceToken;
@@ -226,23 +225,6 @@
     return ret;
 }
 
-
-#pragma mark Private
-- (NSArray *)columnsForQuery:(sqlite3_stmt *)query
-{
-    int columnCount = sqlite3_column_count(query);
-    if(columnCount <= 0)
-        return nil;
-
-    NSMutableArray *columnNames = [NSMutableArray array];
-    for(int i = 0; i < columnCount; ++i)
-    {
-        const char *name;
-        name = sqlite3_column_name(query, i);
-        [columnNames addObject:@(name)];
-    }
-    return columnNames;
-}
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
                              tail:(NSString **)aoTail
                             error:(NSError **)outErr
@@ -277,8 +259,9 @@
     return queryByteCode;
 }
 
-#pragma mark -
-#pragma mark Transactions
+
+#pragma mark - Transactions
+
 - (BOOL)beginTransaction
 {
     NSString * const savePointName = [[NSUUID UUID] UUIDString];
@@ -332,8 +315,9 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Cleanup
+
+#pragma mark - Cleanup
+
 - (void)dealloc
 {
     [self closeConnection];
