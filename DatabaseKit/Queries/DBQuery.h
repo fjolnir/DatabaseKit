@@ -51,6 +51,10 @@
 - (NSString *)toString;
 @end
 
+@interface DBConnection (DBQuery)
+- (BOOL)executeWriteQueriesInTransaction:(NSArray *)queries error:(NSError **)outErr;
+@end
+
 #import <DatabaseKit/DBCreateQuery.h>
 #import <DatabaseKit/DBSelectQuery.h>
 #import <DatabaseKit/DBInsertQuery.h>

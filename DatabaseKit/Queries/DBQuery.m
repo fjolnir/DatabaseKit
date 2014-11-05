@@ -227,3 +227,25 @@
     return _expressionString;
 }
 @end
+
+@implementation DBConnection (DBQuery)
+
+- (BOOL)executeWriteQueriesInTransaction:(NSArray *)queries error:(NSError **)outErr
+{
+    switch([queries count]) {
+        case 0:
+            return NO;
+        case 1:
+            return [(DBWriteQuery *)[queries firstObject] executeOnConnection:self error:outErr];
+        default:
+            return [self transaction:^DBTransactionOperation{
+                for(DBWriteQuery *query in queries) {
+                    if(![query executeOnConnection:self error:outErr])
+                        return DBTransactionRollBack;
+                }
+                return DBTransactionCommit;
+            }];
+    }
+}
+
+@end
