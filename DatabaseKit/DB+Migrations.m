@@ -12,13 +12,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
 {
     NSMutableDictionary *creates = [NSMutableDictionary dictionaryWithCapacity:[classes count]];
     for(Class klass in classes) {
-        NSMutableArray *columns = [NSMutableArray arrayWithObject:
-                                   [DBColumnDefinition columnWithName:@"identifier"
-                                                       type:DBTypeText
-                                                constraints:@[[DBPrimaryKeyConstraint
-                                                               primaryKeyConstraintWithOrder:DBOrderAscending
-                                                               autoIncrement:NO
-                                                               onConflict:DBConflictActionFail]]]];
+        NSMutableArray *columns = [NSMutableArray new];
         for(NSString *key in [klass savedKeys]) {
             DBType type = DBTypeUnknown;
             Class keyClass = nil;
@@ -29,8 +23,10 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
 
             if(!type) {
-                if([keyClass isSubclassOfClass:[NSSet class]]) { // To many
-                    Class counterpart = [klass relatedClassForKey:key];
+                BOOL toMany;
+                Class counterpart = [klass relatedClassForKey:key isToMany:&toMany];
+
+                if(counterpart && toMany) {
                     if(counterpart && ![creates[[counterpart tableName]] hasColumnNamed:[klass foreignKeyName]]) {
                         DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
                                                    columnWithName:[klass foreignKeyName]
@@ -48,8 +44,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                         }
                     }
                     continue;
-                } else if([keyClass isSubclassOfClass:[DBModel class]]) { // To one
-                    Class counterpart = [klass relatedClassForKey:key];
+                } else if(counterpart && !toMany) {
                     if(counterpart && ![creates[[klass tableName]] hasColumnNamed:[counterpart foreignKeyName]]) {
                         DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
                                                    columnWithName:[counterpart foreignKeyName]
