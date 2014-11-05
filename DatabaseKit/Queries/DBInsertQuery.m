@@ -23,7 +23,6 @@
 - (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
 {
     return aQuery.class == self.class
-        && DBEqual(_where, aQuery.where)
         && DBEqual(_table, aQuery.table);
 }
 
@@ -37,7 +36,7 @@
     DBInsertQuery *query = (id)aQuery;
     DBInsertQuery *combined = [self copy];
     combined.columns = [_columns arrayByAddingObjectsFromArray:query.columns];
-    combined.values = [_values arrayByAddingObjectsFromArray:query.values];
+    combined.values  = [_values arrayByAddingObjectsFromArray:query.values];
     return combined;
 }
 
@@ -93,6 +92,13 @@
 @end
 
 @implementation DBUpdateQuery
+
+- (BOOL)canCombineWithQuery:(DBQuery * const)aQuery
+{
+    return [super canCombineWithQuery:aQuery]
+        && DBEqual(_where, aQuery.where);
+}
+
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
