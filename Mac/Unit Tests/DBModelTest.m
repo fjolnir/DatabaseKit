@@ -110,6 +110,23 @@
 
 }
 
+- (void)testRelationships
+{
+    // Fetching
+    [db migrateModelClasses:@[[TECar class], [TEDoor class]] error:NULL];
+    TECar *car = [[TECar alloc] initWithDatabase:db];
+    car.brandName = @"Subaru";
+    car.yearBuilt = 1994;
+    [car save];
+    car = [[db[@"cars"] select] firstObject];
+    [[db[@"doors"] insert:@{
+                           @"identifier": [[NSUUID UUID] UUIDString],
+                           @"side": @(TELeft),
+                           @"carIdentifier": car.identifier }] execute];
+
+    NSLog(@"%@", [car valueForKey:@"doors"]);
+}
+
 @end
 
 @implementation TEModel

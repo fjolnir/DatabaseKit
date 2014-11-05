@@ -151,6 +151,15 @@ static NSString *classPrefix = nil;
     // No action
 }
 
+- (id)valueForKey:(NSString *)key
+{
+    return [super valueForKey:key];
+}
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    [super setValue:value forKey:key];
+}
+
 - (BOOL)save
 {
     return [self save:NULL];
