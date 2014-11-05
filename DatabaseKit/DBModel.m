@@ -238,8 +238,7 @@ static NSString *classPrefix = nil;
                                 options:0
                                   range:NSMakeRange(0, [ret length])];
     }
-    ret = (NSMutableString *)[[ret stringByDecapitalizingFirstLetter] pluralizedString];
-    return ret;
+    return [[ret stringByDecapitalizingFirstLetter] pluralizedString];
 }
 
 #pragma mark -
