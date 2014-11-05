@@ -28,7 +28,7 @@ static NSString *classPrefix = nil;
     objc_property_t * properties = class_copyPropertyList(self, &propertyCount);
     if(properties) {
         NSSet *excludedKeys = [self excludedKeys];
-        NSMutableSet *result = [NSMutableSet setWithCapacity:propertyCount];
+        NSMutableSet *result = [NSMutableSet setWithObject:@"identifier"];
         for(NSUInteger i = 0; i < propertyCount; ++i) {
             NSString *key = @(property_getName(properties[i]));
             Class klass;
@@ -82,12 +82,19 @@ static NSString *classPrefix = nil;
         return nil;
 }
 
++ (NSArray *)constraintsForIdentifier
+{
+    return @[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending
+                                                     autoIncrement:NO
+                                                        onConflict:DBConflictActionFail]];
+}
+
 
 #pragma mark -
 
 + (NSSet *)keyPathsForValuesAffectingDirtyKeys
 {
-    NSMutableSet *keyPaths = [NSMutableSet new];
+    NSMutableSet *keyPaths = [NSMutableSet setWithObject:@"identifier"];
 
     Class klass = self;
     do {
@@ -148,28 +155,37 @@ static NSString *classPrefix = nil;
 {
     return [self save:NULL];
 }
+
+- (DBWriteQuery *)saveQueryForKey:(NSString *)key
+{
+    if(!self.inserted)
+        return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
+    else if([_dirtyKeys containsObject:key])
+        return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
+    else
+        return nil;
+}
+
 - (BOOL)save:(NSError **)outErr
 {
-    if(!self.isInserted) {
-        NSMutableDictionary *values = [[self dictionaryWithValuesForKeys:[[[self class] savedKeys] allObjects]] mutableCopy];
-        if(!_savedIdentifier)
-            values[@"identifier"] = [[NSUUID UUID] UUIDString];
+    if(!_savedIdentifier)
+        self.identifier = [[NSUUID UUID] UUIDString];
 
-        DBInsertQuery * const query = [[[self query] insert:values] or:DBInsertFallbackFail];
-        if([query execute:outErr]) {
-            _savedIdentifier = values[@"identifier"];
-            return YES;
-        } else
-            return YES;
-    } else if([_dirtyKeys count] > 0) {
-        NSDictionary *changedValues = [self dictionaryWithValuesForKeys:[_dirtyKeys allObjects]];
-        if([[[self query] update:changedValues] execute:outErr]) {
-            [_dirtyKeys removeAllObjects];
-            return YES;
-        } else
-            return NO;
+    NSMutableArray *queries = [NSMutableArray new];
+    for(NSString *key in [[self class] savedKeys]) {
+        DBWriteQuery *query = [self saveQueryForKey:key];
+        if(query)
+            [queries addObject:query];
     }
-    return YES;
+
+    DBConnection *connection = self.table.database.connection;
+    BOOL saved = [connection executeWriteQueriesInTransaction:[DBQuery combineQueries:queries]
+                                                        error:outErr];
+    if(saved) {
+        [_dirtyKeys removeAllObjects];
+        return YES;
+    } else
+        return NO;
 }
 
 - (BOOL)destroy

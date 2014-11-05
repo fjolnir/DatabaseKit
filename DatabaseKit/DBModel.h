@@ -4,7 +4,7 @@
 
 static NSString * const kDBIdentifierColumn = @"identifier";
 
-@class DBTable;
+@class DBTable, DBWriteQuery;
 
 /*!
  * The abstract base class for the DatabaseKit implementation\n
@@ -65,6 +65,13 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  */
 - (BOOL)save:(NSError **)outErr;
 - (BOOL)save;
+
+/*!
+ * Returns a query to use to save a given key to the database,
+ * before a save is performed an attempt is made to combine the queries
+ * involved in the save, down to the smallest possible number of queries
+ */
+- (DBWriteQuery *)saveQueryForKey:(NSString *)key;
 
 /*! Deletes a record from the database
  */
