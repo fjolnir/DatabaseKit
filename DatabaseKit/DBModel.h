@@ -60,7 +60,8 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  */
 + (NSArray *)constraintsForKey:(NSString *)key;
 
-/*! Saves changes to the database
+/*! 
+ * Saves changes to the database
  */
 - (BOOL)save:(NSError **)outErr;
 - (BOOL)save;

@@ -60,7 +60,7 @@ static NSString *classPrefix = nil;
     char * const type = property_copyAttributeValue(property, "T");
     NSAssert(type, @"Unable to get type for key %@", key);
 
-    if(*type == _C_ID && outClass && type[1] == '"') {
+    if(outClass && type[0] == _C_ID && type[1] == '"') {
         NSScanner * const scanner = [NSScanner scannerWithString:[NSString stringWithUTF8String:type+2]];
         NSString *className;
         if([scanner scanUpToString:@"\"" intoString:&className])

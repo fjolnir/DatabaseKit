@@ -1,15 +1,6 @@
-//
-//  NSString+Inflections.m
-//  DatabaseKit
-//
-//  Created by Fjölnir Ásgeirsson on 9.8.2007.
-//  Copyright 2007 Fjölnir Ásgeirsson. All rights reserved.
-//
-
 #import "NSString+DBAdditions.h"
 #import "DBInflector/DBInflector.h"
 
-/* @cond IGNORE */
 @implementation NSString (Inflections)
 - (NSString *)pluralizedString
 {
@@ -77,4 +68,3 @@
     return self;
 }
 @end
-/* @endcond */
