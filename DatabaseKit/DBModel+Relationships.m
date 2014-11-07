@@ -69,6 +69,19 @@
     BOOL toMany;
     Class relatedClass = [[self class] relatedClassForKey:key isToMany:&toMany];
     if(relatedClass) {
+        if(toMany) {
+            NSArray *counterparts = [self valueForKey:key];
+            for(DBModel *counterpart in counterparts) {
+                if(!counterpart.isInserted)
+                    [counterpart save];
+            }
+            DBTable *counterpartTable = self.table.database[[relatedClass tableName]];
+            return [[counterpartTable update:@{ [[self class] foreignKeyName]: self.identifier }]
+                                       where:@"identifier IN %@", [[self valueForKey:key] valueForKey:@"identifier"]];
+        } else {
+            NSDictionary *value = @{ [relatedClass foreignKeyName]: [[self valueForKey:key] identifier] };
+            return self.inserted ? [self.table update:value] : [self.table insert:value];
+        }
         return nil;
     } else
         return [self _db_relationships_saveQueryForKey:key];
