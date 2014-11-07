@@ -67,9 +67,13 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 - (BOOL)save;
 
 /*!
- * Returns a query to use to save a given key to the database,
- * before a save is performed an attempt is made to combine the queries
- * involved in the save, down to the smallest possible number of queries
+ * Returns an array of queries to execute in order to
+ * save the object to the database.
+ */
+- (NSArray *)queriesToSave;
+
+/*!
+ * Returns a query to use to save a given key to the database.
  */
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key;
 

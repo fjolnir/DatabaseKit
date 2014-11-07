@@ -175,20 +175,24 @@ static NSString *classPrefix = nil;
         return nil;
 }
 
-- (BOOL)save:(NSError **)outErr
+- (NSArray *)queriesToSave
 {
-    if(!_savedIdentifier)
-        self.identifier = [[NSUUID UUID] UUIDString];
-
     NSMutableArray *queries = [NSMutableArray new];
     for(NSString *key in [[self class] savedKeys]) {
         DBWriteQuery *query = [self saveQueryForKey:key];
         if(query)
             [queries addObject:query];
     }
+    return [DBQuery combineQueries:queries];
+}
+
+- (BOOL)save:(NSError **)outErr
+{
+    if(!_savedIdentifier)
+        self.identifier = [[NSUUID UUID] UUIDString];
 
     DBConnection *connection = self.table.database.connection;
-    BOOL saved = [connection executeWriteQueriesInTransaction:[DBQuery combineQueries:queries]
+    BOOL saved = [connection executeWriteQueriesInTransaction:[self queriesToSave]
                                                         error:outErr];
     if(saved) {
         [_dirtyKeys removeAllObjects];
@@ -256,8 +260,8 @@ static NSString *classPrefix = nil;
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n",
                                                                      [self class], self, self.savedIdentifier];
-    for(NSString *column in self.table.columns) {
-        [description appendFormat:@"%@ = %@\n", column, [self valueForKey:column]];
+    for(NSString *key in [[self class] savedKeys]) {
+        [description appendFormat:@"%@ = %@\n", key, [self valueForKey:key]];
     }
     [description appendString:@"}"];
     return description;
