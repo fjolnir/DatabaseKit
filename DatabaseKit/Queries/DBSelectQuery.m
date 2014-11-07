@@ -268,11 +268,15 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(selectingEntireTable && [results count] > 0 && self.table.modelClass) {
         NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
+        NSSet *savedKeys = [self.table.modelClass savedKeys];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
             NSArray *columns = result.columns;
             while([result step:outErr] == DBResultStateNotAtEnd) {
                 DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
                 for(NSUInteger i = 0; i < [columns count]; ++i) {
+                    if(![savedKeys containsObject:columns[i]])
+                        continue;
+                    
                     id value = [result valueOfColumnAtIndex:i];
                     if([value isKindOfClass:[NSData class]]) {
                         Class klass;
