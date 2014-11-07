@@ -1,5 +1,4 @@
 #import "DB+Migrations.h"
-#import "DBModel+Relationships.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 #import "NSString+DBAdditions.h"
@@ -22,7 +21,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             else
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
 
-            if(!type) {
+            if(!type && [klass isSubclassOfClass:[DBRelationalModel class]]) {
                 BOOL toMany;
                 Class counterpart = [klass relatedClassForKey:key isToMany:&toMany];
 

@@ -16,14 +16,14 @@
 @property(nonatomic, strong) NSString *species, *nickname;
 @end
 
-@interface TECar : DBModel
+@interface TECar : DBRelationalModel
 @property(nonatomic, strong) NSString *brandName;
 @property(nonatomic) NSUInteger yearBuilt;
 @property(nonatomic, copy) NSSet *doors;
 @end
 
 
-@interface TECarChanged : DBModel
+@interface TECarChanged : DBRelationalModel
 @property(nonatomic, strong) NSString *color;
 @property(nonatomic) NSUInteger yearBuilt;
 @property(nonatomic, copy) NSSet *doors;
@@ -33,6 +33,6 @@ typedef NS_ENUM(NSUInteger, TEDoorSide) {
     TELeft,
     TERight
 };
-@interface TEDoor : DBModel
+@interface TEDoor : DBRelationalModel
 @property(nonatomic) TEDoorSide side;
 @end

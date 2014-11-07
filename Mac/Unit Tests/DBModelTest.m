@@ -118,13 +118,20 @@
     car.brandName = @"Subaru";
     car.yearBuilt = 1994;
     [car save];
-    car = [[db[@"cars"] select] firstObject];
-    [[db[@"doors"] insert:@{
-                           @"identifier": [[NSUUID UUID] UUIDString],
-                           @"side": @(TELeft),
-                           @"carIdentifier": car.identifier }] execute];
 
+    [[db[@"doors"] insert:@{ @"identifier": [[NSUUID UUID] UUIDString],
+                             @"side": @(TELeft),
+                             @"carIdentifier": car.identifier }] execute];
+
+    car = [[db[@"cars"] select] firstObject];
     NSLog(@"%@", [car valueForKey:@"doors"]);
+    NSMutableSet *doorsModified = [[car valueForKey:@"doors"] mutableCopy];
+    [[db[@"doors"] insert:@{ @"identifier": [[NSUUID UUID] UUIDString],
+                             @"side": @(TERight) }] execute];
+    TEDoor *rightDoor = [[[db[@"doors"] select] where:@"side = %d", TERight] firstObject];
+    [doorsModified addObject:rightDoor];
+    car.doors = doorsModified;
+    [car save];
 }
 
 @end

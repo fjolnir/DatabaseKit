@@ -1,23 +1,9 @@
-#import "DBModel+Relationships.h"
+#import "DBRelationalModel.h"
+#import "DBModel+Private.h"
 #import "NSString+DBAdditions.h"
 #import <objc/runtime.h>
 
-@implementation DBModel (Relationships)
-
-+ (void)load
-{
-    for(NSString *key in [self savedKeys]) {
-        BOOL toMany;
-        Class klass = [self relatedClassForKey:key isToMany:&toMany];
-        if(!klass)
-            continue;
-    }
-
-    method_exchangeImplementations(class_getInstanceMethod(self, @selector(valueForKey:)),
-                                   class_getInstanceMethod(self, @selector(_db_relationships_valueForKey:)));
-    method_exchangeImplementations(class_getInstanceMethod(self, @selector(saveQueryForKey:)),
-                                   class_getInstanceMethod(self, @selector(_db_relationships_saveQueryForKey:)));
-}
+@implementation DBRelationalModel
 
 + (Class)relatedClassForKey:(NSString *)key isToMany:(BOOL *)outToMany
 {
@@ -26,7 +12,7 @@
         if([klass isSubclassOfClass:[NSSet class]]) {
             if(outToMany) *outToMany = YES;
             return NSClassFromString([[self classPrefix] stringByAppendingString:[[key singularizedString] stringByCapitalizingFirstLetter]]);
-        } else if([klass isSubclassOfClass:[DBModel class]]) {
+        } else if([klass isSubclassOfClass:[DBRelationalModel class]]) {
             if(outToMany) *outToMany = NO;
             return NSClassFromString([[self classPrefix] stringByAppendingString:[key stringByCapitalizingFirstLetter]]);
         }
@@ -39,9 +25,9 @@
     return [[[self tableName] singularizedString] stringByAppendingString:@"Identifier"];
 }
 
-- (id)_db_relationships_valueForKey:(NSString *)key
+- (id)valueForKey:(NSString *)key
 {
-    id value = [self _db_relationships_valueForKey:key];
+    id value = [super valueForKey:key];
 
     if(!value) {
         BOOL toMany;
@@ -64,7 +50,7 @@
     return value;
 }
 
-- (DBWriteQuery *)_db_relationships_saveQueryForKey:(NSString *)key
+- (DBWriteQuery *)saveQueryForKey:(NSString *)key
 {
     BOOL toMany;
     Class relatedClass = [[self class] relatedClassForKey:key isToMany:&toMany];
@@ -84,7 +70,7 @@
         }
         return nil;
     } else
-        return [self _db_relationships_saveQueryForKey:key];
+        return [super saveQueryForKey:key];
 }
 
 @end
