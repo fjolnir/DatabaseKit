@@ -65,6 +65,10 @@ static void _connectionCloser(void *ptr)
 {
     return [[self _getConnection:outErr] execute:sql substitutions:substitutions error:outErr];
 }
+- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
+{
+    return [[self _getConnection:outErr] executeUpdate:sql substitutions:substitutions error:outErr];
+}
 - (BOOL)closeConnection
 {
     @synchronized(_connections) {
