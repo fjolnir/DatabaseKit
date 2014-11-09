@@ -5,7 +5,6 @@
 
 @class TEAnimal, TEPerson;
 
-
 @interface DBModelTest : XCTestCase {
     DB *db;
 }

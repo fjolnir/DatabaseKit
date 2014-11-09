@@ -22,7 +22,6 @@
 @property(nonatomic, copy) NSSet *doors;
 @end
 
-
 @interface TECarChanged : DBRelationalModel
 @property(nonatomic, strong) NSString *color;
 @property(nonatomic) NSUInteger yearBuilt;
