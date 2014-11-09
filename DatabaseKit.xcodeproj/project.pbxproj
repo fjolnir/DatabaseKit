@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C71CE9AC19B3839600C77150 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97619B3839600C77150 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9AD19B3839600C77150 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97619B3839600C77150 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9AE19B3839600C77150 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97719B3839600C77150 /* DBConnection.m */; };
 		C71CE9AF19B3839600C77150 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE97719B3839600C77150 /* DBConnection.m */; };
@@ -53,6 +52,7 @@
 		C753CABE1A0F4ECF000149A7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CABD1A0F4ECF000149A7 /* libsqlite3.dylib */; };
 		C753CAC01A0F4EDE000149A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CABF1A0F4EDE000149A7 /* Foundation.framework */; };
 		C753CAC21A0F4EE3000149A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CAC11A0F4EE3000149A7 /* Foundation.framework */; };
+		C753CADB1A0F8180000149A7 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE97619B3839600C77150 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76774BB19C2032B00B9B687 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B219C2032B00B9B687 /* DBDeleteQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C76774BC19C2032B00B9B687 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B319C2032B00B9B687 /* DBDeleteQuery.m */; };
 		C76774BD19C2032B00B9B687 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B419C2032B00B9B687 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -481,12 +481,12 @@
 				C7F6FD5C19FE031800C77AC6 /* DBAlterTableQuery.h in Headers */,
 				C7F6FD5619FE030D00C77AC6 /* DBDropTableQuery.h in Headers */,
 				C76774C019C2032B00B9B687 /* DBQuery.h in Headers */,
+				C753CADB1A0F8180000149A7 /* DBConnection.h in Headers */,
 				C7F6FD4619FA3FD400C77AC6 /* DBColumnDefinition.h in Headers */,
 				C7F6FD3419FA22AF00C77AC6 /* DB+Migrations.h in Headers */,
 				C799312F19C580210094C090 /* DBModel+Private.h in Headers */,
 				C7F6FD4C19FBC54B00C77AC6 /* DBSQLRepresentable.h in Headers */,
 				C76774BF19C2032B00B9B687 /* DBQuery+Private.h in Headers */,
-				C71CE9AC19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9C319B3839600C77150 /* DBModel.h in Headers */,
 				C71CEA0D19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
 				C71CEA0519B3839600C77150 /* ISO8601DateFormatter.h in Headers */,
@@ -828,6 +828,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -859,6 +860,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -927,7 +929,6 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -967,7 +968,6 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
