@@ -3,7 +3,9 @@
 #import "NSString+DBAdditions.h"
 #import <objc/runtime.h>
 
-@implementation DBRelationalModel
+@implementation DBRelationalModel {
+    NSMutableDictionary *_implicitColumns;
+}
 
 + (Class)relatedClassForKey:(NSString *)key isToMany:(BOOL *)outToMany
 {
@@ -34,20 +36,34 @@
         Class klass = [[self class] relatedClassForKey:key isToMany:&toMany];
         char *ivarName = property_copyAttributeValue(class_getProperty([self class], [key UTF8String]), "V");
         if(ivarName && klass) {
-            DB *db = self.table.database;
-            DBTable *counterpartTable = db[[klass tableName]];
-
-            if(toMany) {
-                value = [[[counterpartTable select] where:@"%K = %@", [[self class] foreignKeyName], self.identifier] execute];
-            } else {
-                NSString *counterpartIdentifier = [[self.table select:@[[klass foreignKeyName]]] firstObject];
-                value = [[counterpartTable select] where:@"identifier = %@", counterpartIdentifier];
-            }
+            DBSelectQuery *query = [self queryForRelationalKey:key];
+            value = toMany ? [query execute] : [query firstObject];
             object_setIvar(self, class_getInstanceVariable([self class], ivarName), value);
             free(ivarName);
         }
     }
     return value;
+}
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+    if([self.table.columns containsObject:key])
+        return _implicitColumns[key];
+    else
+        return [super valueForUndefinedKey:key];
+}
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    if([self.table.columns containsObject:key]) {
+        if(!_implicitColumns)
+            _implicitColumns = [NSMutableDictionary new];
+        
+        if(value)
+            _implicitColumns[key] = value;
+        else
+            [_implicitColumns removeObjectForKey:key];
+    } else
+        [super setValue:value forKey:key];
 }
 
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key
@@ -71,6 +87,22 @@
         return nil;
     } else
         return [super saveQueryForKey:key];
+}
+
+- (DBSelectQuery *)queryForRelationalKey:(NSString *)key
+{
+    BOOL toMany;
+    Class relatedClass = [[self class] relatedClassForKey:key isToMany:&toMany];
+    if(relatedClass) {
+        DB *db = self.table.database;
+        DBTable *counterpartTable = db[[relatedClass tableName]];
+
+        if(toMany)
+            return [[counterpartTable select] where:@"%K = %@", [[self class] foreignKeyName], self.identifier];
+        else
+            return [[counterpartTable select] where:@"identifier = %@", [self valueForKey:[key stringByAppendingString:@"Identifier"]]];
+    }
+    return nil;
 }
 
 @end

@@ -33,5 +33,6 @@ typedef NS_ENUM(NSUInteger, TEDoorSide) {
     TERight
 };
 @interface TEDoor : DBRelationalModel
+@property(nonatomic) TECar *car;
 @property(nonatomic) TEDoorSide side;
 @end

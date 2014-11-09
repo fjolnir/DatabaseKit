@@ -131,6 +131,9 @@
     [doorsModified addObject:rightDoor];
     car.doors = doorsModified;
     [car save];
+
+    rightDoor = [[[db[@"doors"] select] where:@"side = %d", TERight] firstObject];
+    NSLog(@"%@", [rightDoor valueForKey:@"car"]);
 }
 
 @end
