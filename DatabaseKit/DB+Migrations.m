@@ -16,56 +16,12 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             DBType type = DBTypeUnknown;
             Class keyClass = nil;
             char enc = [klass typeForKey:key class:&keyClass];
-            if(enc == _C_ID)
+            if(enc == _C_ID) {
                 type = [[self.connection class] typeForClass:keyClass];
-            else
+                if(type == DBTypeUnknown && [keyClass conformsToProtocol:@protocol(NSCoding)])
+                    type = DBColumnTypeBlob;
+            } else
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
-
-            if(!type && [klass isSubclassOfClass:[DBRelationalModel class]]) {
-                BOOL toMany;
-                Class counterpart = [klass relatedClassForKey:key isToMany:&toMany];
-
-                if(counterpart && toMany) {
-                    if(counterpart && ![creates[[counterpart tableName]] hasColumnNamed:[klass foreignKeyName]]) {
-                        DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
-                                                   columnWithName:[klass foreignKeyName]
-                                                   type:DBTypeText
-                                                   constraints:@[[DBForeignKeyConstraint
-                                                                  foreignKeyConstraintWithTable:[klass tableName]
-                                                                  columnName:@"identifier"
-                                                                  onDelete:DBForeignKeyActionCascade
-                                                                  onUpdate:DBForeignKeyActionCascade]]];
-                        if(!creates[[counterpart tableName]])
-                            creates[[counterpart tableName]] = [[[self create] table:[counterpart tableName]] columns:@[foreignKeyCol]];
-                        else {
-                            DBCreateTableQuery *q = creates[[klass tableName]];
-                            creates[[counterpart tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
-                        }
-                    }
-                    continue;
-                } else if(counterpart && !toMany) {
-                    if(counterpart && ![creates[[klass tableName]] hasColumnNamed:[counterpart foreignKeyName]]) {
-                        DBColumnDefinition *foreignKeyCol = [DBColumnDefinition
-                                                   columnWithName:[counterpart foreignKeyName]
-                                                   type:@"TEXT"
-                                                   constraints:@[[DBForeignKeyConstraint
-                                                                  foreignKeyConstraintWithTable:[counterpart tableName]
-                                                                  columnName:@"identifier"
-                                                                  onDelete:DBForeignKeyActionCascade
-                                                                  onUpdate:DBForeignKeyActionCascade]]];
-                        if(!creates[[klass tableName]])
-                            creates[[counterpart tableName]] = [[[self create] table:[counterpart tableName]] columns:@[foreignKeyCol]];
-                        else {
-                            DBCreateTableQuery *q = creates[[klass tableName]];
-                            creates[[klass tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
-                        }
-                    }
-                    continue;
-                }
-            }
-
-            if(type == DBTypeUnknown && [keyClass conformsToProtocol:@protocol(NSCoding)])
-                type = DBColumnTypeBlob;
 
             NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumnDefinition *col, NSUInteger _, BOOL *__) {
                 return [col.name isEqualToString:key];
