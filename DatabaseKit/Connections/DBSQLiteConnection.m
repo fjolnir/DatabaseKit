@@ -373,14 +373,14 @@ retry:
 
 - (NSString *)nameOfColumnAtIndex:(NSUInteger)idx
 {
-    NSParameterAssert(idx < self.columnCount);
-    return @(sqlite3_column_name(_stmt, idx));
+    NSParameterAssert(idx < self.columnCount && idx < INT_MAX);
+    return @(sqlite3_column_name(_stmt, (int)idx));
 }
 
 - (NSUInteger)indexOfColumnNamed:(NSString *)name
 {
     const char *nameBuf = [name UTF8String];
-    for(NSUInteger i = 0; i < self.columnCount; ++i) {
+    for(int i = 0; i < self.columnCount; ++i) {
         if(strcmp(nameBuf, sqlite3_column_name(_stmt, i)) == 0)
             return i;
     }
@@ -395,28 +395,28 @@ retry:
         dateFormatter = [DBISO8601DateFormatter new];
     });
 
-    int columnType = sqlite3_column_type(_stmt, idx);
+    int columnType = sqlite3_column_type(_stmt, (int)idx);
     switch(columnType)
     {
         case SQLITE_INTEGER:
-            return @(sqlite3_column_int(_stmt, idx));
+            return @(sqlite3_column_int(_stmt, (int)idx));
             break;
         case SQLITE_FLOAT:
-            return @(sqlite3_column_double(_stmt, idx));
+            return @(sqlite3_column_double(_stmt, (int)idx));
             break;
         case SQLITE_BLOB:
-            return [NSData dataWithBytes:sqlite3_column_blob(_stmt, idx)
-                                  length:sqlite3_column_bytes(_stmt, idx)];
+            return [NSData dataWithBytes:sqlite3_column_blob(_stmt, (int)idx)
+                                  length:sqlite3_column_bytes(_stmt, (int)idx)];
             break;
         case SQLITE_NULL:
             return [NSNull null];
             break;
         case SQLITE_TEXT: {
-            const char *declType = sqlite3_column_decltype(_stmt, idx);
+            const char *declType = sqlite3_column_decltype(_stmt, (int)idx);
             if(declType && strncmp("date", declType, 4) == 0)
-                return [dateFormatter dateFromString:@((char *)sqlite3_column_text(_stmt, idx))];
+                return [dateFormatter dateFromString:@((char *)sqlite3_column_text(_stmt, (int)idx))];
             else
-                return @((char *)sqlite3_column_text(_stmt, idx));
+                return @((char *)sqlite3_column_text(_stmt, (int)idx));
             break;
         } default:
             // It really shouldn't ever come to this.

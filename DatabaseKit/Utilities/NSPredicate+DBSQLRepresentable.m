@@ -175,7 +175,7 @@
                                   ? self.leftExpression.keyPath
                                   : [self.leftExpression.keyPath substringFromIndex:dotIdx+1];
 
-                if([table typeOfColumn:column] == DBColumnTypeText) {
+                if([table typeOfColumn:column] == DBTypeText) {
                     NSString * const prefix      = self.rightExpression.constantValue;
                     unichar const incremented    = [prefix characterAtIndex:[prefix length] - 1] + 1;
                     NSString * const upperBounds = [prefix

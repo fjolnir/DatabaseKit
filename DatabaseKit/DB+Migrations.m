@@ -19,7 +19,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             if(enc == _C_ID) {
                 type = [[self.connection class] typeForClass:keyClass];
                 if(type == DBTypeUnknown && [keyClass conformsToProtocol:@protocol(NSCoding)])
-                    type = DBColumnTypeBlob;
+                    type = DBTypeBlob;
             } else
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
 

@@ -14,7 +14,7 @@
 {
     if((self = [self init])) {
         _name = [aDecoder decodeObjectForKey:@"name"];
-        _type = [aDecoder decodeObjectForKey:@"type"];
+        _type = [aDecoder decodeIntegerForKey:@"type"];
         _constraints = [aDecoder decodeObjectForKey:@"constraints"];
     }
     return self;

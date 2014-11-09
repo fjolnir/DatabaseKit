@@ -6,16 +6,6 @@
 
 @class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
 
-typedef NS_ENUM(NSUInteger, DBColumnType) {
-    DBColumnTypeInvalid,
-    DBColumnTypeUnknown,
-    DBColumnTypeInteger,
-    DBColumnTypeFloat,
-    DBColumnTypeText,
-    DBColumnTypeBlob,
-    DBColumnTypeDate
-};
-
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;
 @property(readonly, strong) DB *database;
@@ -37,7 +27,7 @@ typedef NS_ENUM(NSUInteger, DBColumnType) {
 - (DBUpdateQuery *)update:(NSDictionary *)columns;
 - (DBDeleteQuery *)delete;
 - (DBSelectQuery *)where:(id)conds, ...;
-- (DBSelectQuery *)order:(NSString *)order by:(id)columns;
+- (DBSelectQuery *)order:(DBOrder)order by:(id)columns;
 - (DBSelectQuery *)orderBy:(id)columns;
 - (DBSelectQuery *)limit:(NSUInteger)limit;
 
@@ -46,5 +36,5 @@ typedef NS_ENUM(NSUInteger, DBColumnType) {
 
 - (NSUInteger)count;
 
-- (DBColumnType)typeOfColumn:(NSString *)column;
+- (DBType)typeOfColumn:(NSString *)column;
 @end

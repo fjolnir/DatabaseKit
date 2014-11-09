@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, DBType) {
     DBTypeReal,
     DBTypeBoolean,
     DBTypeText,
-    DBTypeBlob
+    DBTypeBlob,
+    DBTypeDate
 };
 
 typedef NS_ENUM(NSUInteger, DBResultState) {

@@ -51,7 +51,7 @@
     return _columns;
 }
 
-- (DBColumnType)typeOfColumn:(NSString *)column
+- (DBType)typeOfColumn:(NSString *)column
 {
     if(!_columnTypes) {
         NSDictionary * const types = [self.database.connection columnsForTable:self.name];
@@ -60,13 +60,13 @@
             // TODO: support more types
             NSString *type = types[column];
             if([[type lowercaseString] isEqualToString:@"text"])
-                _columnTypes[column] = @(DBColumnTypeText);
+                _columnTypes[column] = @(DBTypeText);
             else if([[type lowercaseString] isEqualToString:@"integer"])
-                _columnTypes[column] = @(DBColumnTypeInteger);
+                _columnTypes[column] = @(DBTypeInteger);
             else if([[type lowercaseString] isEqualToString:@"numeric"])
-                _columnTypes[column] = @(DBColumnTypeFloat);
+                _columnTypes[column] = @(DBTypeReal);
             else if([[type lowercaseString] isEqualToString:@"date"])
-                _columnTypes[column] = @(DBColumnTypeDate);
+                _columnTypes[column] = @(DBTypeDate);
         }
     }
     return [_columnTypes[column] unsignedIntegerValue];
@@ -111,7 +111,7 @@
     va_end(args);
     return query;
 }
-- (DBQuery *)order:(NSString *)order by:(id)columns
+- (DBQuery *)order:(DBOrder)order by:(id)columns
 {
     return [[DBSelectQuery withTable:self] order:order by:columns];
 }

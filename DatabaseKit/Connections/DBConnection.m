@@ -163,7 +163,7 @@ static NSMutableArray *_ConnectionClasses;
         case _C_BOOL:
             return DBTypeBoolean;
         default:
-            return nil;
+            return DBTypeUnknown;
     }
 }
 
@@ -187,7 +187,7 @@ static NSMutableArray *_ConnectionClasses;
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
-    return nil;
+    return DBResultStateError;
 }
 
 - (NSUInteger)columnCount
