@@ -1,5 +1,7 @@
 #import <DatabaseKit/DBQuery.h>
 
+@class DBSelectQuery;
+
 typedef NS_ENUM(NSUInteger, DBFallback) {
     DBInsertFallbackNone,
     DBInsertFallbackReplace,

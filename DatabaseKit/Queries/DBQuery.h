@@ -54,10 +54,3 @@
 @interface DBConnection (DBQuery)
 - (BOOL)executeWriteQueriesInTransaction:(NSArray *)queries error:(NSError **)outErr;
 @end
-
-#import <DatabaseKit/DBCreateTableQuery.h>
-#import <DatabaseKit/DBSelectQuery.h>
-#import <DatabaseKit/DBInsertQuery.h>
-#import <DatabaseKit/DBDeleteQuery.h>
-#import <DatabaseKit/DBAlterTableQuery.h>
-#import <DatabaseKit/DBDropTableQuery.h>

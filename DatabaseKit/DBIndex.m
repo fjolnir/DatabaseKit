@@ -1,4 +1,5 @@
 #import "DBIndex.h"
+#import "DB.h"
 #import "DBTable.h"
 
 @implementation DBIndex

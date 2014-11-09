@@ -1,10 +1,8 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DB.h>
-
-#import <DatabaseKit/DBQuery.h>
+#import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBColumnDefinition.h>
 
-@class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
+@class DB, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
 
 @interface DBTable : NSObject
 @property(readonly, strong) NSString *name;

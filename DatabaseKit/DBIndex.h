@@ -1,4 +1,4 @@
-#import <DatabaseKit/DBConnection.h>
+#import <Foundation/Foundation.h>
 
 @class DBTable;
 

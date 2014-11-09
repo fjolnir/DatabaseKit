@@ -1,6 +1,11 @@
 #import "DBTable.h"
+#import "DB.h"
 #import "DBModel.h"
-#import "DBQuery.h"
+#import "DBSelectQuery.h"
+#import "DBInsertQuery.h"
+#import "DBDeleteQuery.h"
+#import "DBAlterTableQuery.h"
+#import "DBDropTableQuery.h"
 #import "Utilities/NSString+DBAdditions.h"
 
 @interface DBTable ()

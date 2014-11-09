@@ -1,4 +1,5 @@
 #import "DBQuery+Private.h"
+#import "DB.h"
 #import "DBTable.h"
 #import "DBModel.h"
 #import "Debug.h"
@@ -204,7 +205,7 @@
 }
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBInsertQuery *copy = [super copyWithZone:zone];
+    DBWriteQuery *copy = [super copyWithZone:zone];
     copy.values = _values;
     return copy;
 }

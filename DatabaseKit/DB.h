@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBConnectionPool.h>
 
-@class DBTable, DBCreateTableQuery;
+@class DBConnection, DBTable, DBCreateTableQuery;
 
 @interface DB : NSObject
 @property(readonly, strong) DBConnection *connection;

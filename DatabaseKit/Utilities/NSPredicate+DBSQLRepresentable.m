@@ -1,4 +1,5 @@
 #import "NSPredicate+DBSQLRepresentable.h"
+#import "DB.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 

@@ -1,6 +1,7 @@
 #import "DB+Migrations.h"
+#import "DBModel.h"
 #import "DBTable.h"
-#import "DBQuery.h"
+#import "DBCreateTableQuery.h"
 #import "NSString+DBAdditions.h"
 #import <objc/runtime.h>
 

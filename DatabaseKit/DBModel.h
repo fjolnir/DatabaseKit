@@ -1,10 +1,8 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DB.h>
-#import <DatabaseKit/DBConnection.h>
 
 static NSString * const kDBIdentifierColumn = @"identifier";
 
-@class DBTable, DBWriteQuery;
+@class DB, DBQuery, DBTable, DBWriteQuery;
 
 /*!
  * The abstract base class for the DatabaseKit implementation\n

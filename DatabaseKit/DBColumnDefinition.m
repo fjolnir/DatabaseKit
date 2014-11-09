@@ -1,4 +1,7 @@
 #import "DBColumnDefinition.h"
+#import "DB.h"
+#import "DBConnection.h"
+#import "DBQuery.h"
 
 @implementation DBColumnDefinition
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
