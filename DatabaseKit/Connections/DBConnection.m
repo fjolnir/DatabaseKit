@@ -121,6 +121,8 @@ static NSMutableArray *_ConnectionClasses;
             return @"TEXT";
         case DBTypeBlob:
             return @"BLOB";
+        case DBTypeDate:
+            return @"DATE";
         default:
             return nil;
     }
