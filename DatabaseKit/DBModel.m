@@ -74,7 +74,7 @@ static NSString *classPrefix = nil;
 + (NSArray *)constraintsForKey:(NSString *)key
 {
     // Check if we respond to the selector `constraintsFor<Key>`
-    SEL selector = NSSelectorFromString([@"constraintsFor" stringByAppendingString:[key stringByCapitalizingFirstLetter]]);
+    SEL selector = NSSelectorFromString([@"constraintsFor" stringByAppendingString:[key db_stringByCapitalizingFirstLetter]]);
     if([self respondsToSelector:selector]) {
         id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
         return imp(self, selector);
@@ -251,7 +251,7 @@ static NSString *classPrefix = nil;
                                 options:0
                                   range:NSMakeRange(0, [ret length])];
     }
-    return [[ret stringByDecapitalizingFirstLetter] pluralizedString];
+    return [[ret db_stringByDecapitalizingFirstLetter] db_pluralizedString];
 }
 
 #pragma mark -

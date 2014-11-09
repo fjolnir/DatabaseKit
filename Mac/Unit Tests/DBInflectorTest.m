@@ -37,29 +37,29 @@
 
 - (void)testPluralizationWithStringCategory
 {
-  XCTAssertTrue([[@"guy" pluralizedString] isEqualToString:@"guys"], @"guy should become guys");
-  XCTAssertTrue([[@"octopus" pluralizedString] isEqualToString:@"octopi"], @"octopus should become octopi");
-  XCTAssertTrue([[@"person" pluralizedString] isEqualToString:@"people"], @"person should become people");
-  XCTAssertTrue([[@"mother" pluralizedString] isEqualToString:@"mothers"], @"mother should become mothers");
-  XCTAssertTrue([[@"equipment" pluralizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
+  XCTAssertTrue([[@"guy" db_pluralizedString] isEqualToString:@"guys"], @"guy should become guys");
+  XCTAssertTrue([[@"octopus" db_pluralizedString] isEqualToString:@"octopi"], @"octopus should become octopi");
+  XCTAssertTrue([[@"person" db_pluralizedString] isEqualToString:@"people"], @"person should become people");
+  XCTAssertTrue([[@"mother" db_pluralizedString] isEqualToString:@"mothers"], @"mother should become mothers");
+  XCTAssertTrue([[@"equipment" db_pluralizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
 
 - (void)testSingularizationWithStringCategory
 {
-  XCTAssertTrue([[@"guys" singularizedString] isEqualToString:@"guy"], @"guys should become guy");
-  XCTAssertTrue([[@"octopi" singularizedString] isEqualToString:@"octopus"], @"octopi should become octopus");
-  XCTAssertTrue([[@"people" singularizedString] isEqualToString:@"person"], @"people should become person");
-  XCTAssertTrue([[@"mothers" singularizedString] isEqualToString:@"mother"], @"mothers should become mother");
-  XCTAssertTrue([[@"equipment" singularizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
+  XCTAssertTrue([[@"guys" db_singularizedString] isEqualToString:@"guy"], @"guys should become guy");
+  XCTAssertTrue([[@"octopi" db_singularizedString] isEqualToString:@"octopus"], @"octopi should become octopus");
+  XCTAssertTrue([[@"people" db_singularizedString] isEqualToString:@"person"], @"people should become person");
+  XCTAssertTrue([[@"mothers" db_singularizedString] isEqualToString:@"mother"], @"mothers should become mother");
+  XCTAssertTrue([[@"equipment" db_singularizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
 
 - (void)testUnderscoring
 {
-    XCTAssertEqualObjects([@"MyCamelizedString" underscoredString], @"my_camelized_string", @"underscore test failed");
+    XCTAssertEqualObjects([@"MyCamelizedString" db_underscoredString], @"my_camelized_string", @"underscore test failed");
 }
 
 - (void)testCamelizing
 {
-    XCTAssertEqualObjects([@"my_underscored_string" camelizedString], @"myUnderscoredString", @"camelize test failed");
+    XCTAssertEqualObjects([@"my_underscored_string" db_camelizedString], @"myUnderscoredString", @"camelize test failed");
 }
 @end

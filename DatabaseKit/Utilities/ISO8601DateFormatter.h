@@ -1,4 +1,4 @@
-/*ISO8601DateFormatter.h
+/*DBISO8601DateFormatter.h
  *
  *Created by Peter Hosey on 2009-04-11.
  *Copyright 2009 Peter Hosey. All rights reserved.
@@ -34,7 +34,7 @@ typedef NSUInteger ISO8601DateFormat;
 //The default separator for time values. Currently, this is ':'.
 extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
-@interface ISO8601DateFormatter: NSFormatter
+@interface DBISO8601DateFormatter: NSFormatter
 {
 	NSString *lastUsedFormatString;
 	NSDateFormatter *unparsingFormatter;

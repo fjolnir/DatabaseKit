@@ -390,9 +390,9 @@ retry:
 - (id)valueOfColumnAtIndex:(NSUInteger)idx
 {
     static dispatch_once_t onceToken;
-    static ISO8601DateFormatter *dateFormatter;
+    static DBISO8601DateFormatter *dateFormatter;
     dispatch_once(&onceToken, ^{
-        dateFormatter = [ISO8601DateFormatter new];
+        dateFormatter = [DBISO8601DateFormatter new];
     });
 
     int columnType = sqlite3_column_type(_stmt, idx);

@@ -1,4 +1,4 @@
-/*ISO8601DateFormatter.m
+/*DBISO8601DateFormatter.m
  *
  *Created by Peter Hosey on 2009-04-11.
  *Copyright 2009 Peter Hosey. All rights reserved.
@@ -22,7 +22,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 #define ISO_TIMEZONE_UTC_FORMAT @"Z"
 #define ISO_TIMEZONE_OFFSET_FORMAT @"%+.2d%.2d"
 
-@interface ISO8601DateFormatter(UnparsingPrivate)
+@interface DBISO8601DateFormatter(UnparsingPrivate)
 
 - (NSString *) replaceColonsInString:(NSString *)timeFormat withTimeSeparator:(unichar)timeSep;
 
@@ -33,7 +33,7 @@ unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 static NSMutableDictionary *timeZonesByOffset;
 
-@implementation ISO8601DateFormatter
+@implementation DBISO8601DateFormatter
 
 + (void) initialize {
 	if (!timeZonesByOffset) {

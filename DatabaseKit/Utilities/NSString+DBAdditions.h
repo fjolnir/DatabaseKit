@@ -2,19 +2,19 @@
 
 @interface NSString (DBAdditions)
 /*! Returns a singularized form of the string */
-- (NSString *)pluralizedString;
+- (NSString *)db_pluralizedString;
 /*! Returns a pluralized form of the string */
-- (NSString *)singularizedString;
+- (NSString *)db_singularizedString;
 
 /*! Returns a copy of the string with the first letter capitalized */
-- (NSString *)stringByCapitalizingFirstLetter;
+- (NSString *)db_stringByCapitalizingFirstLetter;
 /*! Returns a copy of the string with the first letter cdeapitalized */
-- (NSString *)stringByDecapitalizingFirstLetter;
+- (NSString *)db_stringByDecapitalizingFirstLetter;
 
 /*! Converts a camelized string to a underscored one aString -> a_string */
-- (NSString *)underscoredString;
+- (NSString *)db_underscoredString;
 /*! Converts an underscored string to a cameilzed one a_string -> aString */
-- (NSString *)camelizedString;
+- (NSString *)db_camelizedString;
 
 /*! Just returns self */
 - (NSString *)toString;

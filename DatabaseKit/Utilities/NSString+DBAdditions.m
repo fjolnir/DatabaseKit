@@ -2,7 +2,7 @@
 #import "DBInflector/DBInflector.h"
 
 @implementation NSString (Inflections)
-- (NSString *)pluralizedString
+- (NSString *)db_pluralizedString
 {
   NSArray *words = [self componentsSeparatedByString:@" "];
   NSMutableString *ret = [NSMutableString string];
@@ -13,7 +13,7 @@
   
   return ret;
 }
-- (NSString *)singularizedString
+- (NSString *)db_singularizedString
 {
   NSArray *words = [self componentsSeparatedByString:@" "];
   NSMutableString *ret = [NSMutableString string];
@@ -25,20 +25,20 @@
   return ret;
 }
 
-- (NSString *)stringByCapitalizingFirstLetter
+- (NSString *)db_stringByCapitalizingFirstLetter
 {
     NSString *capitalized = [self capitalizedString];
     return [self stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                          withString:[capitalized substringWithRange:NSMakeRange(0, 1)]];
 }
-- (NSString *)stringByDecapitalizingFirstLetter
+- (NSString *)db_stringByDecapitalizingFirstLetter
 {
     NSString *lowercase = [self lowercaseString];
     return [self stringByReplacingCharactersInRange:NSMakeRange(0, 1)
                                          withString:[lowercase substringWithRange:NSMakeRange(0, 1)]];
 }
 
-- (NSString *)underscoredString
+- (NSString *)db_underscoredString
 {
     NSString *underscored = [self stringByReplacingOccurrencesOfString:@"([A-Z]+)([A-Z][a-z])"
                                                             withString:@"$1_$2"
@@ -51,14 +51,14 @@
     
     return [underscored lowercaseString];
 }
-- (NSString *)camelizedString
+- (NSString *)db_camelizedString
 {
     NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
     NSMutableString *ret = [NSMutableString stringWithString:parts[0]];
     [parts removeObjectAtIndex:0];
     for(NSString *part in parts)
     {
-        [ret appendString:[part stringByCapitalizingFirstLetter]];
+        [ret appendString:[part db_stringByCapitalizingFirstLetter]];
     }
     return ret;
 }

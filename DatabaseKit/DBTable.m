@@ -24,7 +24,7 @@
 - (Class)modelClass
 {
     NSString *prefix    = [DBModel classPrefix];
-    NSString *tableName = [[_name singularizedString] stringByCapitalizingFirstLetter];
+    NSString *tableName = [[_name db_singularizedString] db_stringByCapitalizingFirstLetter];
     Class const klass = NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
     return [klass isSubclassOfClass:[DBModel class]] ? klass : nil;
 }
