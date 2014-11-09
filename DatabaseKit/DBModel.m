@@ -8,7 +8,7 @@
 
 static NSString *classPrefix = nil;
 
-@implementation DBModel{
+@implementation DBModel {
     NSMutableSet *_dirtyKeys;
 }
 @dynamic inserted;
