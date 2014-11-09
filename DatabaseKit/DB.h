@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBConnectionPool.h>
 
-@class DBTable, DBCreateQuery;
+@class DBTable, DBCreateTableQuery;
 
 @interface DB : NSObject
 @property(readonly, strong) DBConnection *connection;
@@ -14,5 +14,5 @@
 // Returns a table whose name matches key or nil
 - (DBTable *)objectForKeyedSubscript:(id)key;
 
-- (DBCreateQuery *)create;
+- (DBCreateTableQuery *)create;
 @end

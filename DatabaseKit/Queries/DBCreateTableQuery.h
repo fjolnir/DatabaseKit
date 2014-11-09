@@ -2,7 +2,7 @@
 
 @class DBSelectQuery;
 
-@interface DBCreateQuery : DBWriteQuery
+@interface DBCreateTableQuery : DBWriteQuery
 @property(readonly, nonatomic) NSString *tableName;
 @property(readonly, nonatomic) NSArray *columns;
 @property(readonly, nonatomic) DBSelectQuery *queryToDeriveFrom;

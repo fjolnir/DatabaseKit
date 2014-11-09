@@ -4,7 +4,7 @@
 #import <DatabaseKit/DBQuery.h>
 #import <DatabaseKit/DBColumnDefinition.h>
 
-@class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterQuery, DBDropQuery;
+@class DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
 
 typedef NS_ENUM(NSUInteger, DBColumnType) {
     DBColumnTypeInvalid,
@@ -41,8 +41,8 @@ typedef NS_ENUM(NSUInteger, DBColumnType) {
 - (DBSelectQuery *)orderBy:(id)columns;
 - (DBSelectQuery *)limit:(NSUInteger)limit;
 
-- (DBAlterQuery *)alter;
-- (DBDropQuery *)drop;
+- (DBAlterTableQuery *)alter;
+- (DBDropTableQuery *)drop;
 
 - (NSUInteger)count;
 

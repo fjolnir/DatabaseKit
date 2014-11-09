@@ -124,13 +124,13 @@
     return [[DBSelectQuery withTable:self] limit:limit];
 }
 
-- (DBAlterQuery *)alter
+- (DBAlterTableQuery *)alter
 {
-    return [DBAlterQuery withTable:self];
+    return [DBAlterTableQuery withTable:self];
 }
-- (DBDropQuery *)drop
+- (DBDropTableQuery *)drop
 {
-    return [DBDropQuery withTable:self];
+    return [DBDropTableQuery withTable:self];
 }
 
 - (NSUInteger)count

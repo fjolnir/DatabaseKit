@@ -1,25 +1,25 @@
 #import "DBQuery+Private.h"
-#import "DBCreateQuery.h"
+#import "DBCreateTableQuery.h"
 
-@implementation DBCreateQuery
+@implementation DBCreateTableQuery
 
 - (instancetype)table:(NSString *)tableName
 {
-    DBCreateQuery *query = [self copy];
+    DBCreateTableQuery *query = [self copy];
     query->_tableName = tableName;
     return query;
 }
 
 - (instancetype)columns:(NSArray *)columns
 {
-    DBCreateQuery *query = [self copy];
+    DBCreateTableQuery *query = [self copy];
     query->_queryToDeriveFrom = nil;
     query->_columns = columns;
     return query;
 }
 - (instancetype)as:(DBSelectQuery *)queryToDeriveFrom
 {
-    DBCreateQuery *query = [self copy];
+    DBCreateTableQuery *query = [self copy];
     query->_columns = nil;
     query->_queryToDeriveFrom = queryToDeriveFrom;
     return query;
@@ -63,7 +63,7 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBCreateQuery *copy   = [super copyWithZone:zone];
+    DBCreateTableQuery *copy = [super copyWithZone:zone];
     copy->_tableName = _tableName;
     copy->_columns   = _columns;
     return copy;

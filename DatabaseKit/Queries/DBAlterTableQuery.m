@@ -1,18 +1,18 @@
-#import "DBAlterQuery.h"
+#import "DBAlterTableQuery.h"
 #import "DBQuery+Private.h"
 
-@implementation DBAlterQuery
+@implementation DBAlterTableQuery
 
 - (instancetype)rename:(NSString *)name
 {
-    DBAlterQuery *ret = [self copy];
-    ret->_nameToRenameTo = name;
+    DBAlterTableQuery *ret = [self copy];
+    ret->_nameToRenameTo   = name;
     return ret;
 }
 - (instancetype)appendColumns:(NSArray *)columns
 {
-    DBAlterQuery *ret = [self copy];
-    ret->_columnsToAppend = columns;
+    DBAlterTableQuery *ret = [self copy];
+    ret->_columnsToAppend  = columns;
     return ret;
 }
 
@@ -47,9 +47,9 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBAlterQuery *copy   = [super copyWithZone:zone];
-    copy->_nameToRenameTo         = _nameToRenameTo;
-    copy->_columnsToAppend        = _columnsToAppend;
+    DBAlterTableQuery *copy = [super copyWithZone:zone];
+    copy->_nameToRenameTo   = _nameToRenameTo;
+    copy->_columnsToAppend  = _columnsToAppend;
     return copy;
 }
 

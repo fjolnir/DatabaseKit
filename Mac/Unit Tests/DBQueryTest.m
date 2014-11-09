@@ -35,9 +35,9 @@
     XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columnDefinitions] toString],
                           @"CREATE TABLE `tbl`(`identifier` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
 
-    XCTAssertEqualObjects([Q(Drop) toString], @"DROP TABLE `aTable`");
+    XCTAssertEqualObjects([Q(DropTable) toString], @"DROP TABLE `aTable`");
 
-    DBAlterQuery *alter = [Q(Alter) appendColumns:@[[DBColumnDefinition columnWithName:@"test" type:DBTypeText constraints:@[[DBNotNullConstraint new]]]]];
+    DBAlterTableQuery *alter = [Q(AlterTable) appendColumns:@[[DBColumnDefinition columnWithName:@"test" type:DBTypeText constraints:@[[DBNotNullConstraint new]]]]];
     XCTAssertEqualObjects([alter toString], @"ALTER TABLE `aTable` ADD COLUMN `test` TEXT NOT NULL");
 }
 

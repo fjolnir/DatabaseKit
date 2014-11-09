@@ -38,7 +38,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                         if(!creates[[counterpart tableName]])
                             creates[[counterpart tableName]] = [[[self create] table:[counterpart tableName]] columns:@[foreignKeyCol]];
                         else {
-                            DBCreateQuery *q = creates[[klass tableName]];
+                            DBCreateTableQuery *q = creates[[klass tableName]];
                             creates[[counterpart tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
                         }
                     }
@@ -56,7 +56,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                         if(!creates[[klass tableName]])
                             creates[[counterpart tableName]] = [[[self create] table:[counterpart tableName]] columns:@[foreignKeyCol]];
                         else {
-                            DBCreateQuery *q = creates[[klass tableName]];
+                            DBCreateTableQuery *q = creates[[klass tableName]];
                             creates[[klass tableName]] = [q columns:[q.columns arrayByAddingObject:foreignKeyCol]];
                         }
                     }
@@ -77,7 +77,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
         if(!creates[[klass tableName]])
             creates[[klass tableName]] = [[[self create] table:[klass tableName]] columns:columns];
         else {
-            DBCreateQuery *q = creates[[klass tableName]];
+            DBCreateTableQuery *q = creates[[klass tableName]];
             creates[[klass tableName]] = [q columns:[q.columns arrayByAddingObjectsFromArray:columns]];
         }
     }
@@ -90,7 +90,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
         NSMutableDictionary *creates = [[self tableCreationQueriesForClasses:classes] mutableCopy];
         for(Class klass in classes) {
             NSString *tableName = [klass tableName];
-            DBCreateQuery *createQuery = creates[tableName];
+            DBCreateTableQuery *createQuery = creates[tableName];
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
             if(lastMigration) {
                 NSSet *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
@@ -123,7 +123,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                         return DBTransactionRollBack;
                 }
             } else {
-                if(![(DBCreateQuery *)creates[tableName] execute:outErr])
+                if(![(DBCreateTableQuery *)creates[tableName] execute:outErr])
                     return DBTransactionRollBack;
             }
 
@@ -147,7 +147,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
 - (DBTable *)migrationTable
 {
     if(![self.connection tableExists:kCYMigrationTableName]) {
-        DBCreateQuery *migrationCreate = [[[self create] table:kCYMigrationTableName] columns:@[
+        DBCreateTableQuery *migrationCreate = [[[self create] table:kCYMigrationTableName] columns:@[
             [DBColumnDefinition columnWithName:@"table" type:DBTypeText constraints:@[[DBNotNullConstraint new], [DBUniqueConstraint new]]],
             [DBColumnDefinition columnWithName:@"columns" type:DBTypeBlob constraints:@[[DBNotNullConstraint new]]]
         ]];

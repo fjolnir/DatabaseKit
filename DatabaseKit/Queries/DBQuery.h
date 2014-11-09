@@ -55,9 +55,9 @@
 - (BOOL)executeWriteQueriesInTransaction:(NSArray *)queries error:(NSError **)outErr;
 @end
 
-#import <DatabaseKit/DBCreateQuery.h>
+#import <DatabaseKit/DBCreateTableQuery.h>
 #import <DatabaseKit/DBSelectQuery.h>
 #import <DatabaseKit/DBInsertQuery.h>
 #import <DatabaseKit/DBDeleteQuery.h>
-#import <DatabaseKit/DBAlterQuery.h>
-#import <DatabaseKit/DBDropQuery.h>
+#import <DatabaseKit/DBAlterTableQuery.h>
+#import <DatabaseKit/DBDropTableQuery.h>

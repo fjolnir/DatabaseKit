@@ -1,7 +1,7 @@
-#import "DBDropQuery.h"
+#import "DBDropTableQuery.h"
 #import "DBQuery+Private.h"
 
-@implementation DBDropQuery
+@implementation DBDropTableQuery
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
@@ -15,4 +15,5 @@
 
     return YES;
 }
+
 @end

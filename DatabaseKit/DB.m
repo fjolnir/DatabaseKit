@@ -1,6 +1,6 @@
 #import "DB.h"
 #import "DBTable.h"
-#import "DBCreateQuery.h"
+#import "DBCreateTableQuery.h"
 
 @interface DB ()
 @property(readwrite, strong) DBConnection *connection;
@@ -32,9 +32,9 @@
     return [DBTable withDatabase:self name:key];
 }
 
-- (DBCreateQuery *)create
+- (DBCreateTableQuery *)create
 {
-    return [DBCreateQuery withDatabase:self];
+    return [DBCreateTableQuery withDatabase:self];
 }
 
 @end
