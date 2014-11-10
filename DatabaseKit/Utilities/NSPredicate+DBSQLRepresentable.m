@@ -150,15 +150,15 @@
             NSString *pattern = [self.rightExpression.constantValue stringByReplacingOccurrencesOfString:@"*"
                                                                                               withString:@"%"];
             pattern = [pattern stringByReplacingOccurrencesOfString:@"?" withString:@"_"];
-            NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+            NSString *likeOperator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
             
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ %@" : @"%@ %@ %@"),
                                               [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
-                                              operator,
+                                              likeOperator,
                                               [[NSExpression expressionForConstantValue:pattern] _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSBeginsWithPredicateOperatorType: {
-            NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+            NSString *likeOperator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
 
             if(!(self.options & NSCaseInsensitivePredicateOption) &&
                self.leftExpression.expressionType == NSKeyPathExpressionType &&
@@ -192,14 +192,14 @@
             }
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ %@||'%%'" : @"%@ %@ %@||'%%'"),
                                               [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
-                                              operator,
+                                              likeOperator,
                                               [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         case NSEndsWithPredicateOperatorType: {
-            NSString *operator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
+            NSString *likeOperator = (self.options & NSCaseInsensitivePredicateOption) ? @"ILIKE" : @"LIKE";
             return [NSString stringWithFormat:(negate ? @"%@ NOT %@ '%%'||%@" : @"%@ %@ '%%'||%@"),
                                               [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
-                                              operator,
+                                              likeOperator,
                                               [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters]];
         }
         default:

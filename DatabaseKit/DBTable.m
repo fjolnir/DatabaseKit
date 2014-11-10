@@ -61,17 +61,17 @@
     if(!_columnTypes) {
         NSDictionary * const types = [self.database.connection columnsForTable:self.name];
         _columnTypes = [NSMutableDictionary dictionaryWithCapacity:[types count]];
-        for(NSString *column in types) {
+        for(NSString *columnName in types) {
             // TODO: support more types
-            NSString *type = types[column];
+            NSString *type = types[columnName];
             if([[type lowercaseString] isEqualToString:@"text"])
-                _columnTypes[column] = @(DBTypeText);
+                _columnTypes[columnName] = @(DBTypeText);
             else if([[type lowercaseString] isEqualToString:@"integer"])
-                _columnTypes[column] = @(DBTypeInteger);
+                _columnTypes[columnName] = @(DBTypeInteger);
             else if([[type lowercaseString] isEqualToString:@"numeric"])
-                _columnTypes[column] = @(DBTypeReal);
+                _columnTypes[columnName] = @(DBTypeReal);
             else if([[type lowercaseString] isEqualToString:@"date"])
-                _columnTypes[column] = @(DBTypeDate);
+                _columnTypes[columnName] = @(DBTypeDate);
         }
     }
     return [_columnTypes[column] unsignedIntegerValue];
