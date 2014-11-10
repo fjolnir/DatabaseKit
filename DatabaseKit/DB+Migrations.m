@@ -6,6 +6,7 @@
 #import <objc/runtime.h>
 
 static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
+
 @implementation DB (Migrations)
 
 - (NSDictionary *)tableCreationQueriesForClasses:(NSArray *)classes
@@ -24,9 +25,6 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             } else
                 type = [[self.connection class] typeForObjCScalarEncoding:enc];
 
-            NSAssert(NSNotFound == [columns indexOfObjectPassingTest:^(DBColumnDefinition *col, NSUInteger _, BOOL *__) {
-                return [col.name isEqualToString:key];
-            }], @"Duplicate column %@", key);
             [columns addObject:[DBColumnDefinition columnWithName:key
                                                    type:type
                                             constraints:[klass constraintsForKey:key]]];
@@ -50,7 +48,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             DBCreateTableQuery *createQuery = creates[tableName];
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
             if(lastMigration) {
-                NSSet *currentColumns = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
+                NSSet *currentColumns   = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
                 NSSet *untouchedColumns = [currentColumns
                                                    filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
                     return [[creates[tableName] columns] containsObject:col];
@@ -89,8 +87,7 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
                     return DBTransactionRollBack;
             }
 
-            DBInsertQuery *migration = [[[self migrationTable]
-             insert:@{
+            DBInsertQuery *migration = [[self.migrationTable insert:@{
                  @"table": tableName,
                  @"columns": [NSKeyedArchiver archivedDataWithRootObject:[NSSet setWithArray:[creates[tableName] valueForKey:@"columns"]]]
              }] or:DBInsertFallbackReplace];

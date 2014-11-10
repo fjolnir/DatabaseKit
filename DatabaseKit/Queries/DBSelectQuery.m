@@ -258,7 +258,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     NSArray *results = [super executeOnConnection:connection error:outErr];
 
-    NSMutableString *query = [NSMutableString new];
+    NSMutableString *query  = [NSMutableString new];
     NSMutableArray  *params = [NSMutableArray new];
     NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
     DBResult *result = [connection execute:query substitutions:params error:outErr];
