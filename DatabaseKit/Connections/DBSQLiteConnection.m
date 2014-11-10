@@ -220,9 +220,9 @@
     }
     [_cachedStatements removeAllObjects];
 
-    BOOL ret = sqlite3_close(_handle) == SQLITE_OK;
+    int err = sqlite3_close(_handle);
     _handle = NULL;
-    return ret;
+    return err == SQLITE_OK;
 }
 
 - (sqlite3_stmt *)prepareQuerySQL:(NSString *)query
