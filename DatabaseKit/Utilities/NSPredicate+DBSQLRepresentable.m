@@ -75,11 +75,15 @@
 {
     switch(self.expressionType) {
         case NSKeyPathExpressionType: {
-            NSString *quotedKeyPath = [NSString stringWithFormat:@"`%@`", self.keyPath];
-            if(query.table && [self.keyPath rangeOfString:@"."].location == NSNotFound)
-                return [query.table.name stringByAppendingFormat:@".%@", quotedKeyPath];
-            else
-                return quotedKeyPath;
+            NSMutableString *quotedKeyPath = [NSMutableString stringWithFormat:@"`%@`", self.keyPath];
+            [quotedKeyPath replaceOccurrencesOfString:@"." withString:@"`.`"
+                                              options:0
+                                                range:(NSRange) { 0, [quotedKeyPath length] }];
+            if(query.table && [self.keyPath rangeOfString:@"."].location == NSNotFound) {
+                [quotedKeyPath insertString:@"." atIndex:0];
+                [quotedKeyPath insertString:query.table.name atIndex:0];
+            }
+            return quotedKeyPath;
             break;
         } case NSConstantValueExpressionType:
             if([self.constantValue isKindOfClass:[NSArray class]]) {
