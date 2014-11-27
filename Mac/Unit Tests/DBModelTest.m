@@ -81,13 +81,6 @@
 @end
 
 @implementation TEModel
-+ (NSArray *)constraintsForCategoryIdentifier
-{
-    return @[[DBForeignKeyConstraint foreignKeyConstraintWithTable:[CYProduct tableName]
-                                                        columnName:@"identifier"
-                                                          onDelete:DBForeignKeyActionCascade
-                                                          onUpdate:foreignKeyConstraintWithTable]];
-}
 @end
 
 @implementation TEPerson

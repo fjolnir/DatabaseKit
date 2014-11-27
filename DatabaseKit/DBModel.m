@@ -35,11 +35,15 @@ static NSString *classPrefix = nil;
         NSMutableSet *result = [NSMutableSet setWithObject:@"identifier"];
         for(NSUInteger i = 0; i < propertyCount; ++i) {
             NSString *key = @(property_getName(properties[i]));
+            char * const getterName = property_copyAttributeValue(properties[i], "G")
+                                   ?: strdup([key UTF8String]);
             Class klass;
             char encoding = [self typeForKey:key class:&klass];
-            if(![excludedKeys containsObject:key] &&
+            if(![[DBModel superclass] instancesRespondToSelector:sel_registerName(getterName)] &&
+               ![excludedKeys containsObject:key] &&
                (encoding != _C_ID || [klass conformsToProtocol:@protocol(NSCoding)]))
                 [result addObject:key];
+            free(getterName);
         }
         return result;
     } else
