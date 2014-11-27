@@ -63,8 +63,7 @@
     TEModel *first = [[db[@"models"] select] firstObject];
     [first.table.database.connection beginTransaction];
     NSString *newName = @"NOT THE SAME NAME!";
-    //[first setName:newName];
-    first.name = @"NOT THE SAME NAME!";
+    first.name = newName;
     [first.table.database.connection endTransaction];
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
