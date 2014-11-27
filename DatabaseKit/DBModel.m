@@ -126,16 +126,33 @@ static NSString *classPrefix = nil;
     return self;
 }
 
-- (id)initWithDatabase:(DB *)aDB
+- (id)initWithDatabase:(DB *)aDB result:(DBResult *)result
 {
     NSParameterAssert(aDB);
-    if(!(self = [self init]))
-        return nil;
+    if((self = [self init])) {
+        _table     = aDB[[[self class] tableName]];
+        _dirtyKeys = [NSMutableSet new];
 
-    _table     = aDB[[[self class] tableName]];
-    _dirtyKeys = [NSMutableSet new];
-
+        NSArray *columns = result.columns;
+        for(NSUInteger i = 0; i < [columns count]; ++i) {
+            id value = [result valueOfColumnAtIndex:i];
+            if([value isKindOfClass:[NSData class]]) {
+                Class klass;
+                char encoding = [[self class] typeForKey:columns[i] class:&klass];
+                if(encoding == _C_ID && ![klass isSubclassOfClass:[NSData class]])
+                    value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
+            }
+            [self setValue:(value == [NSNull null]) ? nil : value
+                    forKey:columns[i]];
+        }
+        _savedIdentifier = _identifier;
+    }
     return self;
+}
+
+- (id)initWithDatabase:(DB *)aDB
+{
+    return [self initWithDatabase:aDB result:nil];
 }
 
 - (void)didChangeValueForKey:(NSString *)key

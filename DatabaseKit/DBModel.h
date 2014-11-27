@@ -2,7 +2,7 @@
 
 static NSString * const kDBIdentifierColumn = @"identifier";
 
-@class DB, DBQuery, DBTable, DBWriteQuery;
+@class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 
 /*!
  * The abstract base class for the DatabaseKit implementation\n
@@ -37,6 +37,11 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  *  You must set an identifier before saving
  */
 - (id)initWithDatabase:(DB *)aDB;
+
+/*! Returns a model object in the given database
+ *  populated with data from the result object.
+ */
+- (id)initWithDatabase:(DB *)aDB result:(DBResult *)result;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n

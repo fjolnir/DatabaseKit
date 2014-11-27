@@ -265,29 +265,19 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
     BOOL const selectingEntireTable = self.columns == nil
                                    || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
-    if(selectingEntireTable && [results count] > 0 && self.table.modelClass) {
+    Class modelClass = self.table.modelClass;
+    if(selectingEntireTable && [results count] > 0 && modelClass) {
         NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
-            NSArray *columns = result.columns;
             while([result step:outErr] == DBResultStateNotAtEnd) {
-                DBModel *model = [[self.table.modelClass alloc] initWithDatabase:self.table.database];
-                for(NSUInteger i = 0; i < [columns count]; ++i) {
-                    id value = [result valueOfColumnAtIndex:i];
-                    if([value isKindOfClass:[NSData class]]) {
-                        Class klass;
-                        char encoding = [[model class] typeForKey:columns[i] class:&klass];
-                        if(encoding == _C_ID && ![klass isSubclassOfClass:[NSData class]])
-                            value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
-                    }
-                    [model setValue:[[NSNull null] isEqual:value] ? nil : value
-                             forKey:columns[i]];
-                }
-                model.savedIdentifier = model.identifier;
-                [model _clearDirtyKeys];
-                [modelObjects addObject:model];
+                [modelObjects addObject:[[modelClass alloc]
+                                         initWithDatabase:self.table.database
+                                         result:result]];
             }
-            return result.state == DBResultStateAtEnd ? modelObjects : nil;
+            return result.state == DBResultStateAtEnd
+                 ? modelObjects
+                 : nil;
         }
     }
     return [result toArray:outErr];
