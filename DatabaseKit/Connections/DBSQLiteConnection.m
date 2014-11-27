@@ -90,6 +90,7 @@
     dispatch_once(&onceToken, ^{
         dateFormatter = [NSDateFormatter new];
         dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        dateFormatter.locale     = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     });
     
     BOOL isDict = [substitutions isKindOfClass:[NSDictionary class]] ||
