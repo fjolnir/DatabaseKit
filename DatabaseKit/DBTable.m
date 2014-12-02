@@ -58,23 +58,7 @@
 
 - (DBType)typeOfColumn:(NSString *)column
 {
-    if(!_columnTypes) {
-        NSDictionary * const types = [self.database.connection columnsForTable:self.name];
-        _columnTypes = [NSMutableDictionary dictionaryWithCapacity:[types count]];
-        for(NSString *columnName in types) {
-            // TODO: support more types
-            NSString *type = types[columnName];
-            if([[type lowercaseString] isEqualToString:@"text"])
-                _columnTypes[columnName] = @(DBTypeText);
-            else if([[type lowercaseString] isEqualToString:@"integer"])
-                _columnTypes[columnName] = @(DBTypeInteger);
-            else if([[type lowercaseString] isEqualToString:@"numeric"])
-                _columnTypes[columnName] = @(DBTypeReal);
-            else if([[type lowercaseString] isEqualToString:@"date"])
-                _columnTypes[columnName] = @(DBTypeDate);
-        }
-    }
-    return [_columnTypes[column] unsignedIntegerValue];
+    [self.database.connection columnsForTable:self.name][column];
 }
 
 #pragma mark - Query generators
