@@ -213,7 +213,7 @@ static NSString *classPrefix = nil;
 
 - (BOOL)save:(NSError **)outErr
 {
-    if(!_savedIdentifier)
+    if(!self.identifier)
         self.identifier = [[NSUUID UUID] UUIDString];
 
     DBConnection *connection = self.table.database.connection;
