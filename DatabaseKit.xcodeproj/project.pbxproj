@@ -910,7 +910,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-DENABLE_AR_DEBUG";
+				OTHER_CFLAGS = "-DENABLE_DB_DEBUG";
 			};
 			name = Debug;
 		};
