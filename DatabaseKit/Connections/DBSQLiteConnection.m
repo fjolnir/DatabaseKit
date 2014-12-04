@@ -346,14 +346,6 @@ retry:
         case SQLITE_BUSY:
             usleep(100);
             goto retry;
-        case SQLITE_ERROR:
-        case SQLITE_MISUSE:
-            if(outErr)
-                *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
-                                              code:0
-                                          userInfo:@{ NSLocalizedDescriptionKey: @(sqlite3_errmsg(_connection->_handle)) }];
-            _state = DBResultStateError;
-            break;
         case SQLITE_ROW:
             _state = DBResultStateNotAtEnd;
             break;
@@ -361,6 +353,13 @@ retry:
             _state = DBResultStateAtEnd;
             break;
         default:
+            if(outErr)
+                *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
+                                              code:0
+                                          userInfo:@{
+                    NSLocalizedDescriptionKey: @(sqlite3_errmsg(_connection->_handle)),
+                    @"query": _query ?: @""
+                }];
             _state = DBResultStateError;
             break;
     }
