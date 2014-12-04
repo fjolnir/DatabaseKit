@@ -220,6 +220,7 @@ static NSString *classPrefix = nil;
     BOOL saved = [connection executeWriteQueriesInTransaction:[self queriesToSave]
                                                         error:outErr];
     if(saved) {
+        _savedIdentifier = self.identifier;
         [_dirtyKeys removeAllObjects];
         return YES;
     } else
