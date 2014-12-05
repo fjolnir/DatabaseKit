@@ -58,7 +58,7 @@
 
 - (DBType)typeOfColumn:(NSString *)column
 {
-    [self.database.connection columnsForTable:self.name][column];
+    return [self.database.connection columnsForTable:self.name][column];
 }
 
 #pragma mark - Query generators
