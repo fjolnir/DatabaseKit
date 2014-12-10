@@ -36,12 +36,12 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 /*! Returns a model object in the given database
  *  You must set an identifier before saving
  */
-- (id)initWithDatabase:(DB *)aDB;
++ (instancetype)modelInDatabase:(DB *)aDB;
 
 /*! Returns a model object in the given database
  *  populated with data from the result object.
  */
-- (id)initWithDatabase:(DB *)aDB result:(DBResult *)result;
++ (instancetype)modelInDatabase:(DB *)aDB result:(DBResult *)result;
 
 /*! Sets the class prefix for models\n
  * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n

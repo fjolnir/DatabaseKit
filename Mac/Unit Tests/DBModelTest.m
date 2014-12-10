@@ -28,7 +28,7 @@
         NSLog(@"Failed to initialize models: %@", err);
     }
 
-    TEModel *testModel = [[TEModel alloc] initWithDatabase:db];
+    TEModel *testModel = [TEModel modelInDatabase:db];
     testModel.name = @"Foobar";
     testModel.info = @"lorem ipsum";
     [testModel save];
@@ -70,7 +70,7 @@
 
 - (void)testNSCoding
 {
-    TEWebSite *site = [[TEWebSite alloc] initWithDatabase:db];
+    TEWebSite *site = [TEWebSite modelInDatabase:db];
     site.url = [NSURL URLWithString:@"http://google.com"];
     XCTAssert([site save], @"Unable to save NSCoding compliant object to database");
     TEWebSite *retrievedSite = [[db[[TEWebSite tableName]] select] firstObject];

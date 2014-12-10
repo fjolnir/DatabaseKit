@@ -8,7 +8,8 @@
 #import "Debug.h"
 #import "Utilities/NSString+DBAdditions.h"
 #import <objc/runtime.h>
-#include <unistd.h>
+#import <unistd.h>
+#import <pthread.h>
 
 static NSString *classPrefix = nil;
 
@@ -130,33 +131,44 @@ static NSString *classPrefix = nil;
     return self;
 }
 
-- (id)initWithDatabase:(DB *)aDB result:(DBResult *)result
++ (instancetype)modelInDatabase:(DB *)aDB
+{
+    return [self modelInDatabase:aDB result:nil];
+}
+
++ (instancetype)modelInDatabase:(DB *)aDB result:(DBResult *)result
 {
     NSParameterAssert(aDB);
-    if((self = [self init])) {
-        _table     = aDB[[[self class] tableName]];
-        _dirtyKeys = [NSMutableSet new];
+
+    NSString *identifier = [result valueOfColumnNamed:@"identifier"];
+    if(identifier) {
+        NSMapTable *liveObjects = [aDB liveObjectsOfModelClass:self];
+
+        DBModel *liveObj = [liveObjects objectForKey:identifier];
+        if(liveObj)
+            return liveObj;
+    }
+
+    DBModel *model = [self new];
+    if(model) {
+        model->_table     = aDB[self.tableName];
+        model->_dirtyKeys = [NSMutableSet new];
 
         NSArray *columns = result.columns;
         for(NSUInteger i = 0; i < [columns count]; ++i) {
             id value = [result valueOfColumnAtIndex:i];
             if([value isKindOfClass:[NSData class]]) {
                 Class klass;
-                char encoding = [[self class] typeForKey:columns[i] class:&klass];
+                char encoding = [self typeForKey:columns[i] class:&klass];
                 if(encoding == _C_ID && ![klass isSubclassOfClass:[NSData class]])
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
             }
-            [self setValue:(value == [NSNull null]) ? nil : value
+            [model setValue:(value == [NSNull null]) ? nil : value
                     forKey:columns[i]];
         }
-        _savedIdentifier = _identifier;
+        model->_savedIdentifier = model->_identifier;
     }
-    return self;
-}
-
-- (id)initWithDatabase:(DB *)aDB
-{
-    return [self initWithDatabase:aDB result:nil];
+    return model;
 }
 
 - (void)didChangeValueForKey:(NSString *)key
@@ -220,6 +232,12 @@ static NSString *classPrefix = nil;
     BOOL saved = [connection executeWriteQueriesInTransaction:[self queriesToSave]
                                                         error:outErr];
     if(saved) {
+        NSMapTable *liveObjects = [self.table.database liveObjectsOfModelClass:[self class]];
+        if(_savedIdentifier && _savedIdentifier != self.identifier)
+             [liveObjects removeObjectForKey:_savedIdentifier];
+        if(self.identifier)
+            [liveObjects setObject:self forKey:self.identifier];
+
         _savedIdentifier = self.identifier;
         [_dirtyKeys removeAllObjects];
         return YES;
@@ -305,7 +323,7 @@ static NSString *classPrefix = nil;
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBModel *copy = [[[self class] alloc] initWithDatabase:self.table.database];
+    DBModel *copy = [[self class] modelInDatabase:self.table.database];
     for(NSString *column in self.table.columns) {
         if(![column isEqualToString:kDBIdentifierColumn])
             [copy setValue:[self valueForKey:column] forKey:column];
@@ -313,4 +331,30 @@ static NSString *classPrefix = nil;
     return copy;
 }
 
+@end
+
+@implementation DB (DBModelUniquing)
+static pthread_key_t liveObjectKey;
+static void releaseLiveObjects(void *ptr) {
+    __unused id objs = (__bridge_transfer id)ptr;
+}
+- (NSMapTable *)liveObjectsOfModelClass:(Class)modelClass
+{
+    NSParameterAssert([modelClass isSubclassOfClass:[DBModel class]]);
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pthread_key_create(&liveObjectKey, &releaseLiveObjects);
+    });
+    NSMapTable *liveObjects = (__bridge id)pthread_getspecific(liveObjectKey);
+    if(!liveObjects) {
+        liveObjects = [NSMapTable strongToStrongObjectsMapTable];
+        pthread_setspecific(liveObjectKey, (__bridge_retained void *)liveObjects);
+    }
+
+    if(![liveObjects objectForKey:modelClass])
+        [liveObjects setObject:[NSMapTable strongToWeakObjectsMapTable]
+                        forKey:modelClass];
+    return [liveObjects objectForKey:modelClass];
+}
 @end

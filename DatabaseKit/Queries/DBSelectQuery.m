@@ -271,9 +271,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
             while([result step:outErr] == DBResultStateNotAtEnd) {
-                [modelObjects addObject:[[modelClass alloc]
-                                         initWithDatabase:self.table.database
-                                         result:result]];
+                [modelObjects addObject:[modelClass modelInDatabase:self.table.database result:result]];
             }
             return result.state == DBResultStateAtEnd
                  ? modelObjects
