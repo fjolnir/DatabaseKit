@@ -9,7 +9,6 @@
 #import "Utilities/NSString+DBAdditions.h"
 #import <objc/runtime.h>
 #import <unistd.h>
-#import <pthread.h>
 
 #ifdef ENABLE_AR_DEBUG
 #   define ASSERT_THREAD() NSAssert([NSThread currentThread] == _thread, \
@@ -373,34 +372,6 @@ static NSString *classPrefix = nil;
             [copy setValue:[self valueForKey:column] forKey:column];
     }
     return copy;
-}
-
-@end
-
-@implementation DB (DBModelUniquing)
-static pthread_key_t liveObjectKey;
-static void releaseLiveObjects(void *ptr) {
-    __unused id objs = (__bridge_transfer id)ptr;
-}
-- (NSMapTable *)liveObjectsOfModelClass:(Class)modelClass
-{
-    NSParameterAssert([modelClass isSubclassOfClass:[DBModel class]]);
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ pthread_key_create(&liveObjectKey, &releaseLiveObjects); });
-
-    NSMapTable *storage = (__bridge id)pthread_getspecific(liveObjectKey);
-    if(!storage) {
-        storage = [NSMapTable strongToStrongObjectsMapTable];
-        pthread_setspecific(liveObjectKey, (__bridge_retained void *)storage);
-    }
-
-    NSMapTable *liveObjects = [storage objectForKey:modelClass];
-    if(!liveObjects) {
-        liveObjects = [NSMapTable strongToWeakObjectsMapTable];
-        [storage setObject:liveObjects forKey:modelClass];
-    }
-    return liveObjects;
 }
 
 @end
