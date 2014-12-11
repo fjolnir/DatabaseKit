@@ -233,13 +233,15 @@ static NSString *classPrefix = nil;
     BOOL saved = [connection executeWriteQueriesInTransaction:[self queriesToSave]
                                                         error:outErr];
     if(saved) {
-        NSMapTable *liveObjects = [self.table.database liveObjectsOfModelClass:[self class]];
-        if(_savedIdentifier && _savedIdentifier != self.identifier)
-             [liveObjects removeObjectForKey:_savedIdentifier];
-        if(self.identifier)
-            [liveObjects setObject:self forKey:self.identifier];
+        if(_savedIdentifier != self.identifier) {
+            NSMapTable *liveObjects = [self.table.database liveObjectsOfModelClass:[self class]];
+            if(_savedIdentifier)
+                 [liveObjects removeObjectForKey:_savedIdentifier];
+            if(self.identifier)
+                [liveObjects setObject:self forKey:self.identifier];
 
-        _savedIdentifier = self.identifier;
+            _savedIdentifier = self.identifier;
+        }
         [_dirtyKeys removeAllObjects];
         return YES;
     } else
@@ -344,9 +346,8 @@ static void releaseLiveObjects(void *ptr) {
     NSParameterAssert([modelClass isSubclassOfClass:[DBModel class]]);
 
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        pthread_key_create(&liveObjectKey, &releaseLiveObjects);
-    });
+    dispatch_once(&onceToken, ^{ pthread_key_create(&liveObjectKey, &releaseLiveObjects); });
+
     NSMapTable *storage = (__bridge id)pthread_getspecific(liveObjectKey);
     if(!storage) {
         storage = [NSMapTable strongToStrongObjectsMapTable];
