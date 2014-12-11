@@ -10,21 +10,10 @@
 #import <objc/runtime.h>
 #import <unistd.h>
 
-#ifdef ENABLE_AR_DEBUG
-#   define ASSERT_THREAD() NSAssert([NSThread currentThread] == _thread, \
-                                    @"Message sent to %@ on thread %@, but it was created on %@.", \
-                                    [self class], [NSThread currentThread], _thread)
-#else
-#   define ASSERT_THREAD()
-#endif
-
 static NSString *classPrefix = nil;
 
 @implementation DBModel {
     NSMutableSet *_dirtyKeys;
-#ifdef ENABLE_AR_DEBUG
-    NSThread *_thread;
-#endif
 }
 @dynamic inserted;
 
@@ -138,9 +127,6 @@ static NSString *classPrefix = nil;
                forKeyPath:@"dirtyKeys"
                   options:0
                   context:NULL];
-#ifdef ENABLE_AR_DEBUG
-        _thread = [NSThread currentThread];
-#endif
     }
     return self;
 }
@@ -188,8 +174,6 @@ static NSString *classPrefix = nil;
 
 - (void)didChangeValueForKey:(NSString *)key
 {
-    ASSERT_THREAD();
-
     if([self.table.columns containsObject:key])
         [_dirtyKeys addObject:key];
     [super didChangeValueForKey:key];
@@ -211,12 +195,10 @@ static NSString *classPrefix = nil;
 }
 - (void)setValue:(id)value forKey:(NSString *)key
 {
-    ASSERT_THREAD();
     [super setValue:value forKey:key];
 }
 - (void)setNilValueForKey:(NSString * const)aKey
 {
-    ASSERT_THREAD();
     [self setValue:@0 forKey:aKey];
 }
 
@@ -248,8 +230,6 @@ static NSString *classPrefix = nil;
 
 - (BOOL)save:(NSError **)outErr
 {
-    ASSERT_THREAD();
-
     if(!self.identifier)
         self.identifier = [[NSUUID UUID] UUIDString];
 
@@ -274,8 +254,6 @@ static NSString *classPrefix = nil;
 
 - (BOOL)destroy
 {
-    ASSERT_THREAD();
-
     if(self.isInserted) {
         @try {
             BOOL result = [[[self query] delete] execute];
@@ -298,7 +276,6 @@ static NSString *classPrefix = nil;
 
 - (void)_clearDirtyKeys
 {
-    ASSERT_THREAD();
     [_dirtyKeys removeAllObjects];
 }
 

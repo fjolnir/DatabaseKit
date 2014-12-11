@@ -14,7 +14,8 @@ static void releaseLiveObjects(void *ptr) {
 @end
 
 @implementation DB {
-    pthread_key_t _liveObjectKey;
+    OSSpinLock _liveObjectLock;
+    NSMapTable *_liveObjectStorage;
 }
 
 + (DB *)withURL:(NSURL *)URL
@@ -29,8 +30,10 @@ static void releaseLiveObjects(void *ptr) {
 
 - (instancetype)init
 {
-    if((self = [super init]))
-        pthread_key_create(&_liveObjectKey, &releaseLiveObjects);
+    if((self = [super init])) {
+        _liveObjectLock = OS_SPINLOCK_INIT;
+        _liveObjectStorage = [NSMapTable strongToStrongObjectsMapTable];
+    }
     return self;
 }
 - (instancetype)initWithConnection:(DBConnection *)aConnection
@@ -38,11 +41,6 @@ static void releaseLiveObjects(void *ptr) {
     if((self = [self init]))
         _connection = aConnection;
     return self && _connection ? self : nil;
-}
-
-- (void)dealloc
-{
-    pthread_key_delete(_liveObjectKey);
 }
 
 // Returns a table whose name matches key
@@ -65,17 +63,13 @@ static void releaseLiveObjects(void *ptr) {
 {
     NSParameterAssert([modelClass isSubclassOfClass:[DBModel class]]);
 
-    NSMapTable *storage = (__bridge id)pthread_getspecific(_liveObjectKey);
-    if(!storage) {
-        storage = [NSMapTable strongToStrongObjectsMapTable];
-        pthread_setspecific(_liveObjectKey, (__bridge_retained void *)storage);
-    }
-
-    NSMapTable *liveObjects = [storage objectForKey:modelClass];
+    OSSpinLockLock(&_liveObjectLock);
+    NSMapTable *liveObjects = [_liveObjectStorage objectForKey:modelClass];
     if(!liveObjects) {
         liveObjects = [NSMapTable strongToWeakObjectsMapTable];
-        [storage setObject:liveObjects forKey:modelClass];
+        [_liveObjectStorage setObject:liveObjects forKey:modelClass];
     }
+    OSSpinLockUnlock(&_liveObjectLock);
     return liveObjects;
 }
 
