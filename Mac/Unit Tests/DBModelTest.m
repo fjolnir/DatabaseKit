@@ -77,6 +77,13 @@
     XCTAssertEqualObjects(site.url, retrievedSite.url);
 }
 
+- (void)testUniqing
+{
+    TEModel *firstA = [[db[@"models"] select] firstObject];
+    TEModel *firstB = [[db[@"models"] select] firstObject];
+    XCTAssertEqual(firstA, firstB);
+}
+
 @end
 
 @implementation TEModel
