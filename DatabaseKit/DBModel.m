@@ -166,9 +166,9 @@ static NSString *classPrefix = nil;
                     forKey:columns[i]];
         }
         model->_savedIdentifier = model->_identifier;
+        if(model->_savedIdentifier)
+            [liveObjects setObject:model forKey:model->_savedIdentifier];
     }
-    if(model->_identifier)
-        [liveObjects setObject:model forKey:model->_identifier];
     return model;
 }
 
@@ -347,15 +347,18 @@ static void releaseLiveObjects(void *ptr) {
     dispatch_once(&onceToken, ^{
         pthread_key_create(&liveObjectKey, &releaseLiveObjects);
     });
-    NSMapTable *liveObjects = (__bridge id)pthread_getspecific(liveObjectKey);
-    if(!liveObjects) {
-        liveObjects = [NSMapTable strongToStrongObjectsMapTable];
-        pthread_setspecific(liveObjectKey, (__bridge_retained void *)liveObjects);
+    NSMapTable *storage = (__bridge id)pthread_getspecific(liveObjectKey);
+    if(!storage) {
+        storage = [NSMapTable strongToStrongObjectsMapTable];
+        pthread_setspecific(liveObjectKey, (__bridge_retained void *)storage);
     }
 
-    if(![liveObjects objectForKey:modelClass])
-        [liveObjects setObject:[NSMapTable strongToWeakObjectsMapTable]
-                        forKey:modelClass];
-    return [liveObjects objectForKey:modelClass];
+    NSMapTable *liveObjects = [storage objectForKey:modelClass];
+    if(!liveObjects) {
+        liveObjects = [NSMapTable strongToWeakObjectsMapTable];
+        [storage setObject:liveObjects forKey:modelClass];
+    }
+    return liveObjects;
 }
+
 @end
