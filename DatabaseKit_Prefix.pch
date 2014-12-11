@@ -1,5 +1,0 @@
-// Prefix header for the iPhone static library target
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif

@@ -1,9 +1,9 @@
 #define LOG_QUERIES NO
 
 #import "DBSQLiteConnection.h"
-#import "../Queries/DBQuery.h"
-#import "../Debug.h"
-#import "../Utilities/ISO8601DateFormatter.h"
+#import "DBQuery.h"
+#import "Debug.h"
+#import "ISO8601DateFormatter.h"
 #import <unistd.h>
 #import <sqlite3.h>
 #import <dispatch/dispatch.h>

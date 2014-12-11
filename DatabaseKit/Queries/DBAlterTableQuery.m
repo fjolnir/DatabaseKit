@@ -1,5 +1,6 @@
 #import "DBAlterTableQuery.h"
 #import "DBQuery+Private.h"
+#import "DBTable.h"
 
 @implementation DBAlterTableQuery
 

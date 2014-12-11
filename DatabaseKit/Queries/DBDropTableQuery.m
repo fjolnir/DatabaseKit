@@ -1,5 +1,6 @@
 #import "DBDropTableQuery.h"
 #import "DBQuery+Private.h"
+#import "DBTable.h"
 
 @implementation DBDropTableQuery
 

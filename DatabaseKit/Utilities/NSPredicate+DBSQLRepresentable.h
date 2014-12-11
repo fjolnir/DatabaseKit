@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBSQLRepresentable.h>
+#import "DBSQLRepresentable.h"
 
 @class DBQuery;
 @protocol DBTableQuery;

@@ -1,4 +1,4 @@
-#import <DatabaseKit/DBQuery.h>
+#import "DBQuery.h"
 
 @class DBSelectQuery;
 

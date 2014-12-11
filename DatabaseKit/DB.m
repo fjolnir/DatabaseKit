@@ -2,6 +2,7 @@
 #import "DBModel+Private.h"
 #import "DBTable.h"
 #import "DBCreateTableQuery.h"
+#import "DBConnectionPool.h"
 #import <pthread.h>
 
 static void releaseLiveObjects(void *ptr) {
