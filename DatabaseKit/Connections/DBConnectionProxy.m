@@ -30,6 +30,10 @@
     return nil;
 }
 
+- (Class)class
+{
+    return self.connection.class;
+}
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel
 {
     return [self.connection methodSignatureForSelector:sel];
