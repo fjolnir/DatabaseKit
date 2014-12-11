@@ -1,5 +1,5 @@
 #import "NSString+DBAdditions.h"
-#import "DBInflector/DBInflector.h"
+#import "DBInflector.h"
 
 @implementation NSString (Inflections)
 - (NSString *)db_pluralizedString

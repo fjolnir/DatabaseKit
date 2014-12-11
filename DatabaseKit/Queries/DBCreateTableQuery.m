@@ -1,5 +1,7 @@
 #import "DBQuery+Private.h"
 #import "DBCreateTableQuery.h"
+#import "DBSelectQuery.h"
+#import "DBColumnDefinition.h"
 
 @implementation DBCreateTableQuery
 

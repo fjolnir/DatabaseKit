@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBConnection.h>
+#import "DBConnection.h"
 
 @class DBTable, DB;
 

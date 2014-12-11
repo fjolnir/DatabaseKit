@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <DatabaseKit/DBConnection.h>
+#import "DBConnection.h"
 
 typedef NS_ENUM(NSUInteger, DBSQLiteErrorCode)  {
   DBSQLiteDatabaseNotFoundErrorCode = 0

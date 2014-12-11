@@ -1,4 +1,4 @@
-#import <DatabaseKit/DBConnection.h>
+#import "DBConnectionProxy.h"
 
-@interface DBConnectionPool : DBConnection
+@interface DBConnectionPool : DBConnectionProxy
 @end

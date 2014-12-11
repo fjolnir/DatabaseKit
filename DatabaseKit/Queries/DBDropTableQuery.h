@@ -1,4 +1,4 @@
-#import <DatabaseKit/DatabaseKit.h>
+#import "DBQuery.h"
 
 @interface DBDropTableQuery : DBWriteQuery <DBTableQuery>
 @end

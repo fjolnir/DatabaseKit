@@ -1,6 +1,7 @@
 #import "DB.h"
 #import "DBTable.h"
 #import "DBCreateTableQuery.h"
+#import "DBConnectionPool.h"
 
 @interface DB ()
 @property(readwrite, strong) DBConnection *connection;
@@ -15,7 +16,7 @@
 
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err
 {
-    return [[self alloc] initWithConnection:[DBConnectionPool openConnectionWithURL:URL error:err]];
+    return [[self alloc] initWithConnection:(DBConnection *)[DBConnectionPool connectionProxyWithURL:URL error:err]];
 }
 
 - (id)initWithConnection:(DBConnection *)aConnection
