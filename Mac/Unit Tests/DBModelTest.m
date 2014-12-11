@@ -84,6 +84,14 @@
     XCTAssertEqual(firstA, firstB);
 }
 
+- (void)testThreadDebugging
+{
+    TEModel *model = [[db[@"models"] select] firstObject];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+        XCTAssertThrows([model query], @"DBModel did not detect invalid thread");
+    });
+}
+
 @end
 
 @implementation TEModel
