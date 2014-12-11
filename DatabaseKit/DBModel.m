@@ -140,10 +140,9 @@ static NSString *classPrefix = nil;
 {
     NSParameterAssert(aDB);
 
+    NSMapTable *liveObjects = [aDB liveObjectsOfModelClass:self];
     NSString *identifier = [result valueOfColumnNamed:@"identifier"];
     if(identifier) {
-        NSMapTable *liveObjects = [aDB liveObjectsOfModelClass:self];
-
         DBModel *liveObj = [liveObjects objectForKey:identifier];
         if(liveObj)
             return liveObj;
@@ -168,6 +167,8 @@ static NSString *classPrefix = nil;
         }
         model->_savedIdentifier = model->_identifier;
     }
+    if(model->_identifier)
+        [liveObjects setObject:model forKey:model->_identifier];
     return model;
 }
 
