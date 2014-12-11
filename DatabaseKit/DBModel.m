@@ -207,13 +207,17 @@ static NSString *classPrefix = nil;
 
 - (id)valueForKey:(NSString *)key
 {
-    ASSERT_THREAD();
     return [super valueForKey:key];
 }
 - (void)setValue:(id)value forKey:(NSString *)key
 {
     ASSERT_THREAD();
     [super setValue:value forKey:key];
+}
+- (void)setNilValueForKey:(NSString * const)aKey
+{
+    ASSERT_THREAD();
+    [self setValue:@0 forKey:aKey];
 }
 
 - (BOOL)save
@@ -223,8 +227,6 @@ static NSString *classPrefix = nil;
 
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key
 {
-    ASSERT_THREAD();
-
     if(!self.inserted)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else if([_dirtyKeys containsObject:key])
@@ -235,8 +237,6 @@ static NSString *classPrefix = nil;
 
 - (NSArray *)queriesToSave
 {
-    ASSERT_THREAD();
-
     NSMutableArray *queries = [NSMutableArray new];
     for(NSString *key in [[self class] savedKeys]) {
         DBWriteQuery *query = [self saveQueryForKey:key];
@@ -278,7 +278,10 @@ static NSString *classPrefix = nil;
 
     if(self.isInserted) {
         @try {
-            return [[[self query] delete] execute];
+            BOOL result = [[[self query] delete] execute];
+            NSMapTable *liveObjects = [self.table.database liveObjectsOfModelClass:[self class]];
+            [liveObjects removeObjectForKey:_savedIdentifier];
+            return result;
         }
         @catch(NSException *e) {
             DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
@@ -290,15 +293,12 @@ static NSString *classPrefix = nil;
 
 - (BOOL)isInserted
 {
-    ASSERT_THREAD();
-
     return _savedIdentifier != nil;
 }
 
 - (void)_clearDirtyKeys
 {
     ASSERT_THREAD();
-
     [_dirtyKeys removeAllObjects];
 }
 
@@ -306,16 +306,7 @@ static NSString *classPrefix = nil;
 
 - (DBQuery *)query
 {
-    ASSERT_THREAD();
-
     return [_table where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
-}
-
-- (void)setNilValueForKey:(NSString * const)aKey
-{
-    ASSERT_THREAD();
-
-    [self setValue:@0 forKey:aKey];
 }
 
 #pragma mark -
@@ -350,22 +341,16 @@ static NSString *classPrefix = nil;
 
 - (NSUInteger)hash
 {
-    ASSERT_THREAD();
-
     return [_table hash] ^ [_identifier hash];
 }
 - (BOOL)isEqual:(id)anObject
 {
-    ASSERT_THREAD();
-
     return [anObject isMemberOfClass:[self class]]
         && [[anObject identifier] isEqual:[self identifier]];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    ASSERT_THREAD();
-
     DBModel *copy = [[self class] modelInDatabase:self.table.database];
     for(NSString *column in self.table.columns) {
         if(![column isEqualToString:kDBIdentifierColumn])
