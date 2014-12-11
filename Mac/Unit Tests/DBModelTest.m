@@ -79,17 +79,18 @@
 
 - (void)testUniqing
 {
-    TEModel *firstA = [[db[@"models"] select] firstObject];
-    TEModel *firstB = [[db[@"models"] select] firstObject];
-    XCTAssertEqual(firstA, firstB);
-}
+    void *addr;
+    @autoreleasepool {
+        TEModel *firstA = [[db[@"models"] select] firstObject];
+        TEModel *firstB = [[db[@"models"] select] firstObject];
+        XCTAssertEqual(firstA, firstB);
 
-- (void)testThreadDebugging
-{
-    TEModel *model = [[db[@"models"] select] firstObject];
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        XCTAssertThrows([model query], @"DBModel did not detect invalid thread");
-    });
+        addr = (__bridge void *)firstA;
+        firstA = nil;
+        firstB = nil;
+    }
+    TEModel *first = [[db[@"models"] select] firstObject];
+    XCTAssertNotEqual((__bridge void *)first, addr);
 }
 
 @end
