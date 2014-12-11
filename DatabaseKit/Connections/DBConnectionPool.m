@@ -18,14 +18,12 @@ static void _connectionCloser(void *ptr)
 
 @implementation DBConnectionPool
 
-+ (instancetype)connectionProxyWithURL:(NSURL *)URL error:(NSError **)err
++ (instancetype)alloc
 {
-    DBConnectionPool *pool = [super connectionProxyWithURL:URL error:err];
+    DBConnectionPool *pool = [super alloc];
     if(pool) {
         pool->_connections = [NSMutableArray new];
         pthread_key_create(&pool->_threadLocalKey, &_connectionCloser);
-        if(![pool connection:err])
-            return nil;
     }
     return pool;
 }
