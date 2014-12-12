@@ -8,7 +8,7 @@
 #import "Debug.h"
 #import "Utilities/NSString+DBAdditions.h"
 #import <objc/runtime.h>
-#include <unistd.h>
+#import <unistd.h>
 
 static NSString *classPrefix = nil;
 
@@ -161,7 +161,7 @@ static NSString *classPrefix = nil;
 
 - (void)didChangeValueForKey:(NSString *)key
 {
-    if([self.table.columns containsObject:key])
+    if([[[self class] savedKeys] containsObject:key])
         [_dirtyKeys addObject:key];
     [super didChangeValueForKey:key];
 }
@@ -183,6 +183,10 @@ static NSString *classPrefix = nil;
 - (void)setValue:(id)value forKey:(NSString *)key
 {
     [super setValue:value forKey:key];
+}
+- (void)setNilValueForKey:(NSString * const)aKey
+{
+    [self setValue:@0 forKey:aKey];
 }
 
 - (BOOL)save
@@ -258,11 +262,6 @@ static NSString *classPrefix = nil;
     return [_table where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
 }
 
-- (void)setNilValueForKey:(NSString * const)aKey
-{
-    [self setValue:@0 forKey:aKey];
-}
-
 #pragma mark -
 
 + (NSString *)tableName
@@ -306,7 +305,7 @@ static NSString *classPrefix = nil;
 - (instancetype)copyWithZone:(NSZone *)zone
 {
     DBModel *copy = [[[self class] alloc] initWithDatabase:self.table.database];
-    for(NSString *column in self.table.columns) {
+    for(NSString *column in [[self class] savedKeys]) {
         if(![column isEqualToString:kDBIdentifierColumn])
             [copy setValue:[self valueForKey:column] forKey:column];
     }
