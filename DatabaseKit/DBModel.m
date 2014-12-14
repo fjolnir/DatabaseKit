@@ -32,7 +32,7 @@ static NSString *classPrefix = nil;
     objc_property_t * properties = class_copyPropertyList(self, &propertyCount);
     if(properties) {
         NSSet *excludedKeys = [self excludedKeys];
-        NSMutableSet *result = [NSMutableSet setWithObject:@"identifier"];
+        NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
         for(NSUInteger i = 0; i < propertyCount; ++i) {
             NSString *key = @(property_getName(properties[i]));
             char * const getterName = property_copyAttributeValue(properties[i], "G")
@@ -102,7 +102,7 @@ static NSString *classPrefix = nil;
 
 + (NSSet *)keyPathsForValuesAffectingDirtyKeys
 {
-    NSMutableSet *keyPaths = [NSMutableSet setWithObject:@"identifier"];
+    NSMutableSet *keyPaths = [NSMutableSet setWithObject:kDBIdentifierColumn];
 
     Class klass = self;
     do {

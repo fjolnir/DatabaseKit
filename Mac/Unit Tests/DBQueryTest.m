@@ -25,7 +25,7 @@
     XCTAssertEqualObjects([[Q(Delete) delete] toString], @"DELETE FROM `aTable`", @"");
 
     NSArray *columnDefinitions = @[
-        [DBColumnDefinition columnWithName:@"identifier"
+        [DBColumnDefinition columnWithName:kDBIdentifierColumn
                             type:DBTypeText
                      constraints:@[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending autoIncrement:NO onConflict:DBConflictActionFail]]],
         [DBColumnDefinition columnWithName:@"name"
