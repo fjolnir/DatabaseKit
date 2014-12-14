@@ -98,8 +98,9 @@ static NSMutableArray *_ConnectionClasses;
                 return [self endTransaction];
         }
     }
-    @catch(NSException *_) {
+    @catch(NSException *e) {
         [self rollBack];
+        [e raise];
         return NO;
     }
     return YES;
