@@ -34,7 +34,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 + (NSArray *)indices;
 
 /*! Returns a model object in the given database
- *  You must set an identifier before saving
  */
 - (id)initWithDatabase:(DB *)aDB;
 

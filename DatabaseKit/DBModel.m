@@ -156,7 +156,9 @@ static NSString *classPrefix = nil;
 
 - (id)initWithDatabase:(DB *)aDB
 {
-    return [self initWithDatabase:aDB result:nil];
+    DBModel *model = [self initWithDatabase:aDB result:nil];
+    model.identifier = [[NSUUID UUID] UUIDString];
+    return model;
 }
 
 - (void)didChangeValueForKey:(NSString *)key
