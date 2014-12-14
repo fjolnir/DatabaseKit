@@ -6,7 +6,8 @@
 #import "DBTable.h"
 #import "DBQuery.h"
 #import "Debug.h"
-#import "Utilities/NSString+DBAdditions.h"
+#import "NSString+DBAdditions.h"
+#import "DBUtilities.h"
 #import <objc/runtime.h>
 #import <unistd.h>
 
@@ -82,7 +83,7 @@ static NSString *classPrefix = nil;
 + (NSArray *)constraintsForKey:(NSString *)key
 {
     // Check if we respond to the selector `constraintsFor<Key>`
-    SEL selector = NSSelectorFromString([@"constraintsFor" stringByAppendingString:[key db_stringByCapitalizingFirstLetter]]);
+    SEL selector = DBCapitalizedSelector(@"constraintsFor", key);
     if([self respondsToSelector:selector]) {
         id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
         return imp(self, selector);
