@@ -38,10 +38,10 @@
 		C71CE9F819B3839600C77150 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99F19B3839600C77150 /* DBInflector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C71CE9F919B3839600C77150 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A019B3839600C77150 /* DBInflector.m */; };
 		C71CE9FA19B3839600C77150 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A019B3839600C77150 /* DBInflector.m */; };
-		C71CEA0519B3839600C77150 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */; };
-		C71CEA0619B3839600C77150 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */; };
-		C71CEA0719B3839600C77150 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C71CEA0819B3839600C77150 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C71CEA0519B3839600C77150 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* DBISO8601DateFormatter.h */; };
+		C71CEA0619B3839600C77150 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* DBISO8601DateFormatter.h */; };
+		C71CEA0719B3839600C77150 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C71CEA0819B3839600C77150 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C71CEA0D19B3839600C77150 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */; };
 		C71CEA0E19B3839600C77150 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */; };
 		C71CEA0F19B3839600C77150 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */; };
@@ -117,7 +117,7 @@
 		C7E9F5381A0F48DF0045F226 /* DBCreateTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD3919FA3B2C00C77AC6 /* DBCreateTableQuery.m */; };
 		C7E9F5391A0F48DF0045F226 /* DBDropTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD5519FE030D00C77AC6 /* DBDropTableQuery.m */; };
 		C7E9F53A1A0F48DF0045F226 /* DBAlterTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F6FD5B19FE031800C77AC6 /* DBAlterTableQuery.m */; };
-		C7E9F53B1A0F48DF0045F226 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7E9F53B1A0F48DF0045F226 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A719B3839600C77150 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7E9F53C1A0F48DF0045F226 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */; };
 		C7E9F53D1A0F48DF0045F226 /* NSPredicate+DBSQLRepresentable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7772C7519C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m */; };
 		C7E9F53E1A0F48DF0045F226 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C71CE9A019B3839600C77150 /* DBInflector.m */; };
@@ -143,7 +143,7 @@
 		C7E9F5541A0F49280045F226 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C76774B619C2032B00B9B687 /* DBQuery+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C7E9F5551A0F49350045F226 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE98B19B3839600C77150 /* Debug.h */; };
 		C7E9F5561A0F49350045F226 /* DBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C76DC67319C46FA8008D54C8 /* DBUtilities.h */; };
-		C7E9F5571A0F49350045F226 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */; };
+		C7E9F5571A0F49350045F226 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9A619B3839600C77150 /* DBISO8601DateFormatter.h */; };
 		C7E9F5581A0F49350045F226 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */; };
 		C7E9F5591A0F49350045F226 /* NSPredicate+DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7772C7419C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h */; };
 		C7E9F55A1A0F49350045F226 /* DBInflector.h in Headers */ = {isa = PBXBuildFile; fileRef = C71CE99F19B3839600C77150 /* DBInflector.h */; };
@@ -205,8 +205,8 @@
 		C71CE9A319B3839600C77150 /* plurals.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = plurals.inc; sourceTree = "<group>"; };
 		C71CE9A419B3839600C77150 /* singulars.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = singulars.inc; sourceTree = "<group>"; };
 		C71CE9A519B3839600C77150 /* uncountables.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = uncountables.inc; sourceTree = "<group>"; };
-		C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ISO8601DateFormatter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ISO8601DateFormatter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		C71CE9A619B3839600C77150 /* DBISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DBISO8601DateFormatter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		C71CE9A719B3839600C77150 /* DBISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DBISO8601DateFormatter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DBAdditions.h"; sourceTree = "<group>"; };
 		C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBAdditions.m"; sourceTree = "<group>"; };
 		C71CEA1119B383AD00C77150 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Debug.h; path = DatabaseKit/Debug.h; sourceTree = "<group>"; };
@@ -355,8 +355,8 @@
 			children = (
 				C71CE98B19B3839600C77150 /* Debug.h */,
 				C76DC67319C46FA8008D54C8 /* DBUtilities.h */,
-				C71CE9A619B3839600C77150 /* ISO8601DateFormatter.h */,
-				C71CE9A719B3839600C77150 /* ISO8601DateFormatter.m */,
+				C71CE9A619B3839600C77150 /* DBISO8601DateFormatter.h */,
+				C71CE9A719B3839600C77150 /* DBISO8601DateFormatter.m */,
 				C71CE9AA19B3839600C77150 /* NSString+DBAdditions.h */,
 				C71CE9AB19B3839600C77150 /* NSString+DBAdditions.m */,
 				C7772C7419C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h */,
@@ -509,7 +509,7 @@
 				C76774BF19C2032B00B9B687 /* DBQuery+Private.h in Headers */,
 				C71CE9C319B3839600C77150 /* DBModel.h in Headers */,
 				C71CEA0D19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
-				C71CEA0519B3839600C77150 /* ISO8601DateFormatter.h in Headers */,
+				C71CEA0519B3839600C77150 /* DBISO8601DateFormatter.h in Headers */,
 				C71CE9D519B3839600C77150 /* Debug.h in Headers */,
 				C71CE9F719B3839600C77150 /* DBInflector.h in Headers */,
 			);
@@ -544,7 +544,7 @@
 				C7772C7719C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h in Headers */,
 				C71CEA1319B383AD00C77150 /* Debug.h in Headers */,
 				C7D875BF1A3E484100A490E0 /* DBConnectionQueue.h in Headers */,
-				C71CEA0619B3839600C77150 /* ISO8601DateFormatter.h in Headers */,
+				C71CEA0619B3839600C77150 /* DBISO8601DateFormatter.h in Headers */,
 				C71CEA0E19B3839600C77150 /* NSString+DBAdditions.h in Headers */,
 				C71CE9D619B3839600C77150 /* Debug.h in Headers */,
 			);
@@ -577,7 +577,7 @@
 				C7E9F5451A0F49220045F226 /* DBModel+Private.h in Headers */,
 				C7E9F5551A0F49350045F226 /* Debug.h in Headers */,
 				C7E9F5561A0F49350045F226 /* DBUtilities.h in Headers */,
-				C7E9F5571A0F49350045F226 /* ISO8601DateFormatter.h in Headers */,
+				C7E9F5571A0F49350045F226 /* DBISO8601DateFormatter.h in Headers */,
 				C7D875BE1A3E484100A490E0 /* DBConnectionQueue.h in Headers */,
 				C7E9F5581A0F49350045F226 /* NSString+DBAdditions.h in Headers */,
 				C7E9F5591A0F49350045F226 /* NSPredicate+DBSQLRepresentable.h in Headers */,
@@ -733,7 +733,7 @@
 				C7F6FD3C19FA3B2C00C77AC6 /* DBCreateTableQuery.m in Sources */,
 				C76774C119C2032B00B9B687 /* DBQuery.m in Sources */,
 				C76774BE19C2032B00B9B687 /* DBInsertQuery.m in Sources */,
-				C71CEA0719B3839600C77150 /* ISO8601DateFormatter.m in Sources */,
+				C71CEA0719B3839600C77150 /* DBISO8601DateFormatter.m in Sources */,
 				C7F6FD5819FE030D00C77AC6 /* DBDropTableQuery.m in Sources */,
 				C7772C7819C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m in Sources */,
 				C76774BC19C2032B00B9B687 /* DBDeleteQuery.m in Sources */,
@@ -772,7 +772,7 @@
 				C72294671A39A93B00091D13 /* DBConnectionProxy.m in Sources */,
 				C71CEA1019B3839600C77150 /* NSString+DBAdditions.m in Sources */,
 				C7F6FD3D19FA3B2C00C77AC6 /* DBCreateTableQuery.m in Sources */,
-				C71CEA0819B3839600C77150 /* ISO8601DateFormatter.m in Sources */,
+				C71CEA0819B3839600C77150 /* DBISO8601DateFormatter.m in Sources */,
 				C71CE9AF19B3839600C77150 /* DBConnection.m in Sources */,
 				C71CE9BC19B3839600C77150 /* DBSQLiteConnection.m in Sources */,
 				C7F6FD5919FE030D00C77AC6 /* DBDropTableQuery.m in Sources */,
@@ -815,7 +815,7 @@
 				C7E9F5381A0F48DF0045F226 /* DBCreateTableQuery.m in Sources */,
 				C7E9F5391A0F48DF0045F226 /* DBDropTableQuery.m in Sources */,
 				C7E9F53A1A0F48DF0045F226 /* DBAlterTableQuery.m in Sources */,
-				C7E9F53B1A0F48DF0045F226 /* ISO8601DateFormatter.m in Sources */,
+				C7E9F53B1A0F48DF0045F226 /* DBISO8601DateFormatter.m in Sources */,
 				C7E9F53C1A0F48DF0045F226 /* NSString+DBAdditions.m in Sources */,
 				C7E9F53D1A0F48DF0045F226 /* NSPredicate+DBSQLRepresentable.m in Sources */,
 				C7E9F53E1A0F48DF0045F226 /* DBInflector.m in Sources */,

@@ -5,7 +5,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "ISO8601DateFormatter.h"
+#import "DBISO8601DateFormatter.h"
 
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
