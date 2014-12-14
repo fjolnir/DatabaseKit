@@ -225,7 +225,7 @@ static NSString *classPrefix = nil;
                                                         error:outErr];
     if(saved) {
         _savedIdentifier = self.identifier;
-        [_dirtyKeys removeAllObjects];
+        [self _clearDirtyKeys];
         return YES;
     } else
         return NO;
@@ -252,7 +252,9 @@ static NSString *classPrefix = nil;
 
 - (void)_clearDirtyKeys
 {
+    [self willChangeValueForKey:@"dirtyKeys"];
     [_dirtyKeys removeAllObjects];
+    [self didChangeValueForKey:@"dirtyKeys"];
 }
 
 #pragma mark -
