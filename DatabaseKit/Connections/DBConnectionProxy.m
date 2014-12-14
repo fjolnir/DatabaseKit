@@ -38,10 +38,6 @@
 {
     return [self.connection methodSignatureForSelector:sel];
 }
-- (id)forwardingTargetForSelector:(SEL)aSelector
-{
-    return self.connection;
-}
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
     invocation.target = self.connection;

@@ -270,8 +270,7 @@
     int err = sqlite3_exec(_handle,
                            [[NSString stringWithFormat:@"SAVEPOINT '%@'", savePointName] UTF8String],
                            NULL, NULL, &errorMessage);
-    if(err != SQLITE_OK)
-    {
+    if(err != SQLITE_OK) {
         [NSException raise:@"SQLite error"
                     format:@"Couldn't start transaction, Details: %@", @(errorMessage)];
         return NO;
@@ -283,6 +282,7 @@
         [_savePointStack addObject:savePointName];
     return YES;
 }
+
 - (BOOL)rollBack
 {
     NSAssert([_savePointStack count] > 0, @"Not in a transaction");

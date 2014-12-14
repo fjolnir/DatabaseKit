@@ -61,10 +61,11 @@
 - (void)testModifying
 {
     TEModel *first = [[db[@"models"] select] firstObject];
-    [first.table.database.connection beginTransaction];
     NSString *newName = @"NOT THE SAME NAME!";
-    first.name = newName;
-    [first.table.database.connection endTransaction];
+    [first.table.database.connection transaction:^{
+        first.name = newName;
+        return DBTransactionCommit;
+    }];
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
 
