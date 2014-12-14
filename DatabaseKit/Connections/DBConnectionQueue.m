@@ -13,7 +13,7 @@ static const char *kDBExecutingQueueKey = (void *)&kDBExecutingQueueKey;
 
 @implementation DBConnectionQueue
 
-+ (instancetype)connectionProxyWithURL:(NSURL *)URL error:(NSError **)err
++ (id)connectionProxyWithURL:(NSURL *)URL error:(NSError **)err
 {
     DBConnectionQueue *queueProxy = [super connectionProxyWithURL:URL error:err];
     if(queueProxy) {

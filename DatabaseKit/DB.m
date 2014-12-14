@@ -16,7 +16,7 @@
 
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err
 {
-    return [[self alloc] initWithConnection:(DBConnection *)[DBConnectionPool connectionProxyWithURL:URL error:err]];
+    return [[self alloc] initWithConnection:[DBConnectionQueue connectionProxyWithURL:URL error:err]];
 }
 
 - (id)initWithConnection:(DBConnection *)aConnection
