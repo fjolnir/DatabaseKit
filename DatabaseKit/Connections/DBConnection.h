@@ -97,14 +97,14 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  */
 - (NSDictionary *)columnsForTable:(NSString *)tableName;
 
-/*! Begins a transaction */
-- (BOOL)beginTransaction;
-/*! Rolls back a transaction */
-- (BOOL)rollBack;
-/*! Ends a transaction */
-- (BOOL)endTransaction;
 /*! Executes a block wrapped in a transaction */
 - (BOOL)transaction:(DBTransactionBlock)aBlock;
+/*! Begins a transaction (in most cases, using -transaction: is preferred) */
+- (BOOL)beginTransaction;
+/*! Rolls back a transaction (in most cases, using -transaction: is preferred) */
+- (BOOL)rollBack;
+/*! Ends a transaction (in most cases, using -transaction: is preferred) */
+- (BOOL)endTransaction;
 
 /*! Returns a SQL type string for a type */
 + (NSString *)sqlForType:(DBType)type;
