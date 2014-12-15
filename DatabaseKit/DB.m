@@ -1,7 +1,7 @@
 #import "DB.h"
 #import "DBTable.h"
 #import "DBCreateTableQuery.h"
-#import "DBConnectionPool.h"
+#import "DBConnectionQueue.h"
 
 @interface DB ()
 @property(readwrite, strong) DBConnection *connection;
