@@ -7,6 +7,8 @@
 @implementation DB {
     DBConnection *_connection;
     NSMutableSet *_dirtyObjects;
+    NSMutableDictionary *_tables;
+    OSSpinLock _tableLock;
 }
 
 + (DB *)withURL:(NSURL *)URL
@@ -19,6 +21,12 @@
     return [[self alloc] initWithConnection:[DBConnectionQueue connectionProxyWithURL:URL error:err]];
 }
 
+- (instancetype)init
+{
+    if((self = [super init]))
+        _tableLock = OS_SPINLOCK_INIT;
+    return self;
+}
 - (instancetype)initWithConnection:(DBConnection *)aConnection
 {
     if((self = [self init])) {
@@ -29,11 +37,21 @@
 }
 
 // Returns a table whose name matches key
-- (id)objectForKeyedSubscript:(id)key
-{
-    NSParameterAssert([key isKindOfClass:[NSString class]]);
-    return [DBTable withDatabase:self name:key];
-}
+ - (id)objectForKeyedSubscript:(id)key
+ {
+     NSParameterAssert([key isKindOfClass:[NSString class]]);
+     OSSpinLockLock(&_tableLock);
+     DBTable *table = _tables[key];
+     if(!table && [_connection tableExists:key]) {
+         table = [DBTable withDatabase:self name:key];
+         if(!_tables)
+             _tables = [NSMutableDictionary dictionaryWithObject:table forKey:key];
+         else
+             _tables[key] = table;
+     }
+     OSSpinLockUnlock(&_tableLock);
+     return table;
+ }
 
 - (DBCreateTableQuery *)create
 {
