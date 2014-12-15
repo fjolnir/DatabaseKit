@@ -1,4 +1,4 @@
-#import <DatabaseKit/DatabaseKit.h>
+@import DatabaseKit;
 
 @interface TEModel : DBModel
 @property(readwrite, strong) NSString *name, *info;

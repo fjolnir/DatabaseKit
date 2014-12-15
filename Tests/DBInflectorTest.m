@@ -1,4 +1,4 @@
-#import <XCTest/XCTest.h>
+@import XCTest;
 #import "../Source/Utilities/DBInflector/DBInflector.h"
 #import "../Source/Utilities/NSString+DBAdditions.h"
 

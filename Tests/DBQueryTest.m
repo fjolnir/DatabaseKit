@@ -1,5 +1,5 @@
-#import <XCTest/XCTest.h>
-#import <DatabaseKit/DatabaseKit.h>
+@import XCTest;
+@import DatabaseKit;
 
 @interface DBQueryTest : XCTestCase
 

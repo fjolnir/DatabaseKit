@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import <DatabaseKit/DatabaseKit.h>
+@import DatabaseKit;
 #import "DBUnitTestUtilities.h"
 
 @interface DBSQLiteConnectionTest : XCTestCase {
