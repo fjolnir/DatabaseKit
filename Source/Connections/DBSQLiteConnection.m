@@ -190,8 +190,8 @@
 - (BOOL)tableExists:(NSString *)tableName
 {
     DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
-                          substitutions:@[tableName]
-                                  error:NULL];
+                       substitutions:@[tableName]
+                               error:NULL];
     if([result step:NULL] == DBResultStateNotAtEnd)
         return [[result valueOfColumnAtIndex:0] unsignedIntegerValue] > 0;
     else
@@ -200,9 +200,9 @@
 
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    DBResult *result = [self execute:[NSString stringWithFormat:@"PRAGMA table_info(%@)", tableName]
-                          substitutions:@[tableName]
-                                  error:NULL];
+    DBResult *result = [self execute:[NSString stringWithFormat:@"PRAGMA table_info(`%@`)", tableName]
+                       substitutions:nil
+                               error:NULL];
     if([result step:NULL] == DBResultStateNotAtEnd) {
         NSMutableDictionary *columns = [NSMutableDictionary new];
         do {
