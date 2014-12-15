@@ -2,13 +2,12 @@
 @import DatabaseKit;
 #import "DBUnitTestUtilities.h"
 
-@interface DBSQLiteConnectionTest : XCTestCase {
-    DB *db;
-}
-- (void)testConnection;
+@interface DBSQLiteConnectionTest : XCTestCase
 @end
 
-@implementation DBSQLiteConnectionTest
+@implementation DBSQLiteConnectionTest {
+    DB *db;
+}
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();

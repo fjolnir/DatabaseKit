@@ -1,5 +1,6 @@
 @import XCTest;
 @import DatabaseKit;
+#import "DBUnitTestUtilities.h"
 
 @interface DBQueryTest : XCTestCase
 
@@ -7,7 +8,14 @@
 
 #define Q(type) [DB##type##Query withTable:[DBTable withDatabase:[DB new] name:@"aTable"]]
 
-@implementation DBQueryTest
+@implementation DBQueryTest {
+    DB *db;
+}
+- (void)setUp
+{
+    db = DBSQLiteDatabaseForTesting();
+}
+
 
 - (void)testBuilding
 {
@@ -39,6 +47,16 @@
 
     DBAlterTableQuery *alter = [Q(AlterTable) appendColumns:@[[DBColumnDefinition columnWithName:@"test" type:DBTypeText constraints:@[[DBNotNullConstraint new]]]]];
     XCTAssertEqualObjects([alter toString], @"ALTER TABLE `aTable` ADD COLUMN `test` TEXT NOT NULL");
+}
+
+- (void)testFastEnumeration
+{
+    NSUInteger count = [[db[@"foo"] select] count];
+    NSUInteger i = 0;
+    for(__unused NSDictionary *row in [db[@"foo"] select]) {
+        ++i;
+    }
+    XCTAssertEqual(count, i);
 }
 
 @end

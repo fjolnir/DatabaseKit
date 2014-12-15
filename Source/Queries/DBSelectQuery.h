@@ -8,7 +8,7 @@ extern NSString *const DBLeftJoin;
 extern NSString *const DBUnion;
 extern NSString *const DBUnionAll;
 
-@interface DBSelectQuery : DBReadQuery <DBTableQuery, DBFilterableQuery>
+@interface DBSelectQuery : DBReadQuery <DBTableQuery, DBFilterableQuery, NSFastEnumeration>
 @property(readonly, strong) DBSelectQuery *subQuery;
 @property(readonly, strong) NSArray *orderedBy;
 @property(readonly, strong) NSArray *groupedBy;

@@ -135,13 +135,40 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    return [[[self offset:idx] limit:1] firstObject];
+    return [[[[self offset:idx] limit:1] execute] firstObject];
 }
 
 - (id)firstObject
 {
-    return [[[self limit:1] execute] firstObject];
+    return self[0];
 }
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(id __unsafe_unretained [])buffer
+                                    count:(NSUInteger)bufLen;
+
+{
+    NSArray *results;
+    if(state->state == 0) {
+        state->state = 1;
+
+        results = [self execute];
+        state->mutationsPtr = (__bridge void *)results;
+    } else
+        results = (__bridge_transfer id)(void *)state->extra[0];
+
+    state->itemsPtr = buffer;
+
+    NSUInteger *ofs = &state->extra[1];
+    NSUInteger len  = MIN(bufLen, results.count - *ofs);
+    if(len > 0) {
+        [results getObjects:buffer range:(NSRange) { *ofs, len }];
+        state->extra[0] = (__bridge_retained void *)results;
+        *ofs += len;
+    }
+    return len;
+}
+
 
 - (NSUInteger)count
 {

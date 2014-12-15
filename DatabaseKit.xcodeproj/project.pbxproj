@@ -395,7 +395,6 @@
 		C7D875CF1A3E67E300A490E0 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				C7D875D01A3E67E300A490E0 /* Connections */,
 				C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */,
 				C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */,
 				C7D875DF1A3E67E300A490E0 /* DB+Migrations.m */,
@@ -413,6 +412,7 @@
 				C7D875EA1A3E67E300A490E0 /* DBTable.h */,
 				C7D875EB1A3E67E300A490E0 /* DBTable.m */,
 				C7D875EC1A3E67E300A490E0 /* Debug.h */,
+				C7D875D01A3E67E300A490E0 /* Connections */,
 				C7D875ED1A3E67E300A490E0 /* Queries */,
 				C7D875FD1A3E67E300A490E0 /* Utilities */,
 			);
