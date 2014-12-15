@@ -1,7 +1,6 @@
 #import "DBConnectionProxy.h"
 #import "DBConnection.h"
 #import "Debug.h"
-#import <pthread.h>
 
 @implementation DBConnectionProxy
 @dynamic connection;
