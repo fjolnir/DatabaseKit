@@ -152,8 +152,8 @@
 		C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */; };
 		C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */; };
 		C7D876A81A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C7D876A91A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */; };
-		C7D876AA1A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */; };
+		C7D876A91A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C7D876AA1A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C7D876AB1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876081A3E67E300A490E0 /* DBOrderedDictionary.h */; };
 		C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876081A3E67E300A490E0 /* DBOrderedDictionary.h */; };
 		C7D876AD1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876081A3E67E300A490E0 /* DBOrderedDictionary.h */; };
@@ -908,7 +908,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = DatabaseKit;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
@@ -937,7 +937,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Postgres.app/Contents/MacOS/lib\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = DatabaseKit;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
@@ -1073,7 +1073,7 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
 				PRODUCT_NAME = DatabaseKit;
@@ -1091,7 +1091,7 @@
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/active_record.dst;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-all_load";
 				PRIVATE_HEADERS_FOLDER_PATH = "include/DatabaseKit-Private";
 				PRODUCT_NAME = DatabaseKit;
@@ -1138,9 +1138,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1181,9 +1180,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = DatabaseKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

@@ -6,14 +6,14 @@
     __a == __b || [__a isEqual:__b]; \
 })
 
-__attribute__((overloadable))
+__attribute__((overloadable)) __unused
 static SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix)
 {
     return NSSelectorFromString([NSString stringWithFormat:@"%@%@%@",
                                  prefix, [key db_stringByCapitalizingFirstLetter], suffix ?: @""]);
 }
 
-__attribute__((overloadable))
+__attribute__((overloadable)) __unused
 static SEL DBCapitalizedSelector(NSString *prefix, NSString *key)
 {
     return NSSelectorFromString([NSString stringWithFormat:@"%@%@",

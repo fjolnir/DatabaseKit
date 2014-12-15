@@ -20,7 +20,7 @@ static const char *kDBExecutingQueueKey = (void *)&kDBExecutingQueueKey;
         NSString *queueName = [NSString stringWithFormat:@"DBQueue: %@", URL.absoluteString];
         queueProxy->_connection = [DBConnection openConnectionWithURL:URL error:err];
         queueProxy->_queue = dispatch_queue_create(queueName.UTF8String, DISPATCH_QUEUE_SERIAL);
-        dispatch_queue_set_specific(queueProxy->_queue, kDBExecutingQueueKey, queueProxy->_queue, NULL);
+        dispatch_queue_set_specific(queueProxy->_queue, kDBExecutingQueueKey, (__bridge void *)queueProxy->_queue, NULL);
     }
     return queueProxy;
 }
@@ -33,7 +33,7 @@ static const char *kDBExecutingQueueKey = (void *)&kDBExecutingQueueKey;
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
     invocation.target = self.connection;
-    if(dispatch_get_specific(kDBExecutingQueueKey) == _queue)
+    if(dispatch_get_specific(kDBExecutingQueueKey) == (__bridge void *)_queue)
         [super forwardInvocation:invocation];
     else
         dispatch_sync(_queue, ^{
