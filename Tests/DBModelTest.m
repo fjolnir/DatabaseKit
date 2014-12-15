@@ -31,7 +31,7 @@
     TEModel *testModel = [[TEModel alloc] initWithDatabase:db];
     testModel.name = @"Foobar";
     testModel.info = @"lorem ipsum";
-    [testModel save];
+    [db saveDirtyObjects:NULL];
 }
 
 - (void)testTableName
@@ -73,7 +73,7 @@
 {
     TEWebSite *site = [[TEWebSite alloc] initWithDatabase:db];
     site.url = [NSURL URLWithString:@"http://google.com"];
-    XCTAssert([site save], @"Unable to save NSCoding compliant object to database");
+    XCTAssert([db saveDirtyObjects:NULL], @"Unable to save NSCoding compliant object to database");
     TEWebSite *retrievedSite = [[db[[TEWebSite tableName]] select] firstObject];
     XCTAssertEqualObjects(site.url, retrievedSite.url);
 }

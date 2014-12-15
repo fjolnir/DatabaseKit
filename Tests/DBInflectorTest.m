@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
-#import "DBInflector.h"
-#import "NSString+DBAdditions.h"
+#import "../Source/Utilities/DBInflector/DBInflector.h"
+#import "../Source/Utilities/NSString+DBAdditions.h"
 
 @class DBInflector;
 

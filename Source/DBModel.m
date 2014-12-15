@@ -198,11 +198,6 @@ static NSString *classPrefix = nil;
     [self setValue:@0 forKey:aKey];
 }
 
-- (BOOL)save
-{
-    return [self save:NULL];
-}
-
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key
 {
     if(!self.inserted)
@@ -216,7 +211,7 @@ static NSString *classPrefix = nil;
     return [DBQuery combineQueries:_pendingQueries.allValues];
 }
 
-- (BOOL)save:(NSError **)outErr
+- (BOOL)_save:(NSError **)outErr
 {
     DBConnection *connection = self.table.database.connection;
     BOOL saved = [connection executeWriteQueriesInTransaction:self.queriesToSave

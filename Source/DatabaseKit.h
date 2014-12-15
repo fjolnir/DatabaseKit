@@ -7,6 +7,7 @@
 
 #import <DatabaseKit/DBConnection.h>
 #import <DatabaseKit/DBConnectionPool.h>
+#import <DatabaseKit/DBConnectionQueue.h>
 #import <DatabaseKit/DBSQLiteConnection.h>
 
 #import <DatabaseKit/DBCreateTableQuery.h>

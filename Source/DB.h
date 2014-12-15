@@ -15,3 +15,12 @@
 
 - (DBCreateTableQuery *)create;
 @end
+
+@class DBModel;
+@interface DB (DBModel)
+- (BOOL)saveDirtyObjects:(NSError **)outErr;
+@end
+
+@interface DB (DBModelPrivate)
+- (void)registerDirtyObject:(DBModel *)obj;
+@end
