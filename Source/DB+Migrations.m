@@ -22,18 +22,18 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
         NSMutableArray *columns = [NSMutableArray new];
         for(NSString *key in [klass savedKeys]) {
             DBType type = DBTypeUnknown;
-            Class keyClass = nil;
-            char enc = [klass typeForKey:key class:&keyClass];
-            if(enc == _C_ID) {
-                type = [[self.connection class] typeForClass:keyClass];
-                if(type == DBTypeUnknown && [keyClass conformsToProtocol:@protocol(NSCoding)])
+            DBPropertyAttributes *keyAttrs = DBAttributesForProperty(klass, class_getProperty(klass, key.UTF8String));
+            if(keyAttrs->encoding[0] == _C_ID) {
+                type = [[self.connection class] typeForClass:keyAttrs->klass];
+                if(type == DBTypeUnknown && [keyAttrs->klass conformsToProtocol:@protocol(NSCoding)])
                     type = DBTypeBlob;
             } else
-                type = [[self.connection class] typeForObjCScalarEncoding:enc];
+                type = [[self.connection class] typeForObjCScalarEncoding:keyAttrs->encoding[0]];
+            free(keyAttrs);
 
             [columns addObject:[DBColumnDefinition columnWithName:key
-                                                   type:type
-                                            constraints:[klass constraintsForKey:key]]];
+                                                             type:type
+                                                      constraints:[klass constraintsForKey:key]]];
         }
         if(!creates[[klass tableName]])
             creates[[klass tableName]] = [[[self create] table:[klass tableName]] columns:columns];

@@ -42,12 +42,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  */
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
 
-
-/*!
- * Returns the type of a key (along with the class if it is '@')
- */
-+ (char)typeForKey:(NSString *)key class:(Class *)outClass;
-
 /*!
  * Returns an array of constraints for a key
  * NOTE: Rather than overriding `constraintsForKey:`

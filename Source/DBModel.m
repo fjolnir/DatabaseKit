@@ -20,26 +20,20 @@
 
 + (NSSet *)savedKeys
 {
-    unsigned int propertyCount;
-    objc_property_t * properties = class_copyPropertyList(self, &propertyCount);
-    if(properties) {
-        NSSet *excludedKeys = [self excludedKeys];
-        NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
-        for(NSUInteger i = 0; i < propertyCount; ++i) {
-            NSString *key = @(property_getName(properties[i]));
-            char * const getterName = property_copyAttributeValue(properties[i], "G")
-                                   ?: strdup([key UTF8String]);
-            Class klass;
-            char encoding = [self typeForKey:key class:&klass];
-            if(![[DBModel superclass] instancesRespondToSelector:sel_registerName(getterName)] &&
-               ![excludedKeys containsObject:key] &&
-               (encoding != _C_ID || [klass conformsToProtocol:@protocol(NSCoding)]))
-                [result addObject:key];
-            free(getterName);
-        }
-        return result;
-    } else
-        return nil;
+    NSSet *excludedKeys = [self excludedKeys];
+    NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
+
+    DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
+        NSString *key = @(attrs->name);
+        if(!attrs->dynamic &&
+           ![DBModel instancesRespondToSelector:attrs->getter] &&
+           ![excludedKeys containsObject:key] &&
+           (attrs->encoding[0] != _C_ID || [attrs->klass conformsToProtocol:@protocol(NSCoding)]))
+            [result addObject:key];
+    });
+    return [result count] > 0
+         ? result
+         : nil;
 }
 
 + (NSSet *)excludedKeys
@@ -50,25 +44,6 @@
 + (NSArray *)indices
 {
     return nil;
-}
-
-+ (char)typeForKey:(NSString *)key class:(Class *)outClass
-{
-    objc_property_t const property = class_getProperty([self class], [key UTF8String]);
-    NSAssert(property, @"Key %@ not found on %@", key, [self class]);
-
-    char * const type = property_copyAttributeValue(property, "T");
-    NSAssert(type, @"Unable to get type for key %@", key);
-
-    if(outClass && type[0] == _C_ID && type[1] == '"') {
-        NSScanner * const scanner = [NSScanner scannerWithString:@(type+2)];
-        NSString *className;
-        if([scanner scanUpToString:@"\"" intoString:&className])
-            *outClass = NSClassFromString(className);
-    }
-    char const result = *type;
-    free(type);
-    return result;
 }
 
 + (NSArray *)constraintsForKey:(NSString *)key
@@ -135,10 +110,11 @@
         for(NSUInteger i = 0; i < [columns count]; ++i) {
             id value = [result valueOfColumnAtIndex:i];
             if([value isKindOfClass:[NSData class]]) {
-                Class klass;
-                char encoding = [[self class] typeForKey:columns[i] class:&klass];
-                if(encoding == _C_ID && ![klass isSubclassOfClass:[NSData class]])
+                DBPropertyAttributes *attrs = DBAttributesForProperty([self class],
+                                                                      class_getProperty([self class], [columns[i] UTF8String]));
+                if(attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]])
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
+                free(attrs);
             }
             [self setValue:(value == [NSNull null]) ? nil : value
                     forKey:columns[i]];
