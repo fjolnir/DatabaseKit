@@ -20,77 +20,77 @@
 		C7D5040B1809B1D800818DBF /* DBSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504051809B1D800818DBF /* DBSQLiteConnectionTest.m */; };
 		C7D5040C1809B1D800818DBF /* DBUnitTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504071809B1D800818DBF /* DBUnitTestUtilities.m */; };
 		C7D8760F1A3E67E300A490E0 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D11A3E67E300A490E0 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D11A3E67E300A490E0 /* DBConnection.h */; };
-		C7D876111A3E67E300A490E0 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D11A3E67E300A490E0 /* DBConnection.h */; };
+		C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D11A3E67E300A490E0 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876111A3E67E300A490E0 /* DBConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D11A3E67E300A490E0 /* DBConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876121A3E67E300A490E0 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D21A3E67E300A490E0 /* DBConnection.m */; };
 		C7D876131A3E67E300A490E0 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D21A3E67E300A490E0 /* DBConnection.m */; };
 		C7D876141A3E67E300A490E0 /* DBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D21A3E67E300A490E0 /* DBConnection.m */; };
 		C7D876151A3E67E300A490E0 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D31A3E67E300A490E0 /* DBConnectionPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876161A3E67E300A490E0 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D31A3E67E300A490E0 /* DBConnectionPool.h */; };
-		C7D876171A3E67E300A490E0 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D31A3E67E300A490E0 /* DBConnectionPool.h */; };
+		C7D876161A3E67E300A490E0 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D31A3E67E300A490E0 /* DBConnectionPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876171A3E67E300A490E0 /* DBConnectionPool.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D31A3E67E300A490E0 /* DBConnectionPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876181A3E67E300A490E0 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D41A3E67E300A490E0 /* DBConnectionPool.m */; };
 		C7D876191A3E67E300A490E0 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D41A3E67E300A490E0 /* DBConnectionPool.m */; };
 		C7D8761A1A3E67E300A490E0 /* DBConnectionPool.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D41A3E67E300A490E0 /* DBConnectionPool.m */; };
 		C7D8761B1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D51A3E67E300A490E0 /* DBConnectionProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8761C1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D51A3E67E300A490E0 /* DBConnectionProxy.h */; };
-		C7D8761D1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D51A3E67E300A490E0 /* DBConnectionProxy.h */; };
+		C7D8761C1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D51A3E67E300A490E0 /* DBConnectionProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8761D1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D51A3E67E300A490E0 /* DBConnectionProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8761E1A3E67E300A490E0 /* DBConnectionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D61A3E67E300A490E0 /* DBConnectionProxy.m */; };
 		C7D8761F1A3E67E300A490E0 /* DBConnectionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D61A3E67E300A490E0 /* DBConnectionProxy.m */; };
 		C7D876201A3E67E300A490E0 /* DBConnectionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D61A3E67E300A490E0 /* DBConnectionProxy.m */; };
 		C7D876211A3E67E300A490E0 /* DBConnectionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D71A3E67E300A490E0 /* DBConnectionQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876221A3E67E300A490E0 /* DBConnectionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D71A3E67E300A490E0 /* DBConnectionQueue.h */; };
-		C7D876231A3E67E300A490E0 /* DBConnectionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D71A3E67E300A490E0 /* DBConnectionQueue.h */; };
+		C7D876221A3E67E300A490E0 /* DBConnectionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D71A3E67E300A490E0 /* DBConnectionQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876231A3E67E300A490E0 /* DBConnectionQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875D71A3E67E300A490E0 /* DBConnectionQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876241A3E67E300A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D81A3E67E300A490E0 /* DBConnectionQueue.m */; };
 		C7D876251A3E67E300A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D81A3E67E300A490E0 /* DBConnectionQueue.m */; };
 		C7D876261A3E67E300A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875D81A3E67E300A490E0 /* DBConnectionQueue.m */; };
 		C7D8762D1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DB1A3E67E300A490E0 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8762E1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DB1A3E67E300A490E0 /* DBSQLiteConnection.h */; };
-		C7D8762F1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DB1A3E67E300A490E0 /* DBSQLiteConnection.h */; };
+		C7D8762E1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DB1A3E67E300A490E0 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8762F1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DB1A3E67E300A490E0 /* DBSQLiteConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876301A3E67E300A490E0 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DC1A3E67E300A490E0 /* DBSQLiteConnection.m */; };
 		C7D876311A3E67E300A490E0 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DC1A3E67E300A490E0 /* DBSQLiteConnection.m */; };
 		C7D876321A3E67E300A490E0 /* DBSQLiteConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DC1A3E67E300A490E0 /* DBSQLiteConnection.m */; };
 		C7D876331A3E67E300A490E0 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876341A3E67E300A490E0 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */; };
-		C7D876351A3E67E300A490E0 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */; };
+		C7D876341A3E67E300A490E0 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876351A3E67E300A490E0 /* DatabaseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DD1A3E67E300A490E0 /* DatabaseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876361A3E67E300A490E0 /* DB+Migrations.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876371A3E67E300A490E0 /* DB+Migrations.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */; };
-		C7D876381A3E67E300A490E0 /* DB+Migrations.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */; };
+		C7D876371A3E67E300A490E0 /* DB+Migrations.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876381A3E67E300A490E0 /* DB+Migrations.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876391A3E67E300A490E0 /* DB+Migrations.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DF1A3E67E300A490E0 /* DB+Migrations.m */; };
 		C7D8763A1A3E67E300A490E0 /* DB+Migrations.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DF1A3E67E300A490E0 /* DB+Migrations.m */; };
 		C7D8763B1A3E67E300A490E0 /* DB+Migrations.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875DF1A3E67E300A490E0 /* DB+Migrations.m */; };
 		C7D8763C1A3E67E300A490E0 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E01A3E67E300A490E0 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8763D1A3E67E300A490E0 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E01A3E67E300A490E0 /* DB.h */; };
-		C7D8763E1A3E67E300A490E0 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E01A3E67E300A490E0 /* DB.h */; };
+		C7D8763D1A3E67E300A490E0 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E01A3E67E300A490E0 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8763E1A3E67E300A490E0 /* DB.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E01A3E67E300A490E0 /* DB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8763F1A3E67E300A490E0 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E11A3E67E300A490E0 /* DB.m */; };
 		C7D876401A3E67E300A490E0 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E11A3E67E300A490E0 /* DB.m */; };
 		C7D876411A3E67E300A490E0 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E11A3E67E300A490E0 /* DB.m */; };
 		C7D876421A3E67E300A490E0 /* DBColumnDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */; };
-		C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */; };
+		C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876451A3E67E300A490E0 /* DBColumnDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E31A3E67E300A490E0 /* DBColumnDefinition.m */; };
 		C7D876461A3E67E300A490E0 /* DBColumnDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E31A3E67E300A490E0 /* DBColumnDefinition.m */; };
 		C7D876471A3E67E300A490E0 /* DBColumnDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E31A3E67E300A490E0 /* DBColumnDefinition.m */; };
 		C7D876481A3E67E300A490E0 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E41A3E67E300A490E0 /* DBIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876491A3E67E300A490E0 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E41A3E67E300A490E0 /* DBIndex.h */; };
-		C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E41A3E67E300A490E0 /* DBIndex.h */; };
+		C7D876491A3E67E300A490E0 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E41A3E67E300A490E0 /* DBIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E41A3E67E300A490E0 /* DBIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8764B1A3E67E300A490E0 /* DBIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E51A3E67E300A490E0 /* DBIndex.m */; };
 		C7D8764C1A3E67E300A490E0 /* DBIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E51A3E67E300A490E0 /* DBIndex.m */; };
 		C7D8764D1A3E67E300A490E0 /* DBIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E51A3E67E300A490E0 /* DBIndex.m */; };
 		C7D8764E1A3E67E300A490E0 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E61A3E67E300A490E0 /* DBModel+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E61A3E67E300A490E0 /* DBModel+Private.h */; };
-		C7D876501A3E67E300A490E0 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E61A3E67E300A490E0 /* DBModel+Private.h */; };
+		C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E61A3E67E300A490E0 /* DBModel+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876501A3E67E300A490E0 /* DBModel+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E61A3E67E300A490E0 /* DBModel+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C7D876511A3E67E300A490E0 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E71A3E67E300A490E0 /* DBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876521A3E67E300A490E0 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E71A3E67E300A490E0 /* DBModel.h */; };
-		C7D876531A3E67E300A490E0 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E71A3E67E300A490E0 /* DBModel.h */; };
+		C7D876521A3E67E300A490E0 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E71A3E67E300A490E0 /* DBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876531A3E67E300A490E0 /* DBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E71A3E67E300A490E0 /* DBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876541A3E67E300A490E0 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E81A3E67E300A490E0 /* DBModel.m */; };
 		C7D876551A3E67E300A490E0 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E81A3E67E300A490E0 /* DBModel.m */; };
 		C7D876561A3E67E300A490E0 /* DBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875E81A3E67E300A490E0 /* DBModel.m */; };
 		C7D876571A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876581A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */; };
-		C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */; };
+		C7D876581A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8765A1A3E67E300A490E0 /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EA1A3E67E300A490E0 /* DBTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8765B1A3E67E300A490E0 /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EA1A3E67E300A490E0 /* DBTable.h */; };
-		C7D8765C1A3E67E300A490E0 /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EA1A3E67E300A490E0 /* DBTable.h */; };
+		C7D8765B1A3E67E300A490E0 /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EA1A3E67E300A490E0 /* DBTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8765C1A3E67E300A490E0 /* DBTable.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EA1A3E67E300A490E0 /* DBTable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8765D1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
 		C7D8765E1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
 		C7D8765F1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
@@ -98,47 +98,47 @@
 		C7D876611A3E67E300A490E0 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EC1A3E67E300A490E0 /* Debug.h */; };
 		C7D876621A3E67E300A490E0 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EC1A3E67E300A490E0 /* Debug.h */; };
 		C7D876631A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876641A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; };
-		C7D876651A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; };
+		C7D876641A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876651A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876661A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EF1A3E67E300A490E0 /* DBAlterTableQuery.m */; };
 		C7D876671A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EF1A3E67E300A490E0 /* DBAlterTableQuery.m */; };
 		C7D876681A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EF1A3E67E300A490E0 /* DBAlterTableQuery.m */; };
 		C7D876691A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8766A1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */; };
-		C7D8766B1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */; };
+		C7D8766A1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8766B1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8766C1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F11A3E67E300A490E0 /* DBCreateTableQuery.m */; };
 		C7D8766D1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F11A3E67E300A490E0 /* DBCreateTableQuery.m */; };
 		C7D8766E1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F11A3E67E300A490E0 /* DBCreateTableQuery.m */; };
 		C7D8766F1A3E67E300A490E0 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F21A3E67E300A490E0 /* DBDeleteQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876701A3E67E300A490E0 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F21A3E67E300A490E0 /* DBDeleteQuery.h */; };
-		C7D876711A3E67E300A490E0 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F21A3E67E300A490E0 /* DBDeleteQuery.h */; };
+		C7D876701A3E67E300A490E0 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F21A3E67E300A490E0 /* DBDeleteQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876711A3E67E300A490E0 /* DBDeleteQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F21A3E67E300A490E0 /* DBDeleteQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876721A3E67E300A490E0 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F31A3E67E300A490E0 /* DBDeleteQuery.m */; };
 		C7D876731A3E67E300A490E0 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F31A3E67E300A490E0 /* DBDeleteQuery.m */; };
 		C7D876741A3E67E300A490E0 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F31A3E67E300A490E0 /* DBDeleteQuery.m */; };
 		C7D876751A3E67E300A490E0 /* DBDropTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F41A3E67E300A490E0 /* DBDropTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876761A3E67E300A490E0 /* DBDropTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F41A3E67E300A490E0 /* DBDropTableQuery.h */; };
-		C7D876771A3E67E300A490E0 /* DBDropTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F41A3E67E300A490E0 /* DBDropTableQuery.h */; };
+		C7D876761A3E67E300A490E0 /* DBDropTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F41A3E67E300A490E0 /* DBDropTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876771A3E67E300A490E0 /* DBDropTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F41A3E67E300A490E0 /* DBDropTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876781A3E67E300A490E0 /* DBDropTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F51A3E67E300A490E0 /* DBDropTableQuery.m */; };
 		C7D876791A3E67E300A490E0 /* DBDropTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F51A3E67E300A490E0 /* DBDropTableQuery.m */; };
 		C7D8767A1A3E67E300A490E0 /* DBDropTableQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F51A3E67E300A490E0 /* DBDropTableQuery.m */; };
 		C7D8767B1A3E67E300A490E0 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F61A3E67E300A490E0 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F61A3E67E300A490E0 /* DBInsertQuery.h */; };
-		C7D8767D1A3E67E300A490E0 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F61A3E67E300A490E0 /* DBInsertQuery.h */; };
+		C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F61A3E67E300A490E0 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8767D1A3E67E300A490E0 /* DBInsertQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F61A3E67E300A490E0 /* DBInsertQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8767E1A3E67E300A490E0 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F71A3E67E300A490E0 /* DBInsertQuery.m */; };
 		C7D8767F1A3E67E300A490E0 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F71A3E67E300A490E0 /* DBInsertQuery.m */; };
 		C7D876801A3E67E300A490E0 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875F71A3E67E300A490E0 /* DBInsertQuery.m */; };
 		C7D876811A3E67E300A490E0 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F81A3E67E300A490E0 /* DBQuery+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F81A3E67E300A490E0 /* DBQuery+Private.h */; };
-		C7D876831A3E67E300A490E0 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F81A3E67E300A490E0 /* DBQuery+Private.h */; };
+		C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F81A3E67E300A490E0 /* DBQuery+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876831A3E67E300A490E0 /* DBQuery+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F81A3E67E300A490E0 /* DBQuery+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C7D876841A3E67E300A490E0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F91A3E67E300A490E0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876851A3E67E300A490E0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F91A3E67E300A490E0 /* DBQuery.h */; };
-		C7D876861A3E67E300A490E0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F91A3E67E300A490E0 /* DBQuery.h */; };
+		C7D876851A3E67E300A490E0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F91A3E67E300A490E0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876861A3E67E300A490E0 /* DBQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875F91A3E67E300A490E0 /* DBQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876871A3E67E300A490E0 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FA1A3E67E300A490E0 /* DBQuery.m */; };
 		C7D876881A3E67E300A490E0 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FA1A3E67E300A490E0 /* DBQuery.m */; };
 		C7D876891A3E67E300A490E0 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FA1A3E67E300A490E0 /* DBQuery.m */; };
 		C7D8768A1A3E67E300A490E0 /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D8768B1A3E67E300A490E0 /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */; };
-		C7D8768C1A3E67E300A490E0 /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */; };
+		C7D8768B1A3E67E300A490E0 /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D8768C1A3E67E300A490E0 /* DBSelectQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D8768D1A3E67E300A490E0 /* DBSelectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FC1A3E67E300A490E0 /* DBSelectQuery.m */; };
 		C7D8768E1A3E67E300A490E0 /* DBSelectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FC1A3E67E300A490E0 /* DBSelectQuery.m */; };
 		C7D8768F1A3E67E300A490E0 /* DBSelectQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875FC1A3E67E300A490E0 /* DBSelectQuery.m */; };
@@ -148,16 +148,6 @@
 		C7D876931A3E67E300A490E0 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876001A3E67E300A490E0 /* DBInflector.m */; };
 		C7D876941A3E67E300A490E0 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876001A3E67E300A490E0 /* DBInflector.m */; };
 		C7D876951A3E67E300A490E0 /* DBInflector.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876001A3E67E300A490E0 /* DBInflector.m */; };
-		C7D876971A3E67E300A490E0 /* inflections.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876011A3E67E300A490E0 /* inflections.inc */; };
-		C7D876981A3E67E300A490E0 /* inflections.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876011A3E67E300A490E0 /* inflections.inc */; };
-		C7D8769A1A3E67E300A490E0 /* irregulars.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876021A3E67E300A490E0 /* irregulars.inc */; };
-		C7D8769B1A3E67E300A490E0 /* irregulars.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876021A3E67E300A490E0 /* irregulars.inc */; };
-		C7D8769D1A3E67E300A490E0 /* plurals.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876031A3E67E300A490E0 /* plurals.inc */; };
-		C7D8769E1A3E67E300A490E0 /* plurals.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876031A3E67E300A490E0 /* plurals.inc */; };
-		C7D876A01A3E67E300A490E0 /* singulars.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876041A3E67E300A490E0 /* singulars.inc */; };
-		C7D876A11A3E67E300A490E0 /* singulars.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876041A3E67E300A490E0 /* singulars.inc */; };
-		C7D876A31A3E67E300A490E0 /* uncountables.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876051A3E67E300A490E0 /* uncountables.inc */; };
-		C7D876A41A3E67E300A490E0 /* uncountables.inc in Sources */ = {isa = PBXBuildFile; fileRef = C7D876051A3E67E300A490E0 /* uncountables.inc */; };
 		C7D876A51A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */; };
 		C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */; };
 		C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */; };
@@ -191,6 +181,15 @@
 		C7D876C31A3E683000A490E0 /* singulars.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876041A3E67E300A490E0 /* singulars.inc */; };
 		C7D876C41A3E683000A490E0 /* uncountables.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876051A3E67E300A490E0 /* uncountables.inc */; };
 		C7D876C81A3E6ACD00A490E0 /* sqlite_fixtures.sql in Resources */ = {isa = PBXBuildFile; fileRef = C7D876C61A3E6ACD00A490E0 /* sqlite_fixtures.sql */; };
+		C7D876CA1A3E6C2E00A490E0 /* DB+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876C91A3E6C2E00A490E0 /* DB+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876CB1A3E6C2E00A490E0 /* DB+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876C91A3E6C2E00A490E0 /* DB+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876CC1A3E6C2E00A490E0 /* DB+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876C91A3E6C2E00A490E0 /* DB+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876CD1A3E6C9700A490E0 /* inflections.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876011A3E67E300A490E0 /* inflections.inc */; };
+		C7D876CE1A3E6C9700A490E0 /* irregulars.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876021A3E67E300A490E0 /* irregulars.inc */; };
+		C7D876CF1A3E6C9700A490E0 /* plurals.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876031A3E67E300A490E0 /* plurals.inc */; };
+		C7D876D01A3E6C9700A490E0 /* singulars.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876041A3E67E300A490E0 /* singulars.inc */; };
+		C7D876D11A3E6C9700A490E0 /* uncountables.inc in Resources */ = {isa = PBXBuildFile; fileRef = C7D876051A3E67E300A490E0 /* uncountables.inc */; };
+		C7D876D21A3E6CAD00A490E0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7A5077813F01B1200301981 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -281,6 +280,7 @@
 		C7D8760E1A3E67E300A490E0 /* NSString+DBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBAdditions.m"; sourceTree = "<group>"; };
 		C7D876C51A3E6ACD00A490E0 /* DatabaseKit Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "DatabaseKit Tests-Info.plist"; path = "Tests/DatabaseKit Tests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C7D876C61A3E6ACD00A490E0 /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlite_fixtures.sql; path = Tests/sqlite_fixtures.sql; sourceTree = SOURCE_ROOT; };
+		C7D876C91A3E6C2E00A490E0 /* DB+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DB+Private.h"; sourceTree = "<group>"; };
 		C7E9F5121A0F48960045F226 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -400,6 +400,7 @@
 				C7D875DE1A3E67E300A490E0 /* DB+Migrations.h */,
 				C7D875DF1A3E67E300A490E0 /* DB+Migrations.m */,
 				C7D875E01A3E67E300A490E0 /* DB.h */,
+				C7D876C91A3E6C2E00A490E0 /* DB+Private.h */,
 				C7D875E11A3E67E300A490E0 /* DB.m */,
 				C7D875E21A3E67E300A490E0 /* DBColumnDefinition.h */,
 				C7D875E31A3E67E300A490E0 /* DBColumnDefinition.m */,
@@ -516,13 +517,14 @@
 				C7D8760F1A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876421A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D8764E1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
+				C7D876CA1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
 				C7D876811A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
 				C7D876901A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876A51A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
+				C7D876601A3E67E300A490E0 /* Debug.h in Headers */,
 				C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876AB1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D876B41A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
-				C7D876601A3E67E300A490E0 /* Debug.h in Headers */,
 				C7D876B11A3E67E300A490E0 /* DBUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,17 +536,12 @@
 				C7D8767D1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
 				C7D876531A3E67E300A490E0 /* DBModel.h in Headers */,
 				C7D876351A3E67E300A490E0 /* DatabaseKit.h in Headers */,
-				C7D876B31A3E67E300A490E0 /* DBUtilities.h in Headers */,
-				C7D876921A3E67E300A490E0 /* DBInflector.h in Headers */,
-				C7D876AD1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D876861A3E67E300A490E0 /* DBQuery.h in Headers */,
 				C7D876771A3E67E300A490E0 /* DBDropTableQuery.h in Headers */,
-				C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876171A3E67E300A490E0 /* DBConnectionPool.h in Headers */,
 				C7D876651A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */,
 				C7D876381A3E67E300A490E0 /* DB+Migrations.h in Headers */,
 				C7D8766B1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */,
-				C7D876831A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
 				C7D8762F1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */,
 				C7D876231A3E67E300A490E0 /* DBConnectionQueue.h in Headers */,
 				C7D8761D1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
@@ -552,14 +549,20 @@
 				C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */,
 				C7D8763E1A3E67E300A490E0 /* DB.h in Headers */,
+				C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */,
 				C7D8765C1A3E67E300A490E0 /* DBTable.h in Headers */,
-				C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876711A3E67E300A490E0 /* DBDeleteQuery.h in Headers */,
 				C7D8768C1A3E67E300A490E0 /* DBSelectQuery.h in Headers */,
-				C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */,
+				C7D876831A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
+				C7D876501A3E67E300A490E0 /* DBModel+Private.h in Headers */,
+				C7D876CC1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
+				C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
+				C7D876AD1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
+				C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
+				C7D876B31A3E67E300A490E0 /* DBUtilities.h in Headers */,
+				C7D876921A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876621A3E67E300A490E0 /* Debug.h in Headers */,
 				C7D876B61A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
-				C7D876501A3E67E300A490E0 /* DBModel+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,24 +570,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
-				C7D876B21A3E67E300A490E0 /* DBUtilities.h in Headers */,
 				C7D876491A3E67E300A490E0 /* DBIndex.h in Headers */,
 				C7D876221A3E67E300A490E0 /* DBConnectionQueue.h in Headers */,
 				C7D876851A3E67E300A490E0 /* DBQuery.h in Headers */,
-				C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
-				C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D8763D1A3E67E300A490E0 /* DB.h in Headers */,
-				C7D876611A3E67E300A490E0 /* Debug.h in Headers */,
 				C7D876641A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */,
 				C7D8762E1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */,
 				C7D876581A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */,
-				C7D876B51A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
-				C7D876911A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876521A3E67E300A490E0 /* DBModel.h in Headers */,
-				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876701A3E67E300A490E0 /* DBDeleteQuery.h in Headers */,
-				C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
 				C7D8766A1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */,
 				C7D876371A3E67E300A490E0 /* DB+Migrations.h in Headers */,
 				C7D876761A3E67E300A490E0 /* DBDropTableQuery.h in Headers */,
@@ -596,6 +590,16 @@
 				C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
 				C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
+				C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
+				C7D876CB1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
+				C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
+				C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
+				C7D876611A3E67E300A490E0 /* Debug.h in Headers */,
+				C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
+				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
+				C7D876911A3E67E300A490E0 /* DBInflector.h in Headers */,
+				C7D876B51A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
+				C7D876B21A3E67E300A490E0 /* DBUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,10 +610,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Mac Framework" */;
 			buildPhases = (
-				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
+				8DC2EF520486A6940098B216 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -661,8 +665,8 @@
 			buildConfigurationList = C7E9F5251A0F48960045F226 /* Build configuration list for PBXNativeTarget "iOS Framework" */;
 			buildPhases = (
 				C7E9F50D1A0F48960045F226 /* Sources */,
-				C7E9F50E1A0F48960045F226 /* Frameworks */,
 				C7E9F50F1A0F48960045F226 /* Headers */,
+				C7E9F50E1A0F48960045F226 /* Frameworks */,
 				C7E9F5101A0F48960045F226 /* Resources */,
 			);
 			buildRules = (
@@ -736,6 +740,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7D876D21A3E6CAD00A490E0 /* InfoPlist.strings in Resources */,
+				C7D876CD1A3E6C9700A490E0 /* inflections.inc in Resources */,
+				C7D876CE1A3E6C9700A490E0 /* irregulars.inc in Resources */,
+				C7D876CF1A3E6C9700A490E0 /* plurals.inc in Resources */,
+				C7D876D01A3E6C9700A490E0 /* singulars.inc in Resources */,
+				C7D876D11A3E6C9700A490E0 /* uncountables.inc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +802,6 @@
 				C7D876AA1A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D876681A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */,
 				C7D876741A3E67E300A490E0 /* DBDeleteQuery.m in Sources */,
-				C7D876981A3E67E300A490E0 /* inflections.inc in Sources */,
 				C7D8764D1A3E67E300A490E0 /* DBIndex.m in Sources */,
 				C7D876141A3E67E300A490E0 /* DBConnection.m in Sources */,
 				C7D8766E1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */,
@@ -801,20 +810,16 @@
 				C7D8763B1A3E67E300A490E0 /* DB+Migrations.m in Sources */,
 				C7D8768F1A3E67E300A490E0 /* DBSelectQuery.m in Sources */,
 				C7D876261A3E67E300A490E0 /* DBConnectionQueue.m in Sources */,
-				C7D8769E1A3E67E300A490E0 /* plurals.inc in Sources */,
 				C7D8765F1A3E67E300A490E0 /* DBTable.m in Sources */,
 				C7D876B91A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m in Sources */,
 				C7D876321A3E67E300A490E0 /* DBSQLiteConnection.m in Sources */,
 				C7D876891A3E67E300A490E0 /* DBQuery.m in Sources */,
 				C7D876BF1A3E67E300A490E0 /* NSString+DBAdditions.m in Sources */,
-				C7D876A41A3E67E300A490E0 /* uncountables.inc in Sources */,
 				C7D876801A3E67E300A490E0 /* DBInsertQuery.m in Sources */,
 				C7D876411A3E67E300A490E0 /* DB.m in Sources */,
 				C7D876561A3E67E300A490E0 /* DBModel.m in Sources */,
 				C7D876201A3E67E300A490E0 /* DBConnectionProxy.m in Sources */,
 				C7D876B01A3E67E300A490E0 /* DBOrderedDictionary.m in Sources */,
-				C7D876A11A3E67E300A490E0 /* singulars.inc in Sources */,
-				C7D8769B1A3E67E300A490E0 /* irregulars.inc in Sources */,
 				C7D8761A1A3E67E300A490E0 /* DBConnectionPool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -827,7 +832,6 @@
 				C7D876A91A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D876671A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */,
 				C7D876731A3E67E300A490E0 /* DBDeleteQuery.m in Sources */,
-				C7D876971A3E67E300A490E0 /* inflections.inc in Sources */,
 				C7D8764C1A3E67E300A490E0 /* DBIndex.m in Sources */,
 				C7D876131A3E67E300A490E0 /* DBConnection.m in Sources */,
 				C7D8766D1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */,
@@ -836,20 +840,16 @@
 				C7D8763A1A3E67E300A490E0 /* DB+Migrations.m in Sources */,
 				C7D8768E1A3E67E300A490E0 /* DBSelectQuery.m in Sources */,
 				C7D876251A3E67E300A490E0 /* DBConnectionQueue.m in Sources */,
-				C7D8769D1A3E67E300A490E0 /* plurals.inc in Sources */,
 				C7D8765E1A3E67E300A490E0 /* DBTable.m in Sources */,
 				C7D876B81A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m in Sources */,
 				C7D876311A3E67E300A490E0 /* DBSQLiteConnection.m in Sources */,
 				C7D876881A3E67E300A490E0 /* DBQuery.m in Sources */,
 				C7D876BE1A3E67E300A490E0 /* NSString+DBAdditions.m in Sources */,
-				C7D876A31A3E67E300A490E0 /* uncountables.inc in Sources */,
 				C7D8767F1A3E67E300A490E0 /* DBInsertQuery.m in Sources */,
 				C7D876401A3E67E300A490E0 /* DB.m in Sources */,
 				C7D876551A3E67E300A490E0 /* DBModel.m in Sources */,
 				C7D8761F1A3E67E300A490E0 /* DBConnectionProxy.m in Sources */,
 				C7D876AF1A3E67E300A490E0 /* DBOrderedDictionary.m in Sources */,
-				C7D876A01A3E67E300A490E0 /* singulars.inc in Sources */,
-				C7D8769A1A3E67E300A490E0 /* irregulars.inc in Sources */,
 				C7D876191A3E67E300A490E0 /* DBConnectionPool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
