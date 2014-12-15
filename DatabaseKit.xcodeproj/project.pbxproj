@@ -97,6 +97,12 @@
 		C7D875C01A3E484100A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875BC1A3E484100A490E0 /* DBConnectionQueue.m */; };
 		C7D875C11A3E484100A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875BC1A3E484100A490E0 /* DBConnectionQueue.m */; };
 		C7D875C21A3E484100A490E0 /* DBConnectionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875BC1A3E484100A490E0 /* DBConnectionQueue.m */; };
+		C7D875C51A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875C31A3E5A9600A490E0 /* DBOrderedDictionary.h */; };
+		C7D875C61A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875C31A3E5A9600A490E0 /* DBOrderedDictionary.h */; };
+		C7D875C71A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875C31A3E5A9600A490E0 /* DBOrderedDictionary.h */; };
+		C7D875C81A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875C41A3E5A9600A490E0 /* DBOrderedDictionary.m */; };
+		C7D875C91A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875C41A3E5A9600A490E0 /* DBOrderedDictionary.m */; };
+		C7D875CA1A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875C41A3E5A9600A490E0 /* DBOrderedDictionary.m */; };
 		C7E423DF19C4D7340069D010 /* DBQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B819C2032B00B9B687 /* DBQuery.m */; };
 		C7E423E019C4D7340069D010 /* DBDeleteQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B319C2032B00B9B687 /* DBDeleteQuery.m */; };
 		C7E423E119C4D7340069D010 /* DBInsertQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C76774B519C2032B00B9B687 /* DBInsertQuery.m */; };
@@ -248,6 +254,8 @@
 		C7D5041C180BB2CF00818DBF /* sqlite_fixtures.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sqlite_fixtures.sql; path = "Mac/Unit Tests/sqlite_fixtures.sql"; sourceTree = SOURCE_ROOT; };
 		C7D875BB1A3E484100A490E0 /* DBConnectionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBConnectionQueue.h; sourceTree = "<group>"; };
 		C7D875BC1A3E484100A490E0 /* DBConnectionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnectionQueue.m; sourceTree = "<group>"; };
+		C7D875C31A3E5A9600A490E0 /* DBOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBOrderedDictionary.h; sourceTree = "<group>"; };
+		C7D875C41A3E5A9600A490E0 /* DBOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBOrderedDictionary.m; sourceTree = "<group>"; };
 		C7E9F5121A0F48960045F226 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7F6FD3219FA22AF00C77AC6 /* DB+Migrations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "DB+Migrations.h"; path = "DatabaseKit/DB+Migrations.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		C7F6FD3319FA22AF00C77AC6 /* DB+Migrations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "DB+Migrations.m"; path = "DatabaseKit/DB+Migrations.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -362,6 +370,8 @@
 				C7772C7419C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.h */,
 				C7772C7519C592FB00A7D42A /* NSPredicate+DBSQLRepresentable.m */,
 				C71CE99E19B3839600C77150 /* DBInflector */,
+				C7D875C31A3E5A9600A490E0 /* DBOrderedDictionary.h */,
+				C7D875C41A3E5A9600A490E0 /* DBOrderedDictionary.m */,
 			);
 			name = Utilities;
 			path = DatabaseKit/Utilities;
@@ -489,6 +499,7 @@
 				C71CE9BD19B3839600C77150 /* DatabaseKit.h in Headers */,
 				C71CE9B019B3839600C77150 /* DBConnectionPool.h in Headers */,
 				C76774C219C2032B00B9B687 /* DBSelectQuery.h in Headers */,
+				C7D875C51A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7F6FD3419FA22AF00C77AC6 /* DB+Migrations.h in Headers */,
 				C7F6FD3A19FA3B2C00C77AC6 /* DBCreateTableQuery.h in Headers */,
 				C71CE9B919B3839600C77150 /* DBSQLiteConnection.h in Headers */,
@@ -523,6 +534,7 @@
 				C71CE9BA19B3839600C77150 /* DBSQLiteConnection.h in Headers */,
 				C7D46C631A062B82008825CD /* DBIndex.h in Headers */,
 				C71CE9D219B3839600C77150 /* DBTable.h in Headers */,
+				C7D875C71A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */,
 				C71CE9AD19B3839600C77150 /* DBConnection.h in Headers */,
 				C71CE9F819B3839600C77150 /* DBInflector.h in Headers */,
 				C71CE9B119B3839600C77150 /* DBConnectionPool.h in Headers */,
@@ -558,6 +570,7 @@
 				C7E9F5421A0F49220045F226 /* DB.h in Headers */,
 				C7E9F5431A0F49220045F226 /* DB+Migrations.h in Headers */,
 				C7E9F5441A0F49220045F226 /* DBModel.h in Headers */,
+				C7D875C61A3E5A9600A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7E9F5461A0F49220045F226 /* DBTable.h in Headers */,
 				C7E9F5471A0F49220045F226 /* DBSQLRepresentable.h in Headers */,
 				C7E9F5481A0F49220045F226 /* DBColumnDefinition.h in Headers */,
@@ -730,6 +743,7 @@
 				C71CE9C519B3839600C77150 /* DBModel.m in Sources */,
 				C72294651A39A93B00091D13 /* DBConnectionProxy.m in Sources */,
 				C71CEA0F19B3839600C77150 /* NSString+DBAdditions.m in Sources */,
+				C7D875C81A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */,
 				C7F6FD3C19FA3B2C00C77AC6 /* DBCreateTableQuery.m in Sources */,
 				C76774C119C2032B00B9B687 /* DBQuery.m in Sources */,
 				C76774BE19C2032B00B9B687 /* DBInsertQuery.m in Sources */,
@@ -771,6 +785,7 @@
 				C71CE9C619B3839600C77150 /* DBModel.m in Sources */,
 				C72294671A39A93B00091D13 /* DBConnectionProxy.m in Sources */,
 				C71CEA1019B3839600C77150 /* NSString+DBAdditions.m in Sources */,
+				C7D875CA1A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */,
 				C7F6FD3D19FA3B2C00C77AC6 /* DBCreateTableQuery.m in Sources */,
 				C71CEA0819B3839600C77150 /* DBISO8601DateFormatter.m in Sources */,
 				C71CE9AF19B3839600C77150 /* DBConnection.m in Sources */,
@@ -800,6 +815,7 @@
 				C7E9F52B1A0F48DF0045F226 /* DB.m in Sources */,
 				C72294661A39A93B00091D13 /* DBConnectionProxy.m in Sources */,
 				C7E9F52C1A0F48DF0045F226 /* DB+Migrations.m in Sources */,
+				C7D875C91A3E5A9600A490E0 /* DBOrderedDictionary.m in Sources */,
 				C7E9F52D1A0F48DF0045F226 /* DBModel.m in Sources */,
 				C7E9F52E1A0F48DF0045F226 /* DBTable.m in Sources */,
 				C7E9F52F1A0F48DF0045F226 /* DBColumnDefinition.m in Sources */,

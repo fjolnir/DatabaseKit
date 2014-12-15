@@ -16,7 +16,7 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 @property(readonly, strong) DBTable *table;
 @property(readwrite, copy) NSString *identifier;
 @property(readonly, getter=isInserted) BOOL inserted;
-@property(readonly, retain) NSSet *dirtyKeys;
+@property(readonly) BOOL hasChanges;
 
 /*!
  * Returns the set of keys that should be saved to the database

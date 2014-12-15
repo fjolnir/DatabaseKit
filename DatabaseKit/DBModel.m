@@ -8,15 +8,16 @@
 #import "Debug.h"
 #import "NSString+DBAdditions.h"
 #import "DBUtilities.h"
+#import "DBOrderedDictionary.h"
 #import <objc/runtime.h>
 #import <unistd.h>
 
 static NSString *classPrefix = nil;
 
 @implementation DBModel {
-    NSMutableSet *_dirtyKeys;
+    DBOrderedDictionary *_pendingQueries;
 }
-@dynamic inserted;
+@dynamic inserted, hasChanges;
 
 + (void)setClassPrefix:(NSString *)aPrefix
 {
@@ -136,7 +137,7 @@ static NSString *classPrefix = nil;
     NSParameterAssert(aDB);
     if((self = [self init])) {
         _table     = aDB[[[self class] tableName]];
-        _dirtyKeys = [NSMutableSet new];
+        _pendingQueries = [DBOrderedDictionary new];
 
         NSArray *columns = result.columns;
         for(NSUInteger i = 0; i < [columns count]; ++i) {
@@ -164,8 +165,12 @@ static NSString *classPrefix = nil;
 
 - (void)didChangeValueForKey:(NSString *)key
 {
-    if([[[self class] savedKeys] containsObject:key])
-        [_dirtyKeys addObject:key];
+    if(_pendingQueries && [[[self class] savedKeys] containsObject:key]) {
+        [self willChangeValueForKey:@"hasChanges"];
+        _pendingQueries[key] = [self saveQueryForKey:key];
+        [self didChangeValueForKey:@"hasChanges"];
+        [self.table.database registerDirtyObject:self];
+    }
     [super didChangeValueForKey:key];
 }
 
@@ -201,21 +206,13 @@ static NSString *classPrefix = nil;
 {
     if(!self.inserted)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
-    else if([_dirtyKeys containsObject:key])
-        return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else
-        return nil;
+        return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
 - (NSArray *)queriesToSave
 {
-    NSMutableArray *queries = [NSMutableArray new];
-    for(NSString *key in [[self class] savedKeys]) {
-        DBWriteQuery *query = [self saveQueryForKey:key];
-        if(query)
-            [queries addObject:query];
-    }
-    return [DBQuery combineQueries:queries];
+    return [DBQuery combineQueries:_pendingQueries.allValues];
 }
 
 - (BOOL)save:(NSError **)outErr
@@ -224,11 +221,13 @@ static NSString *classPrefix = nil;
         self.identifier = [[NSUUID UUID] UUIDString];
 
     DBConnection *connection = self.table.database.connection;
-    BOOL saved = [connection executeWriteQueriesInTransaction:[self queriesToSave]
+    BOOL saved = [connection executeWriteQueriesInTransaction:self.queriesToSave
                                                         error:outErr];
     if(saved) {
         _savedIdentifier = self.identifier;
-        [self _clearDirtyKeys];
+        [self willChangeValueForKey:@"hasChanges"];
+        [_pendingQueries removeAllObjects];
+        [self didChangeValueForKey:@"hasChanges"];
         return YES;
     } else
         return NO;
@@ -252,12 +251,9 @@ static NSString *classPrefix = nil;
 {
     return _savedIdentifier != nil;
 }
-
-- (void)_clearDirtyKeys
+- (BOOL)hasChanges
 {
-    [self willChangeValueForKey:@"dirtyKeys"];
-    [_dirtyKeys removeAllObjects];
-    [self didChangeValueForKey:@"dirtyKeys"];
+    return _pendingQueries.count > 0;
 }
 
 #pragma mark -
