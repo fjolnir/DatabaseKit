@@ -56,12 +56,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
 + (NSArray *)constraintsForKey:(NSString *)key;
 
 /*!
- * Returns an array of queries to execute in order to
- * save the object to the database.
- */
-- (NSArray *)queriesToSave;
-
-/*!
  * Returns a query to use to save a given key to the database.
  */
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key;

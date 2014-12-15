@@ -196,15 +196,10 @@
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
-- (NSArray *)queriesToSave
-{
-    return [DBQuery combineQueries:_pendingQueries.allValues];
-}
-
 - (BOOL)_save:(NSError **)outErr
 {
     DBConnection *connection = self.table.database.connection;
-    BOOL saved = [connection executeWriteQueriesInTransaction:self.queriesToSave
+    BOOL saved = [connection executeWriteQueriesInTransaction:[DBQuery combineQueries:_pendingQueries.allValues]
                                                         error:outErr];
     if(saved) {
         _savedIdentifier = self.identifier;
