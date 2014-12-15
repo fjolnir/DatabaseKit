@@ -10,17 +10,21 @@
 
 - (id)initWithConnection:(DBConnection *)aConnection;
 
-// Returns a table whose name matches key or nil
+/*!
+ * Returns a table whose name matches key or nil if it doesn't exist
+ */
 - (DBTable *)objectForKeyedSubscript:(id)key;
 
+/*!
+ * Returns a `CREATE TABLE` query
+ */
 - (DBCreateTableQuery *)create;
 @end
 
 @class DBModel;
 @interface DB (DBModel)
-- (BOOL)saveDirtyObjects:(NSError **)outErr;
-@end
-
-@interface DB (DBModelPrivate)
-- (void)registerDirtyObject:(DBModel *)obj;
+/*!
+ * Saves any objects with pending changes.
+ */
+- (BOOL)save:(NSError **)outErr;
 @end

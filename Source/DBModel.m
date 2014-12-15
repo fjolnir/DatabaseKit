@@ -1,5 +1,5 @@
 #import "DBModel+Private.h"
-#import "DB.h"
+#import "DB+Private.h"
 #import "DBSelectQuery.h"
 #import "DBInsertQuery.h"
 #import "DBDeleteQuery.h"

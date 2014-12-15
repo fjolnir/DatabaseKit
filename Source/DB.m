@@ -1,4 +1,4 @@
-#import "DB.h"
+#import "DB+Private.h"
 #import "DBTable.h"
 #import "DBModel+Private.h"
 #import "DBCreateTableQuery.h"
@@ -40,7 +40,7 @@
     return [DBCreateTableQuery withDatabase:self];
 }
 
-- (BOOL)saveDirtyObjects:(NSError **)outErr
+- (BOOL)save:(NSError **)outErr
 {
     @synchronized(_dirtyObjects) {
         if([_dirtyObjects count] > 0)
