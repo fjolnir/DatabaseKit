@@ -180,12 +180,14 @@
 @implementation DBForeignKeyConstraint
 + (instancetype)foreignKeyConstraintWithTable:(NSString *)tableName
                                    columnName:(NSString *)columnName
+                                     deferred:(BOOL)deferred
                                      onDelete:(DBForeignKeyAction)onDelete
                                      onUpdate:(DBForeignKeyAction)onUpdate
 {
     DBForeignKeyConstraint *constr = [self new];
     constr->_tableName    = tableName;
     constr->_columnName   = columnName;
+    constr->_deferred     = deferred;
     constr->_deleteAction = onDelete;
     constr->_updateAction = onUpdate;
     return constr;
@@ -199,6 +201,8 @@
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 {
     NSMutableString *sql = [NSMutableString stringWithFormat:@"REFERENCES %@(%@)", _tableName, _columnName];
+    if(_deferred)
+        [sql appendString:@" DEFERRABLE INITIALLY DEFERRED"];
     switch(_deleteAction) {
         case DBForeignKeyActionRestrict:
             [sql appendString:@" ON DELETE RESTRICT_"];

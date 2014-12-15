@@ -50,10 +50,12 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @interface DBForeignKeyConstraint : DBConstraint
 @property(readonly) NSString *tableName;
 @property(readonly) NSString *columnName;
+@property(readonly) BOOL deferred;
 @property(readonly) DBForeignKeyAction deleteAction, updateAction;
 
 + (instancetype)foreignKeyConstraintWithTable:(NSString *)tableName
                                    columnName:(NSString *)columnName
+                                     deferred:(BOOL)deferred
                                      onDelete:(DBForeignKeyAction)onDelete
                                      onUpdate:(DBForeignKeyAction)onUpdate;
 @end
