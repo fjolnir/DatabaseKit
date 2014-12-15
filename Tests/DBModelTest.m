@@ -38,7 +38,7 @@
     //[[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
     NSString *theId = model.identifier;
     XCTAssertTrue([model destroy], @"Couldn't delete record");
-    NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBIdentifierColumn, theId] execute];
+    NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBIdentifierColumn, theId] execute:NULL];
     XCTAssertEqual([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 

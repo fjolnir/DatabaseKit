@@ -135,7 +135,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx
 {
-    return [[[[self offset:idx] limit:1] execute] firstObject];
+    return [[[[self offset:idx] limit:1] execute:NULL] firstObject];
 }
 
 - (id)firstObject
@@ -152,7 +152,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(state->state == 0) {
         state->state = 1;
 
-        results = [self execute];
+        results = [self execute:NULL];
         state->mutationsPtr = (__bridge void *)results;
     } else
         results = (__bridge_transfer id)(void *)state->extra[0];
@@ -173,7 +173,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (NSUInteger)count
 {
     if(_groupedBy || _offset || _limit || _unionQuery)
-        return [[self execute] count];
+        return [[self execute:NULL] count];
     else
         return [[self select:@[[DBAs field:@"COUNT(*)" alias:@"count"]]][0][@"count"] unsignedIntegerValue];
 }

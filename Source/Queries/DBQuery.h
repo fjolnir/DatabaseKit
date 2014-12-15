@@ -32,7 +32,6 @@
 @end
 
 @interface DBReadQuery : DBQuery
-- (NSArray *)execute;
 - (NSArray *)execute:(NSError **)err;
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
 @end
@@ -40,7 +39,6 @@
 @interface DBWriteQuery : DBQuery
 @property(readonly, strong) NSArray *values;
 
-- (BOOL)execute;
 - (BOOL)execute:(NSError **)err;
 - (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr;
 @end

@@ -170,10 +170,6 @@
 @end
 
 @implementation DBReadQuery
-- (NSArray *)execute
-{
-    return [self execute:NULL];
-}
 - (NSArray *)execute:(NSError **)err
 {
     return [self executeOnConnection:[self connection] error:err];
@@ -188,10 +184,6 @@
 @end
 
 @implementation DBWriteQuery
-- (BOOL)execute
-{
-    return [self execute:NULL];
-}
 - (BOOL)execute:(NSError **)err
 {
     return [self executeOnConnection:[self connection] error:err];
