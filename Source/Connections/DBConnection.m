@@ -60,6 +60,12 @@ static NSMutableArray *_ConnectionClasses;
     return NO;
 }
 
+- (NSArray *)tableNames
+{
+    NOT_IMPLEMENTED;
+    return NO;
+}
+
 - (BOOL)tableExists:(NSString *)tableName
 {
     NOT_IMPLEMENTED;

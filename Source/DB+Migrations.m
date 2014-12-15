@@ -8,6 +8,7 @@
 #import "DBDropTableQuery.h"
 #import "DBIndex.h"
 #import "NSString+DBAdditions.h"
+#import "DBIntrospection.h"
 #import <objc/runtime.h>
 
 static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
@@ -42,6 +43,13 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
         }
     }
     return creates;
+}
+
+- (BOOL)migrateSchema:(NSError **)outErr
+{
+    NSArray *modelClasses = [DBClassesInheritingFrom([DBModel class])
+                             filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"savedKeys.@count > 0"]];
+    return [self migrateModelClasses:modelClasses error:outErr];
 }
 
 - (BOOL)migrateModelClasses:(NSArray *)classes error:(NSError **)outErr

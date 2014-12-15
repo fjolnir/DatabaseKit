@@ -16,8 +16,7 @@
     db = DBSQLiteDatabaseForTesting();
 
     NSError *err;
-    if(![db migrateModelClasses:@[[TEModel class], [TEPerson class], [TEWebSite class], [TEAnimal class]]
-                          error:&err]) {
+     if(![db migrateSchema:&err]) {
         NSLog(@"Failed to initialize models: %@", err);
     }
 

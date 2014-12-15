@@ -187,6 +187,14 @@
     return [[self execute:sql substitutions:substitutions error:outErr] step:outErr] == DBResultStateAtEnd;
 }
 
+- (NSArray *)tableNames
+{
+    DBResult *result = [self execute:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table'"
+                       substitutions:nil
+                               error:NULL];
+    return [[result toArray:NULL] valueForKey:@"name"];
+}
+
 - (BOOL)tableExists:(NSString *)tableName
 {
     DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
