@@ -71,7 +71,7 @@ static NSString *classPrefix = nil;
     NSAssert(type, @"Unable to get type for key %@", key);
 
     if(outClass && type[0] == _C_ID && type[1] == '"') {
-        NSScanner * const scanner = [NSScanner scannerWithString:[NSString stringWithUTF8String:type+2]];
+        NSScanner * const scanner = [NSScanner scannerWithString:@(type+2)];
         NSString *className;
         if([scanner scanUpToString:@"\"" intoString:&className])
             *outClass = NSClassFromString(className);
@@ -133,7 +133,7 @@ static NSString *classPrefix = nil;
     return self;
 }
 
-- (id)initWithDatabase:(DB *)aDB result:(DBResult *)result
+- (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result
 {
     NSParameterAssert(aDB);
     if((self = [self init])) {
@@ -157,7 +157,7 @@ static NSString *classPrefix = nil;
     return self;
 }
 
-- (id)initWithDatabase:(DB *)aDB
+- (instancetype)initWithDatabase:(DB *)aDB
 {
     DBModel *model = [self initWithDatabase:aDB result:nil];
     model.identifier = [[NSUUID UUID] UUIDString];

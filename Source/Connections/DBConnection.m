@@ -37,7 +37,7 @@ static NSMutableArray *_ConnectionClasses;
                                userInfo:@{ NSLocalizedDescriptionKey: @"Unhandled URL type", @"url": URL }];
     return nil;
 }
-- (id)initWithURL:(NSURL *)URL error:(NSError **)err
+- (instancetype)initWithURL:(NSURL *)URL error:(NSError **)err
 {
     if(!(self = [super init]))
         return nil;

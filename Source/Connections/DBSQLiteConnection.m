@@ -51,7 +51,7 @@
 
 #pragma mark - Initialization
 
-- (id)initWithURL:(NSURL *)URL error:(NSError **)err;
+- (instancetype)initWithURL:(NSURL *)URL error:(NSError **)err;
 {
     if(!(self = [super initWithURL:URL error:err]))
         return nil;
@@ -253,7 +253,7 @@
         return NULL;
     }
 
-    NSString *tail = [[NSString stringWithUTF8String:tailBuf] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *tail = [@(tailBuf) stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if(aoTail && [tail length] > 0)
         *aoTail = tail;
 

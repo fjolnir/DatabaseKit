@@ -8,7 +8,7 @@
 + (DB *)withURL:(NSURL *)URL;
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err;
 
-- (id)initWithConnection:(DBConnection *)aConnection;
+- (instancetype)initWithConnection:(DBConnection *)aConnection;
 
 /*!
  * Returns a table whose name matches key or nil if it doesn't exist

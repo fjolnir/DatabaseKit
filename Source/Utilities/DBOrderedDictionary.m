@@ -38,7 +38,7 @@
 
 - (id)objectForKey:(id)aKey
 {
-    return [_pairs objectForKey:aKey];
+    return _pairs[aKey];
 }
 
 - (NSEnumerator *)keyEnumerator

@@ -57,7 +57,7 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  */
 + (id)openConnectionWithURL:(NSURL *)URL error:(NSError **)err;
 /*! @copydoc openConnectionWithURL:error: */
-- (id)initWithURL:(NSURL *)URL error:(NSError **)err;
+- (instancetype)initWithURL:(NSURL *)URL error:(NSError **)err NS_DESIGNATED_INITIALIZER;
 /*!
  * Executes the given SQL query, returning a result set
  *

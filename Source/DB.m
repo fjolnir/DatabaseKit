@@ -19,7 +19,7 @@
     return [[self alloc] initWithConnection:[DBConnectionQueue connectionProxyWithURL:URL error:err]];
 }
 
-- (id)initWithConnection:(DBConnection *)aConnection
+- (instancetype)initWithConnection:(DBConnection *)aConnection
 {
     if((self = [self init])) {
         _connection = aConnection;
