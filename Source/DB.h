@@ -26,5 +26,21 @@
 /*!
  * Saves any objects with pending changes.
  */
-- (BOOL)save:(NSError **)outErr;
+- (BOOL)saveObjects:(NSError **)outErr;
+
+/*!
+ * Inserts a DBModel object into the database
+ *
+ * @param object The object to insert.
+ *         Raises NSInternalInconsistencyException if the object is nil, or already inserted into a database.
+ */
+- (void)insertObject:(DBModel *)object;
+
+/*!
+ * Deletes a DBModel object from the database
+ *
+ * @param object The object to delete.
+ *         Raises NSInternalInconsistencyException if the object is not already in the database.
+ */
+- (void)deleteObject:(DBModel *)object;
 @end

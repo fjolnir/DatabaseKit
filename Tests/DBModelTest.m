@@ -23,7 +23,7 @@
     TEModel *testModel = [[TEModel alloc] initWithDatabase:db];
     testModel.name = @"Foobar";
     testModel.info = @"lorem ipsum";
-    [db save:NULL];
+    [db saveObjects:NULL];
 }
 
 - (void)testTableName
@@ -35,9 +35,8 @@
 - (void)testDestroy
 {
     TEModel *model = [[db[@"models"] select] firstObject];
-    //[[[db[@"models"] insert:@{@"name": @"Deletee", @"info": @"This won't exist for long"}] execute] firstObject];
     NSString *theId = model.identifier;
-    XCTAssertTrue([model destroy], @"Couldn't delete record");
+    [db deleteObject:model];
     NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBIdentifierColumn, theId] execute:NULL];
     XCTAssertEqual([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
@@ -54,7 +53,7 @@
 {
     TEModel *first = [[db[@"models"] select] firstObject];
     NSString *newName = @"NOT THE SAME NAME!";
-    [first.table.database.connection transaction:^{
+    [first.database.connection transaction:^{
         first.name = newName;
         return DBTransactionCommit;
     }];
@@ -65,7 +64,7 @@
 {
     TEWebSite *site = [[TEWebSite alloc] initWithDatabase:db];
     site.url = [NSURL URLWithString:@"http://google.com"];
-    XCTAssert([db save:NULL], @"Unable to save NSCoding compliant object to database");
+    XCTAssert([db saveObjects:NULL], @"Unable to save NSCoding compliant object to database");
     TEWebSite *retrievedSite = [[db[[TEWebSite tableName]] select] firstObject];
     XCTAssertEqualObjects(site.url, retrievedSite.url);
 }

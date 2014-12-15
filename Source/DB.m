@@ -2,6 +2,7 @@
 #import "DBTable.h"
 #import "DBModel+Private.h"
 #import "DBCreateTableQuery.h"
+#import "DBDeleteQuery.h"
 #import "DBConnectionQueue.h"
 
 @implementation DB {
@@ -58,7 +59,7 @@
     return [DBCreateTableQuery withDatabase:self];
 }
 
-- (BOOL)save:(NSError **)outErr
+- (BOOL)saveObjects:(NSError **)outErr
 {
     @synchronized(_dirtyObjects) {
         if([_dirtyObjects count] > 0)
@@ -73,6 +74,25 @@
         else
             return NO;
     }
+}
+
+- (void)insertObject:(DBModel *)object
+{
+    NSParameterAssert(object && !object.database);
+
+    object.database = self;
+    if(!object.identifier)
+        object.identifier = [[NSUUID UUID] UUIDString];
+    if(object.hasChanges)
+        [self registerDirtyObject:object];
+}
+- (void)deleteObject:(DBModel *)object
+{
+    NSParameterAssert(object.database == self);
+
+    if(object.isInserted)
+        [[object.query delete] execute:NULL];
+    object.database = nil;
 }
 
 - (void)registerDirtyObject:(DBModel *)obj

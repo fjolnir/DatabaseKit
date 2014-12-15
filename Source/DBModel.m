@@ -113,13 +113,15 @@
 
 - (instancetype)init
 {
-    if((self = [super init]))
+    if((self = [super init])) {
+        _pendingQueries = [DBOrderedDictionary new];
         // This is to coerce KVC into calling didChangeValueForKey:
         // We don't actually take any action when pendingQueries changes
         [self addObserver:self
                forKeyPath:@"pendingQueries"
                   options:0
                   context:NULL];
+    }
     return self;
 }
 
@@ -127,8 +129,7 @@
 {
     NSParameterAssert(aDB);
     if((self = [self init])) {
-        _table     = aDB[[[self class] tableName]];
-        _pendingQueries = [DBOrderedDictionary new];
+        _database = aDB;
 
         NSArray *columns = result.columns;
         for(NSUInteger i = 0; i < [columns count]; ++i) {
@@ -160,7 +161,7 @@
         [self willChangeValueForKey:@"hasChanges"];
         _pendingQueries[key] = [self saveQueryForKey:key];
         [self didChangeValueForKey:@"hasChanges"];
-        [self.table.database registerDirtyObject:self];
+        [self.database registerDirtyObject:self];
     }
     [super didChangeValueForKey:key];
 }
@@ -198,31 +199,18 @@
 
 - (BOOL)_save:(NSError **)outErr
 {
-    DBConnection *connection = self.table.database.connection;
-    BOOL saved = [connection executeWriteQueriesInTransaction:[DBQuery combineQueries:_pendingQueries.allValues]
-                                                        error:outErr];
-    if(saved) {
-        _savedIdentifier = self.identifier;
-        [self willChangeValueForKey:@"hasChanges"];
-        [_pendingQueries removeAllObjects];
-        [self didChangeValueForKey:@"hasChanges"];
-        return YES;
-    } else
-        return NO;
-}
+    NSAssert(_database, @"Tried to save object not in a database");
 
-- (BOOL)destroy
-{
-    if(self.isInserted) {
-        @try {
-            return [[[self query] delete] execute];
-        }
-        @catch(NSException *e) {
-            DBLog(@"Error deleting record with id %ld, exception: %@", (unsigned long)self.identifier, e);
+    for(DBWriteQuery *query in [DBQuery combineQueries:_pendingQueries.allValues]) {
+        if(![query execute:outErr])
             return NO;
-        }
-    } else
-        return NO;
+    }
+
+    _savedIdentifier = self.identifier;
+    [self willChangeValueForKey:@"hasChanges"];
+    [_pendingQueries removeAllObjects];
+    [self didChangeValueForKey:@"hasChanges"];
+    return YES;
 }
 
 - (BOOL)isInserted
@@ -238,7 +226,7 @@
 
 - (DBQuery *)query
 {
-    return [_table where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
+    return [_database[[[self class] tableName]] where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
 }
 
 #pragma mark -
@@ -280,7 +268,7 @@
 
 - (NSUInteger)hash
 {
-    return [_table hash] ^ [_identifier hash];
+    return [_database[[[self class] tableName]] hash] ^ [_identifier hash];
 }
 - (BOOL)isEqual:(id)anObject
 {
@@ -290,7 +278,7 @@
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBModel *copy = [[[self class] alloc] initWithDatabase:self.table.database];
+    DBModel *copy = [[[self class] alloc] initWithDatabase:_database];
     for(NSString *column in [[self class] savedKeys]) {
         if(![column isEqualToString:kDBIdentifierColumn])
             [copy setValue:[self valueForKey:column] forKey:column];

@@ -13,7 +13,7 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
  */
 @interface DBModel : NSObject <NSCopying>
-@property(readonly, strong) DBTable *table;
+@property(readonly, strong) DB *database;
 @property(readwrite, copy) NSString *identifier;
 @property(readonly, getter=isInserted) BOOL inserted;
 @property(readonly) BOOL hasChanges;
@@ -59,10 +59,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  * Returns a query to use to save a given key to the database.
  */
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key;
-
-/*! Deletes a record from the database
- */
-- (BOOL)destroy;
 
 /*! Returns the table name of the record based on the class name by converting it to lowercase, pluralizing it and removing the class prefix if one is set. */
 + (NSString *)tableName;
