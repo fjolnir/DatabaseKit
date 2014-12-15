@@ -103,7 +103,7 @@ static NSString *classPrefix = nil;
 
 #pragma mark -
 
-+ (NSSet *)keyPathsForValuesAffectingDirtyKeys
++ (NSSet *)keyPathsForValuesAffectingPendingQueries
 {
     NSMutableSet *keyPaths = [NSMutableSet setWithObject:kDBIdentifierColumn];
 
@@ -125,9 +125,9 @@ static NSString *classPrefix = nil;
 {
     if((self = [super init]))
         // This is to coerce KVC into calling didChangeValueForKey:
-        // We don't actually take any action when dirtyKeys changes
+        // We don't actually take any action when pendingQueries changes
         [self addObserver:self
-               forKeyPath:@"dirtyKeys"
+               forKeyPath:@"pendingQueries"
                   options:0
                   context:NULL];
     return self;
@@ -178,7 +178,7 @@ static NSString *classPrefix = nil;
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"dirtyKeys"];
+    [self removeObserver:self forKeyPath:@"pendingQueries"];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
