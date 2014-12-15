@@ -6,7 +6,8 @@
 #import "DBDeleteQuery.h"
 #import "DBAlterTableQuery.h"
 #import "DBDropTableQuery.h"
-#import "Utilities/NSString+DBAdditions.h"
+#import "NSString+DBAdditions.h"
+#import "DBIntrospection.h"
 
 @interface DBTable ()
 @property(readwrite, strong) NSString *name;
@@ -15,6 +16,7 @@
 
 @implementation DBTable {
     NSMutableDictionary *_columnTypes;
+    Class _modelClass;
 }
 @synthesize columns=_columns;
 
@@ -23,15 +25,14 @@
     DBTable *ret = [self new];
     ret.database = database;
     ret.name     = name;
-    return ret;
-}
 
-- (Class)modelClass
-{
-    NSString *prefix    = [DBModel classPrefix];
-    NSString *tableName = [[_name db_singularizedString] db_stringByCapitalizingFirstLetter];
-    Class const klass = NSClassFromString(prefix ? [prefix stringByAppendingString:tableName] : tableName);
-    return [klass isSubclassOfClass:[DBModel class]] ? klass : nil;
+    NSString *className = [[name db_singularizedString] db_stringByCapitalizingFirstLetter];
+    NSArray *modelClasses = DBClassesInheritingFrom([DBModel class]);
+    NSUInteger idx = [modelClasses indexOfObjectPassingTest:^BOOL(id klass, NSUInteger _, BOOL *__) {
+        return [NSStringFromClass(klass) hasSuffix:className];
+    }];
+    ret->_modelClass = idx == NSNotFound ? nil : modelClasses[idx];
+    return ret;
 }
 
 - (id)objectForKeyedSubscript:(id)cond

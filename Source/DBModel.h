@@ -42,13 +42,6 @@ static NSString * const kDBIdentifierColumn = @"identifier";
  */
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
 
-/*! Sets the class prefix for models\n
- * Example: You have a project called TestApp, and therefore all your classes have a TA prefix.\n
- * Suddenly calling your models simply MyModel, would be inconsistent so you set the prefix to "TA" and now calling the model TAMyModel will work
- */
-+ (void)setClassPrefix:(NSString *)aPrefix;
-/*! Returns the class prefix for models */
-+ (NSString *)classPrefix;
 
 /*!
  * Returns the type of a key (along with the class if it is '@')

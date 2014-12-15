@@ -44,14 +44,13 @@ Examples
     [[[people update:@{ @"name": @"Percie" }] where:@"name = %@", @"John"] execute];
 --- 
     // You can create a class to represent results from a table like so:
-    [DBModel setClassPrefix:@"Nice"]; // You'd set this to whatever prefix you're using
-    
-    @interface NicePerson : DBModel
+    // (Our project's class prefix is `NICE`)
+    @interface NICEPerson : DBModel
     @property(readwrite, retain) NSString *name, *address;
     - (void)introduceYourself;
     @end
     
-    @implementation NicePerson
+    @implementation NICEPerson
     - (void)introduceYourself
     {
         NSLog(@"Hi! I'm %@.", self.name);

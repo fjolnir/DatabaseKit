@@ -5,14 +5,14 @@
 @class DB, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
 
 @interface DBTable : NSObject
-@property(readonly, strong) NSString *name;
-@property(readonly, strong) DB *database;
-@property(readonly, strong) NSSet *columns;
+@property(readonly) NSString *name;
+@property(readonly) DB *database;
+@property(readonly) NSSet *columns;
+@property(readonly) Class modelClass;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 
 - (NSString *)toString;
-- (Class)modelClass;
 
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;

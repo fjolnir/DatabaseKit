@@ -7,26 +7,16 @@
 #import "DBQuery.h"
 #import "Debug.h"
 #import "NSString+DBAdditions.h"
-#import "DBUtilities.h"
+#import "DBIntrospection.h"
 #import "DBOrderedDictionary.h"
 #import <objc/runtime.h>
 #import <unistd.h>
 
-static NSString *classPrefix = nil;
 
 @implementation DBModel {
     DBOrderedDictionary *_pendingQueries;
 }
 @dynamic inserted, hasChanges;
-
-+ (void)setClassPrefix:(NSString *)aPrefix
-{
-    classPrefix = aPrefix;
-}
-+ (NSString *)classPrefix
-{
-    return classPrefix ? classPrefix : @"";
-}
 
 + (NSSet *)savedKeys
 {
@@ -260,17 +250,24 @@ static NSString *classPrefix = nil;
 
 + (NSString *)tableName
 {
-    NSMutableString *ret = [NSStringFromClass(self) mutableCopy];
-    NSUInteger dotLocation = [ret rangeOfString:@"."].location;
-    if(dotLocation != NSNotFound)
-        [ret deleteCharactersInRange:(NSRange) { 0, dotLocation+1 }];
-    if([DBModel classPrefix]) {
-        [ret replaceOccurrencesOfString:[DBModel classPrefix]
-                             withString:@""
-                                options:0
-                                  range:NSMakeRange(0, [ret length])];
+    static void *tableNameKey = &tableNameKey;
+    NSString *tableName = objc_getAssociatedObject(self, tableNameKey);
+    if(!tableName) {
+        NSMutableString *builder = [NSStringFromClass(self) mutableCopy];
+        NSUInteger dotLocation = [builder rangeOfString:@"."].location;
+        if(dotLocation != NSNotFound)
+            [builder deleteCharactersInRange:(NSRange) { 0, dotLocation+1 }];
+
+        NSRange prefixRange = [builder rangeOfString:@"[A-Z]*" options:NSRegularExpressionSearch];
+        if(prefixRange.location != 0 || NSMaxRange(prefixRange) == builder.length)
+            return nil;
+        else
+            [builder deleteCharactersInRange:(NSRange) { 0, prefixRange.length-1 }];
+
+        tableName = [[builder db_stringByDecapitalizingFirstLetter] db_pluralizedString];
+        objc_setAssociatedObject(self, tableNameKey, tableName, OBJC_ASSOCIATION_RETAIN);
     }
-    return [[ret db_stringByDecapitalizingFirstLetter] db_pluralizedString];
+    return tableName;
 }
 
 #pragma mark -
