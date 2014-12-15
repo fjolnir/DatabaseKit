@@ -96,7 +96,8 @@ static NSString *classPrefix = nil;
 {
     return @[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending
                                                      autoIncrement:NO
-                                                        onConflict:DBConflictActionFail]];
+                                                        onConflict:DBConflictActionFail],
+             [DBNotNullConstraint new]];
 }
 
 
