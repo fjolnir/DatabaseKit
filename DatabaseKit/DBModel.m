@@ -218,9 +218,6 @@ static NSString *classPrefix = nil;
 
 - (BOOL)save:(NSError **)outErr
 {
-    if(!self.identifier)
-        self.identifier = [[NSUUID UUID] UUIDString];
-
     DBConnection *connection = self.table.database.connection;
     BOOL saved = [connection executeWriteQueriesInTransaction:self.queriesToSave
                                                         error:outErr];
