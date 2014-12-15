@@ -10,8 +10,8 @@ typedef NS_ENUM(NSUInteger, DBFallback) {
     DBInsertFallbackIgnore
 };
 @interface DBInsertQuery : DBWriteQuery <DBTableQuery>
-@property(nonatomic, readonly) DBFallback fallback;
-@property(nonatomic, readonly) DBSelectQuery *sourceQuery;
+@property(readonly) DBFallback fallback;
+@property(readonly) DBSelectQuery *sourceQuery;
 
 - (instancetype)or:(DBFallback)aFallback;
 @end

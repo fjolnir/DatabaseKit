@@ -1,17 +1,17 @@
 @import DatabaseKit;
 
 @interface TEModel : DBModel
-@property(readwrite, strong) NSString *name, *info;
+@property NSString *name, *info;
 @end
 
 @interface TEPerson : DBModel
-@property(readwrite, weak) NSString *userName, *realName;
+@property(weak) NSString *userName, *realName;
 @end
 
 @interface TEWebSite : DBModel
-@property(readwrite, strong) NSURL *url;
+@property NSURL *url;
 @end
 
 @interface TEAnimal : DBModel
-@property(nonatomic, strong) NSString *species, *nickname;
+@property NSString *species, *nickname;
 @end

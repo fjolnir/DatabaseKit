@@ -20,9 +20,9 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 };
 
 @interface DBColumnDefinition : NSObject <DBSQLRepresentable, NSCoding>
-@property(readonly, nonatomic) NSString *name;
-@property(readonly, nonatomic) DBType type;
-@property(readonly, nonatomic) NSArray *constraints;
+@property(readonly) NSString *name;
+@property(readonly) DBType type;
+@property(readonly) NSArray *constraints;
 
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints;
 @end
@@ -38,9 +38,9 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @end
 
 @interface DBPrimaryKeyConstraint : DBConstraint
-@property(readonly, nonatomic) DBOrder order;
-@property(readonly, nonatomic) BOOL autoIncrement;
-@property(readonly, nonatomic) DBConflictAction conflictAction;
+@property(readonly) DBOrder order;
+@property(readonly) BOOL autoIncrement;
+@property(readonly) DBConflictAction conflictAction;
 
 + (instancetype)primaryKeyConstraintWithOrder:(DBOrder)order
                                 autoIncrement:(BOOL)autoIncrement
@@ -48,9 +48,9 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @end
 
 @interface DBForeignKeyConstraint : DBConstraint
-@property(readonly, nonatomic) NSString *tableName;
-@property(readonly, nonatomic) NSString *columnName;
-@property(readonly, nonatomic) DBForeignKeyAction deleteAction, updateAction;
+@property(readonly) NSString *tableName;
+@property(readonly) NSString *columnName;
+@property(readonly) DBForeignKeyAction deleteAction, updateAction;
 
 + (instancetype)foreignKeyConstraintWithTable:(NSString *)tableName
                                    columnName:(NSString *)columnName
@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @end
 
 @interface DBDefaultConstraint : DBConstraint
-@property(readonly, nonatomic) id value;
+@property(readonly) id value;
 
 + (instancetype)defaultConstraintWithValue:(id)value;
 @end

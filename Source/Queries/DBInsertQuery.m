@@ -6,17 +6,16 @@
 #import "DBUtilities.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
-@interface DBInsertQuery ()
-@property(nonatomic, readwrite) DBFallback fallback;
-@property(nonatomic, readwrite) DBSelectQuery *sourceQuery;
-@end
-
-@implementation DBInsertQuery
+@implementation DBInsertQuery {
+@public
+    DBFallback _fallback;
+    DBSelectQuery *_sourceQuery;
+}
 
 - (instancetype)or:(DBFallback)aFallback
 {
     DBInsertQuery *query = [self copy];
-    query.fallback = aFallback;
+    query->_fallback = aFallback;
     return query;
 }
 
@@ -148,8 +147,8 @@
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery intoColumns:(NSArray *)columns
 {
     DBInsertQuery *ret = [self _copyWithSubclass:[DBInsertQuery class]];
-    ret.sourceQuery = sourceQuery;
-    ret.columns = columns;
+    ret->_sourceQuery = sourceQuery;
+    ret->_columns = columns;
     return ret;
 }
 - (DBInsertQuery *)insertUsingSelect:(DBSelectQuery *)sourceQuery

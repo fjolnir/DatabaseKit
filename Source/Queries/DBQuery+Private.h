@@ -1,7 +1,7 @@
 #import "DBQuery.h"
 
 @interface DBQuery () <DBTableQuery, DBFilterableQuery> {
-@protected
+@public
     DB *_database;
     DBTable *_table;
     NSArray *_columns;
@@ -23,5 +23,5 @@
 @protected
     NSArray *_values;
 }
-@property(nonatomic, readwrite) NSArray *values;
+@property NSArray *values;
 @end

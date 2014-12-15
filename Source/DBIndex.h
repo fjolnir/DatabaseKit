@@ -3,9 +3,9 @@
 @class DBTable;
 
 @interface DBIndex : NSObject <NSCoding>
-@property(nonatomic, readonly) BOOL unique;
-@property(nonatomic, readonly) NSString *name;
-@property(nonatomic, readonly) NSArray *columns;
+@property(readonly) BOOL unique;
+@property(readonly) NSString *name;
+@property(readonly) NSArray *columns;
 
 + (instancetype)indexWithName:(NSString *)name onColumns:(NSArray *)columns unique:(BOOL)unique;
 
