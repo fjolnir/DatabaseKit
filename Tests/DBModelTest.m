@@ -10,13 +10,6 @@
 }
 @end
 
-@implementation DBModel (PrefixSetter)
-+ (void)load
-{
-    [self setClassPrefix:@"TE"]; // TE stands for test fyi
-}
-@end
-
 @implementation DBModelTest
 - (void)setUp
 {
