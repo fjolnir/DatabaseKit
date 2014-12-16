@@ -4,16 +4,14 @@
 #import <pthread.h>
 
 @interface DBConnectionPool () {
-    NSMutableArray *_connections;
+    NSHashTable *_connections;
     pthread_key_t _threadLocalKey;
 }
 @end
 
-static void _connectionCloser(void *ptr)
+static void _onThreadExit(void *connection)
 {
-    DBConnection *connection = (__bridge_transfer id)ptr;
-    [connection closeConnection];
-    connection = nil; // Just to make the release explicit
+    CFRelease(connection);
 }
 
 @implementation DBConnectionPool
@@ -22,8 +20,8 @@ static void _connectionCloser(void *ptr)
 {
     DBConnectionPool *pool = [super alloc];
     if(pool) {
-        pool->_connections = [NSMutableArray new];
-        pthread_key_create(&pool->_threadLocalKey, &_connectionCloser);
+        pool->_connections = [NSHashTable weakObjectsHashTable];
+        pthread_key_create(&pool->_threadLocalKey, _onThreadExit);
     }
     return pool;
 }
@@ -31,6 +29,11 @@ static void _connectionCloser(void *ptr)
 - (void)dealloc
 {
     pthread_key_delete(_threadLocalKey);
+    @synchronized(_connections) {
+        for(DBConnection *connection in _connections) {
+            CFRelease((__bridge void *)connection);
+        }
+    }
 }
 
 - (DBConnection *)connection:(NSError **)err
@@ -41,7 +44,7 @@ static void _connectionCloser(void *ptr)
         if(!connection)
             return nil;
         pthread_setspecific(_threadLocalKey, (__bridge_retained void *)connection);
-        @synchronized(_connections) { // Replace with a spinlock?
+        @synchronized(_connections) {
             [_connections addObject:connection];
         }
     }
@@ -51,14 +54,13 @@ static void _connectionCloser(void *ptr)
 - (BOOL)closeConnection
 {
     @synchronized(_connections) {
-        if([_connections count] == 0)
-            return YES;
-        BOOL ret = NO;
+        BOOL ret = YES;
         for(DBConnection *connection in _connections) {
             BOOL const succ = [connection closeConnection];
-            if(!succ)
-                DBLog(@"Failed to close %@ in  connection pool %@", connection, self);
-            ret |= succ;
+            if(!succ) {
+                ret = NO;
+                DBLog(@"Failed to close %@ in pool %@", connection, self);
+            }
         }
         return ret;
     }
