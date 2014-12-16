@@ -118,6 +118,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
                     forKey:columns[i]];
         }
         _savedIdentifier = _identifier;
+        [_pendingQueries removeAllObjects];
     }
     return self;
 }
