@@ -8,6 +8,7 @@
 #import "DBDropTableQuery.h"
 #import "DBIndex.h"
 #import "NSString+DBAdditions.h"
+#import "NSSet+DBAdditions.h"
 #import "DBIntrospection.h"
 #import <objc/runtime.h>
 
@@ -62,10 +63,9 @@ static NSString * const kCYMigrationTableName = @"DBKitSchemaInfo";
             NSDictionary *lastMigration = [self currentMigrationForModelClass:klass error:outErr];
             if(lastMigration) {
                 NSSet *currentColumns   = [NSKeyedUnarchiver unarchiveObjectWithData:lastMigration[@"columns"]];
-                NSSet *untouchedColumns = [currentColumns
-                                                   filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(DBColumnDefinition *col, NSDictionary *bindings) {
+                NSSet *untouchedColumns = [currentColumns db_filter:^(DBColumnDefinition *col) {
                     return [[creates[tableName] columns] containsObject:col];
-                }]];
+                }];
 
                 if(![currentColumns isEqual:untouchedColumns]) {
                     if([[self.connection execute:@"PRAGMA foreign_keys = OFF" substitutions:nil error:outErr] step:outErr] != DBResultStateAtEnd)
