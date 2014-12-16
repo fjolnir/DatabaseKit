@@ -3,14 +3,13 @@
 #import "DBUnitTestUtilities.h"
 #import "DBModelTest.h"
 
-@class TEAnimal, TEPerson;
-
-@interface DBModelTest : XCTestCase {
-    DB *db;
-}
+@interface DBModelTest : XCTestCase
 @end
 
-@implementation DBModelTest
+@implementation DBModelTest {
+    DB *db;
+}
+
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();

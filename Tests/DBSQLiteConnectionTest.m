@@ -1,4 +1,4 @@
-#import <XCTest/XCTest.h>
+@import XCTest;
 @import DatabaseKit;
 #import "DBUnitTestUtilities.h"
 
@@ -8,6 +8,7 @@
 @implementation DBSQLiteConnectionTest {
     DB *db;
 }
+
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();

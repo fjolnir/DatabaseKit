@@ -2,15 +2,15 @@
 @import DatabaseKit;
 #import "DBUnitTestUtilities.h"
 
-@interface DBQueryTest : XCTestCase
-
-@end
-
 #define Q(type) [DB##type##Query withTable:[DBTable withDatabase:[DB new] name:@"aTable"]]
+
+@interface DBQueryTest : XCTestCase
+@end
 
 @implementation DBQueryTest {
     DB *db;
 }
+
 - (void)setUp
 {
     db = DBSQLiteDatabaseForTesting();

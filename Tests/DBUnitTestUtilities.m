@@ -1,9 +1,9 @@
-#import "DBUnitTestUtilities.h"
 @import DatabaseKit;
+#import "DBUnitTestUtilities.h"
 
 @interface FixtureGetter : NSObject
-+ (NSString *)fixturesForDatabase:(NSString *)dbName;
 @end
+
 @implementation FixtureGetter
 + (NSString *)fixturesForDatabase:(NSString *)dbName
 {

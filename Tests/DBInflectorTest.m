@@ -2,16 +2,13 @@
 #import "../Source/Utilities/DBInflector/DBInflector.h"
 #import "../Source/Utilities/NSString+DBAdditions.h"
 
-@class DBInflector;
+@interface DBInflectorTest : XCTestCase
+@end
 
-@interface DBInflectorTest : XCTestCase {
+@implementation DBInflectorTest {
     DBInflector *inflector;
 }
 
-@end
-
-
-@implementation DBInflectorTest
 - (void)setUp
 {
   inflector = [DBInflector sharedInflector];
