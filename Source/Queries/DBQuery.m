@@ -5,6 +5,8 @@
 #import "DBDebug.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
+NSString * const DBQueryException = @"DBQueryException";
+
 @implementation DBQuery
 @synthesize table=_table;
 
@@ -170,6 +172,16 @@
 @end
 
 @implementation DBReadQuery
+- (NSArray *)execute
+{
+    NSError *err;
+    NSArray *results = [self execute:&err];
+    if(!results)
+        [[NSException exceptionWithName:DBQueryException
+                                 reason:[NSString stringWithFormat:@"Failed to execute query '%@'", self.stringRepresentation]
+                               userInfo:@{ @"error": err }] raise];
+    return results;
+}
 - (NSArray *)execute:(NSError **)err
 {
     return [self executeOnConnection:[self connection] error:err];
@@ -184,6 +196,14 @@
 @end
 
 @implementation DBWriteQuery
+- (void)execute
+{
+    NSError *err;
+    if(![self execute:&err])
+        [[NSException exceptionWithName:DBQueryException
+                                 reason:[NSString stringWithFormat:@"Failed to execute query '%@'", self.stringRepresentation]
+                               userInfo:@{ @"error": err }] raise];
+}
 - (BOOL)execute:(NSError **)err
 {
     return [self executeOnConnection:[self connection] error:err];
