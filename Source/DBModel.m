@@ -246,7 +246,8 @@
 - (BOOL)isEqual:(id)anObject
 {
     return [anObject isMemberOfClass:[self class]]
-        && [[anObject identifier] isEqual:[self identifier]];
+        && self.database == [anObject database]
+        && [self.identifier isEqual:[anObject identifier]]
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
