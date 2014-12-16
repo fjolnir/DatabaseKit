@@ -2,15 +2,13 @@
 #import "NSString+DBAdditions.h"
 #import <objc/runtime.h>
 
-__attribute((overloadable))
-SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix)
+DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix)
 {
     return NSSelectorFromString([NSString stringWithFormat:@"%@%@%@",
                                  prefix, [key db_stringByCapitalizingFirstLetter], suffix ?: @""]);
 }
 
-__attribute((overloadable))
-SEL DBCapitalizedSelector(NSString *prefix, NSString *key)
+DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key)
 {
     return NSSelectorFromString([NSString stringWithFormat:@"%@%@",
                                  prefix, [key db_stringByCapitalizingFirstLetter]]);

@@ -1,12 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-
-__attribute((overloadable))
-SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix);
-__attribute((overloadable)) 
-SEL DBCapitalizedSelector(NSString *prefix, NSString *key);
-
-NSArray *DBClassesInheritingFrom(Class superclass);
+#import "DBUtilities.h"
 
 typedef NS_ENUM(NSUInteger, DBMemoryManagementPolicy) {
     DBPropertyStrong,
@@ -25,6 +19,12 @@ typedef struct {
     Class klass;
     char encoding[];
 } DBPropertyAttributes;
+
+
+DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix);
+DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key);
+
+NSArray *DBClassesInheritingFrom(Class superclass);
 
 DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t property);
 void DBIteratePropertiesForClass(Class klass, void (^blk)(DBPropertyAttributes *));
