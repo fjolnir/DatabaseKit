@@ -8,7 +8,7 @@
 #import "DBDropTableQuery.h"
 #import "DBIndex.h"
 #import "NSString+DBAdditions.h"
-#import "NSSet+DBAdditions.h"
+#import "NSCollections+DBAdditions.h"
 #import "DBIntrospection.h"
 #import <objc/runtime.h>
 

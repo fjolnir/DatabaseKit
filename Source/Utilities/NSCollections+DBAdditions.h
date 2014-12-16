@@ -7,3 +7,8 @@ typedef BOOL(^DBFilterBlock)(id obj);
 - (NSArray *)db_map:(DBMapBlock)blk;
 - (NSArray *)db_filter:(DBFilterBlock)blk;
 @end
+
+@interface NSSet (DBAdditions)
+- (NSSet *)db_map:(DBMapBlock)blk;
+- (NSSet *)db_filter:(DBFilterBlock)blk;
+@end

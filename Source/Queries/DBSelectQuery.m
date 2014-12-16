@@ -5,7 +5,7 @@
 #import "DBModel+Private.h"
 #import "DBUtilities.h"
 #import "NSPredicate+DBSQLRepresentable.h"
-#import "NSArray+DBAdditions.h"
+#import "NSCollections+DBAdditions.h"
 
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
