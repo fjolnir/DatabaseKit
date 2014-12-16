@@ -73,20 +73,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingPendingQueries
 {
-    NSMutableSet *keyPaths = [NSMutableSet setWithObject:kDBIdentifierColumn];
-
-    Class klass = self;
-    do {
-        unsigned int propertyCount;
-        objc_property_t *properties = class_copyPropertyList(klass, &propertyCount);
-        for(int i = 0; i < propertyCount; ++i) {
-            [keyPaths addObject:@(property_getName(properties[i]))];
-        }
-        [keyPaths addObject:kDBIdentifierColumn];
-        free(properties);
-    } while((klass = [klass superclass]) != [DBModel class]);
-    
-    return keyPaths;
+    return [self savedKeys];
 }
 
 - (instancetype)init

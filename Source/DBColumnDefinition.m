@@ -6,6 +6,8 @@
 @implementation DBColumnDefinition
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
 {
+    NSParameterAssert(name);
+    
     DBColumnDefinition *col = [self new];
     col->_name        = name;
     col->_type        = type;
@@ -184,6 +186,8 @@
                                      onDelete:(DBForeignKeyAction)onDelete
                                      onUpdate:(DBForeignKeyAction)onUpdate
 {
+    NSParameterAssert(tableName && columnName);
+
     DBForeignKeyConstraint *constr = [self new];
     constr->_tableName    = tableName;
     constr->_columnName   = columnName;
@@ -226,6 +230,8 @@
 @implementation DBDefaultConstraint
 + (instancetype)defaultConstraintWithValue:(id)value
 {
+    NSParameterAssert(value);
+
     DBDefaultConstraint *constr = [self new];
     constr->_value = value;
     return constr;
