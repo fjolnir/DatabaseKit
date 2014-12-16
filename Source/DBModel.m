@@ -12,6 +12,8 @@
 #import <objc/runtime.h>
 #import <unistd.h>
 
+NSString * const kDBIdentifierColumn = @"identifier";
+
 
 @implementation DBModel {
     DBOrderedDictionary *_pendingQueries;

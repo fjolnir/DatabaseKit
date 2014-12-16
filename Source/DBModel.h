@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-static NSString * const kDBIdentifierColumn = @"identifier";
+extern NSString * const kDBIdentifierColumn;
 
 @class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 
