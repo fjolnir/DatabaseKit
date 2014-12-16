@@ -1,4 +1,4 @@
-#import "DB.h"
+#import <DatabaseKit/DB.h>
 
 @interface DB (Migrations)
 - (BOOL)migrateSchema:(NSError **)outErr;

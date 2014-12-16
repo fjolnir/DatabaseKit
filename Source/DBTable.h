@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "DBConnection.h"
-#import "DBColumnDefinition.h"
+#import <DatabaseKit/DBConnection.h>
+#import <DatabaseKit/DBColumnDefinition.h>
 
 @class DB, DBSelectQuery, DBInsertQuery, DBUpdateQuery, DBDeleteQuery, DBAlterTableQuery, DBDropTableQuery;
 

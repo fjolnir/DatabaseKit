@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "DBSQLRepresentable.h"
+#import <DatabaseKit/DBSQLRepresentable.h>
 
 @interface NSString (DBAdditions) <DBSQLRepresentable>
 /*! Returns a singularized form of the string */

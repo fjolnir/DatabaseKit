@@ -1,4 +1,4 @@
-#import "DBModel.h"
+#import <DatabaseKit/DBModel.h>
 
 @interface DBModel ()
 @property(readwrite, strong) DB *database;

@@ -14,7 +14,6 @@
 
 NSString * const kDBIdentifierColumn = @"identifier";
 
-
 @implementation DBModel {
     DBOrderedDictionary *_pendingQueries;
 }

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
-#import "DBConnection.h"
-#import "DBSQLRepresentable.h"
+#import <DatabaseKit/DBConnection.h>
+#import <DatabaseKit/DBSQLRepresentable.h>
 
 typedef NS_ENUM(NSUInteger, DBForeignKeyAction) {
     DBForeignKeyActionNone,

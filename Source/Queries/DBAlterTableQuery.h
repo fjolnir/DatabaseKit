@@ -1,4 +1,4 @@
-#import "DBQuery.h"
+#import <DatabaseKit/DBQuery.h>
 
 // Note: currently only implements features supported by SQLite's ALTER command
 @interface DBAlterTableQuery : DBWriteQuery <DBTableQuery>

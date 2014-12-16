@@ -1,4 +1,4 @@
-#import "DBQuery.h"
+#import <DatabaseKit/DBQuery.h>
 
 @class DBAs, DBJoin;
 

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-#import "DBUtilities.h"
+#import <DatabaseKit/DBUtilities.h>
 
 typedef NS_ENUM(NSUInteger, DBMemoryManagementPolicy) {
     DBPropertyStrong,

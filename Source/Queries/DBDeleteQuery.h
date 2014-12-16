@@ -1,4 +1,4 @@
-#import "DBQuery.h"
+#import <DatabaseKit/DBQuery.h>
 
 @interface DBDeleteQuery : DBWriteQuery <DBTableQuery, DBFilterableQuery>
 @end
