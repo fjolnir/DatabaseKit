@@ -543,11 +543,11 @@
 				C7D876811A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
 				C7D876901A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876A51A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
+				C7D876B11A3E67E300A490E0 /* DBUtilities.h in Headers */,
 				C7D876601A3E67E300A490E0 /* DBDebug.h in Headers */,
 				C7D839931A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876AB1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D876B41A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
-				C7D876B11A3E67E300A490E0 /* DBUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,8 +636,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Mac Framework" */;
 			buildPhases = (
-				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
 				8DC2EF520486A6940098B216 /* Resources */,
 			);
@@ -673,8 +673,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "iOS Library" */;
 			buildPhases = (
-				C7AED93913C1440200C47919 /* Sources */,
 				C7AED93B13C1440200C47919 /* Headers */,
+				C7AED93913C1440200C47919 /* Sources */,
 				C7AED93A13C1440200C47919 /* Frameworks */,
 			);
 			buildRules = (
@@ -690,8 +690,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7E9F5251A0F48960045F226 /* Build configuration list for PBXNativeTarget "iOS Framework" */;
 			buildPhases = (
-				C7E9F50D1A0F48960045F226 /* Sources */,
 				C7E9F50F1A0F48960045F226 /* Headers */,
+				C7E9F50D1A0F48960045F226 /* Sources */,
 				C7E9F50E1A0F48960045F226 /* Frameworks */,
 				C7E9F5101A0F48960045F226 /* Resources */,
 			);

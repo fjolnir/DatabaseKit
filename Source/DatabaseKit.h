@@ -16,5 +16,3 @@
 #import <DatabaseKit/DBDeleteQuery.h>
 #import <DatabaseKit/DBAlterTableQuery.h>
 #import <DatabaseKit/DBDropTableQuery.h>
-
-#import <DatabaseKit/NSString+DBAdditions.h>

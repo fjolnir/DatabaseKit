@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-#import <DatabaseKit/DBUtilities.h>
 
 typedef NS_ENUM(NSUInteger, DBMemoryManagementPolicy) {
     DBPropertyStrong,
@@ -21,8 +20,8 @@ typedef struct {
 } DBPropertyAttributes;
 
 
-DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix);
-DBOverloadable SEL DBCapitalizedSelector(NSString *prefix, NSString *key);
+__attribute((overloadable)) SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix);
+__attribute((overloadable)) SEL DBCapitalizedSelector(NSString *prefix, NSString *key);
 
 NSArray *DBClassesInheritingFrom(Class superclass);
 
