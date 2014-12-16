@@ -51,6 +51,11 @@ static void _onThreadExit(void *connection)
     return connection;
 }
 
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    return self.connection;
+}
+
 - (BOOL)closeConnection
 {
     @synchronized(_connections) {
