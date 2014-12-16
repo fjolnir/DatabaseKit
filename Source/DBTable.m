@@ -15,7 +15,7 @@
 @end
 
 @implementation DBTable {
-    NSMutableDictionary *_columnTypes;
+    NSDictionary *_columnTypes;
     Class _modelClass;
 }
 @synthesize columns=_columns;
@@ -54,7 +54,9 @@
 
 - (DBType)typeOfColumn:(NSString *)column
 {
-    return [[self.database.connection columnsForTable:self.name][column] unsignedIntegerValue];
+    if(!_columnTypes)
+        _columnTypes = [self.database.connection columnsForTable:self.name];
+    return [_columnTypes[column] unsignedIntegerValue];
 }
 
 #pragma mark - Query generators
