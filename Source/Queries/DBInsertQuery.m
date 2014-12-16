@@ -88,6 +88,14 @@
     return YES;
 }
 
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    DBInsertQuery *copy   = [super copyWithZone:zone];
+    copy->_fallback  = _fallback;
+    copy->_sourceQuery  = _sourceQuery;
+    return copy;
+}
+
 @end
 
 @implementation DBUpdateQuery
