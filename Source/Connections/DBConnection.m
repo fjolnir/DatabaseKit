@@ -99,7 +99,8 @@ static NSMutableArray *_ConnectionClasses;
             return NO;
         switch(aBlock()) {
             case DBTransactionRollBack:
-                return [self rollBack];
+                [self rollBack];
+                return NO;
             case DBTransactionCommit:
                 return [self endTransaction];
         }
