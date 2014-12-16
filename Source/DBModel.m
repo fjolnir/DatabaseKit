@@ -20,22 +20,29 @@
 
 + (NSSet *)savedKeys
 {
+    static void *savedKeysKey = &savedKeysKey;
+
     if(self == [DBModel class])
         return nil;
 
-    NSSet *excludedKeys = [self excludedKeys];
-    NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
+    NSSet *savedKeys = objc_getAssociatedObject(self, savedKeysKey);
+    if(!savedKeys) {
+        NSSet *excludedKeys = [self excludedKeys];
+        NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
 
-    DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
-        NSString *key = @(attrs->name);
-        if(!attrs->dynamic &&
-           ![DBModel instancesRespondToSelector:attrs->getter] &&
-           ![excludedKeys containsObject:key] &&
-           (attrs->encoding[0] != _C_ID || [attrs->klass conformsToProtocol:@protocol(NSCoding)]))
-            [result addObject:key];
-    });
-    return [result count] > 0
-         ? result
+        DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
+            NSString *key = @(attrs->name);
+            if(!attrs->dynamic &&
+               ![DBModel instancesRespondToSelector:attrs->getter] &&
+               ![excludedKeys containsObject:key] &&
+               (attrs->encoding[0] != _C_ID || [attrs->klass conformsToProtocol:@protocol(NSCoding)]))
+                [result addObject:key];
+        });
+        savedKeys = result;
+        objc_setAssociatedObject(self, savedKeysKey, result, OBJC_ASSOCIATION_RETAIN);
+    }
+    return [savedKeys count] > 0
+         ? savedKeys
          : nil;
 }
 
