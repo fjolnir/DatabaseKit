@@ -20,6 +20,9 @@
 
 + (NSSet *)savedKeys
 {
+    if(self == [DBModel class])
+        return nil;
+
     NSSet *excludedKeys = [self excludedKeys];
     NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
 
