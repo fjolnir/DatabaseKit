@@ -8,11 +8,8 @@
 + (instancetype)connectionProxyWithURL:(NSURL *)URL error:(NSError **)err
 {
     DBConnectionProxy *proxy = [self alloc];
-    if(proxy) {
+    if(proxy)
         proxy->_connectionURL = URL;
-        if(!proxy.connection)
-            return nil;
-    }
     return proxy;
 }
 
