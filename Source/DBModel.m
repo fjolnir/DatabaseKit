@@ -175,6 +175,9 @@ NSString * const kDBIdentifierColumn = @"identifier";
 {
     NSAssert(_database, @"Tried to save object not in a database");
 
+    if(_pendingQueries.count == 0)
+        return YES;
+    
     for(DBWriteQuery *query in [DBQuery combineQueries:_pendingQueries.allValues]) {
         if(![query execute:outErr])
             return NO;
