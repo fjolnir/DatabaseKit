@@ -175,9 +175,9 @@
 		C7D876B71A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760C1A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m */; };
 		C7D876B81A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760C1A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m */; };
 		C7D876B91A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760C1A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m */; };
-		C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C7D876BD1A3E67E300A490E0 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760E1A3E67E300A490E0 /* NSString+DBAdditions.m */; };
 		C7D876BE1A3E67E300A490E0 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760E1A3E67E300A490E0 /* NSString+DBAdditions.m */; };
 		C7D876BF1A3E67E300A490E0 /* NSString+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8760E1A3E67E300A490E0 /* NSString+DBAdditions.m */; };
@@ -199,9 +199,9 @@
 		C7D876D41A3EA54E00A490E0 /* DBIntrospection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876D31A3EA54E00A490E0 /* DBIntrospection.m */; };
 		C7D876D51A3EA54E00A490E0 /* DBIntrospection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876D31A3EA54E00A490E0 /* DBIntrospection.m */; };
 		C7D876D61A3EA54E00A490E0 /* DBIntrospection.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D876D31A3EA54E00A490E0 /* DBIntrospection.m */; };
-		C7D876D81A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; };
-		C7D876D91A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; };
-		C7D876DA1A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; };
+		C7D876D81A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876D91A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C7D876DA1A3EA55D00A490E0 /* DBIntrospection.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -532,12 +532,12 @@
 				C7D8768A1A3E67E300A490E0 /* DBSelectQuery.h in Headers */,
 				C7D876151A3E67E300A490E0 /* DBConnectionPool.h in Headers */,
 				C7D8761B1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
-				C7D876D81A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D876331A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767B1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
 				C7D8760F1A3E67E300A490E0 /* DBConnection.h in Headers */,
-				C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876421A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
+				C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
+				C7D876D81A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D8764E1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
 				C7D876CA1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
 				C7D876811A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
@@ -571,14 +571,14 @@
 				C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */,
 				C7D8763E1A3E67E300A490E0 /* DB.h in Headers */,
-				C7D876DA1A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */,
 				C7D8765C1A3E67E300A490E0 /* DBTable.h in Headers */,
-				C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876711A3E67E300A490E0 /* DBDeleteQuery.h in Headers */,
 				C7D8768C1A3E67E300A490E0 /* DBSelectQuery.h in Headers */,
 				C7D876831A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
+				C7D876BC1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876501A3E67E300A490E0 /* DBModel+Private.h in Headers */,
+				C7D876DA1A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D876CC1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
 				C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876AD1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
@@ -610,12 +610,12 @@
 				C7D8768B1A3E67E300A490E0 /* DBSelectQuery.h in Headers */,
 				C7D876161A3E67E300A490E0 /* DBConnectionPool.h in Headers */,
 				C7D8761C1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
-				C7D876D91A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D876341A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
-				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
+				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
+				C7D876D91A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
 				C7D876CB1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
 				C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
