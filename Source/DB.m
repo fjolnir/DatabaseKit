@@ -4,6 +4,7 @@
 #import "DBCreateTableQuery.h"
 #import "DBDeleteQuery.h"
 #import "DBConnectionQueue.h"
+#import <libkern/OSAtomic.h>
 
 @implementation DB {
     DBConnection *_connection;
