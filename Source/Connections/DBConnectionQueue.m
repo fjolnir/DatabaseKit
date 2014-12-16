@@ -1,6 +1,6 @@
 #import "DBConnectionQueue.h"
 #import "DBConnection.h"
-#import "Debug.h"
+#import "DBDebug.h"
 
 @interface DBConnectionQueue () {
     DBConnection *_connection;

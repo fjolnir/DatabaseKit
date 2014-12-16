@@ -2,7 +2,7 @@
 
 #import "DBSQLiteConnection.h"
 #import "DBQuery.h"
-#import "Debug.h"
+#import "DBDebug.h"
 #import "DBISO8601DateFormatter.h"
 #import <unistd.h>
 #import <sqlite3.h>

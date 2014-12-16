@@ -2,7 +2,7 @@
 #import "DB.h"
 #import "DBTable.h"
 #import "DBModel.h"
-#import "Debug.h"
+#import "DBDebug.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
 @implementation DBQuery

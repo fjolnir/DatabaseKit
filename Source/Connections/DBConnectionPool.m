@@ -1,6 +1,6 @@
 #import "DBConnectionPool.h"
 #import "DBConnection.h"
-#import "Debug.h"
+#import "DBDebug.h"
 #import <pthread.h>
 
 @interface DBConnectionPool () {
