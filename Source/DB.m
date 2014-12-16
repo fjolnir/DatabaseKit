@@ -3,7 +3,7 @@
 #import "DBModel+Private.h"
 #import "DBCreateTableQuery.h"
 #import "DBDeleteQuery.h"
-#import "DBConnectionQueue.h"
+#import "DBConnectionPool.h"
 #import <libkern/OSAtomic.h>
 
 @implementation DB {
@@ -20,7 +20,7 @@
 
 + (DB *)withURL:(NSURL *)URL error:(NSError **)err
 {
-    return [[self alloc] initWithConnection:[DBConnectionQueue connectionProxyWithURL:URL error:err]];
+    return [[self alloc] initWithConnection:[DBConnectionPool connectionProxyWithURL:URL error:err]];
 }
 
 - (instancetype)init
