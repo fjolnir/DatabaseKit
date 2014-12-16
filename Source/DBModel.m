@@ -247,7 +247,7 @@
 {
     return [anObject isMemberOfClass:[self class]]
         && self.database == [anObject database]
-        && [self.identifier isEqual:[anObject identifier]]
+        && [self.identifier isEqual:[anObject identifier]];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
