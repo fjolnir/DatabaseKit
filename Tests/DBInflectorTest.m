@@ -53,13 +53,4 @@
   XCTAssertTrue([[@"equipment" db_singularizedString] isEqualToString:@"equipment"], @"equipment should become equipment");
 }
 
-- (void)testUnderscoring
-{
-    XCTAssertEqualObjects([@"MyCamelizedString" db_underscoredString], @"my_camelized_string", @"underscore test failed");
-}
-
-- (void)testCamelizing
-{
-    XCTAssertEqualObjects([@"my_underscored_string" db_camelizedString], @"myUnderscoredString", @"camelize test failed");
-}
 @end

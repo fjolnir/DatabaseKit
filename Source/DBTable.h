@@ -12,8 +12,6 @@
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 
-- (NSString *)toString;
-
 - (id)objectForKeyedSubscript:(id)cond;
 - (void)setObject:(id)obj forKeyedSubscript:(id)cond;
 

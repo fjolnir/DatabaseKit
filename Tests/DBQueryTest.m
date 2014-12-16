@@ -19,18 +19,18 @@
 
 - (void)testBuilding
 {
-    XCTAssertEqualObjects([[[[Q(Select) select] where:@"foo = 1"] order:DBOrderDescending by:@[@"index"]] toString],
+    XCTAssertEqualObjects([[[[Q(Select) select] where:@"foo = 1"] order:DBOrderDescending by:@[@"index"]] stringRepresentation],
                           @"SELECT * FROM `aTable` WHERE aTable.`foo` IS $1 ORDER BY `index` DESC");
     
     NSArray *columns = @[@"a", @"b", @"c"];
-    XCTAssertEqualObjects([[Q(Select) select:columns] toString],
+    XCTAssertEqualObjects([[Q(Select) select:columns] stringRepresentation],
                           @"SELECT a, b, c FROM `aTable`", @"");
     
     NSDictionary *update = @{ @"a": @1, @"b": @2, @"c": @3 };
-    XCTAssertEqualObjects([[Q(Update) update:update] toString],
+    XCTAssertEqualObjects([[Q(Update) update:update] stringRepresentation],
                           @"UPDATE `aTable` SET `a`=$1, `b`=$2, `c`=$3");
     
-    XCTAssertEqualObjects([[Q(Delete) delete] toString], @"DELETE FROM `aTable`", @"");
+    XCTAssertEqualObjects([[Q(Delete) delete] stringRepresentation], @"DELETE FROM `aTable`", @"");
 
     NSArray *columnDefinitions = @[
         [DBColumnDefinition columnWithName:kDBIdentifierColumn
@@ -40,13 +40,13 @@
                             type:DBTypeText
                      constraints:@[[DBNotNullConstraint new]]]
                          ];
-    XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columnDefinitions] toString],
+    XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columnDefinitions] stringRepresentation],
                           @"CREATE TABLE `tbl`(`identifier` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
 
-    XCTAssertEqualObjects([Q(DropTable) toString], @"DROP TABLE `aTable`");
+    XCTAssertEqualObjects([Q(DropTable) stringRepresentation], @"DROP TABLE `aTable`");
 
     DBAlterTableQuery *alter = [Q(AlterTable) appendColumns:@[[DBColumnDefinition columnWithName:@"test" type:DBTypeText constraints:@[[DBNotNullConstraint new]]]]];
-    XCTAssertEqualObjects([alter toString], @"ALTER TABLE `aTable` ADD COLUMN `test` TEXT NOT NULL");
+    XCTAssertEqualObjects([alter stringRepresentation], @"ALTER TABLE `aTable` ADD COLUMN `test` TEXT NOT NULL");
 }
 
 - (void)testFastEnumeration

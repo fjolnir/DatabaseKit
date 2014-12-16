@@ -38,32 +38,8 @@
                                          withString:[lowercase substringWithRange:NSMakeRange(0, 1)]];
 }
 
-- (NSString *)db_underscoredString
-{
-    NSString *underscored = [self stringByReplacingOccurrencesOfString:@"([A-Z]+)([A-Z][a-z])"
-                                                            withString:@"$1_$2"
-                                                               options:NSRegularExpressionSearch
-                                                                 range:(NSRange) { 0, [self length] }];
-    underscored = [underscored stringByReplacingOccurrencesOfString:@"([a-z\\d])([A-Z])"
-                                                         withString:@"$1_$2"
-                                                            options:NSRegularExpressionSearch
-                                                              range:(NSRange) { 0, [underscored length] }];
-    
-    return [underscored lowercaseString];
-}
-- (NSString *)db_camelizedString
-{
-    NSMutableArray *parts = [[self componentsSeparatedByString:@"_"] mutableCopy];
-    NSMutableString *ret = [NSMutableString stringWithString:parts[0]];
-    [parts removeObjectAtIndex:0];
-    for(NSString *part in parts)
-    {
-        [ret appendString:[part db_stringByCapitalizingFirstLetter]];
-    }
-    return ret;
-}
-
-- (NSString *)toString
+- (NSString *)sqlRepresentationForQuery:(DBQuery *)query
+                         withParameters:(NSMutableArray *)parameters
 {
     return self;
 }

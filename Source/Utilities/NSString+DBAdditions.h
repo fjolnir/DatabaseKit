@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "DBSQLRepresentable.h"
 
-@interface NSString (DBAdditions)
+@interface NSString (DBAdditions) <DBSQLRepresentable>
 /*! Returns a singularized form of the string */
 - (NSString *)db_pluralizedString;
 /*! Returns a pluralized form of the string */
@@ -8,14 +9,6 @@
 
 /*! Returns a copy of the string with the first letter capitalized */
 - (NSString *)db_stringByCapitalizingFirstLetter;
-/*! Returns a copy of the string with the first letter cdeapitalized */
+/*! Returns a copy of the string with the first letter decapitalized */
 - (NSString *)db_stringByDecapitalizingFirstLetter;
-
-/*! Converts a camelized string to a underscored one aString -> a_string */
-- (NSString *)db_underscoredString;
-/*! Converts an underscored string to a cameilzed one a_string -> aString */
-- (NSString *)db_camelizedString;
-
-/*! Just returns self */
-- (NSString *)toString;
 @end

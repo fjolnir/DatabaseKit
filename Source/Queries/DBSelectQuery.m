@@ -5,6 +5,7 @@
 #import "DBModel+Private.h"
 #import "DBUtilities.h"
 #import "NSPredicate+DBSQLRepresentable.h"
+#import "NSArray+DBAdditions.h"
 
 NSString *const DBInnerJoin = @" INNER ";
 NSString *const DBLeftJoin  = @" LEFT ";
@@ -79,7 +80,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(_columns == nil)
         [q appendString:@"*"];
     else
-        [q appendString:[[_columns valueForKey:@"toString"] componentsJoinedByString:@", "]];
+        [q appendString:[[_columns db_map:^(id<DBSQLRepresentable> obj) {
+            return [obj sqlRepresentationForQuery:self withParameters:p];
+        }] componentsJoinedByString:@", "]];
 
     [q appendString:@" FROM "];
     if(_subQuery) {
@@ -88,7 +91,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
         [q appendString:@")"];
     } else {
         [q appendString:@"`"];
-        [q appendString:[_table toString]];
+        [q appendString:_table.name];
         [q appendString:@"`"];
     }
 
@@ -315,7 +318,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @implementation DBJoin
 + (DBJoin *)withType:(NSString *)type table:(DBTable *)table predicate:(NSPredicate *)predicate
 {
-    NSParameterAssert([table respondsToSelector:@selector(toString)]);
     DBJoin *ret = [self new];
     ret.type   = type;
     ret.table  = table;
@@ -326,7 +328,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 {
     [q appendString:_type];
     [q appendString:@" JOIN `"];
-    [q appendString:[_table toString]];
+    [q appendString:_table.name];
     [q appendString:@"` ON "];
     [q appendString:[_predicate sqlRepresentationForQuery:query withParameters:p]];
     return YES;
@@ -349,16 +351,18 @@ NSString *const DBUnionAll = @" UNION ALL ";
     return ret;
 }
 
-- (NSString *)toString
+- (NSString *)sqlRepresentationForQuery:(DBQuery *)query
+                         withParameters:(NSMutableArray *)parameters
 {
     NSMutableString *ret = [NSMutableString stringWithString:_field];
     [ret appendString:@" AS "];
     [ret appendString:_alias];
     return ret;
 }
+
 - (NSString *)description
 {
-    return [self toString];
+    return [self sqlRepresentationForQuery:nil withParameters:nil];
 }
 @end
 

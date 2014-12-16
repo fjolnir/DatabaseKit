@@ -46,7 +46,7 @@ extern NSString *const DBUnionAll;
 + (DBJoin *)withType:(NSString *)type table:(id)table predicate:(NSPredicate *)aPredicate;
 @end
 
-@interface DBAs : NSObject
+@interface DBAs : NSObject <DBSQLRepresentable>
 @property(readonly, strong) NSString *field, *alias;
 
 + (DBAs *)field:(NSString *)field alias:(NSString *)alias;

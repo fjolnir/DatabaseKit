@@ -63,7 +63,7 @@
     }
 
     [q appendString:@"INTO "];
-    [q appendString:[_table toString]];
+    [q appendString:_table.name];
     if(_columns) {
         [q appendString:@"(\""];
         [q appendString:[_columns componentsJoinedByString:@"\", \""]];
@@ -105,7 +105,7 @@
              @"Field/value count does not match");
 
     [q appendString:@"UPDATE `"];
-    [q appendString:[_table toString]];
+    [q appendString:_table.name];
     [q appendString:@"` SET `"];
 
     for(NSUInteger i = 0; i < [_columns count]; ++i) {
@@ -118,7 +118,7 @@
             [q appendString:@"NULL"];
         else if([obj isKindOfClass:[DBExpression class]]) {
             [q appendString:@"("];
-            [q appendString:[obj toString]];
+            [q appendString:[obj sqlRepresentationForQuery:self withParameters:p]];
             [q appendString:@")"];
         } else
             [self _addParam:obj withToken:YES currentParams:p query:q];

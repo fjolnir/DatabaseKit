@@ -9,7 +9,7 @@
 {
     NSParameterAssert(q && p);
     [q appendString:@"DELETE FROM `"];
-    [q appendString:[_table toString]];
+    [q appendString:_table.name];
     [q appendString:@"`"];
 
     if(_where) {

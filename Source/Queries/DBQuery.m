@@ -138,7 +138,7 @@
 {
     return _database ?: _table.database;
 }
-- (NSString *)toString
+- (NSString *)stringRepresentation
 {
     NSMutableString *ret = [NSMutableString new];
     [self _generateString:ret parameters:[NSMutableArray new]];
@@ -147,7 +147,7 @@
 
 - (NSString *)description
 {
-    return [self toString];
+    return [self stringRepresentation];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
@@ -215,7 +215,8 @@
     expr->_expressionString = [aString copy];
     return expr;
 }
-- (NSString *)toString
+- (NSString *)sqlRepresentationForQuery:(DBQuery *)query
+                         withParameters:(NSMutableArray *)parameters
 {
     return _expressionString;
 }

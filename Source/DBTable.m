@@ -45,11 +45,6 @@
     [[[DBUpdateQuery withTable:self] update:obj] where:cond];
 }
 
-- (NSString *)toString
-{
-    return _name;
-}
-
 - (NSSet *)columns
 {
     if(!_columns)

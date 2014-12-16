@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "DBConnection.h"
+#import "DBSQLRepresentable.h"
 
 @class DBTable, DB;
 
@@ -28,7 +29,7 @@
 - (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
 - (instancetype)combineWith:(DBQuery *)aQuery;
 
-- (NSString *)toString;
+- (NSString *)stringRepresentation;
 @end
 
 @interface DBReadQuery : DBQuery
@@ -44,9 +45,8 @@
 @end
 
 #define DBExpr(expr) [DBExpression withString:(expr)]
-@interface DBExpression : NSObject
+@interface DBExpression : NSObject <DBSQLRepresentable>
 + (instancetype)withString:(NSString *)aString;
-- (NSString *)toString;
 @end
 
 @interface DBConnection (DBQuery)
