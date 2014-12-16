@@ -2,6 +2,7 @@
 #import "DB.h"
 #import "DBTable.h"
 #import "DBModel.h"
+#import "DBUtilities.h"
 #import "DBDebug.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
@@ -188,10 +189,8 @@ NSString * const DBQueryException = @"DBQueryException";
 }
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
 {
-    NSMutableString *query = [NSMutableString new];
-    NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-    return [[connection execute:query substitutions:params error:outErr] toArray:outErr];
+    DBNotImplemented();
+    return nil;
 }
 @end
 

@@ -286,8 +286,6 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
 {
-    NSArray *results = [super executeOnConnection:connection error:outErr];
-
     NSMutableString *query  = [NSMutableString new];
     NSMutableArray  *params = [NSMutableArray new];
     NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
@@ -296,9 +294,9 @@ NSString *const DBUnionAll = @" UNION ALL ";
     BOOL const selectingEntireTable = self.columns == nil
                                    || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
     Class modelClass = self.table.modelClass;
-    if(selectingEntireTable && [results count] > 0 && modelClass) {
-        NSMutableArray *modelObjects = [NSMutableArray arrayWithCapacity:[results count]];
-        NSSet *fieldNames = [NSSet setWithArray:[[results firstObject] allKeys]];
+    if(selectingEntireTable && modelClass) {
+        NSMutableArray *modelObjects = [NSMutableArray new];
+        NSSet *fieldNames = [NSSet setWithArray:result.columns];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
             while([result step:outErr] == DBResultStateNotAtEnd) {
                 [modelObjects addObject:[[modelClass alloc]
