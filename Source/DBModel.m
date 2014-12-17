@@ -5,7 +5,7 @@
 #import "DBDeleteQuery.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBDebug.h"
+#import "DBUtilities.h"
 #import "NSString+DBAdditions.h"
 #import "DBIntrospection.h"
 #import "DBOrderedDictionary.h"

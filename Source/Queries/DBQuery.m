@@ -3,7 +3,6 @@
 #import "DBTable.h"
 #import "DBModel.h"
 #import "DBUtilities.h"
-#import "DBDebug.h"
 #import "NSPredicate+DBSQLRepresentable.h"
 
 NSString * const DBQueryException = @"DBQueryException";

@@ -94,9 +94,6 @@
 		C7D8765D1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
 		C7D8765E1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
 		C7D8765F1A3E67E300A490E0 /* DBTable.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D875EB1A3E67E300A490E0 /* DBTable.m */; };
-		C7D876601A3E67E300A490E0 /* DBDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EC1A3E67E300A490E0 /* DBDebug.h */; };
-		C7D876611A3E67E300A490E0 /* DBDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EC1A3E67E300A490E0 /* DBDebug.h */; };
-		C7D876621A3E67E300A490E0 /* DBDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EC1A3E67E300A490E0 /* DBDebug.h */; };
 		C7D876631A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876641A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7D876651A3E67E300A490E0 /* DBAlterTableQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -252,7 +249,6 @@
 		C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSQLRepresentable.h; sourceTree = "<group>"; };
 		C7D875EA1A3E67E300A490E0 /* DBTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTable.h; sourceTree = "<group>"; };
 		C7D875EB1A3E67E300A490E0 /* DBTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTable.m; sourceTree = "<group>"; };
-		C7D875EC1A3E67E300A490E0 /* DBDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBDebug.h; sourceTree = "<group>"; };
 		C7D875EE1A3E67E300A490E0 /* DBAlterTableQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAlterTableQuery.h; sourceTree = "<group>"; };
 		C7D875EF1A3E67E300A490E0 /* DBAlterTableQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAlterTableQuery.m; sourceTree = "<group>"; };
 		C7D875F01A3E67E300A490E0 /* DBCreateTableQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBCreateTableQuery.h; sourceTree = "<group>"; };
@@ -419,7 +415,6 @@
 				C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */,
 				C7D875EA1A3E67E300A490E0 /* DBTable.h */,
 				C7D875EB1A3E67E300A490E0 /* DBTable.m */,
-				C7D875EC1A3E67E300A490E0 /* DBDebug.h */,
 				C7D875D01A3E67E300A490E0 /* Connections */,
 				C7D875ED1A3E67E300A490E0 /* Queries */,
 				C7D875FD1A3E67E300A490E0 /* Utilities */,
@@ -533,7 +528,6 @@
 				C7D876901A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876A51A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876B11A3E67E300A490E0 /* DBUtilities.h in Headers */,
-				C7D876601A3E67E300A490E0 /* DBDebug.h in Headers */,
 				C7D839931A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876AB1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D876B41A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
@@ -573,7 +567,6 @@
 				C7D839951A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876B31A3E67E300A490E0 /* DBUtilities.h in Headers */,
 				C7D876921A3E67E300A490E0 /* DBInflector.h in Headers */,
-				C7D876621A3E67E300A490E0 /* DBDebug.h in Headers */,
 				C7D876B61A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,7 +600,6 @@
 				C7D876CB1A3E6C2E00A490E0 /* DB+Private.h in Headers */,
 				C7D876821A3E67E300A490E0 /* DBQuery+Private.h in Headers */,
 				C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
-				C7D876611A3E67E300A490E0 /* DBDebug.h in Headers */,
 				C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876911A3E67E300A490E0 /* DBInflector.h in Headers */,
