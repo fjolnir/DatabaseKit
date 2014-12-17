@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
+/*! @cond IGNORE */
 typedef NS_ENUM(NSUInteger, DBMemoryManagementPolicy) {
     DBPropertyStrong,
     DBPropertyWeak,
@@ -27,3 +28,4 @@ NSArray *DBClassesInheritingFrom(Class superclass);
 
 DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t property);
 void DBIteratePropertiesForClass(Class klass, void (^blk)(DBPropertyAttributes *));
+/*! @endcond */

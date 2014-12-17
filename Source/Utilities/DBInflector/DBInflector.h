@@ -1,9 +1,6 @@
 #import <Foundation/Foundation.h>
 
-/*!
- * Provides inflections for english words (can be extended to support other languages
- * by writing a plist configuration for it)
- */
+/*! @cond IGNORE */
 @interface DBInflector : NSObject {
   NSCache *singularCache, *pluralCache;
 }
@@ -24,3 +21,4 @@
  */
 - (NSString *)singularizeWord:(NSString *)word;
 @end
+/*! @endcond */

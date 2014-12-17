@@ -3,8 +3,6 @@
 #import <dispatch/dispatch.h>
 #import <objc/runtime.h>
 
-#define NOT_IMPLEMENTED [NSException raise:@"Unimplemented" format:@"DBConnection can not be used directly!"]
-
 static NSMutableArray *_ConnectionClasses;
 
 @interface DBConnection ()
@@ -47,49 +45,49 @@ static NSMutableArray *_ConnectionClasses;
 }
 - (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return nil;
 }
 - (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 - (BOOL)closeConnection:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 
 - (NSArray *)tableNames
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 
 - (BOOL)tableExists:(NSString *)tableName
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 - (NSDictionary *)columnsForTable:(NSString *)tableName
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return nil;
 }
 - (BOOL)beginTransaction:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 - (BOOL)rollBack:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 - (BOOL)endTransaction:(NSError **)outErr
 {
-    NOT_IMPLEMENTED;
+    DBNotImplemented();
     return NO;
 }
 

@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 
+/*! @cond IGNORE */
 typedef id(^DBMapBlock)(id obj);
 typedef BOOL(^DBFilterBlock)(id obj);
 
@@ -12,3 +13,4 @@ typedef BOOL(^DBFilterBlock)(id obj);
 - (NSSet *)db_map:(DBMapBlock)blk;
 - (NSSet *)db_filter:(DBFilterBlock)blk;
 @end
+/*! @endcond */

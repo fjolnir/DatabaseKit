@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <DatabaseKit/DBSQLRepresentable.h>
 
+/*! @cond IGNORE */
 @interface NSString (DBAdditions) <DBSQLRepresentable>
 /*! Returns a singularized form of the string */
 - (NSString *)db_pluralizedString;
@@ -12,3 +13,4 @@
 /*! Returns a copy of the string with the first letter decapitalized */
 - (NSString *)db_stringByDecapitalizingFirstLetter;
 @end
+/*! @endcond */

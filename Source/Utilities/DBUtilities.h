@@ -1,5 +1,6 @@
 #import <unistd.h>
 
+/*! @cond IGNORE */
 #define DBEqual(a, b) ({ \
     __typeof(a) __a = (a); \
     __typeof(b) __b = (b); \
@@ -21,3 +22,4 @@
 #else
 # define DBDebugLog(...) 
 #endif
+/*! @endcond */

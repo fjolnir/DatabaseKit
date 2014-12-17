@@ -48,7 +48,7 @@
     return [_keys count];
 }
 
-- (id)objectForKey:(id)aKey
+- (id)objectForKey:(id<NSCopying>)aKey
 {
     return [_pairs objectForKey:aKey];
 }

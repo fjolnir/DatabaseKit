@@ -1,5 +1,6 @@
 #import <DatabaseKit/DBQuery.h>
 
+/*! @cond IGNORE */
 @interface DBQuery () <DBTableQuery, DBFilterableQuery> {
 @public
     DB *_database;
@@ -25,3 +26,4 @@
 }
 @property NSArray *values;
 @end
+/*! @endcond */

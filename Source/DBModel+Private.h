@@ -1,5 +1,6 @@
 #import <DatabaseKit/DBModel.h>
 
+/*! @cond IGNORE */
 @interface DBModel ()
 @property(readwrite, strong) DB *database;
 @property(readwrite, strong) NSString *savedIdentifier;
@@ -7,3 +8,4 @@
 
 - (BOOL)_save:(NSError **)outErr;
 @end
+/*! @endcond */
