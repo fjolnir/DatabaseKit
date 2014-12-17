@@ -2,6 +2,7 @@
 #import "DB.h"
 #import "DBConnection.h"
 #import "DBQuery.h"
+#import "DBUtilities.h"
 
 @implementation DBColumnDefinition
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
@@ -83,8 +84,7 @@
 
 - (BOOL)addToColumn:(NSString *)column inTable:(DBTable *)table error:(NSError **)outErr
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return NO;
 }
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters

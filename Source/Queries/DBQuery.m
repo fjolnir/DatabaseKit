@@ -42,8 +42,7 @@ NSString * const DBQueryException = @"DBQueryException";
 
 - (instancetype)combineWith:(DBQuery * const)aQuery
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented by %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return nil;
 }
 

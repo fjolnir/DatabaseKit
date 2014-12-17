@@ -1,4 +1,5 @@
 #import "DBConnection.h"
+#import "DBUtilities.h"
 #import <dispatch/dispatch.h>
 #import <objc/runtime.h>
 
@@ -195,35 +196,30 @@ static NSMutableArray *_ConnectionClasses;
 
 - (DBResultState)step:(NSError **)outErr
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return DBResultStateError;
 }
 
 - (NSUInteger)columnCount
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return 0;
 }
 
 - (NSString *)nameOfColumnAtIndex:(NSUInteger)idx
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return nil;
 }
 - (NSUInteger)indexOfColumnNamed:(NSString *)name
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return NSNotFound;
 }
 
 - (id)valueOfColumnAtIndex:(NSUInteger)idx
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"%@ not implemented for %@", NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return nil;
 }
 

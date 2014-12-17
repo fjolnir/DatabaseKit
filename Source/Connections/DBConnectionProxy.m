@@ -1,6 +1,7 @@
 #import "DBConnectionProxy.h"
 #import "DBConnection.h"
 #import "DBDebug.h"
+#import "DBUtilities.h"
 
 @implementation DBConnectionProxy
 @dynamic connection;
@@ -20,9 +21,7 @@
 
 - (DBConnection *)connection:(NSError **)outErr
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"Abstract method %@ not implemented for %@",
-                       NSStringFromSelector(_cmd), [self class]];
+    DBNotImplemented();
     return nil;
 }
 
