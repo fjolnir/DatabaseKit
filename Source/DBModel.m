@@ -126,13 +126,14 @@ NSString * const kDBIdentifierColumn = @"identifier";
 - (instancetype)initWithDatabase:(DB *)aDB
 {
     DBModel *model = [self initWithDatabase:aDB result:nil];
-    model.identifier = [[NSUUID UUID] UUIDString];
+    if(aDB)
+        model.identifier = [[NSUUID UUID] UUIDString];
     return model;
 }
 
 - (void)didChangeValueForKey:(NSString *)key
 {
-    if(_pendingQueries && [[[self class] savedKeys] containsObject:key]) {
+    if(_database && _pendingQueries && [[[self class] savedKeys] containsObject:key]) {
         [self willChangeValueForKey:@"hasChanges"];
         _pendingQueries[key] = [self saveQueryForKey:key];
         [self didChangeValueForKey:@"hasChanges"];
@@ -176,6 +177,12 @@ NSString * const kDBIdentifierColumn = @"identifier";
 {
     NSAssert(_database, @"Tried to save object not in a database");
 
+    if(!_savedIdentifier) {
+        for(NSString *key in [[self class] savedKeys]) {
+            if(!_pendingQueries[key])
+                _pendingQueries[key] = [self saveQueryForKey:key];
+        }
+    }
     if(_pendingQueries.count == 0)
         return YES;
     

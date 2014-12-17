@@ -84,8 +84,7 @@
     object.database = self;
     if(!object.identifier)
         object.identifier = [[NSUUID UUID] UUIDString];
-    if(object.hasChanges)
-        [self registerDirtyObject:object];
+    [self registerDirtyObject:object];
 }
 - (void)deleteObject:(DBModel *)object
 {
