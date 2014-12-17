@@ -8,6 +8,9 @@
 #import <sqlite3.h>
 #import <dispatch/dispatch.h>
 
+static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
+#define CHK(expr) (_checkSQLiteStatus((expr), _handle, outErr))
+
 /*! @cond IGNORE */
 @interface DBSQLiteResult : DBResult {
 @public
@@ -30,7 +33,7 @@
                              tail:(NSString **)outTail
                             error:(NSError **)outError;
 
-- (void)_resultWasDeallocated:(DBSQLiteResult *)result;
+- (void)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr;
 @end
 /*! @endcond */
 
@@ -51,27 +54,26 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithURL:(NSURL *)URL error:(NSError **)err;
+- (instancetype)initWithURL:(NSURL *)URL error:(NSError **)outErr;
 {
-    if(!(self = [super initWithURL:URL error:err]))
+    if(!(self = [super initWithURL:URL error:outErr]))
         return nil;
     _path = URL ? URL.path : @":memory:";
     _cachedStatements  = [NSMutableDictionary new];
 
-    int sqliteError = 0;
     int flags = SQLITE_OPEN_READWRITE;
     if([URL.query rangeOfString:@"create=yes"].location != NSNotFound)
         flags |= SQLITE_OPEN_CREATE;
     
-    sqliteError = sqlite3_open_v2([_path UTF8String], &_handle, flags, NULL);
-    if(sqliteError != SQLITE_OK) {
-        const char *errStr = sqlite3_errmsg(_handle);
-        if(err != NULL) {
-            *err = [NSError errorWithDomain:@"database.sqlite.openerror"
+    int err = sqlite3_open_v2([_path UTF8String], &_handle, flags, NULL);
+    if(err != SQLITE_OK) {
+        if(outErr)
+            *outErr = [NSError errorWithDomain:@"database.sqlite.openerror"
                                        code:DBSQLiteDatabaseNotFoundErrorCode
-                                   userInfo:@{NSLocalizedDescriptionKey: @(errStr),
-                         NSFilePathErrorKey:_path}];
-        }
+                                   userInfo:@{
+                NSLocalizedDescriptionKey: @(sqlite3_errmsg(_handle)),
+                NSFilePathErrorKey:_path
+            }];
         return nil;
     }
 
@@ -128,32 +130,32 @@
         if(!sub)
             continue;
         else if([sub isKindOfClass:[NSString class]])
-            sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT);
+            CHK(sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT));
         else if([sub isKindOfClass:[NSData class]])
-            sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_TRANSIENT);
+            CHK(sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_TRANSIENT));
         else if([sub isKindOfClass:[NSNumber class]]) {
             switch (*[sub objCType]) {
                 case 'd':
                 case 'f':
-                    sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]);
+                    CHK(sqlite3_bind_double(queryByteCode, i+1, [sub doubleValue]));
                     break;
                 case 'l':
                 case 'L':
                 case 'q':
                 case 'Q':
-                    sqlite3_bind_int64(queryByteCode, i+1, [sub longLongValue]);
+                    CHK(sqlite3_bind_int64(queryByteCode, i+1, [sub longLongValue]));
                     break;
                 default:
-                    sqlite3_bind_int(queryByteCode, i+1, [sub intValue]);
+                    CHK(sqlite3_bind_int(queryByteCode, i+1, [sub intValue]));
                     break;
             }
         } else if([sub isMemberOfClass:[NSNull class]])
-            sqlite3_bind_null(queryByteCode, i+1);
+            CHK(sqlite3_bind_null(queryByteCode, i+1));
         else if([sub isKindOfClass:[NSDate class]])
-            sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT);
+            CHK(sqlite3_bind_text(queryByteCode, i+1, [[dateFormatter stringFromDate:sub] UTF8String], -1, SQLITE_TRANSIENT));
         else if([sub conformsToProtocol:@protocol(NSCoding)]) {
             NSData *serialized = [NSKeyedArchiver archivedDataWithRootObject:sub];
-            sqlite3_bind_blob(queryByteCode, i+1, serialized.bytes, (int)serialized.length, SQLITE_TRANSIENT);
+            CHK(sqlite3_bind_blob(queryByteCode, i+1, serialized.bytes, (int)serialized.length, SQLITE_TRANSIENT));
         } else
             [NSException raise:@"Unrecognized object type"
                         format:@"DBKit doesn't know how to handle this type of object: %@ class: %@", sub, [sub class]];
@@ -172,14 +174,14 @@
         return result;
 }
 
-- (void)_resultWasDeallocated:(DBSQLiteResult *)result
+- (void)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr
 {
     NSParameterAssert(result);
     if(result->_query) {
-        sqlite3_reset(result->_stmt);
+        CHK(sqlite3_reset(result->_stmt));
         _cachedStatements[result->_query] = [NSValue valueWithPointer:result->_stmt];
     } else
-        sqlite3_finalize(result->_stmt);
+        CHK(sqlite3_finalize(result->_stmt));
 }
 
 - (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
@@ -200,6 +202,7 @@
     DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
                        substitutions:@[tableName]
                                error:NULL];
+
     if([result step:NULL] == DBResultStateNotAtEnd)
         return [[result valueOfColumnAtIndex:0] unsignedIntegerValue] > 0;
     else
@@ -222,14 +225,14 @@
         return nil;
 }
 
-- (BOOL)closeConnection
+- (BOOL)closeConnection:(NSError **)outErr
 {
     for(NSValue *query in _cachedStatements.allValues) {
-        sqlite3_finalize([query pointerValue]);
+        CHK(sqlite3_finalize([query pointerValue]));
     }
     [_cachedStatements removeAllObjects];
 
-    int err = sqlite3_close(_handle);
+    int err = CHK(sqlite3_close(_handle));
     _handle = NULL;
     return err == SQLITE_OK;
 }
@@ -247,19 +250,13 @@
         return queryByteCode;
 
     const char *tailBuf = NULL;
-    int err = sqlite3_prepare_v2(_handle,
-                                 [query UTF8String],
-                                 (int)[query lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
-                                 &queryByteCode,
-                                 &tailBuf);
-    if(err != SQLITE_OK || queryByteCode == NULL) {
-        if(outErr)
-            *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
-                                          code:0
-                                      userInfo:@{ NSLocalizedDescriptionKey: @(sqlite3_errmsg(_handle)),
-                       @"query": query }];
+    int err = CHK(sqlite3_prepare_v2(_handle,
+                                     [query UTF8String],
+                                     (int)[query lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+                                     &queryByteCode,
+                                     &tailBuf));
+    if(err != SQLITE_OK || queryByteCode == NULL)
         return NULL;
-    }
 
     NSString *tail = [@(tailBuf) stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if(aoTail && [tail length] > 0)
@@ -271,7 +268,7 @@
 
 #pragma mark - Transactions
 
-- (BOOL)beginTransaction
+- (BOOL)beginTransaction:(NSError **)outErr
 {
     NSString * const savePointName = [[NSUUID UUID] UUIDString];
     char *errorMessage;
@@ -291,7 +288,7 @@
     return YES;
 }
 
-- (BOOL)rollBack
+- (BOOL)rollBack:(NSError **)outErr
 {
     NSAssert([_savePointStack count] > 0, @"Not in a transaction");
     char *errorMessage;
@@ -307,7 +304,7 @@
     [_savePointStack removeLastObject];
     return YES;
 }
-- (BOOL)endTransaction
+- (BOOL)endTransaction:(NSError **)outErr
 {
     NSAssert([_savePointStack count] > 0, @"Not in a transaction");
     char *errorMessage;
@@ -329,7 +326,7 @@
 
 - (void)dealloc
 {
-    [self closeConnection];
+    [self closeConnection:NULL];
 }
 @end
 
@@ -436,8 +433,24 @@ retry:
 - (void)dealloc
 {
     if(_connection)
-        [_connection _resultWasDeallocated:self];
+        [_connection _resultWasDeallocated:self error:NULL];
     else
         sqlite3_finalize(_stmt);
 }
 @end
+
+static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr)
+{
+    if(status != SQLITE_OK) {
+        const char *err = sqlite3_errmsg(handle);
+        if(outErr)
+            *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
+                                          code:0
+                                      userInfo:@{
+                                                 NSLocalizedDescriptionKey: @(err)
+                                                 }];
+        else
+            NSLog(@"Sqlite error: '%s'", err);
+    }
+    return status;
+}

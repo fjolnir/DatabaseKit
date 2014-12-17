@@ -56,12 +56,12 @@ static void _onThreadExit(void *connection)
     return self.connection;
 }
 
-- (BOOL)closeConnection
+- (BOOL)closeConnection:(NSError **)outErr
 {
     @synchronized(_connections) {
         BOOL ret = YES;
         for(DBConnection *connection in _connections) {
-            BOOL const succ = [connection closeConnection];
+            BOOL const succ = [connection closeConnection:outErr];
             if(!succ) {
                 ret = NO;
                 DBLog(@"Failed to close %@ in pool %@", connection, self);

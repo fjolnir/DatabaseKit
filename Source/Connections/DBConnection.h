@@ -84,7 +84,7 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
  * Closes the connection\n
  * does <b>not</b> release the object object itself
  */
-- (BOOL)closeConnection;
+- (BOOL)closeConnection:(NSError **)outErr;
 
 /*!
  * Returns an array of names of tables in the database.
@@ -106,11 +106,11 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 /*! Executes a block wrapped in a transaction */
 - (BOOL)transaction:(DBTransactionBlock)aBlock;
 /*! Begins a transaction (in most cases, using -transaction: is preferred) */
-- (BOOL)beginTransaction;
+- (BOOL)beginTransaction:(NSError **)outErr;
 /*! Rolls back a transaction (in most cases, using -transaction: is preferred) */
-- (BOOL)rollBack;
+- (BOOL)rollBack:(NSError **)outErr;
 /*! Ends a transaction (in most cases, using -transaction: is preferred) */
-- (BOOL)endTransaction;
+- (BOOL)endTransaction:(NSError **)outErr;
 
 /*! Returns a SQL type string for a type */
 + (NSString *)sqlForType:(DBType)type;

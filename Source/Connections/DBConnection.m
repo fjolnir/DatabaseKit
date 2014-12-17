@@ -55,7 +55,7 @@ static NSMutableArray *_ConnectionClasses;
     NOT_IMPLEMENTED;
     return NO;
 }
-- (BOOL)closeConnection
+- (BOOL)closeConnection:(NSError **)outErr
 {
     NOT_IMPLEMENTED;
     return NO;
@@ -77,17 +77,17 @@ static NSMutableArray *_ConnectionClasses;
     NOT_IMPLEMENTED;
     return nil;
 }
-- (BOOL)beginTransaction
+- (BOOL)beginTransaction:(NSError **)outErr
 {
     NOT_IMPLEMENTED;
     return NO;
 }
-- (BOOL)rollBack
+- (BOOL)rollBack:(NSError **)outErr
 {
     NOT_IMPLEMENTED;
     return NO;
 }
-- (BOOL)endTransaction
+- (BOOL)endTransaction:(NSError **)outErr
 {
     NOT_IMPLEMENTED;
     return NO;
@@ -96,18 +96,18 @@ static NSMutableArray *_ConnectionClasses;
 - (BOOL)transaction:(DBTransactionBlock)aBlock
 {
     @try {
-        if(![self beginTransaction])
+        if(![self beginTransaction:NULL])
             return NO;
         switch(aBlock()) {
             case DBTransactionRollBack:
-                [self rollBack];
+                [self rollBack:NULL];
                 return NO;
             case DBTransactionCommit:
-                return [self endTransaction];
+                return [self endTransaction:NULL];
         }
     }
     @catch(NSException *e) {
-        [self rollBack];
+        [self rollBack:NULL];
         [e raise];
         return NO;
     }
