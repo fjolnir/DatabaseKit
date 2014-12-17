@@ -162,7 +162,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
     state->itemsPtr = buffer;
 
-    NSUInteger *ofs = &state->extra[1];
+    unsigned long *ofs = &state->extra[1];
     NSUInteger len  = MIN(bufLen, results.count - *ofs);
     if(len > 0) {
         [results getObjects:buffer range:(NSRange) { *ofs, len }];
