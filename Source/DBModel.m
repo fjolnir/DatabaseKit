@@ -5,7 +5,7 @@
 #import "DBDeleteQuery.h"
 #import "DBTable.h"
 #import "DBQuery.h"
-#import "DBDebug.h"
+#import "DBUtilities.h"
 #import "NSString+DBAdditions.h"
 #import "DBIntrospection.h"
 #import "DBOrderedDictionary.h"
@@ -86,22 +86,13 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (instancetype)init
 {
-    if((self = [super init])) {
-        _pendingQueries = [DBOrderedDictionary new];
-        // This is to coerce KVC into calling didChangeValueForKey:
-        // We don't actually take any action when pendingQueries changes
-        [self addObserver:self
-               forKeyPath:@"pendingQueries"
-                  options:0
-                  context:NULL];
-    }
-    return self;
+    return [self initWithDatabase:nil];
 }
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result
 {
     NSParameterAssert(aDB);
-    if((self = [self init])) {
+    if((self = [super init])) {
         _database = aDB;
 
         NSArray *columns = result.columns;
@@ -110,7 +101,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
             if([value isKindOfClass:[NSData class]]) {
                 DBPropertyAttributes *attrs = DBAttributesForProperty([self class],
                                                                       class_getProperty([self class], [columns[i] UTF8String]));
-                if(attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]])
+                if(attrs && attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]])
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
@@ -118,7 +109,15 @@ NSString * const kDBIdentifierColumn = @"identifier";
                     forKey:columns[i]];
         }
         _savedIdentifier = _identifier;
-        [_pendingQueries removeAllObjects];
+
+        _pendingQueries = [DBOrderedDictionary new];
+
+        // This is to coerce KVC into calling didChangeValueForKey:
+        // We don't actually take any action when pendingQueries changes
+        [self addObserver:self
+               forKeyPath:@"pendingQueries"
+                  options:0
+                  context:NULL];
     }
     return self;
 }

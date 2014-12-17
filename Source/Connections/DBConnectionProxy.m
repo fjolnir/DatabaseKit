@@ -1,6 +1,5 @@
 #import "DBConnectionProxy.h"
 #import "DBConnection.h"
-#import "DBDebug.h"
 #import "DBUtilities.h"
 
 @implementation DBConnectionProxy
