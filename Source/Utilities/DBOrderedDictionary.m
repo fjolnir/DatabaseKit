@@ -1,5 +1,10 @@
 #import "DBOrderedDictionary.h"
 
+#define AssertPair(key, value) do { \
+    NSAssert(key, @"Tried to insert nil key."); \
+    NSAssert(key, @"Tried to insert nil object."); \
+} while(0)
+
 @implementation DBOrderedDictionary {
     NSMutableArray *_keys;
     NSMapTable *_pairs;
@@ -30,6 +35,7 @@
         _pairs = [NSMapTable strongToStrongObjectsMapTable];
         for(NSUInteger i = 0; i < cnt; ++i) {
             id copiedKey = [keys[i] copyWithZone:NULL];
+            AssertPair(copiedKey, objects[i]);
             [_keys addObject:copiedKey];
             [_pairs setObject:objects[i] forKey:copiedKey];
         }
@@ -69,6 +75,7 @@
         [_keys removeObjectAtIndex:idx];
 
     id copiedKey = [aKey copyWithZone:NULL];
+    AssertPair(copiedKey, anObject);
     [_keys addObject:copiedKey];
     [_pairs setObject:anObject forKey:copiedKey];
 }
