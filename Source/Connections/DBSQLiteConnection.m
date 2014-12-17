@@ -199,7 +199,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 
 - (BOOL)tableExists:(NSString *)tableName
 {
-    DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE `type`='table' AND `name`=$1"
+    DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE (`type`='table' OR `type`='view') AND `name`=$1"
                        substitutions:@[tableName]
                                error:NULL];
 
