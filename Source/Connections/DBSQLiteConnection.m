@@ -246,8 +246,10 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 
     // Prepare the query
     sqlite3_stmt *queryByteCode = [_cachedStatements[query] pointerValue];
-    if(queryByteCode)
+    if(queryByteCode) {
+        CHK(sqlite3_reset(queryByteCode));
         return queryByteCode;
+    }
 
     const char *tailBuf = NULL;
     int err = CHK(sqlite3_prepare_v2(_handle,
