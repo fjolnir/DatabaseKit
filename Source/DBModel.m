@@ -87,14 +87,20 @@ NSString * const kDBIdentifierColumn = @"identifier";
 - (instancetype)init
 {
     return [self initWithDatabase:nil];
+- (instancetype)initWithDatabase:(DB *)aDB
+{
+    NSParameterAssert(aDB);
+    if((self = [self init])) {
+        [aDB registerObject:self];
+    }
+    return self;
 }
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result
 {
     NSParameterAssert(aDB);
-    if((self = [super init])) {
-        _database = aDB;
 
+    if((self = [self init])) {
         NSArray *columns = result.columns;
         for(NSUInteger i = 0; i < [columns count]; ++i) {
             id value = [result valueOfColumnAtIndex:i];
@@ -118,16 +124,12 @@ NSString * const kDBIdentifierColumn = @"identifier";
                forKeyPath:@"pendingQueries"
                   options:0
                   context:NULL];
+        self.database = aDB;
     }
     return self;
 }
 
-- (instancetype)initWithDatabase:(DB *)aDB
 {
-    DBModel *model = [self initWithDatabase:aDB result:nil];
-    if(aDB)
-        model.identifier = [[NSUUID UUID] UUIDString];
-    return model;
 }
 
 - (void)didChangeValueForKey:(NSString *)key
@@ -166,7 +168,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key
 {
-    if(!self.inserted)
+    if(!self.saved)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
@@ -197,7 +199,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
     return YES;
 }
 
-- (BOOL)isInserted
+- (BOOL)isSaved
 {
     return _savedIdentifier != nil;
 }

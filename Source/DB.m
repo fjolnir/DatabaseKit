@@ -77,20 +77,18 @@
     }
 }
 
-- (void)insertObject:(DBModel *)object
+- (void)registerObject:(DBModel *)object
 {
     NSParameterAssert(object && !object.database);
 
     object.database = self;
-    if(!object.identifier)
-        object.identifier = [[NSUUID UUID] UUIDString];
     [self registerDirtyObject:object];
 }
-- (void)deleteObject:(DBModel *)object
+- (void)removeObject:(DBModel *)object
 {
     NSParameterAssert(object.database == self);
 
-    if(object.isInserted)
+    if(object.saved)
         [[object.query delete] execute:NULL];
     object.database = nil;
 }
