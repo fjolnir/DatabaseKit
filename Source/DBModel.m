@@ -11,13 +11,16 @@
 #import "DBOrderedDictionary.h"
 #import <objc/runtime.h>
 #import <unistd.h>
+#import <libkern/OSAtomic.h>
 
 NSString * const kDBIdentifierColumn = @"identifier";
 
 @implementation DBModel {
+    DB *_database;
     DBOrderedDictionary *_pendingQueries;
+    OSSpinLock _dbLock;
 }
-@dynamic inserted, hasChanges;
+@dynamic saved, hasChanges;
 
 + (NSSet *)savedKeys
 {
@@ -86,7 +89,10 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (instancetype)init
 {
-    return [self initWithDatabase:nil];
+    if((self = [super init]))
+        _dbLock = OS_SPINLOCK_INIT;
+    return self;
+}
 - (instancetype)initWithDatabase:(DB *)aDB
 {
     NSParameterAssert(aDB);
@@ -116,20 +122,41 @@ NSString * const kDBIdentifierColumn = @"identifier";
         }
         _savedIdentifier = _identifier;
 
-        _pendingQueries = [DBOrderedDictionary new];
-
-        // This is to coerce KVC into calling didChangeValueForKey:
-        // We don't actually take any action when pendingQueries changes
-        [self addObserver:self
-               forKeyPath:@"pendingQueries"
-                  options:0
-                  context:NULL];
         self.database = aDB;
     }
     return self;
 }
 
+- (DB *)database
 {
+    OSSpinLockLock(&_dbLock);
+    DB *db = _database;
+    OSSpinLockUnlock(&_dbLock);
+    return db;
+}
+- (void)setDatabase:(DB *)database
+{
+    OSSpinLockLock(&_dbLock);
+    if(database != _database) {
+        _database = database;
+        if(_database) {
+            if(!_identifier)
+                self.identifier = [[NSUUID UUID] UUIDString];
+            
+            _pendingQueries = [DBOrderedDictionary new];
+            // This is to coerce KVC into calling didChangeValueForKey:
+            // We don't actually take any action when pendingQueries changes
+            [self addObserver:self
+                   forKeyPath:@"pendingQueries"
+                      options:0
+                      context:NULL];
+        } else {
+            _pendingQueries = nil;
+            _savedIdentifier = nil;
+            [self removeObserver:self forKeyPath:@"pendingQueries"];
+        }
+    }
+    OSSpinLockUnlock(&_dbLock);
 }
 
 - (void)didChangeValueForKey:(NSString *)key
@@ -146,7 +173,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"pendingQueries"];
+    self.database = nil; // Un-register KVO
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
