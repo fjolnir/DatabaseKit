@@ -5,12 +5,9 @@ extern NSString * const kDBIdentifierColumn;
 @class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 
 /*!
- * The abstract base class for the DatabaseKit implementation\n
- * All models are subclasses of DBModel\n
- * \n
- * To use DBModel, subclass it with a class named <prefix>ModelName
- * set the prefix you'll use in +load (along with the default connection if you want one)\n
- * DBModel will then determine the table name (<prefix>ModelName -> modelname)\n
+ * An abstract base class for objects that should model a table.\n
+ * Any keys not excluded by `+excludedKeys` will be saved to the table
+ * if a column with the same name is present.
  */
 @interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DB *database;
@@ -19,11 +16,11 @@ extern NSString * const kDBIdentifierColumn;
 @property(readonly) BOOL hasChanges;
 
 /*!
- * Returns the set of keys that should be saved to the database
+ * Returns the set of keys that should be saved to a database
  */
 + (NSSet *)savedKeys;
 /*!
- * Returns the set of keys that should NOT be saved to the database
+ * Returns the set of keys that should NOT be saved to a database
  * (Used by +savedKeys)
  */
 + (NSSet *)excludedKeys;
@@ -36,7 +33,8 @@ extern NSString * const kDBIdentifierColumn;
 /*!
  * Returns an array of constraints for a key
  * NOTE: Rather than overriding `constraintsForKey:`
- * you should define a method with a name like: `constraintsForMyKey`, `[kls constraintsForKey:@"myKey"]` will automatically call through to it.
+ * you should define a method with a name like: `constraintsForMyKey`;
+ * `[kls constraintsForKey:@"myKey"]` will automatically call through to it.
  */
 + (NSArray *)constraintsForKey:(NSString *)key;
 
