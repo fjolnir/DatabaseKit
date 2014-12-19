@@ -93,14 +93,6 @@ NSString * const kDBIdentifierColumn = @"identifier";
         _dbLock = OS_SPINLOCK_INIT;
     return self;
 }
-- (instancetype)initWithDatabase:(DB *)aDB
-{
-    NSParameterAssert(aDB);
-    if((self = [self init])) {
-        [aDB registerObject:self];
-    }
-    return self;
-}
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result
 {
@@ -142,7 +134,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
         if(_database) {
             if(!_identifier)
                 self.identifier = [[NSUUID UUID] UUIDString];
-            
+
             _pendingQueries = [DBOrderedDictionary new];
             // This is to coerce KVC into calling didChangeValueForKey:
             // We don't actually take any action when pendingQueries changes
@@ -170,11 +162,11 @@ NSString * const kDBIdentifierColumn = @"identifier";
     [super didChangeValueForKey:key];
 }
 
-
 - (void)dealloc
 {
     self.database = nil; // Un-register KVO
 }
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // No action
@@ -292,7 +284,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBModel *copy = [[[self class] alloc] initWithDatabase:_database];
+    DBModel *copy = [[self class] new];
     for(NSString *column in [[self class] savedKeys]) {
         if(![column isEqualToString:kDBIdentifierColumn])
             [copy setValue:[self valueForKey:column] forKey:column];
