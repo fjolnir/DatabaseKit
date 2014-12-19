@@ -16,7 +16,7 @@
 
 - (void)tearDown
 {
-    XCTAssertTrue([db.connection closeConnection], @"Couldn't close connection");
+    XCTAssertTrue([db.connection closeConnection:NULL], @"Couldn't close connection");
 }
 
 - (void)testConnection

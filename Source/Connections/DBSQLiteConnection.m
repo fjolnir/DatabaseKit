@@ -33,7 +33,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
                              tail:(NSString **)outTail
                             error:(NSError **)outError;
 
-- (void)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr;
+- (BOOL)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr;
 @end
 /*! @endcond */
 
@@ -174,7 +174,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
         return result;
 }
 
-- (void)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr
+- (BOOL)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr
 {
     NSParameterAssert(result);
     if(result->_query) {
