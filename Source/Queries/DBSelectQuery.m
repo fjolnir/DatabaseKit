@@ -295,16 +295,16 @@ NSString *const DBUnionAll = @" UNION ALL ";
                                    || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
     Class modelClass = self.table.modelClass;
     if(selectingEntireTable && modelClass) {
-        NSMutableArray *modelObjects = [NSMutableArray new];
+        NSMutableArray *objects = [NSMutableArray new];
         NSSet *fieldNames = [NSSet setWithArray:result.columns];
         if([fieldNames isSubsetOfSet:self.table.columns]) {
             while([result step:outErr] == DBResultStateNotAtEnd) {
-                [modelObjects addObject:[[modelClass alloc]
+                [objects addObject:[[modelClass alloc]
                                          initWithDatabase:self.table.database
                                          result:result]];
             }
             return result.state == DBResultStateAtEnd
-                 ? modelObjects
+                 ? objects
                  : nil;
         }
     }
