@@ -6,6 +6,7 @@
 @property(readwrite, strong) NSString *savedIdentifier;
 @property(readonly) NSDictionary *pendingQueries;
 
+- (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
 - (BOOL)_save:(NSError **)outErr;
 @end
 /*! @endcond */

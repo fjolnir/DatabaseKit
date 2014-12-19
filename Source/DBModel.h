@@ -37,11 +37,6 @@ extern NSString * const kDBIdentifierColumn;
  */
 - (instancetype)initWithDatabase:(DB *)aDB;
 
-/*! Returns a model object in the given database
- *  populated with data from the result object.
- */
-- (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
-
 /*!
  * Returns an array of constraints for a key
  * NOTE: Rather than overriding `constraintsForKey:`
