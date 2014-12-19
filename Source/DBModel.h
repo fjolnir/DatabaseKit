@@ -33,7 +33,7 @@ extern NSString * const kDBIdentifierColumn;
  */
 + (NSArray *)indices;
 
-/*! Returns a model object in the given database
+/*! Returns a model object registered with the given database
  */
 - (instancetype)initWithDatabase:(DB *)aDB;
 
