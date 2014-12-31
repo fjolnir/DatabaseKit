@@ -1,20 +1,20 @@
 @{
-    @"pattern": @"move",
+    @"word": @"move",
     @"replacement": @"moves"
 },
 @{
-    @"pattern": @"sex",
+    @"word": @"sex",
     @"replacement": @"sexes"
 },
 @{
-    @"pattern": @"child",
+    @"word": @"child",
     @"replacement": @"children"
 },
 @{
-    @"pattern": @"man",
+    @"word": @"man",
     @"replacement": @"men"
 },
 @{
-    @"pattern": @"person",
+    @"word": @"person",
     @"replacement": @"people"
 }

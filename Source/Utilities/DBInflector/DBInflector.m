@@ -51,17 +51,17 @@ static DBInflector *sharedInstance = nil;
     }
     
     for(NSDictionary *inflection in self.irregulars) {
-        if([inflection[@"pattern"] isEqualToString:[word lowercaseString]]) {
+        if([inflection[@"word"] isEqualToString:[word lowercaseString]]) {
             pluralized = inflection[@"replacement"];
             goto done;
         }
     }
 
     for(NSDictionary *inflection in self.plurals) {
-        NSString *transformed = [word stringByReplacingOccurrencesOfString:inflection[@"pattern"]
-                                                                withString:inflection[@"replacement"]
-                                                                   options:NSRegularExpressionSearch|NSRegularExpressionCaseInsensitive
-                                                                     range:(NSRange) { 0, [word length] }];
+        NSString *transformed = [inflection[@"regex"] stringByReplacingMatchesInString:word
+                                                                               options:0
+                                                                                 range:(NSRange) { 0, [word length] }
+                                                                          withTemplate:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             pluralized = transformed;
             goto done;
@@ -87,15 +87,15 @@ done:
     }
     for(NSDictionary *inflection in self.irregulars) {
         if([inflection[@"replacement"] isEqualToString:[word lowercaseString]]) {
-            singularized = inflection[@"pattern"];
+            singularized = inflection[@"word"];
             goto done;
         }
     }
     for(NSDictionary *inflection in self.singulars) {
-        NSString *transformed = [word stringByReplacingOccurrencesOfString:inflection[@"pattern"]
-                                                                withString:inflection[@"replacement"]
-                                                                   options:NSRegularExpressionSearch|NSRegularExpressionCaseInsensitive
-                                                                     range:(NSRange) { 0, [word length] }];
+        NSString *transformed = [inflection[@"regex"] stringByReplacingMatchesInString:word
+                                                                               options:0
+                                                                                 range:(NSRange) { 0, [word length] }
+                                                                          withTemplate:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             singularized = transformed;
             goto done;

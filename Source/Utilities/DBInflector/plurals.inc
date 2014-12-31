@@ -1,68 +1,68 @@
 @{
-    @"pattern": @"(quiz)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(quiz)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1zes"
 },
 @{
-    @"pattern": @"^(ox)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"^(ox)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1en"
 },
 @{
-    @"pattern": @"([m|l])ouse$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"([m|l])ouse$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1ice"
 },
 @{
-    @"pattern": @"(matr|vert|ind)ix|ex$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(matr|vert|ind)ix|ex$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1ices"
 },
 @{
-    @"pattern": @"(x|ch|ss|sh)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(x|ch|ss|sh)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1es"
 },
 @{
-    @"pattern": @"([^aeiouy]|qu)y$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"([^aeiouy]|qu)y$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1ies"
 },
 @{
-    @"pattern": @"(hive)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(hive)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1s"
 },
 @{
-    @"pattern": @"(?:([^f])fe|([lr])f)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(?:([^f])fe|([lr])f)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1$2ves"
 },
 @{
-    @"pattern": @"sis$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"sis$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"ses"
 },
 @{
-    @"pattern": @"([ti])um$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"([ti])um$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1a"
 },
 @{
-    @"pattern": @"(buffal|tomat)o$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(buffal|tomat)o$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1oes"
 },
 @{
-    @"pattern": @"(bu)s$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(bu)s$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1ses"
 },
 @{
-    @"pattern": @"(alias|status)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(alias|status)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1es"
 },
 @{
-    @"pattern": @"(octop|vir)us$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(octop|vir)us$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1i"
 },
 @{
-    @"pattern": @"(ax|test)is$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"(ax|test)is$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1es"
 },
 @{
-    @"pattern": @"([a-z]+)s$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"([a-z]+)s$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1s"
 },
 @{
-    @"pattern": @"([a-z]+)$",
+    @"regex": [NSRegularExpression regularExpressionWithPattern:@"([a-z]+)$" options:NSRegularExpressionCaseInsensitive error:NULL],
     @"replacement": @"$1s"
 }
