@@ -1,8 +1,8 @@
 #import "DBOrderedDictionary.h"
 
 #define AssertPair(key, value) do { \
-    NSAssert(key, @"Tried to insert nil key."); \
-    NSAssert(key, @"Tried to insert nil object."); \
+    NSAssert((key),   @"Tried to insert nil key."); \
+    NSAssert((value), @"Tried to insert nil object."); \
 } while(0)
 
 @implementation DBOrderedDictionary {
