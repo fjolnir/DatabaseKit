@@ -10,7 +10,7 @@
 #ifndef DEFAULT_TIME_SEPARATOR
 #	define DEFAULT_TIME_SEPARATOR ':'
 #endif
-unichar ISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
+unichar DBISO8601DefaultTimeSeparatorCharacter = DEFAULT_TIME_SEPARATOR;
 
 //Unicode date formats.
 #define ISO_CALENDAR_DATE_FORMAT @"yyyy-MM-dd"
@@ -59,8 +59,8 @@ static NSMutableDictionary *timeZonesByOffset;
 		parsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
 		unparsingCalendar = [[self makeCalendarWithDesiredConfiguration] retain];
 
-		format = ISO8601DateFormatCalendar;
-		timeSeparator = ISO8601DefaultTimeSeparatorCharacter;
+		format = DBISO8601DateFormatCalendar;
+		timeSeparator = DBISO8601DefaultTimeSeparatorCharacter;
 		includeTime = NO;
 		parsesStrictly = NO;
 	}
@@ -182,7 +182,7 @@ static BOOL is_leap_year(NSUInteger year);
 	BOOL strict = self.parsesStrictly;
 	unichar timeSep = self.timeSeparator;
 
-	if (strict) timeSep = ISO8601DefaultTimeSeparatorCharacter;
+	if (strict) timeSep = DBISO8601DefaultTimeSeparatorCharacter;
 	NSAssert(timeSep != '\0', @"Time separator must not be NUL.");
 
 	BOOL isValidDate = ([string length] > 0U);
@@ -660,14 +660,14 @@ static BOOL is_leap_year(NSUInteger year);
 
 - (NSString *) stringFromDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone {
 	switch (self.format) {
-		case ISO8601DateFormatCalendar:
+		case DBISO8601DateFormatCalendar:
 			return [self stringFromDate:date formatString:ISO_CALENDAR_DATE_FORMAT timeZone:timeZone];
-		case ISO8601DateFormatWeek:
+		case DBISO8601DateFormatWeek:
 			return [self weekDateStringForDate:date timeZone:timeZone];
-		case ISO8601DateFormatOrdinal:
+		case DBISO8601DateFormatOrdinal:
 			return [self stringFromDate:date formatString:ISO_ORDINAL_DATE_FORMAT timeZone:timeZone];
 		default:
-			[NSException raise:NSInternalInconsistencyException format:@"self.format was %lu, not calendar (%d), week (%d), or ordinal (%d)", (unsigned long)self.format, ISO8601DateFormatCalendar, ISO8601DateFormatWeek, ISO8601DateFormatOrdinal];
+			[NSException raise:NSInternalInconsistencyException format:@"self.format was %lu, not calendar (%d), week (%d), or ordinal (%d)", (unsigned long)self.format, DBISO8601DateFormatCalendar, DBISO8601DateFormatWeek, DBISO8601DateFormatOrdinal];
 			return nil;
 	}
 }
@@ -778,7 +778,7 @@ static BOOL is_leap_year(NSUInteger year);
 	if(includeTime) {
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 		unichar timeSep = self.timeSeparator;
-		if (!timeSep) timeSep = ISO8601DefaultTimeSeparatorCharacter;
+		if (!timeSep) timeSep = DBISO8601DefaultTimeSeparatorCharacter;
 		formatter.dateFormat = [self replaceColonsInString:ISO_TIME_WITH_TIMEZONE_FORMAT withTimeSeparator:timeSep];
 
 		timeString = [formatter stringForObjectValue:date];

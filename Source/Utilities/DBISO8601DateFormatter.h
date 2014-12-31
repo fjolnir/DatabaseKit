@@ -26,14 +26,14 @@
  *Week format is YYYY-Www-D, where ww ranges from 1 to 53 (the 'W' is literal) and D ranges from 1 to 7; for example, 2009-W05-07.
  */
 enum {
-	ISO8601DateFormatCalendar,
-	ISO8601DateFormatOrdinal,
-	ISO8601DateFormatWeek,
+	DBISO8601DateFormatCalendar,
+	DBISO8601DateFormatOrdinal,
+	DBISO8601DateFormatWeek,
 };
-typedef NSUInteger ISO8601DateFormat;
+typedef NSUInteger DBISO8601DateFormat;
 
 //The default separator for time values. Currently, this is ':'.
-extern unichar ISO8601DefaultTimeSeparatorCharacter;
+extern unichar DBISO8601DefaultTimeSeparatorCharacter;
 
 @interface DBISO8601DateFormatter: NSFormatter
 {
@@ -43,7 +43,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 	NSCalendar *parsingCalendar, *unparsingCalendar;
 
 	NSTimeZone *defaultTimeZone;
-	ISO8601DateFormat format;
+	DBISO8601DateFormat format;
 	unichar timeSeparator;
 	BOOL includeTime;
 	BOOL parsesStrictly;
@@ -70,7 +70,7 @@ extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
 #pragma mark Unparsing
 
-@property ISO8601DateFormat format;
+@property DBISO8601DateFormat format;
 @property BOOL includeTime;
 @property unichar timeSeparator;
 
