@@ -177,11 +177,15 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 - (BOOL)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr
 {
     NSParameterAssert(result);
+
     if(result->_query) {
-        CHK(sqlite3_reset(result->_stmt));
-        _cachedStatements[result->_query] = [NSValue valueWithPointer:result->_stmt];
+        if(CHK(sqlite3_reset(result->_stmt)) == SQLITE_OK) {
+            _cachedStatements[result->_query] = [NSValue valueWithPointer:result->_stmt];
+            return YES;
+        } else
+            return NO;
     } else
-        CHK(sqlite3_finalize(result->_stmt));
+        return CHK(sqlite3_finalize(result->_stmt)) == SQLITE_OK;
 }
 
 - (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
