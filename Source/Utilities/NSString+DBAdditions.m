@@ -4,25 +4,31 @@
 @implementation NSString (Inflections)
 - (NSString *)db_pluralizedString
 {
-  NSArray *words = [self componentsSeparatedByString:@" "];
-  NSMutableString *ret = [NSMutableString string];
-  for(NSString *word in words)
-  {
-    [ret appendString:[[DBInflector sharedInflector] pluralizeWord:word]];
-  }
-  
-  return ret;
+    NSArray *words = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([words count] == 1)
+        return [[DBInflector sharedInflector] pluralizeWord:words.firstObject];
+    else {
+        NSMutableString *ret = [NSMutableString string];
+        for(NSString *word in words)
+        {
+            [ret appendString:[[DBInflector sharedInflector] pluralizeWord:word]];
+        }
+        return ret;
+    }
 }
 - (NSString *)db_singularizedString
 {
-  NSArray *words = [self componentsSeparatedByString:@" "];
-  NSMutableString *ret = [NSMutableString string];
-  for(NSString *word in words)
-  {
-    [ret appendString:[[DBInflector sharedInflector] singularizeWord:word]];
-  }
-  
-  return ret;
+    NSArray *words = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([words count] == 1)
+        return [[DBInflector sharedInflector] singularizeWord:words.firstObject];
+    else {
+        NSMutableString *ret = [NSMutableString string];
+        for(NSString *word in words)
+        {
+            [ret appendString:[[DBInflector sharedInflector] singularizeWord:word]];
+        }
+        return ret;
+    }
 }
 
 - (NSString *)db_stringByCapitalizingFirstLetter
