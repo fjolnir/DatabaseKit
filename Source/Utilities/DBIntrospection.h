@@ -20,7 +20,6 @@ typedef struct {
     char encoding[];
 } DBPropertyAttributes;
 
-
 __attribute((overloadable)) SEL DBCapitalizedSelector(NSString *prefix, NSString *key, NSString *suffix);
 __attribute((overloadable)) SEL DBCapitalizedSelector(NSString *prefix, NSString *key);
 
