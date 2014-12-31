@@ -12,8 +12,8 @@
 }
 
 - (NSString *)_sqlRepresentationForQuery:(DBQuery *)query
-                             withParameters:(NSMutableArray *)parameters
-                                     negate:(BOOL)negate
+                          withParameters:(NSMutableArray *)parameters
+                                  negate:(BOOL)negate
 {
     return nil;
 }
@@ -84,7 +84,6 @@
                 [quotedKeyPath insertString:query.table.name atIndex:0];
             }
             return quotedKeyPath;
-            break;
         } case NSConstantValueExpressionType:
             if([self.constantValue isKindOfClass:[NSArray class]]) {
                 NSMutableArray *bindings = [NSMutableArray new];
@@ -97,7 +96,6 @@
                 [parameters addObject:self.constantValue ?: [NSNull null]];
                 return [NSString stringWithFormat:@"$%lu", (unsigned long)(parameters ? [parameters count] : 1)];
             }
-            break;
         default:
             [NSException raise:NSInternalInconsistencyException
                         format:@"Expression '%@' does not support SQL generation", self];
