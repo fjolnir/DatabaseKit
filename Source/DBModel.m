@@ -193,7 +193,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
-- (BOOL)_save:(NSError **)outErr
+- (BOOL)_executePendingQueries:(NSError **)outErr
 {
     NSAssert(_database, @"Tried to save object not in a database");
 

@@ -66,7 +66,7 @@
         if([_dirtyObjects count] > 0)
             return [_connection transaction:^{
                 for(DBModel *obj in [_dirtyObjects copy]) {
-                    if(![obj _save:outErr])
+                    if(![obj _executePendingQueries:outErr])
                         return DBTransactionRollBack;
                 }
                 [_dirtyObjects removeAllObjects];

@@ -7,6 +7,6 @@
 @property(readonly) NSDictionary *pendingQueries;
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
-- (BOOL)_save:(NSError **)outErr;
+- (BOOL)_executePendingQueries:(NSError **)outErr;
 @end
 /*! @endcond */
