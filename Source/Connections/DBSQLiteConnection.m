@@ -131,6 +131,8 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
             continue;
         else if([sub isKindOfClass:[NSString class]])
             CHK(sqlite3_bind_text(queryByteCode, i+1, [sub UTF8String], -1, SQLITE_TRANSIENT));
+        else if([sub isKindOfClass:[NSUUID class]])
+            CHK(sqlite3_bind_text(queryByteCode, i+1, [[sub UUIDString] UTF8String], -1, SQLITE_TRANSIENT));
         else if([sub isKindOfClass:[NSData class]])
             CHK(sqlite3_bind_blob(queryByteCode, i+1, [sub bytes], (int)[sub length], SQLITE_TRANSIENT));
         else if([sub isKindOfClass:[NSNumber class]]) {

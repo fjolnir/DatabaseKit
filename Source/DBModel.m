@@ -109,6 +109,9 @@ NSString * const kDBIdentifierColumn = @"identifier";
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
+            if([columns[i] isEqualToString:kDBIdentifierColumn])
+                value = [[NSUUID alloc] initWithUUIDString:value];
+            
             [self setValue:(value == [NSNull null]) ? nil : value
                     forKey:columns[i]];
         }

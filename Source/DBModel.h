@@ -11,7 +11,7 @@ extern NSString * const kDBIdentifierColumn;
  */
 @interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DB *database;
-@property(readwrite, copy) NSString *identifier;
+@property(readwrite, copy) NSUUID *identifier;
 @property(readonly, getter=isSaved) BOOL saved;
 @property(readonly) BOOL hasChanges;
 
