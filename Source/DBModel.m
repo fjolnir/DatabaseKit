@@ -190,7 +190,11 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key
 {
-    if(!self.saved)
+    SEL selector = DBCapitalizedSelector(@"saveQueryFor", key);
+    if([self respondsToSelector:selector]) {
+        id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
+        return imp(self, selector);
+    } else if(!self.saved)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
