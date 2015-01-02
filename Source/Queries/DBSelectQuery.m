@@ -365,11 +365,11 @@ NSString *const DBUnionAll = @" UNION ALL ";
 @end
 
 @implementation DBQuery (DBSelectQuery)
-- (DBQuery *)select:(NSArray *)columns
+- (DBSelectQuery *)select:(NSArray *)columns
 {
-    DBQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
-                 ? [self copy]
-                 : [self _copyWithSubclass:[DBSelectQuery class]];
+    DBSelectQuery *ret = [self isKindOfClass:[DBSelectQuery class]]
+                       ? [self copy]
+                       : [self _copyWithSubclass:[DBSelectQuery class]];
     ret.columns = columns;
     return ret;
 }
