@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
-extern NSString * const kDBIdentifierColumn;
+extern NSString * const kDBUUIDColumn,
+                * const kDBUUIDKey;
 
 @class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 
@@ -11,7 +12,7 @@ extern NSString * const kDBIdentifierColumn;
  */
 @interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DB *database;
-@property(readwrite, copy) NSUUID *identifier;
+@property(readwrite, copy) NSUUID *UUID;
 @property(readonly, getter=isSaved) BOOL saved;
 @property(readonly) BOOL hasChanges;
 

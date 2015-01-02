@@ -13,7 +13,8 @@
 #import <unistd.h>
 #import <libkern/OSAtomic.h>
 
-NSString * const kDBIdentifierColumn = @"identifier";
+NSString * const kDBUUIDColumn = @"uuid",
+         * const kDBUUIDKey    = @"UUID";
 
 @implementation DBModel {
     DB *_database;
@@ -32,7 +33,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
     NSSet *savedKeys = objc_getAssociatedObject(self, savedKeysKey);
     if(!savedKeys) {
         NSSet *excludedKeys = [self excludedKeys];
-        NSMutableSet *result = [NSMutableSet setWithObject:kDBIdentifierColumn];
+        NSMutableSet *result = [NSMutableSet setWithObject:kDBUUIDKey];
 
         DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
             NSString *key = @(attrs->name);
@@ -109,13 +110,13 @@ NSString * const kDBIdentifierColumn = @"identifier";
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
-            if([columns[i] isEqualToString:kDBIdentifierColumn])
+            if([columns[i] isEqualToString:kDBUUIDColumn])
                 value = [[NSUUID alloc] initWithUUIDString:value];
             
             [self setValue:(value == [NSNull null]) ? nil : value
                     forKey:columns[i]];
         }
-        _savedIdentifier = _identifier;
+        _savedUUID = _UUID;
 
         self.database = aDB;
     }
@@ -135,8 +136,8 @@ NSString * const kDBIdentifierColumn = @"identifier";
     if(database != _database) {
         _database = database;
         if(_database) {
-            if(!_identifier)
-                self.identifier = [[NSUUID UUID] UUIDString];
+            if(!_UUID)
+                self.UUID = [NSUUID UUID];
 
             _pendingQueries = [DBOrderedDictionary new];
             // This is to coerce KVC into calling didChangeValueForKey:
@@ -147,7 +148,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
                       context:NULL];
         } else {
             _pendingQueries = nil;
-            _savedIdentifier = nil;
+            _savedUUID = nil;
             [self removeObserver:self forKeyPath:@"pendingQueries"];
         }
     }
@@ -200,11 +201,19 @@ NSString * const kDBIdentifierColumn = @"identifier";
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
+- (DBWriteQuery *)saveQueryForUUID
+{
+    if(!self.saved)
+        return [self.query insert:@{ kDBUUIDColumn: _UUID }];
+    else
+        return [self.query update:@{ kDBUUIDColumn: _UUID }];
+}
+
 - (BOOL)_executePendingQueries:(NSError **)outErr
 {
     NSAssert(_database, @"Tried to save object not in a database");
 
-    if(!_savedIdentifier) {
+    if(!_savedUUID) {
         for(NSString *key in [[self class] savedKeys]) {
             if(!_pendingQueries[key])
                 _pendingQueries[key] = [self saveQueryForKey:key];
@@ -218,7 +227,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
             return NO;
     }
 
-    _savedIdentifier = self.identifier;
+    _savedUUID = self.UUID;
     [self willChangeValueForKey:@"hasChanges"];
     [_pendingQueries removeAllObjects];
     [self didChangeValueForKey:@"hasChanges"];
@@ -227,7 +236,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (BOOL)isSaved
 {
-    return _savedIdentifier != nil;
+    return _savedUUID != nil;
 }
 - (BOOL)hasChanges
 {
@@ -238,7 +247,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (DBQuery *)query
 {
-    return [_database[[[self class] tableName]] where:@"%K = %@", kDBIdentifierColumn, _savedIdentifier ?: _identifier];
+    return [_database[[[self class] tableName]] where:@"%K = %@", kDBUUIDColumn, _savedUUID ?: _UUID];
 }
 
 #pragma mark -
@@ -270,7 +279,7 @@ NSString * const kDBIdentifierColumn = @"identifier";
 - (NSString *)description
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n",
-                                                                     [self class], self, self.savedIdentifier];
+                                                                     [self class], self, self.savedUUID];
     for(NSString *key in [[self class] savedKeys]) {
         [description appendFormat:@"%@ = %@\n", key, [self valueForKey:key]];
     }
@@ -280,20 +289,20 @@ NSString * const kDBIdentifierColumn = @"identifier";
 
 - (NSUInteger)hash
 {
-    return [_database[[[self class] tableName]] hash] ^ [_identifier hash];
+    return [_database[[[self class] tableName]] hash] ^ [_UUID hash];
 }
 - (BOOL)isEqual:(id)anObject
 {
     return [anObject isMemberOfClass:[self class]]
         && self.database == [anObject database]
-        && [self.identifier isEqual:[anObject identifier]];
+        && [self.UUID isEqual:[anObject UUID]];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
     DBModel *copy = [[self class] new];
     for(NSString *column in [[self class] savedKeys]) {
-        if(![column isEqualToString:kDBIdentifierColumn])
+        if(![column isEqualToString:kDBUUIDColumn])
             [copy setValue:[self valueForKey:column] forKey:column];
     }
     return copy;

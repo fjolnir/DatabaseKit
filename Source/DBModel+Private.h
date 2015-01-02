@@ -3,7 +3,7 @@
 /*! @cond IGNORE */
 @interface DBModel ()
 @property(readwrite, strong) DB *database;
-@property(readwrite, strong) NSUUID *savedIdentifier;
+@property(readwrite, strong) NSUUID *savedUUID;
 @property(readonly) NSDictionary *pendingQueries;
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;

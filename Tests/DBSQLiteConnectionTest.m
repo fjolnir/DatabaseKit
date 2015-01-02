@@ -28,7 +28,7 @@
 {
     // Test if we fetch correct columns
     NSArray *columnsFromDb = [[db.connection columnsForTable:@"foo"] allKeys];
-    NSArray *columnsFixture = @[kDBIdentifierColumn, @"bar", @"baz", @"integer"];
+    NSArray *columnsFixture = @[kDBUUIDColumn, @"bar", @"baz", @"integer"];
     for(NSString *fixture in columnsFixture)
     {
         XCTAssertTrue([columnsFromDb containsObject:fixture],
@@ -42,7 +42,7 @@
     NSArray *result = [[db.connection execute:query substitutions:nil error:NULL] toArray:NULL];
     XCTAssertTrue([result count] == 2, @"foo should have 2 rows");
     NSArray *columns = [result[0] allKeys];
-    NSArray *expectedColumns = @[kDBIdentifierColumn, @"bar", @"baz", @"integer"];
+    NSArray *expectedColumns = @[kDBUUIDColumn, @"bar", @"baz", @"integer"];
     for(NSString *fixture in expectedColumns)
     {
         XCTAssertTrue([columns containsObject:fixture],

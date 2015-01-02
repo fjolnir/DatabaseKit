@@ -35,9 +35,9 @@
 - (void)testDestroy
 {
     TEModel *model = [[db[@"models"] select] firstObject];
-    NSUUID *theId = model.identifier;
+    NSUUID *theId = model.UUID;
     [db removeObject:model];
-    NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBIdentifierColumn, theId] execute:NULL];
+    NSArray *result = [[[db[@"models"] select] where:@"%K = %@", kDBUUIDColumn, theId] execute:NULL];
     XCTAssertEqual([result count], (NSUInteger)0, @"The record wasn't actually deleted result: %@", result);
 }
 
