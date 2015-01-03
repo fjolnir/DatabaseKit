@@ -90,8 +90,10 @@ NSString * const kDBUUIDColumn = @"uuid",
 
 - (instancetype)init
 {
-    if((self = [super init]))
+    if((self = [super init])) {
         _dbLock = OS_SPINLOCK_INIT;
+        self.UUID = [NSUUID UUID];
+    }
     return self;
 }
 
@@ -136,9 +138,6 @@ NSString * const kDBUUIDColumn = @"uuid",
     if(database != _database) {
         _database = database;
         if(_database) {
-            if(!_UUID)
-                self.UUID = [NSUUID UUID];
-
             _pendingQueries = [DBOrderedDictionary new];
             // This is to coerce KVC into calling didChangeValueForKey:
             // We don't actually take any action when pendingQueries changes
