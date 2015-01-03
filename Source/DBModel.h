@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 
-extern NSString * const kDBUUIDColumn,
-                * const kDBUUIDKey;
+extern NSString * const kDBUUIDKey;
 
 @class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 

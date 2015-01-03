@@ -33,7 +33,7 @@
     XCTAssertEqualObjects([[Q(Delete) delete] stringRepresentation], @"DELETE FROM `aTable`", @"");
 
     NSArray *columnDefinitions = @[
-        [DBColumnDefinition columnWithName:kDBUUIDColumn
+        [DBColumnDefinition columnWithName:kDBUUIDKey
                             type:DBTypeText
                      constraints:@[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending autoIncrement:NO onConflict:DBConflictActionFail]]],
         [DBColumnDefinition columnWithName:@"name"
@@ -41,7 +41,7 @@
                      constraints:@[[DBNotNullConstraint new]]]
                          ];
     XCTAssertEqualObjects([[[[[DB new] create] table:@"tbl"] columns:columnDefinitions] stringRepresentation],
-                          @"CREATE TABLE `tbl`(`uuid` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
+                          @"CREATE TABLE `tbl`(`UUID` TEXT PRIMARY KEY ASC ON CONFLICT FAIL, `name` TEXT NOT NULL)", @"");
 
     XCTAssertEqualObjects([Q(DropTable) stringRepresentation], @"DROP TABLE `aTable`");
 

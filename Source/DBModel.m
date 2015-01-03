@@ -13,8 +13,7 @@
 #import <unistd.h>
 #import <libkern/OSAtomic.h>
 
-NSString * const kDBUUIDColumn = @"uuid",
-         * const kDBUUIDKey    = @"UUID";
+NSString * const kDBUUIDKey = @"UUID";
 
 @implementation DBModel {
     DB *_database;
@@ -72,7 +71,7 @@ NSString * const kDBUUIDColumn = @"uuid",
         return nil;
 }
 
-+ (NSArray *)constraintsForIdentifier
++ (NSArray *)constraintsForUUID
 {
     return @[[DBPrimaryKeyConstraint primaryKeyConstraintWithOrder:DBOrderAscending
                                                      autoIncrement:NO
@@ -112,7 +111,7 @@ NSString * const kDBUUIDColumn = @"uuid",
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
-            if([columns[i] isEqualToString:kDBUUIDColumn])
+            if([columns[i] isEqualToString:kDBUUIDKey])
                 value = [[NSUUID alloc] initWithUUIDString:value];
             
             [self setValue:(value == [NSNull null]) ? nil : value
@@ -203,9 +202,9 @@ NSString * const kDBUUIDColumn = @"uuid",
 - (DBWriteQuery *)saveQueryForUUID
 {
     if(!self.saved)
-        return [self.query insert:@{ kDBUUIDColumn: _UUID }];
+        return [self.query insert:@{ kDBUUIDKey: _UUID }];
     else
-        return [self.query update:@{ kDBUUIDColumn: _UUID }];
+        return [self.query update:@{ kDBUUIDKey: _UUID }];
 }
 
 - (BOOL)_executePendingQueries:(NSError **)outErr
@@ -246,7 +245,7 @@ NSString * const kDBUUIDColumn = @"uuid",
 
 - (DBQuery *)query
 {
-    return [_database[[[self class] tableName]] where:@"%K = %@", kDBUUIDColumn, _savedUUID ?: _UUID];
+    return [_database[[[self class] tableName]] where:@"%K = %@", kDBUUIDKey, _savedUUID ?: _UUID];
 }
 
 #pragma mark -
@@ -301,7 +300,7 @@ NSString * const kDBUUIDColumn = @"uuid",
 {
     DBModel *copy = [[self class] new];
     for(NSString *column in [[self class] savedKeys]) {
-        if(![column isEqualToString:kDBUUIDColumn])
+        if(![column isEqualToString:kDBUUIDKey])
             [copy setValue:[self valueForKey:column] forKey:column];
     }
     return copy;
