@@ -62,8 +62,9 @@
         default: break;
     }
 
-    [q appendString:@"INTO "];
+    [q appendString:@"INTO `"];
     [q appendString:_table.name];
+    [q appendString:@"`"];
     if(_columns) {
         [q appendString:@"(\""];
         [q appendString:[_columns componentsJoinedByString:@"\", \""]];
