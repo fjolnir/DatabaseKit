@@ -205,8 +205,6 @@
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 {
     NSMutableString *sql = [NSMutableString stringWithFormat:@"REFERENCES %@(%@)", _tableName, _columnName];
-    if(_deferred)
-        [sql appendString:@" DEFERRABLE INITIALLY DEFERRED"];
     switch(_deleteAction) {
         case DBForeignKeyActionRestrict:
             [sql appendString:@" ON DELETE RESTRICT_"];
@@ -223,6 +221,8 @@
         default:
             break;
     }
+    if(_deferred)
+        [sql appendString:@" DEFERRABLE INITIALLY DEFERRED"];
     return sql;
 }
 @end
