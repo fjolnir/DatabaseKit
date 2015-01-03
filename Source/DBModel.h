@@ -33,14 +33,16 @@ extern NSString * const kDBUUIDColumn,
 
 /*!
  * Returns an array of constraints for a key
- * NOTE: Rather than overriding `constraintsForKey:`
- * you should define a method with a name like: `constraintsForMyKey`;
- * `[kls constraintsForKey:@"myKey"]` will automatically call through to it.
+ * To specify constraints for a key you should 
+ * define a method with a name like: `-constraintsForMyKey`
  */
 + (NSArray *)constraintsForKey:(NSString *)key;
 
 /*!
  * Returns a query to use to save a given key to the database.
+ * To override query generation for a key you should implement
+ * a method named like `-saveQueryForMyKey`
+ * Remember to handle both the insert and update cases.
  */
 - (DBWriteQuery *)saveQueryForKey:(NSString *)key;
 
