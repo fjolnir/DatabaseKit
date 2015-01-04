@@ -105,9 +105,9 @@ NSString * const kDBUUIDKey = @"UUID";
         for(NSUInteger i = 0; i < [columns count]; ++i) {
             id value = [result valueOfColumnAtIndex:i];
             if([value isKindOfClass:[NSData class]]) {
-                DBPropertyAttributes *attrs = DBAttributesForProperty([self class],
-                                                                      class_getProperty([self class], [columns[i] UTF8String]));
-                if(attrs && attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]])
+                DBPropertyAttributes *attrs = DBAttributesForProperty(self.class,
+                                                                      class_getProperty(self.class, [columns[i] UTF8String]));
+                if(attrs && attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]] && [attrs->klass conformsToProtocol:@protocol(NSCoding)])
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
@@ -283,7 +283,7 @@ NSString * const kDBUUIDKey = @"UUID";
 {
     return [anObject isMemberOfClass:self.class]
         && self.database == [anObject database]
-        && [self.UUID isEqual:[anObject UUID]];
+        && [_UUID isEqual:[anObject UUID]];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
