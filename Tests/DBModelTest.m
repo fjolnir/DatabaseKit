@@ -70,6 +70,22 @@
     XCTAssertEqualObjects(site.url, retrievedSite.url);
 }
 
+- (void)testRelationships
+{
+    TEPerson *john = [TEPerson new];
+    john.name = @"John Smith";
+    TEAnimal *fido = [TEAnimal new];
+    fido.name = @"Fido";
+    john.pet = fido;
+    
+    [db registerObject:john];
+    [db registerObject:fido];
+    [db saveObjects:NULL];
+
+    TEPerson *johnFetched = [[db[@"people"] where:@"name=%@", john.name] firstObject];
+    XCTAssertEqualObjects(johnFetched.pet.name, john.pet.name);
+}
+
 @end
 
 @implementation TEModel

@@ -4,8 +4,10 @@
 @property NSString *name, *info;
 @end
 
+@class TEAnimal;
 @interface TEPerson : DBModel
-@property(weak) NSString *userName, *realName;
+@property NSString *name;
+@property TEAnimal *pet;
 @end
 
 @interface TEWebSite : DBModel
@@ -13,5 +15,5 @@
 @end
 
 @interface TEAnimal : DBModel
-@property NSString *species, *nickname;
+@property NSString *species, *name;
 @end
