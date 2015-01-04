@@ -20,7 +20,7 @@
 - (void)testBuilding
 {
     XCTAssertEqualObjects([[[[Q(Select) select] where:@"foo = 1"] order:DBOrderDescending by:@[@"index"]] stringRepresentation],
-                          @"SELECT * FROM `aTable` WHERE aTable.`foo` IS $1 ORDER BY `index` DESC");
+                          @"SELECT * FROM `aTable` WHERE `aTable`.`foo` IS $1 ORDER BY `index` DESC");
     
     NSArray *columns = @[@"a", @"b", @"c"];
     XCTAssertEqualObjects([[Q(Select) select:columns] stringRepresentation],
