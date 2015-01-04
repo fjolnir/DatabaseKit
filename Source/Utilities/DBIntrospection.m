@@ -87,9 +87,9 @@ DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t prope
         .atomic  = atomic,
         .memoryManagementPolicy = memoryManagementPolicy,
         .getter  = getter ?: sel_registerName(property_getName(property)),
-        .setter  = readOnly ? NULL
-                 : setter
-                ?: DBCapitalizedSelector(@"set", @(property_getName(property)), @":")
+        .setter  = readOnly
+                 ? NULL
+                 : setter ?: DBCapitalizedSelector(@"set", @(property_getName(property)), @":")
     };
     if(encodingIdx != -1)
         strncpy(attrs->encoding, rawAttrs[encodingIdx].value, encodingLen);
