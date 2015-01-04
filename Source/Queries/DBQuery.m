@@ -153,7 +153,7 @@ NSString * const DBQueryException = @"DBQueryException";
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    return [self _copyWithSubclass:[self class]];
+    return [self _copyWithSubclass:self.class];
 }
 
 - (id)_copyWithSubclass:(Class)aClass

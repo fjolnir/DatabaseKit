@@ -40,6 +40,6 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p (%@)>", [self class], self, _connectionURL];
+    return [NSString stringWithFormat:@"<%@: %p (%@)>", self.class, self, _connectionURL];
 }
 @end

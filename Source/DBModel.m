@@ -153,7 +153,7 @@ NSString * const kDBUUIDKey = @"UUID";
 
 - (void)didChangeValueForKey:(NSString *)key
 {
-    if(_database && _pendingQueries && [[[self class] savedKeys] containsObject:key]) {
+    if(_database && _pendingQueries && [self.class.savedKeys containsObject:key]) {
         [self willChangeValueForKey:@"hasChanges"];
         _pendingQueries[key] = [self saveQueryForKey:key];
         [self didChangeValueForKey:@"hasChanges"];
@@ -202,7 +202,7 @@ NSString * const kDBUUIDKey = @"UUID";
     NSAssert(_database, @"Tried to save object not in a database");
 
     if(!_savedUUID) {
-        for(NSString *key in [[self class] savedKeys]) {
+        for(NSString *key in [self.class savedKeys]) {
             if(!_pendingQueries[key])
                 _pendingQueries[key] = [self saveQueryForKey:key];
         }
@@ -235,7 +235,7 @@ NSString * const kDBUUIDKey = @"UUID";
 
 - (DBQuery *)query
 {
-    return [_database[[[self class] tableName]] where:@"%K = %@", kDBUUIDKey, _savedUUID ?: _UUID];
+    return [_database[self.class.tableName] where:@"%K = %@", kDBUUIDKey, _savedUUID ?: _UUID];
 }
 
 #pragma mark -
@@ -267,8 +267,8 @@ NSString * const kDBUUIDKey = @"UUID";
 - (NSString *)description
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n",
-                                                                     [self class], self, self.savedUUID];
-    for(NSString *key in [[self class] savedKeys]) {
+                                                                     self.class, self, self.savedUUID];
+    for(NSString *key in self.class.savedKeys) {
         [description appendFormat:@"%@ = %@\n", key, [self valueForKey:key]];
     }
     [description appendString:@"}"];
@@ -277,19 +277,19 @@ NSString * const kDBUUIDKey = @"UUID";
 
 - (NSUInteger)hash
 {
-    return [_database[[[self class] tableName]] hash] ^ [_UUID hash];
+    return [_database[self.class.tableName] hash] ^ [_UUID hash];
 }
 - (BOOL)isEqual:(id)anObject
 {
-    return [anObject isMemberOfClass:[self class]]
+    return [anObject isMemberOfClass:self.class]
         && self.database == [anObject database]
         && [self.UUID isEqual:[anObject UUID]];
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    DBModel *copy = [[self class] new];
-    for(NSString *column in [[self class] savedKeys]) {
+    DBModel *copy = [self.class new];
+    for(NSString *column in self.class.savedKeys) {
         if(![column isEqualToString:kDBUUIDKey])
             [copy setValue:[self valueForKey:column] forKey:column];
     }

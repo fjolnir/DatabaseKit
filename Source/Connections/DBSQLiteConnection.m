@@ -233,7 +233,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
     if([result step:NULL] == DBResultStateNotAtEnd) {
         NSMutableDictionary *columns = [NSMutableDictionary new];
         do {
-            [columns setObject:@([[self class] typeForSql:[result valueOfColumnNamed:@"type"]])
+            [columns setObject:@([self.class typeForSql:[result valueOfColumnNamed:@"type"]])
                         forKey:[result valueOfColumnNamed:@"name"]];
         } while([result step:NULL] == DBResultStateNotAtEnd);
         return columns;

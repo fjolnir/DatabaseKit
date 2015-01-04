@@ -10,7 +10,7 @@
 #define DBNotImplemented() \
     [NSException raise:NSInternalInconsistencyException \
                 format:@"%@ not implemented for %@", \
-                       NSStringFromSelector(_cmd), [self class]];
+                       NSStringFromSelector(_cmd), self.class];
 
 #define DBLog(...) printf("%s(DBKit)[%u] %s: %s\n", [[[NSProcessInfo processInfo] processName] UTF8String], \
     getpid(),\

@@ -59,7 +59,7 @@
 
 - (BOOL)isEqual:(id)object
 {
-    if([object isKindOfClass:[self class]])
+    if([object isKindOfClass:self.class])
         return [_name isEqual:[object name]];
     else
         return NO;

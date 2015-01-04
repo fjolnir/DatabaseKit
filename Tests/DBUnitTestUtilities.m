@@ -7,7 +7,7 @@
 @implementation FixtureGetter
 + (NSString *)fixturesForDatabase:(NSString *)dbName
 {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
     NSString *fileName = [NSString stringWithFormat:@"%@_fixtures", dbName];
     
     return [NSString stringWithContentsOfFile:[bundle pathForResource:fileName ofType:@"sql"]
