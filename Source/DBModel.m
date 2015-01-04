@@ -197,14 +197,6 @@ NSString * const kDBUUIDKey = @"UUID";
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
-- (DBWriteQuery *)saveQueryForUUID
-{
-    if(!self.saved)
-        return [self.query insert:@{ kDBUUIDKey: _UUID }];
-    else
-        return [self.query update:@{ kDBUUIDKey: _UUID }];
-}
-
 - (BOOL)_executePendingQueries:(NSError **)outErr
 {
     NSAssert(_database, @"Tried to save object not in a database");
