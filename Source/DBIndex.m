@@ -38,7 +38,7 @@
     if(_unique)
         [q appendString:@"UNIQUE "];
     [q appendString:@"INDEX IF NOT EXISTS `"];
-    if([_name length] == 0)
+    if(_name.length == 0)
         return NO;
     [q appendString:_name];
     [q appendString:@"` ON `"];

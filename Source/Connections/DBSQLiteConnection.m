@@ -282,7 +282,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
         return NULL;
 
     NSString *tail = [@(tailBuf) stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if(aoTail && [tail length] > 0)
+    if(aoTail && tail.length > 0)
         *aoTail = tail;
 
     return stmt;
@@ -435,7 +435,7 @@ retry:
             break;
         case SQLITE_BLOB:
             declType = sqlite3_column_decltype(_stmt, (int)idx);
-            if(declType && strncmp("UUID_BLOB", declType, 9) == 0) {
+            if(declType && strncmp([[_connection.class sqlForType:DBTypeUUID] UTF8String], declType, 9) == 0) {
                 NSAssert(sqlite3_column_bytes(_stmt, (int)idx) == sizeof(uuid_t),
                          @"UUID column value was of an invalid length!");
                 return [[NSUUID alloc] initWithUUIDBytes:sqlite3_column_blob(_stmt, (int)idx)];
@@ -448,7 +448,7 @@ retry:
             break;
         case SQLITE_TEXT:
             declType = sqlite3_column_decltype(_stmt, (int)idx);
-            if(declType && strncmp("date", declType, 4) == 0)
+            if(declType && strncmp([[_connection.class sqlForType:DBTypeDate] UTF8String], declType, 4) == 0)
                 return [dateFormatter dateFromString:@((char *)sqlite3_column_text(_stmt, (int)idx))];
             else
                 return @((char *)sqlite3_column_text(_stmt, (int)idx));

@@ -78,7 +78,7 @@
             NSMutableString *quotedKeyPath = [NSMutableString stringWithFormat:@"`%@`", self.keyPath];
             [quotedKeyPath replaceOccurrencesOfString:@"." withString:@"`.`"
                                               options:0
-                                                range:(NSRange) { 0, [quotedKeyPath length] }];
+                                                range:(NSRange) { 0, quotedKeyPath.length }];
             if(query.table && [self.keyPath rangeOfString:@"."].location == NSNotFound) {
                 [quotedKeyPath insertString:@"`." atIndex:0];
                 [quotedKeyPath insertString:query.table.name atIndex:0];
@@ -181,9 +181,9 @@
 
                 if([table typeOfColumn:column] == DBTypeText) {
                     NSString * const prefix      = self.rightExpression.constantValue;
-                    unichar const incremented    = [prefix characterAtIndex:[prefix length] - 1] + 1;
+                    unichar const incremented    = [prefix characterAtIndex:prefix.length - 1] + 1;
                     NSString * const upperBounds = [prefix
-                                                    stringByReplacingCharactersInRange:(NSRange) { [prefix length] - 1, 1 }
+                                                    stringByReplacingCharactersInRange:(NSRange) { prefix.length - 1, 1 }
                                                     withString:[NSString stringWithCharacters:&incremented length:1]];
                     NSString * const left  = [self.leftExpression _sqlRepresentationForQuery:query withParameters:parameters],
                              * const right = [self.rightExpression _sqlRepresentationForQuery:query withParameters:parameters],

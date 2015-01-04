@@ -60,7 +60,7 @@ static DBInflector *sharedInstance = nil;
     for(NSDictionary *inflection in self.plurals) {
         NSString *transformed = [inflection[@"regex"] stringByReplacingMatchesInString:word
                                                                                options:0
-                                                                                 range:(NSRange) { 0, [word length] }
+                                                                                 range:(NSRange) { 0, word.length }
                                                                           withTemplate:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             pluralized = transformed;
@@ -94,7 +94,7 @@ done:
     for(NSDictionary *inflection in self.singulars) {
         NSString *transformed = [inflection[@"regex"] stringByReplacingMatchesInString:word
                                                                                options:0
-                                                                                 range:(NSRange) { 0, [word length] }
+                                                                                 range:(NSRange) { 0, word.length }
                                                                           withTemplate:inflection[@"replacement"]];
         if(![transformed isEqualToString:word]) {
             singularized = transformed;
