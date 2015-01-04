@@ -8,6 +8,7 @@
 #import "DBDropTableQuery.h"
 #import "NSString+DBAdditions.h"
 #import "DBIntrospection.h"
+#import "DBUtilities.h"
 
 @interface DBTable ()
 @property(readwrite, strong) NSString *name;
@@ -25,6 +26,8 @@
     DBTable *ret = [self new];
     ret.database = database;
     ret.name     = name;
+    if([name rangeOfString:@"."].location != NSNotFound)
+        DBDebugLog(@"WARNING: table '%@'s name contains a period, this conflicts with KVC, and will likely cause issues", name);
 
     NSString *className = [[name db_singularizedString] db_stringByCapitalizingFirstLetter];
     NSArray *modelClasses = DBClassesInheritingFrom([DBModel class]);
