@@ -22,6 +22,32 @@ NSString * const kDBUUIDKey = @"UUID";
 }
 @dynamic saved, hasChanges;
 
++ (void)initialize
+{
+    if([NSStringFromClass(self) hasPrefix:@"NSKVONotifying"])
+        return; // TODO: Find a better way of handling this.
+    
+    for(NSString *key in [self savedKeys]) {
+        DBPropertyAttributes *attrs = DBAttributesForProperty(self, class_getProperty(self, [key UTF8String]));
+        if([attrs->klass isSubclassOfClass:[DBModel class]]) {
+            Method getter = class_getInstanceMethod(self, attrs->getter);
+            method_setImplementation(getter, imp_implementationWithBlock(^(DBModel *obj) {
+                DBModel *value = object_getIvar(obj, attrs->ivar);
+                if(!value) {
+                    NSString *joinTableName = [self joinTableNameForKey:key];
+                    DBSelectQuery *q = [[obj.database[[attrs->klass tableName]]
+                                         select:@[[NSString stringWithFormat:@"`%@`.*", attrs->klass.tableName]]]
+                                        innerJoin:obj.database[joinTableName] on:@"%K.%K=%@", joinTableName, [obj.class.tableName db_singularizedString], obj.UUID];
+                    value = [q firstObject];
+                    object_setIvar(obj, attrs->ivar, value);
+                }
+                return value;
+            }));
+        } else
+            free(attrs);
+    }
+}
+
 + (NSSet *)savedKeys
 {
     static void *savedKeysKey = &savedKeysKey;
@@ -39,7 +65,10 @@ NSString * const kDBUUIDKey = @"UUID";
             if(!attrs->dynamic &&
                ![DBModel instancesRespondToSelector:attrs->getter] &&
                ![excludedKeys containsObject:key] &&
-               (attrs->encoding[0] != _C_ID || [attrs->klass conformsToProtocol:@protocol(NSCoding)]))
+               (attrs->encoding[0] != _C_ID
+                || [attrs->klass isSubclassOfClass:[DBModel class]]
+                || [attrs->klass conformsToProtocol:@protocol(NSCoding)]
+               ))
                 [result addObject:key];
         });
         savedKeys = result;
@@ -53,6 +82,11 @@ NSString * const kDBUUIDKey = @"UUID";
 + (NSSet *)excludedKeys
 {
     return nil;
+}
+
++ (NSString *)joinTableNameForKey:(NSString *)key
+{
+    return [NSString stringWithFormat:@"%@-%@", [self tableName], key];
 }
 
 + (NSArray *)indices
@@ -191,6 +225,23 @@ NSString * const kDBUUIDKey = @"UUID";
     if([self respondsToSelector:selector]) {
         id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
         return imp(self, selector);
+    }
+    else if(![self.database[self.class.tableName].columns containsObject:key]) {
+        DBPropertyAttributes *attrs = DBAttributesForProperty(self.class, class_getProperty(self.class, [key UTF8String]));
+        Class relatedClass = attrs->klass;
+        free(attrs);
+        if(![relatedClass isSubclassOfClass:[DBModel class]])
+            return nil;
+
+        DBModel *relatedObject = [self valueForKey:key];
+        if(relatedObject)
+            return [[self.database[[self.class joinTableNameForKey:key]] insert:@{
+                [self.class.tableName db_singularizedString]: _UUID,
+                key: relatedObject.UUID
+                }] or:DBInsertFallbackReplace];
+        else
+            return [[self.database[[self.class joinTableNameForKey:key]] delete]
+                    where:@"%K=%@", [self.class.tableName db_singularizedString], _UUID];
     } else if(!self.saved)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else
