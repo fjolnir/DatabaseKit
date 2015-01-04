@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C706E67A1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
+		C706E67B1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
+		C706E67C1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
+		C706E67D1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C706E6791A595ECA006CC1FB /* DBPointerCollectionAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C706E67E1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C706E6791A595ECA006CC1FB /* DBPointerCollectionAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C706E67F1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C706E6791A595ECA006CC1FB /* DBPointerCollectionAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C753CABC1A0F4EC1000149A7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CABB1A0F4EC1000149A7 /* libsqlite3.dylib */; };
 		C753CABE1A0F4ECF000149A7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CABD1A0F4ECF000149A7 /* libsqlite3.dylib */; };
 		C753CAC01A0F4EDE000149A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C753CABF1A0F4EDE000149A7 /* Foundation.framework */; };
@@ -208,6 +214,8 @@
 /* Begin PBXFileReference section */
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPointerCollectionAdditions.h; sourceTree = "<group>"; };
+		C706E6791A595ECA006CC1FB /* DBPointerCollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPointerCollectionAdditions.m; sourceTree = "<group>"; };
 		C753CABB1A0F4EC1000149A7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		C753CABD1A0F4ECF000149A7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C753CABF1A0F4EDE000149A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -476,6 +484,8 @@
 				C7D839921A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m */,
 				C7D876D71A3EA55D00A490E0 /* DBIntrospection.h */,
 				C7D876D31A3EA54E00A490E0 /* DBIntrospection.m */,
+				C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */,
+				C706E6791A595ECA006CC1FB /* DBPointerCollectionAdditions.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -528,6 +538,7 @@
 				C7D876901A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876A51A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876B11A3E67E300A490E0 /* DBUtilities.h in Headers */,
+				C706E67A1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */,
 				C7D839931A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876AB1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D876B41A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
@@ -565,6 +576,7 @@
 				C7D876A71A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876AD1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D839951A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
+				C706E67C1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */,
 				C7D876B31A3E67E300A490E0 /* DBUtilities.h in Headers */,
 				C7D876921A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876B61A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
@@ -602,6 +614,7 @@
 				C7D876A61A3E67E300A490E0 /* DBISO8601DateFormatter.h in Headers */,
 				C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
+				C706E67B1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */,
 				C7D876911A3E67E300A490E0 /* DBInflector.h in Headers */,
 				C7D876B51A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
 				C7D876B21A3E67E300A490E0 /* DBUtilities.h in Headers */,
@@ -761,6 +774,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C706E67D1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876931A3E67E300A490E0 /* DBInflector.m in Sources */,
 				C7D876A81A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839961A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,
@@ -804,6 +818,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C706E67F1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876951A3E67E300A490E0 /* DBInflector.m in Sources */,
 				C7D876AA1A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839981A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,
@@ -835,6 +850,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C706E67E1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876941A3E67E300A490E0 /* DBInflector.m in Sources */,
 				C7D876A91A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839971A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,

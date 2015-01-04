@@ -178,9 +178,9 @@ static NSMutableArray *_ConnectionClasses;
 
 + (DBType)typeForClass:(Class)klass
 {
-    if([klass isSubclassOfClass:[NSData class]])
+    if([klass isSubclassOfClass:[NSData class]] || [klass isSubclassOfClass:[NSUUID class]])
         return DBTypeBlob;
-    else if([klass isSubclassOfClass:[NSString class]] || [klass isSubclassOfClass:[NSUUID class]])
+    else if([klass isSubclassOfClass:[NSString class]])
         return DBTypeText;
     else if([klass isSubclassOfClass:[NSNumber class]])
         return DBTypeReal;
