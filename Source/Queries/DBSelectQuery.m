@@ -292,7 +292,8 @@ NSString *const DBUnionAll = @" UNION ALL ";
     DBResult *result = [connection execute:query substitutions:params error:outErr];
 
     BOOL const selectingEntireTable = self.columns == nil
-                                   || [self.columns isEqual:@[[self.table.name stringByAppendingString:@".*"]]];
+                                   || [self.columns isEqual:@[[NSString stringWithFormat:@"%@.*", self.table.name]]]
+                                   || [self.columns isEqual:@[[NSString stringWithFormat:@"`%@`.*", self.table.name]]];
     Class modelClass = self.table.modelClass;
     if(selectingEntireTable && modelClass) {
         NSMutableArray *objects = [NSMutableArray new];
