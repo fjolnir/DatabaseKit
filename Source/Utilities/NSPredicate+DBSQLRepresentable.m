@@ -80,8 +80,9 @@
                                               options:0
                                                 range:(NSRange) { 0, [quotedKeyPath length] }];
             if(query.table && [self.keyPath rangeOfString:@"."].location == NSNotFound) {
-                [quotedKeyPath insertString:@"." atIndex:0];
+                [quotedKeyPath insertString:@"`." atIndex:0];
                 [quotedKeyPath insertString:query.table.name atIndex:0];
+                [quotedKeyPath insertString:@"`" atIndex:0];
             }
             return quotedKeyPath;
         } case NSConstantValueExpressionType:

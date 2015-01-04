@@ -2,6 +2,6 @@
 #import <DatabaseKit/DBSQLRepresentable.h>
 
 /*! @cond IGNORE */
-@interface NSPredicate (DBSQLRepresentable)  <DBSQLRepresentable>
+@interface NSPredicate (DBSQLRepresentable) <DBSQLRepresentable>
 @end
 /*! @endcond */
