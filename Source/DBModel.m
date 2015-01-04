@@ -111,9 +111,7 @@ NSString * const kDBUUIDKey = @"UUID";
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
-            if([columns[i] isEqualToString:kDBUUIDKey])
-                value = [[NSUUID alloc] initWithUUIDString:value];
-            
+
             [self setValue:(value == [NSNull null]) ? nil : value
                     forKey:columns[i]];
         }

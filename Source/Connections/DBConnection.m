@@ -130,6 +130,8 @@ static NSMutableArray *_ConnectionClasses;
             return @"BLOB";
         case DBTypeDate:
             return @"DATE";
+        case DBTypeUUID:
+            return @"UUID_BLOB";
         default:
             return nil;
     }
@@ -178,7 +180,9 @@ static NSMutableArray *_ConnectionClasses;
 
 + (DBType)typeForClass:(Class)klass
 {
-    if([klass isSubclassOfClass:[NSData class]] || [klass isSubclassOfClass:[NSUUID class]])
+    if([klass isSubclassOfClass:[NSUUID class]])
+        return DBTypeUUID;
+    if([klass isSubclassOfClass:[NSData class]])
         return DBTypeBlob;
     else if([klass isSubclassOfClass:[NSString class]])
         return DBTypeText;

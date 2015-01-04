@@ -424,6 +424,7 @@ retry:
     });
 
     int columnType = sqlite3_column_type(_stmt, (int)idx);
+    const char *declType;
     switch(columnType)
     {
         case SQLITE_INTEGER:
@@ -433,20 +434,26 @@ retry:
             return @(sqlite3_column_double(_stmt, (int)idx));
             break;
         case SQLITE_BLOB:
-            return [NSData dataWithBytes:sqlite3_column_blob(_stmt, (int)idx)
-                                  length:sqlite3_column_bytes(_stmt, (int)idx)];
+            declType = sqlite3_column_decltype(_stmt, (int)idx);
+            if(declType && strncmp("UUID_BLOB", declType, 9) == 0) {
+                NSAssert(sqlite3_column_bytes(_stmt, (int)idx) == sizeof(uuid_t),
+                         @"UUID column value was of an invalid length!");
+                return [[NSUUID alloc] initWithUUIDBytes:sqlite3_column_blob(_stmt, (int)idx)];
+            } else
+                return [NSData dataWithBytes:sqlite3_column_blob(_stmt, (int)idx)
+                                      length:sqlite3_column_bytes(_stmt, (int)idx)];
             break;
         case SQLITE_NULL:
             return [NSNull null];
             break;
-        case SQLITE_TEXT: {
-            const char *declType = sqlite3_column_decltype(_stmt, (int)idx);
+        case SQLITE_TEXT:
+            declType = sqlite3_column_decltype(_stmt, (int)idx);
             if(declType && strncmp("date", declType, 4) == 0)
                 return [dateFormatter dateFromString:@((char *)sqlite3_column_text(_stmt, (int)idx))];
             else
                 return @((char *)sqlite3_column_text(_stmt, (int)idx));
             break;
-        } default:
+        default:
             // It really shouldn't ever come to this.
             break;
     }
