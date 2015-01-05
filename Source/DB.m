@@ -74,7 +74,7 @@
             for(DBModel *obj in frozenDirtyObjects) {
                 if(![obj _executePendingQueries:outErr]) {
                     OSSpinLockLock(&_dirtyObjectLock);
-                    [_dirtyObjects setSet:frozenDirtyObjects];
+                    [_dirtyObjects unionSet:frozenDirtyObjects];
                     OSSpinLockUnlock(&_dirtyObjectLock);
                     return DBTransactionRollBack;
                 }
