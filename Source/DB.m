@@ -10,7 +10,7 @@
     DBConnection *_connection;
     NSMutableSet *_dirtyObjects;
     NSMutableDictionary *_tables;
-    OSSpinLock _tableLock;
+    OSSpinLock _tableLock, _dirtyObjectLock;
 }
 
 + (DB *)withURL:(NSURL *)URL
@@ -25,8 +25,10 @@
 
 - (instancetype)init
 {
-    if((self = [super init]))
-        _tableLock = OS_SPINLOCK_INIT;
+    if((self = [super init])) {
+        _tableLock       = OS_SPINLOCK_INIT;
+        _dirtyObjectLock = OS_SPINLOCK_INIT;
+    }
     return self;
 }
 - (instancetype)initWithConnection:(DBConnection *)aConnection
@@ -62,18 +64,27 @@
 
 - (BOOL)saveObjects:(NSError **)outErr
 {
-    @synchronized(_dirtyObjects) {
-        if([_dirtyObjects count] > 0)
-            return [_connection transaction:^{
-                for(DBModel *obj in [_dirtyObjects copy]) {
-                    if(![obj _executePendingQueries:outErr])
-                        return DBTransactionRollBack;
+    OSSpinLockLock(&_dirtyObjectLock);
+    if(_dirtyObjects.count > 0) {
+        NSSet *frozenDirtyObjects = [_dirtyObjects copy];
+        [_dirtyObjects removeAllObjects];
+        OSSpinLockUnlock(&_dirtyObjectLock);
+
+        return [_connection transaction:^{
+            for(DBModel *obj in frozenDirtyObjects) {
+                if(![obj _executePendingQueries:outErr]) {
+                    OSSpinLockLock(&_dirtyObjectLock);
+                    [_dirtyObjects setSet:frozenDirtyObjects];
+                    OSSpinLockUnlock(&_dirtyObjectLock);
+                    return DBTransactionRollBack;
                 }
-                [_dirtyObjects removeAllObjects];
-                return DBTransactionCommit;
-            }];
-        else
-            return NO;
+            }
+            return DBTransactionCommit;
+        }];
+    }
+    else {
+        OSSpinLockUnlock(&_dirtyObjectLock);
+        return NO;
     }
 }
 
@@ -96,12 +107,12 @@
 - (void)registerDirtyObject:(DBModel *)obj
 {
     NSParameterAssert(obj);
-    @synchronized(_dirtyObjects) {
-        if(![_dirtyObjects containsObject:obj]) {
-            [_dirtyObjects addObject:obj];
-            [obj addObserver:self forKeyPath:@"hasChanges" options:0 context:NULL];
-        }
+    OSSpinLockLock(&_dirtyObjectLock);
+    if(![_dirtyObjects containsObject:obj]) {
+        [_dirtyObjects addObject:obj];
+        [obj addObserver:self forKeyPath:@"hasChanges" options:0 context:NULL];
     }
+    OSSpinLockUnlock(&_dirtyObjectLock);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
