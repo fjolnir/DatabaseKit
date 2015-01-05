@@ -40,7 +40,7 @@
 {
     NSString *query = @"SELECT * FROM foo";
     NSArray *result = [[db.connection execute:query substitutions:nil error:NULL] toArray:NULL];
-    XCTAssertTrue([result count] == 2, @"foo should have 2 rows");
+    XCTAssertTrue(result.count == 2, @"foo should have 2 rows");
     NSArray *columns = [result[0] allKeys];
     NSArray *expectedColumns = @[kDBUUIDKey, @"bar", @"baz", @"integer"];
     for(NSString *fixture in expectedColumns)
@@ -49,7 +49,7 @@
                      @"Columns didn't contain: %@", fixture);
     }
 
-    XCTAssertEqual([db[@"foo"] count], 2, @"Fast enumeration did not evaluate the correct amount of times");
+    XCTAssertEqual(db[@"foo"].count, 2, @"Fast enumeration did not evaluate the correct amount of times");
 }
 
 @end

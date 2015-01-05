@@ -45,7 +45,7 @@
 
 - (NSUInteger)count
 {
-    return [_keys count];
+    return _keys.count;
 }
 
 - (id)objectForKey:(id<NSCopying>)aKey

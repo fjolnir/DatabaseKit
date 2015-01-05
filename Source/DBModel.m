@@ -26,8 +26,8 @@ NSString * const kDBUUIDKey = @"UUID";
 {
     if([NSStringFromClass(self) hasPrefix:@"NSKVONotifying"])
         return; // TODO: Find a better way of handling this.
-    
-    for(NSString *key in [self savedKeys]) {
+
+    for(NSString *key in self.savedKeys) {
         DBPropertyAttributes *attrs = DBAttributesForProperty(self, class_getProperty(self, [key UTF8String]));
         if([attrs->klass isSubclassOfClass:[DBModel class]]) {
             Method getter = class_getInstanceMethod(self, attrs->getter);
@@ -74,7 +74,7 @@ NSString * const kDBUUIDKey = @"UUID";
         savedKeys = result;
         objc_setAssociatedObject(self, savedKeysKey, result, OBJC_ASSOCIATION_RETAIN);
     }
-    return [savedKeys count] > 0
+    return savedKeys.count > 0
          ? savedKeys
          : nil;
 }
@@ -136,7 +136,7 @@ NSString * const kDBUUIDKey = @"UUID";
 
     if((self = [self init])) {
         NSArray *columns = result.columns;
-        for(NSUInteger i = 0; i < [columns count]; ++i) {
+        for(NSUInteger i = 0; i < columns.count; ++i) {
             id value = [result valueOfColumnAtIndex:i];
             if([value isKindOfClass:[NSData class]]) {
                 DBPropertyAttributes *attrs = DBAttributesForProperty(self.class,

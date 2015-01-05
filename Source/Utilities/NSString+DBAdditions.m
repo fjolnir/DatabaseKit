@@ -5,7 +5,7 @@
 - (NSString *)db_pluralizedString
 {
     NSArray *words = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if([words count] == 1)
+    if(words.count == 1)
         return [[DBInflector sharedInflector] pluralizeWord:words.firstObject];
     else {
         NSMutableString *ret = [NSMutableString string];
@@ -19,7 +19,7 @@
 - (NSString *)db_singularizedString
 {
     NSArray *words = [self componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if([words count] == 1)
+    if(words.count == 1)
         return [[DBInflector sharedInflector] singularizeWord:words.firstObject];
     else {
         NSMutableString *ret = [NSMutableString string];

@@ -23,7 +23,7 @@
     if(!self.table)
         return NO;
 
-    if([_columnsToAppend count] == 0 && !_nameToRenameTo)
+    if(_columnsToAppend.count == 0 && !_nameToRenameTo)
         return NO;
 
     [q appendString:@"ALTER TABLE `"];
@@ -36,7 +36,7 @@
         [q appendString:@"`"];
     }
 
-    for(NSUInteger i = 0; i < [_columnsToAppend count]; ++i) {
+    for(NSUInteger i = 0; i < _columnsToAppend.count; ++i) {
         if(i > 0)
             [q appendString:@", "];
         [q appendString:@" ADD COLUMN "];

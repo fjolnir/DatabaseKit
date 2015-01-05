@@ -45,7 +45,7 @@
     [q appendString:table.name];
     [q appendString:@"` (`"];
     
-    if([_columns count] == 0)
+    if(_columns.count == 0)
         return NO;
     [q appendString:[_columns componentsJoinedByString:@"`, `"]];
     [q appendString:@"`)"];

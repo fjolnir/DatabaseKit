@@ -32,7 +32,7 @@ NSArray *DBClassesInheritingFrom(Class superclass)
         if(kls)
             [classes addObject:allClasses[i]];
     }
-    return [classes count] > 0
+    return classes.count > 0
          ? classes
          : nil;
 }

@@ -49,7 +49,7 @@
     
     if(_columns) {
         [q appendString:@"("];
-        for(NSUInteger i = 0; i < [_columns count]; ++i) {
+        for(NSUInteger i = 0; i < _columns.count; ++i) {
             if(i > 0)
                 [q appendString:@", "];
             [q appendString:[_columns[i] sqlRepresentationForQuery:self withParameters:p]];

@@ -42,7 +42,7 @@
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
     NSParameterAssert(q && p);
-    NSAssert(_sourceQuery || ([self.columns count] == [self.values count]),
+    NSAssert(_sourceQuery || self.columns.count == self.values.count,
              @"Field/value count does not match");
     [q appendString:@"INSERT "];
 
@@ -82,7 +82,7 @@
                 [q appendString:@", "];
 
             [p addObject:value ?: [NSNull null]];
-            [q appendFormat:@"$%lu", (unsigned long)[p count]];
+            [q appendFormat:@"$%lu", (unsigned long)p.count];
         }
         [q appendString:@")"];
     }
@@ -110,14 +110,14 @@
 
 - (BOOL)_generateString:(NSMutableString *)q parameters:(NSMutableArray *)p
 {
-    NSAssert([self.columns count] == [self.values count],
+    NSAssert(self.columns.count == self.values.count,
              @"Field/value count does not match");
 
     [q appendString:@"UPDATE `"];
     [q appendString:_table.name];
     [q appendString:@"` SET `"];
 
-    for(NSUInteger i = 0; i < [_columns count]; ++i) {
+    for(NSUInteger i = 0; i < _columns.count; ++i) {
         if(__builtin_expect(i > 0, 1))
             [q appendString:@", `"];
         [q appendString:_columns[i]];

@@ -89,13 +89,13 @@
             if([self.constantValue isKindOfClass:[NSArray class]]) {
                 NSMutableArray *bindings = [NSMutableArray new];
                 for(NSUInteger i = 1; i <= [self.constantValue count]; ++i) {
-                    [bindings addObject:[NSString stringWithFormat:@"$%lu", (unsigned long)(i + [parameters count])]];
+                    [bindings addObject:[NSString stringWithFormat:@"$%lu", (unsigned long)(i + parameters.count)]];
                 }
                 [parameters addObjectsFromArray:self.constantValue];
                 return [bindings componentsJoinedByString:@", "];
             } else {
                 [parameters addObject:self.constantValue ?: [NSNull null]];
-                return [NSString stringWithFormat:@"$%lu", (unsigned long)(parameters ? [parameters count] : 1)];
+                return [NSString stringWithFormat:@"$%lu", (unsigned long)(parameters ? parameters.count : 1)];
             }
         default:
             [NSException raise:NSInternalInconsistencyException

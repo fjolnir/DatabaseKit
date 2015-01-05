@@ -313,7 +313,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 
 - (BOOL)rollBack:(NSError **)outErr
 {
-    NSAssert([_savePointStack count] > 0, @"Not in a transaction");
+    NSAssert(_savePointStack.count > 0, @"Not in a transaction");
     char *errorMessage;
     int err = sqlite3_exec(_handle,
                            [[NSString stringWithFormat:@"ROLLBACK TO SAVEPOINT '%@'", [_savePointStack lastObject]] UTF8String],
@@ -329,7 +329,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 }
 - (BOOL)endTransaction:(NSError **)outErr
 {
-    NSAssert([_savePointStack count] > 0, @"Not in a transaction");
+    NSAssert(_savePointStack.count > 0, @"Not in a transaction");
     char *errorMessage;
     int err = sqlite3_exec(_handle,
                            [[NSString stringWithFormat:@"RELEASE SAVEPOINT '%@'", [_savePointStack lastObject]] UTF8String],

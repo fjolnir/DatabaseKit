@@ -44,7 +44,7 @@
     NSArray *sortedConstraints = [_constraints sortedArrayUsingComparator:^(DBConstraint *a, DBConstraint *b) {
         return [@([[a class] priority]) compare:@([[b class] priority])];
     }];
-    for(NSUInteger i = 0; i < [sortedConstraints count]; ++i) {
+    for(NSUInteger i = 0; i < sortedConstraints.count; ++i) {
         if(i > 0)
             [sql appendString:@" "];
         [sql appendString:[sortedConstraints[i] sqlRepresentationForQuery:query withParameters:parameters]];

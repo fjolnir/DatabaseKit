@@ -12,13 +12,13 @@ NSString * const DBQueryException = @"DBQueryException";
 
 + (NSArray *)combineQueries:(NSArray *)aQueries
 {
-    if([aQueries count] <= 1)
+    if(aQueries.count <= 1)
         return aQueries;
 
     NSMutableArray * const result = [aQueries mutableCopy];
 
     NSUInteger leftIdx = 0;
-    while(leftIdx < [result count]) {
+    while(leftIdx < result.count) {
         DBQuery * const leftQuery = result[leftIdx];
         NSUInteger const rightIdx = [result indexOfObjectPassingTest:^BOOL(DBQuery *query, NSUInteger idx, BOOL *stop) {
             return idx > leftIdx && [leftQuery canCombineWithQuery:query];
@@ -117,7 +117,7 @@ NSString * const DBQueryException = @"DBQueryException";
         [params addObject:param];
 
     if(addToken)
-        [query appendFormat:@"$%ld", (unsigned long)[params count]];
+        [query appendFormat:@"$%ld", (unsigned long)params.count];
     
     return YES;
 }
@@ -241,7 +241,7 @@ NSString * const DBQueryException = @"DBQueryException";
 
 - (BOOL)executeWriteQueriesInTransaction:(NSArray *)queries error:(NSError **)outErr
 {
-    switch([queries count]) {
+    switch(queries.count) {
         case 0:
             return NO;
         case 1:
