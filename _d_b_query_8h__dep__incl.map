@@ -1,0 +1,7 @@
+<map id="Source/Queries/DBQuery.h" name="Source/Queries/DBQuery.h">
+<area shape="rect" id="node2" href="$_d_b_postgres_connection_8m.html" title="Source/Connections\l/DBPostgresConnection.m" alt="" coords="5,81,186,125"/>
+<area shape="rect" id="node3" href="$_d_b_s_q_lite_connection_8m.html" title="Source/Connections\l/DBSQLiteConnection.m" alt="" coords="210,81,379,125"/>
+<area shape="rect" id="node4" href="$_d_b_column_definition_8m.html" title="Source/DBColumnDefinition.m" alt="" coords="403,89,607,117"/>
+<area shape="rect" id="node5" href="$_d_b_model_8m.html" title="Source/DBModel.m" alt="" coords="632,89,771,117"/>
+<area shape="rect" id="node6" href="$_n_s_predicate_09_d_b_s_q_l_representable_8m.html" title="Source/Utilities/NSPredicate\l+DBSQLRepresentable.m" alt="" coords="795,81,986,125"/>
+</map>

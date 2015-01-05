@@ -1,0 +1,8 @@
+<map id="Source/Queries/DBSelectQuery.h" name="Source/Queries/DBSelectQuery.h">
+<area shape="rect" id="node2" href="$_d_b_09_migrations_8m.html" title="Source/DB+Migrations.m" alt="" coords="5,89,178,117"/>
+<area shape="rect" id="node3" href="$_d_b_model_8m.html" title="Source/DBModel.m" alt="" coords="202,89,341,117"/>
+<area shape="rect" id="node4" href="$_d_b_table_8m.html" title="Source/DBTable.m" alt="" coords="365,89,498,117"/>
+<area shape="rect" id="node5" href="$_d_b_create_table_query_8m.html" title="Source/Queries/DBCreateTable\lQuery.m" alt="" coords="522,81,730,125"/>
+<area shape="rect" id="node6" href="$_d_b_insert_query_8m.html" title="Source/Queries/DBInsertQuery.m" alt="" coords="753,89,974,117"/>
+<area shape="rect" id="node7" href="$_d_b_select_query_8m.html" title="Source/Queries/DBSelectQuery.m" alt="" coords="998,89,1222,117"/>
+</map>

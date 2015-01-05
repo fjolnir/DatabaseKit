@@ -1,0 +1,4 @@
+<map id="DBConnection" name="DBConnection">
+<area shape="rect" id="node3" href="$interface_d_b_postgres_connection.html" title="DBPostgresConnection" alt="" coords="5,157,167,185"/>
+<area shape="rect" id="node4" href="$interface_d_b_s_q_lite_connection.html" title="DBSQLiteConnection" alt="" coords="190,157,339,185"/>
+</map>

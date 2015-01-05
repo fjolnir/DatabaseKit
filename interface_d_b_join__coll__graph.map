@@ -1,0 +1,5 @@
+<map id="DBJoin" name="DBJoin">
+<area shape="rect" id="node3" href="$interface_d_b_table.html" title="DBTable" alt="" coords="46,266,117,294"/>
+<area shape="rect" id="node4" href="$interface_d_b.html" title="DB" alt="" coords="96,174,136,202"/>
+<area shape="rect" id="node5" href="$interface_d_b_connection.html" title="DBConnection" alt="" coords="147,83,256,110"/>
+</map>

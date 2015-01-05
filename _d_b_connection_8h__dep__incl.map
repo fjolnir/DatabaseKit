@@ -1,0 +1,6 @@
+<map id="Source/Connections/DBConnection.h" name="Source/Connections/DBConnection.h">
+<area shape="rect" id="node2" href="$_d_b_connection_8m.html" title="Source/Connections\l/DBConnection.m" alt="" coords="5,97,149,141"/>
+<area shape="rect" id="node3" href="$_d_b_connection_pool_8m.html" title="Source/Connections\l/DBConnectionPool.m" alt="" coords="173,97,328,141"/>
+<area shape="rect" id="node4" href="$_d_b_connection_proxy_8m.html" title="Source/Connections\l/DBConnectionProxy.m" alt="" coords="352,97,514,141"/>
+<area shape="rect" id="node5" href="$_d_b_column_definition_8m.html" title="Source/DBColumnDefinition.m" alt="" coords="538,105,742,133"/>
+</map>

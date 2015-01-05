@@ -1,0 +1,6 @@
+<map id="DBDeleteQuery" name="DBDeleteQuery">
+<area shape="rect" id="node2" href="$interface_d_b_write_query.html" title="DBWriteQuery" alt="" coords="49,157,155,185"/>
+<area shape="rect" id="node3" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="64,81,140,109"/>
+<area shape="rect" id="node6" href="$protocol_d_b_table_query-p.html" title="\&lt;DBTableQuery\&gt;" alt="" coords="179,157,302,185"/>
+<area shape="rect" id="node8" href="$protocol_d_b_filterable_query-p.html" title="\&lt;DBFilterableQuery\&gt;" alt="" coords="326,157,473,185"/>
+</map>

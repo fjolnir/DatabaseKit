@@ -1,0 +1,8 @@
+<map id="&lt;DBTableQuery&gt;" name="&lt;DBTableQuery&gt;">
+<area shape="rect" id="node3" href="$interface_d_b_alter_table_query.html" title="DBAlterTableQuery" alt="" coords="320,5,455,33"/>
+<area shape="rect" id="node4" href="$interface_d_b_delete_query.html" title="DBDeleteQuery" alt="" coords="331,57,444,85"/>
+<area shape="rect" id="node5" href="$interface_d_b_drop_table_query.html" title="DBDropTableQuery" alt="" coords="319,109,456,137"/>
+<area shape="rect" id="node6" href="$interface_d_b_insert_query.html" title="DBInsertQuery" alt="" coords="333,161,442,189"/>
+<area shape="rect" id="node7" href="$interface_d_b_update_query.html" title="DBUpdateQuery" alt="" coords="504,187,623,215"/>
+<area shape="rect" id="node8" href="$interface_d_b_select_query.html" title="DBSelectQuery" alt="" coords="331,263,444,291"/>
+</map>

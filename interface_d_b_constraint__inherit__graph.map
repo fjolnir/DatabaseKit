@@ -1,0 +1,8 @@
+<map id="DBConstraint" name="DBConstraint">
+<area shape="rect" id="node6" href="$interface_d_b_default_constraint.html" title="DBDefaultConstraint" alt="" coords="527,5,671,33"/>
+<area shape="rect" id="node7" href="$interface_d_b_foreign_key_constraint.html" title="DBForeignKeyConstraint" alt="" coords="515,57,684,85"/>
+<area shape="rect" id="node8" href="$interface_d_b_not_null_constraint.html" title="DBNotNullConstraint" alt="" coords="526,109,672,137"/>
+<area shape="rect" id="node9" href="$interface_d_b_primary_key_constraint.html" title="DBPrimaryKeyConstraint" alt="" coords="514,161,684,189"/>
+<area shape="rect" id="node10" href="$interface_d_b_unique_constraint.html" title="DBUniqueConstraint" alt="" coords="527,213,671,241"/>
+<area shape="rect" id="node3" href="$protocol_d_b_s_q_l_representable-p.html" title="\&lt;DBSQLRepresentable\&gt;" alt="" coords="148,109,317,137"/>
+</map>

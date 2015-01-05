@@ -1,0 +1,5 @@
+<map id="&lt;DBFilterableQuery&gt;" name="&lt;DBFilterableQuery&gt;">
+<area shape="rect" id="node2" href="$interface_d_b_delete_query.html" title="DBDeleteQuery" alt="" coords="5,81,119,109"/>
+<area shape="rect" id="node3" href="$interface_d_b_select_query.html" title="DBSelectQuery" alt="" coords="143,81,256,109"/>
+<area shape="rect" id="node4" href="$interface_d_b_update_query.html" title="DBUpdateQuery" alt="" coords="280,81,399,109"/>
+</map>

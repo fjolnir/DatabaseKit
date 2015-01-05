@@ -1,0 +1,12 @@
+<map id="DBCreateTableQuery" name="DBCreateTableQuery">
+<area shape="rect" id="node2" href="$interface_d_b_write_query.html" title="DBWriteQuery" alt="" coords="26,410,132,438"/>
+<area shape="rect" id="node3" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="38,266,114,294"/>
+<area shape="rect" id="node9" href="$interface_d_b_read_query.html" title="DBReadQuery" alt="" coords="23,358,130,386"/>
+<area shape="rect" id="node6" href="$interface_d_b.html" title="DB" alt="" coords="244,174,284,202"/>
+<area shape="rect" id="node7" href="$interface_d_b_connection.html" title="DBConnection" alt="" coords="218,83,326,110"/>
+<area shape="rect" id="node12" href="$interface_d_b_table.html" title="DBTable" alt="" coords="306,266,377,294"/>
+<area shape="rect" id="node15" href="$interface_d_b_join.html" title="DBJoin" alt="" coords="652,358,717,386"/>
+<area shape="rect" id="node8" href="$interface_d_b_select_query.html" title="DBSelectQuery" alt="" coords="269,464,382,492"/>
+<area shape="rect" id="node10" href="$protocol_d_b_table_query-p.html" title="\&lt;DBTableQuery\&gt;" alt="" coords="153,358,276,386"/>
+<area shape="rect" id="node13" href="$protocol_d_b_filterable_query-p.html" title="\&lt;DBFilterableQuery\&gt;" alt="" coords="300,358,447,386"/>
+</map>

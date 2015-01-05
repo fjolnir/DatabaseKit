@@ -1,0 +1,12 @@
+<map id="Source/Utilities/DBUtilities.h" name="Source/Utilities/DBUtilities.h">
+<area shape="rect" id="node2" href="$_d_b_connection_8m.html" title="Source/Connections\l/DBConnection.m" alt="" coords="5,81,149,125"/>
+<area shape="rect" id="node3" href="$_d_b_connection_pool_8m.html" title="Source/Connections\l/DBConnectionPool.m" alt="" coords="173,81,328,125"/>
+<area shape="rect" id="node4" href="$_d_b_connection_proxy_8m.html" title="Source/Connections\l/DBConnectionProxy.m" alt="" coords="352,81,514,125"/>
+<area shape="rect" id="node5" href="$_d_b_s_q_lite_connection_8m.html" title="Source/Connections\l/DBSQLiteConnection.m" alt="" coords="538,81,707,125"/>
+<area shape="rect" id="node6" href="$_d_b_column_definition_8m.html" title="Source/DBColumnDefinition.m" alt="" coords="731,89,935,117"/>
+<area shape="rect" id="node7" href="$_d_b_model_8m.html" title="Source/DBModel.m" alt="" coords="960,89,1098,117"/>
+<area shape="rect" id="node8" href="$_d_b_table_8m.html" title="Source/DBTable.m" alt="" coords="1123,89,1255,117"/>
+<area shape="rect" id="node9" href="$_d_b_insert_query_8m.html" title="Source/Queries/DBInsertQuery.m" alt="" coords="1279,89,1499,117"/>
+<area shape="rect" id="node10" href="$_d_b_query_8m.html" title="Source/Queries/DBQuery.m" alt="" coords="1524,89,1710,117"/>
+<area shape="rect" id="node11" href="$_d_b_select_query_8m.html" title="Source/Queries/DBSelectQuery.m" alt="" coords="1734,89,1958,117"/>
+</map>

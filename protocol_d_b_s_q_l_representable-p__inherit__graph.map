@@ -1,0 +1,11 @@
+<map id="&lt;DBSQLRepresentable&gt;" name="&lt;DBSQLRepresentable&gt;">
+<area shape="rect" id="node3" href="$interface_d_b_as.html" title="DBAs" alt="" coords="408,5,463,33"/>
+<area shape="rect" id="node4" href="$interface_d_b_column_definition.html" title="DBColumnDefinition" alt="" coords="365,57,507,85"/>
+<area shape="rect" id="node5" href="$interface_d_b_constraint.html" title="DBConstraint" alt="" coords="385,109,487,137"/>
+<area shape="rect" id="node11" href="$interface_d_b_expression.html" title="DBExpression" alt="" coords="383,161,489,189"/>
+<area shape="rect" id="node6" href="$interface_d_b_default_constraint.html" title="DBDefaultConstraint" alt="" coords="568,5,712,33"/>
+<area shape="rect" id="node7" href="$interface_d_b_foreign_key_constraint.html" title="DBForeignKeyConstraint" alt="" coords="556,57,725,85"/>
+<area shape="rect" id="node8" href="$interface_d_b_not_null_constraint.html" title="DBNotNullConstraint" alt="" coords="567,109,713,137"/>
+<area shape="rect" id="node9" href="$interface_d_b_primary_key_constraint.html" title="DBPrimaryKeyConstraint" alt="" coords="555,161,725,189"/>
+<area shape="rect" id="node10" href="$interface_d_b_unique_constraint.html" title="DBUniqueConstraint" alt="" coords="568,213,712,241"/>
+</map>

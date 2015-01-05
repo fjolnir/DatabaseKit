@@ -1,0 +1,10 @@
+<map id="DBSelectQuery" name="DBSelectQuery">
+<area shape="rect" id="node2" href="$interface_d_b_read_query.html" title="DBReadQuery" alt="" coords="5,358,112,386"/>
+<area shape="rect" id="node3" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="42,266,118,294"/>
+<area shape="rect" id="node6" href="$interface_d_b.html" title="DB" alt="" coords="251,174,291,202"/>
+<area shape="rect" id="node7" href="$interface_d_b_connection.html" title="DBConnection" alt="" coords="225,83,333,110"/>
+<area shape="rect" id="node10" href="$interface_d_b_table.html" title="DBTable" alt="" coords="315,266,386,294"/>
+<area shape="rect" id="node13" href="$interface_d_b_join.html" title="DBJoin" alt="" coords="634,358,699,386"/>
+<area shape="rect" id="node8" href="$protocol_d_b_table_query-p.html" title="\&lt;DBTableQuery\&gt;" alt="" coords="136,358,259,386"/>
+<area shape="rect" id="node11" href="$protocol_d_b_filterable_query-p.html" title="\&lt;DBFilterableQuery\&gt;" alt="" coords="283,358,429,386"/>
+</map>

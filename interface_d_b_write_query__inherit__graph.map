@@ -1,0 +1,9 @@
+<map id="DBWriteQuery" name="DBWriteQuery">
+<area shape="rect" id="node5" href="$interface_d_b_alter_table_query.html" title="DBAlterTableQuery" alt="" coords="5,233,140,261"/>
+<area shape="rect" id="node6" href="$interface_d_b_create_table_query.html" title="DBCreateTableQuery" alt="" coords="163,233,310,261"/>
+<area shape="rect" id="node7" href="$interface_d_b_delete_query.html" title="DBDeleteQuery" alt="" coords="334,233,448,261"/>
+<area shape="rect" id="node8" href="$interface_d_b_drop_table_query.html" title="DBDropTableQuery" alt="" coords="472,233,609,261"/>
+<area shape="rect" id="node9" href="$interface_d_b_insert_query.html" title="DBInsertQuery" alt="" coords="633,233,742,261"/>
+<area shape="rect" id="node2" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="353,81,429,109"/>
+<area shape="rect" id="node10" href="$interface_d_b_update_query.html" title="DBUpdateQuery" alt="" coords="627,309,747,337"/>
+</map>

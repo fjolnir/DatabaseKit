@@ -1,0 +1,8 @@
+<map id="DBDropTableQuery" name="DBDropTableQuery">
+<area shape="rect" id="node2" href="$interface_d_b_write_query.html" title="DBWriteQuery" alt="" coords="14,358,120,386"/>
+<area shape="rect" id="node3" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="29,266,105,294"/>
+<area shape="rect" id="node6" href="$interface_d_b.html" title="DB" alt="" coords="162,174,202,202"/>
+<area shape="rect" id="node7" href="$interface_d_b_connection.html" title="DBConnection" alt="" coords="136,83,244,110"/>
+<area shape="rect" id="node10" href="$interface_d_b_table.html" title="DBTable" alt="" coords="248,266,319,294"/>
+<area shape="rect" id="node8" href="$protocol_d_b_table_query-p.html" title="\&lt;DBTableQuery\&gt;" alt="" coords="144,358,267,386"/>
+</map>

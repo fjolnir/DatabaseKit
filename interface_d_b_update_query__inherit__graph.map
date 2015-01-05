@@ -1,0 +1,7 @@
+<map id="DBUpdateQuery" name="DBUpdateQuery">
+<area shape="rect" id="node2" href="$interface_d_b_insert_query.html" title="DBInsertQuery" alt="" coords="94,233,203,261"/>
+<area shape="rect" id="node3" href="$interface_d_b_write_query.html" title="DBWriteQuery" alt="" coords="49,157,155,185"/>
+<area shape="rect" id="node4" href="$interface_d_b_query.html" title="DBQuery" alt="" coords="64,81,140,109"/>
+<area shape="rect" id="node7" href="$protocol_d_b_table_query-p.html" title="\&lt;DBTableQuery\&gt;" alt="" coords="179,157,302,185"/>
+<area shape="rect" id="node9" href="$protocol_d_b_filterable_query-p.html" title="\&lt;DBFilterableQuery\&gt;" alt="" coords="278,233,425,261"/>
+</map>
