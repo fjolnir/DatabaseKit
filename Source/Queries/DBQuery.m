@@ -220,12 +220,10 @@ NSString * const DBQueryException = @"DBQueryException";
 }
 @end
 
-@interface DBExpression () {
+@implementation DBExpression {
     NSString *_expressionString;
 }
-@end
 
-@implementation DBExpression : NSObject
 + (instancetype)withString:(NSString *)aString
 {
     DBExpression *expr = [self new];

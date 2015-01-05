@@ -3,18 +3,15 @@
 #import "DBUtilities.h"
 #import <pthread.h>
 
-@interface DBConnectionPool () {
-    NSHashTable *_connections;
-    pthread_key_t _threadLocalKey;
-}
-@end
-
 static void _onThreadExit(void *connection)
 {
     CFRelease(connection);
 }
 
-@implementation DBConnectionPool
+@implementation DBConnectionPool {
+    NSHashTable *_connections;
+    pthread_key_t _threadLocalKey;
+}
 
 + (instancetype)alloc
 {
