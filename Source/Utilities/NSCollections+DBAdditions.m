@@ -47,3 +47,27 @@
     return result;
 }
 @end
+
+@implementation NSDictionary (DBAdditions)
+- (NSDictionary *)db_mapKeys:(DBMapBlock)blk
+{
+    NSParameterAssert(blk);
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:self.count];
+    for(id key in self) {
+        result[blk(key)] = self[key];
+    }
+    return result;
+}
+- (NSDictionary *)db_filterKeys:(DBFilterBlock)blk
+{
+    NSParameterAssert(blk);
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:self.count];
+    for(id key in self) {
+        if(blk(key))
+            result[key] = self[key];
+    }
+    return result;
+}
+@end

@@ -13,4 +13,9 @@ typedef BOOL(^DBFilterBlock)(id obj);
 - (NSSet *)db_map:(DBMapBlock)blk;
 - (NSSet *)db_filter:(DBFilterBlock)blk;
 @end
+
+@interface NSDictionary (DBAdditions)
+- (NSDictionary *)db_mapKeys:(DBMapBlock)blk;
+- (NSDictionary *)db_filterKeys:(DBFilterBlock)blk;
+@end
 /*! @endcond */
