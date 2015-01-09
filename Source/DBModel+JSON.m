@@ -31,6 +31,8 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
             return [NSValueTransformer valueTransformerForName:DBDateTransformerName];
         else if([klass isSubclassOfClass:[NSUUID class]])
             return [NSValueTransformer valueTransformerForName:DBUUIDTransformerName];
+        else if([klass isSubclassOfClass:[DBModel class]])
+            return [DBModelJSONTransformer transformerForModelClass:klass];
         else
             return nil;
     }
