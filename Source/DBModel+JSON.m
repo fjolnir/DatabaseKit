@@ -16,17 +16,24 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
 
 + (NSValueTransformer *)JSONValueTransformerForKey:(NSString *)key
 {
+    NSParameterAssert(key);
+    
     SEL selector = DBCapitalizedSelector(@"JSONValueTransformerFor", key);
     if([self respondsToSelector:selector]) {
         id (*imp)(id,SEL) = (void *)[self methodForSelector:selector];
         return imp(self, selector);
-    } else
-        return nil;
-}
-
-+ (NSValueTransformer *)JSONValueTransformerForUUID
-{
-    return [NSValueTransformer valueTransformerForName:DBUUIDTransformerName];
+    } else {
+        DBPropertyAttributes *attrs = DBAttributesForProperty(self, class_getProperty(self, key.UTF8String));
+        Class klass = attrs->klass;
+        free(attrs);
+        
+        if([klass isSubclassOfClass:[NSDate class]])
+            return [NSValueTransformer valueTransformerForName:DBDateTransformerName];
+        else if([klass isSubclassOfClass:[NSUUID class]])
+            return [NSValueTransformer valueTransformerForName:DBUUIDTransformerName];
+        else
+            return nil;
+    }
 }
 
 + (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray
