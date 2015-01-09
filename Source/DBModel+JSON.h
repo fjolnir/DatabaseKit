@@ -11,6 +11,8 @@ extern NSString * const DBUUIDTransformerName;
 
 + (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray;
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject;
+
+- (void)mergeValuesFromJSONObject:(NSDictionary *)JSONObject;
 @end
 
 @interface DBModelJSONTransformer : NSValueTransformer

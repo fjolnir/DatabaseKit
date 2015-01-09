@@ -40,25 +40,29 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
 
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject
 {
-    if((self = [super init])) {
-        NSDictionary *JSONKeyPaths = [self.class JSONKeyPathsByPropertyKey];
-        for(NSString *key in self.class.savedKeys) {
-            NSString *JSONPath = JSONKeyPaths[key];
-            if(!JSONPath)
-                continue;
-            
-            id value = [JSONObject valueForKeyPath:JSONPath];
-            if(!value || [[NSNull null] isEqual:value])
-                continue;
-            
-            NSValueTransformer *valueTransformer = [self.class JSONValueTransformerForKey:key];
-            [self setValue:valueTransformer
-                           ? [valueTransformer transformedValue:value]
-                           : value
-                    forKey:key];
-        }
-    }
+    if((self = [super init]))
+        [self mergeValuesFromJSONObject:JSONObject];
     return self;
+}
+
+- (void)mergeValuesFromJSONObject:(NSDictionary *)JSONObject
+{
+   NSDictionary *JSONKeyPaths = [self.class JSONKeyPathsByPropertyKey];
+    for(NSString *key in self.class.savedKeys) {
+        NSString *JSONPath = JSONKeyPaths[key];
+        if(!JSONPath)
+            continue;
+        
+        id value = [JSONObject valueForKeyPath:JSONPath];
+        if(!value || [[NSNull null] isEqual:value])
+            continue;
+        
+        NSValueTransformer *valueTransformer = [self.class JSONValueTransformerForKey:key];
+        [self setValue:valueTransformer
+                       ? [valueTransformer transformedValue:value]
+                       : value
+                forKey:key];
+    }
 }
 
 - (NSDictionary *)JSONObjectRepresentation
