@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D362A9D1A5F738F00B453F7 /* DBModel+JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D362A9E1A5F738F00B453F7 /* DBModel+JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D362A9F1A5F738F00B453F7 /* DBModel+JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D362AA01A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
+		1D362AA11A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
+		1D362AA21A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
 		C706E67A1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
 		C706E67B1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
 		C706E67C1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
@@ -212,6 +218,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBModel+JSON.h"; sourceTree = "<group>"; };
+		1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBModel+JSON.m"; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPointerCollectionAdditions.h; sourceTree = "<group>"; };
@@ -420,6 +428,8 @@
 				C7D875E61A3E67E300A490E0 /* DBModel+Private.h */,
 				C7D875E71A3E67E300A490E0 /* DBModel.h */,
 				C7D875E81A3E67E300A490E0 /* DBModel.m */,
+				1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */,
+				1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */,
 				C7D875E91A3E67E300A490E0 /* DBSQLRepresentable.h */,
 				C7D875EA1A3E67E300A490E0 /* DBTable.h */,
 				C7D875EB1A3E67E300A490E0 /* DBTable.m */,
@@ -471,11 +481,11 @@
 			isa = PBXGroup;
 			children = (
 				C7D875FE1A3E67E300A490E0 /* DBInflector */,
+				C7D8760A1A3E67E300A490E0 /* DBUtilities.h */,
 				C7D876061A3E67E300A490E0 /* DBISO8601DateFormatter.h */,
 				C7D876071A3E67E300A490E0 /* DBISO8601DateFormatter.m */,
 				C7D876081A3E67E300A490E0 /* DBOrderedDictionary.h */,
 				C7D876091A3E67E300A490E0 /* DBOrderedDictionary.m */,
-				C7D8760A1A3E67E300A490E0 /* DBUtilities.h */,
 				C7D8760B1A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h */,
 				C7D8760C1A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.m */,
 				C7D8760D1A3E67E300A490E0 /* NSString+DBAdditions.h */,
@@ -529,6 +539,7 @@
 				C7D876331A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767B1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
 				C7D8760F1A3E67E300A490E0 /* DBConnection.h in Headers */,
+				1D362A9D1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
 				C7D876421A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D876BA1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876D81A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
@@ -560,6 +571,7 @@
 				C7D8766B1A3E67E300A490E0 /* DBCreateTableQuery.h in Headers */,
 				C7D8762F1A3E67E300A490E0 /* DBSQLiteConnection.h in Headers */,
 				C7D8761D1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
+				1D362A9F1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
 				C7D876111A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */,
@@ -604,6 +616,7 @@
 				C7D8761C1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
 				C7D876341A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
+				1D362A9E1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
 				C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
@@ -702,7 +715,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0620;
 				TargetAttributes = {
 					C79C0EBE17D9BC3400E538B9 = {
 						TestTargetID = 8DC2EF4F0486A6940098B216;
@@ -785,6 +798,7 @@
 				C7D8766C1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */,
 				C7D876451A3E67E300A490E0 /* DBColumnDefinition.m in Sources */,
 				C7D876781A3E67E300A490E0 /* DBDropTableQuery.m in Sources */,
+				1D362AA01A5F738F00B453F7 /* DBModel+JSON.m in Sources */,
 				C7D876391A3E67E300A490E0 /* DB+Migrations.m in Sources */,
 				C7D8768D1A3E67E300A490E0 /* DBSelectQuery.m in Sources */,
 				C7D876D41A3EA54E00A490E0 /* DBIntrospection.m in Sources */,
@@ -829,6 +843,7 @@
 				C7D8766E1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */,
 				C7D876471A3E67E300A490E0 /* DBColumnDefinition.m in Sources */,
 				C7D8767A1A3E67E300A490E0 /* DBDropTableQuery.m in Sources */,
+				1D362AA21A5F738F00B453F7 /* DBModel+JSON.m in Sources */,
 				C7D8763B1A3E67E300A490E0 /* DB+Migrations.m in Sources */,
 				C7D8768F1A3E67E300A490E0 /* DBSelectQuery.m in Sources */,
 				C7D876D61A3EA54E00A490E0 /* DBIntrospection.m in Sources */,
@@ -861,6 +876,7 @@
 				C7D8766D1A3E67E300A490E0 /* DBCreateTableQuery.m in Sources */,
 				C7D876461A3E67E300A490E0 /* DBColumnDefinition.m in Sources */,
 				C7D876791A3E67E300A490E0 /* DBDropTableQuery.m in Sources */,
+				1D362AA11A5F738F00B453F7 /* DBModel+JSON.m in Sources */,
 				C7D8763A1A3E67E300A490E0 /* DB+Migrations.m in Sources */,
 				C7D8768E1A3E67E300A490E0 /* DBSelectQuery.m in Sources */,
 				C7D876D51A3EA54E00A490E0 /* DBIntrospection.m in Sources */,
@@ -914,6 +930,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -945,6 +962,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -972,17 +990,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = ENABLE_AR_DEBUG;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -995,15 +1023,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1026,6 +1064,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1064,6 +1103,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (

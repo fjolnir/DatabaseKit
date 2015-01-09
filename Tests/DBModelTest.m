@@ -86,6 +86,18 @@
     XCTAssertEqualObjects(johnFetched.pet.name, john.pet.name);
 }
 
+- (void)testJSONInit
+{
+    NSDictionary *JSONObject = @{ @"identifier": [[NSUUID UUID] UUIDString],
+                                 @"name": @"Clarus",
+                                 @"species": @"Dogcow" };
+    
+    TEAnimal *clarus = [[TEAnimal alloc] initWithJSONObject:JSONObject];
+    XCTAssertEqualObjects(clarus.UUID.UUIDString, JSONObject[@"identifier"]);
+    XCTAssertEqualObjects(clarus.name, JSONObject[@"name"]);
+    XCTAssertEqualObjects(clarus.species, JSONObject[@"species"]);
+}
+
 @end
 
 @implementation TEModel
@@ -95,6 +107,12 @@
 @end
 
 @implementation TEAnimal
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{ @"UUID": @"identifier",
+              @"name": @"name",
+              @"species": @"species" };
+}
 @end
 
 @implementation TEWebSite
