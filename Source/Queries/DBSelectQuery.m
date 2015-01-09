@@ -166,7 +166,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     NSUInteger len  = MIN(bufLen, results.count - *ofs);
     if(len > 0) {
         [results getObjects:buffer range:(NSRange) { *ofs, len }];
-        state->extra[0] = (__bridge_retained void *)results;
+        state->extra[0] = (uintptr_t)(__bridge_retained void *)results;
         *ofs += len;
     }
     return len;

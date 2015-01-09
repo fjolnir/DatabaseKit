@@ -1,7 +1,7 @@
 #import "DBPointerCollectionAdditions.h"
 
 #if __has_feature(objc_arc)
-#  error "NSMapTable additions need to be compiled with -fno-objc-arc"
+#  error "DBPointerCollectionAdditions need to be compiled with -fno-objc-arc"
 #else
 
 void *DBMapTableGet(NSMapTable *table, void *key)
