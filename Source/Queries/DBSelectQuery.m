@@ -298,7 +298,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
     if(selectingEntireTable && modelClass) {
         NSMutableArray *objects = [NSMutableArray new];
         NSSet *fieldNames = [NSSet setWithArray:result.columns];
-        if([fieldNames isSubsetOfSet:self.table.columns]) {
+        if([fieldNames isSubsetOfSet:self.table.columnNames]) {
             while([result step:outErr] == DBResultStateNotAtEnd) {
                 [objects addObject:[[modelClass alloc]
                                          initWithDatabase:self.table.database

@@ -7,7 +7,7 @@
 @interface DBTable : NSObject
 @property(readonly) NSString *name;
 @property(readonly) DB *database;
-@property(readonly) NSSet *columns;
+@property(readonly) NSSet *columnNames;
 @property(readonly) Class modelClass;
 @property(readonly) NSUInteger numberOfRows;
 

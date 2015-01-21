@@ -19,7 +19,7 @@
     NSDictionary *_columnTypes;
     Class _modelClass;
 }
-@synthesize columns=_columns;
+@synthesize columnNames=_columnNames;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
 {
@@ -38,11 +38,11 @@
     return ret;
 }
 
-- (NSSet *)columns
+- (NSSet *)columnNames
 {
-    if(!_columns)
-        _columns = [NSSet setWithArray:[[_database.connection columnsForTable:_name] allKeys]];
-    return _columns;
+    if(!_columnNames)
+        _columnNames = [NSSet setWithArray:[[_database.connection columnsForTable:_name] allKeys]];
+    return _columnNames;
 }
 
 - (DBType)typeOfColumn:(NSString *)column

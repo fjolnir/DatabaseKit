@@ -226,7 +226,7 @@ NSString * const kDBUUIDKey = @"UUID";
         id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
         return imp(self, selector);
     }
-    else if(![self.database[self.class.tableName].columns containsObject:key]) {
+    else if(![self.database[self.class.tableName].columnNames containsObject:key]) {
         DBPropertyAttributes *attrs = DBAttributesForProperty(self.class, class_getProperty(self.class, [key UTF8String]));
         Class relatedClass = attrs->klass;
         free(attrs);
