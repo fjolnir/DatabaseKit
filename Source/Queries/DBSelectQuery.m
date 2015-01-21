@@ -295,7 +295,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
                                    || [self.columns isEqual:@[[NSString stringWithFormat:@"%@.*", self.table.name]]]
                                    || [self.columns isEqual:@[[NSString stringWithFormat:@"`%@`.*", self.table.name]]];
     Class modelClass = self.table.modelClass;
-    if(selectingEntireTable && modelClass) {
+    if(selectingEntireTable && [modelClass shouldBeUsedForResults]) {
         NSMutableArray *objects = [NSMutableArray new];
         NSSet *fieldNames = [NSSet setWithArray:result.columns];
         if([fieldNames isSubsetOfSet:self.table.columnNames]) {
@@ -377,5 +377,12 @@ NSString *const DBUnionAll = @" UNION ALL ";
 - (DBSelectQuery *)select
 {
     return [self select:nil];
+}
+@end
+
+@implementation DBModel (DBSelectQuery)
++ (BOOL)shouldBeUsedForResults
+{
+    return YES;
 }
 @end

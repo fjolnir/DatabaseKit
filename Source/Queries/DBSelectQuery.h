@@ -1,4 +1,5 @@
 #import <DatabaseKit/DBQuery.h>
+#import <DatabaseKit/DBModel.h>
 
 @class DBAs, DBJoin;
 
@@ -55,4 +56,8 @@ extern NSString *const DBUnionAll;
 @interface DBQuery (DBSelectQuery)
 - (DBSelectQuery *)select:(NSArray *)columns;
 - (DBSelectQuery *)select;
+@end
+
+@interface DBModel (DBSelectQuery)
++ (BOOL)shouldBeUsedForResults;
 @end
