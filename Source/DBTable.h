@@ -9,11 +9,9 @@
 @property(readonly) DB *database;
 @property(readonly) NSSet *columns;
 @property(readonly) Class modelClass;
+@property(readonly) NSUInteger numberOfRows;
 
 + (DBTable *)withDatabase:(DB *)database name:(NSString *)name;
-
-- (id)objectForKeyedSubscript:(id)cond;
-- (void)setObject:(id)obj forKeyedSubscript:(id)cond;
 
 - (DBSelectQuery *)select:(NSArray *)columns;
 - (DBSelectQuery *)select;
@@ -29,8 +27,6 @@
 
 - (DBAlterTableQuery *)alter;
 - (DBDropTableQuery *)drop;
-
-- (NSUInteger)count;
 
 - (DBType)typeOfColumn:(NSString *)column;
 @end

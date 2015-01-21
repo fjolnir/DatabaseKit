@@ -49,7 +49,7 @@
                      @"Columns didn't contain: %@", fixture);
     }
 
-    XCTAssertEqual(db[@"foo"].count, 2, @"Fast enumeration did not evaluate the correct amount of times");
+    XCTAssertEqual(db[@"foo"].numberOfRows, 2, @"Fast enumeration did not evaluate the correct amount of times");
 }
 
 @end

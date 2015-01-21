@@ -38,16 +38,6 @@
     return ret;
 }
 
-- (id)objectForKeyedSubscript:(id)cond
-{
-    return [[[DBSelectQuery withTable:self] limit:1] where:cond];
-}
-
-- (void)setObject:(id)obj forKeyedSubscript:(id)cond
-{
-    [[[DBUpdateQuery withTable:self] update:obj] where:cond];
-}
-
 - (NSSet *)columns
 {
     if(!_columns)
@@ -123,7 +113,7 @@
     return [DBDropTableQuery withTable:self];
 }
 
-- (NSUInteger)count
+- (NSUInteger)numberOfRows
 {
     return [[DBSelectQuery withTable:self] count];
 }
