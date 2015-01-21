@@ -129,7 +129,7 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 @protected
     DBResultState _state;
 }
-@property DBResultState state;
+@property(readonly) DBResultState state;
 
 - (NSUInteger)indexOfColumnNamed:(NSString *)name;
 - (NSArray *)toArray:(NSError **)outErr;
