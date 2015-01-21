@@ -286,11 +286,7 @@ NSString *const DBUnionAll = @" UNION ALL ";
 
 - (NSArray *)executeOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
 {
-    NSMutableString *query  = [NSMutableString new];
-    NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-    DBResult *result = [connection execute:query substitutions:params error:outErr];
-
+    DBResult *result = [self rawExecuteOnConnection:connection error:outErr];
     BOOL const selectingEntireTable = self.columns == nil
                                    || [self.columns isEqual:@[[NSString stringWithFormat:@"%@.*", self.table.name]]]
                                    || [self.columns isEqual:@[[NSString stringWithFormat:@"`%@`.*", self.table.name]]];

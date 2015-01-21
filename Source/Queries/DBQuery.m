@@ -127,6 +127,13 @@ NSString * const DBQueryException = @"DBQueryException";
     return NO;
 }
 
+- (DBResult *)rawExecuteOnConnection:(DBConnection *)connection error:(NSError **)outErr
+{
+    NSMutableString *query  = [NSMutableString new];
+    NSMutableArray  *params = [NSMutableArray new];
+    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    return [connection execute:query substitutions:params error:outErr];
+}
 
 #pragma mark -
 
@@ -207,10 +214,7 @@ NSString * const DBQueryException = @"DBQueryException";
 }
 - (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
 {
-    NSMutableString *query = [NSMutableString new];
-    NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
-    return [connection executeUpdate:query substitutions:params error:outErr];
+    return [[self rawExecuteOnConnection:connection error:outErr] step:outErr] == DBResultStateAtEnd;
 }
 - (instancetype)copyWithZone:(NSZone *)zone
 {

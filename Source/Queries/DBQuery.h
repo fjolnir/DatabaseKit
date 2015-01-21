@@ -31,6 +31,8 @@ extern NSString * const DBQueryException;
 - (BOOL)canCombineWithQuery:(DBQuery *)aQuery;
 - (instancetype)combineWith:(DBQuery *)aQuery;
 
+- (DBResult *)rawExecuteOnConnection:(DBConnection *)connection error:(NSError **)outErr;
+
 - (NSString *)stringRepresentation;
 @end
 
