@@ -89,13 +89,31 @@
 - (void)testJSONInit
 {
     NSDictionary *JSONObject = @{ @"identifier": [[NSUUID UUID] UUIDString],
-                                 @"name": @"Clarus",
-                                 @"species": @"Dogcow" };
+                                  @"name": @"Clarus",
+                                  @"species": @"Dogcow" };
     
     TEAnimal *clarus = [[TEAnimal alloc] initWithJSONObject:JSONObject];
     XCTAssertEqualObjects(clarus.UUID.UUIDString, JSONObject[@"identifier"]);
     XCTAssertEqualObjects(clarus.name, JSONObject[@"name"]);
     XCTAssertEqualObjects(clarus.species, JSONObject[@"species"]);
+}
+
+- (void)testJSONRelationship
+{
+    NSDictionary *JSONObject = @{ @"identifier": [[NSUUID UUID] UUIDString],
+                                  @"name": @"John Smith",
+                                  @"pet": @{ @"identifier": [[NSUUID UUID] UUIDString],
+                                             @"name": @"Clarus",
+                                             @"species": @"Dogcow" }
+                                  };
+    
+    TEPerson *john = [[TEPerson alloc] initWithJSONObject:JSONObject];
+    TEAnimal *clarus = john.pet;
+    XCTAssertEqualObjects(john.UUID.UUIDString, JSONObject[@"identifier"]);
+    XCTAssertEqualObjects(john.name, JSONObject[@"name"]);
+    XCTAssertEqualObjects(clarus.UUID.UUIDString, JSONObject[@"pet"][@"identifier"]);
+    XCTAssertEqualObjects(clarus.name, JSONObject[@"pet"][@"name"]);
+    XCTAssertEqualObjects(clarus.species, JSONObject[@"pet"][@"species"]);
 }
 
 @end
@@ -104,6 +122,12 @@
 @end
 
 @implementation TEPerson
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{ @"UUID": @"identifier",
+              @"name": @"name",
+              @"pet": @"pet" };
+}
 @end
 
 @implementation TEAnimal
