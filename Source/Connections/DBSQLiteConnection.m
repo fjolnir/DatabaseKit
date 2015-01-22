@@ -315,8 +315,12 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
                            NULL, NULL, &errorMessage);
     if(err != SQLITE_OK)
     {
-        [NSException raise:@"SQLite error"
-                    format:@"Couldn't roll back transaction, Details: %@", @(errorMessage)];
+        if(outErr)
+            *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
+                                          code:0
+                                      userInfo:@{
+                NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Failed to roll back transaction: %@",  @(errorMessage)]
+            }];
         return NO;
     }
     [_savePointStack removeLastObject];
@@ -331,8 +335,12 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
                            NULL, NULL, &errorMessage);
     if(err != SQLITE_OK)
     {
-        [NSException raise:@"SQLite error" 
-                    format:@"Couldn't end transaction, Details: %@", @(errorMessage)];
+        if(outErr)
+            *outErr = [NSError errorWithDomain:DBConnectionErrorDomain
+                                          code:0
+                                      userInfo:@{
+                NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Failed to commit transaction: %@",  @(errorMessage)]
+            }];
         return NO;
     }
     [_savePointStack removeLastObject];
