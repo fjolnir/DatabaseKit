@@ -99,20 +99,10 @@
     [db registerObject:john];
     [db registerObject:fido];
     [db registerObject:clarus];
-    NSError *err;
-    XCTAssert([db saveObjects:&err], @"Failed to save: %@", err);
+    [db saveObjects:NULL];
     
     TEPerson *johnFetched = [[db[@"people"] where:@"name=%@", john.name] firstObject];
-    for(id x in johnFetched.pets) {
-        NSLog(@"%@ %d", x, [john.pets containsObject:x]);
-    }
-    NSLog(@"--");
-    for(id x in john.pets) {
-        NSLog(@"%@ %d", x, [johnFetched.pets containsObject:x]);
-    }
     XCTAssertEqualObjects(johnFetched.pets, john.pets);
-    NSLog(@"%@", johnFetched);
-    NSLog(@"%@", johnFetched.pets);
 }
 
 - (void)testJSONInit
