@@ -70,7 +70,7 @@
     XCTAssertEqualObjects(site.url, retrievedSite.url);
 }
 
-- (void)testRelationships
+- (void)testSingularRelationships
 {
     TEPerson *john = [TEPerson new];
     john.name = @"John Smith";

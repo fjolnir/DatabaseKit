@@ -318,7 +318,7 @@ NSString * const kDBUUIDKey = @"UUID";
 - (NSString *)description
 {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@:%p> (stored id: %@) {\n",
-                                                                     self.class, self, self.savedUUID];
+                                                                     self.class, self, self.savedUUID.UUIDString];
     for(NSString *key in self.class.savedKeys) {
         [description appendFormat:@"%@ = %@\n", key, [self valueForKey:key]];
     }
