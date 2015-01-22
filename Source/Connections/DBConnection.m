@@ -48,11 +48,6 @@ static NSMutableArray *_ConnectionClasses;
     DBNotImplemented();
     return nil;
 }
-- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
-{
-    DBNotImplemented();
-    return NO;
-}
 - (BOOL)closeConnection:(NSError **)outErr
 {
     DBNotImplemented();

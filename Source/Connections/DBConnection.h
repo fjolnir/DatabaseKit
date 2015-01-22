@@ -71,17 +71,6 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 - (DBResult *)execute:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
 
 /*!
- * Executes the given SQL query returning whether or not it was successful.
- *
- * Example usage:
- * @code
- * [myConnection executeUpdate:@"INSERT INTO mymodel(id, name) VALUES($1, $2)"
- *            substitutions:@[@2, @"foobar"]];
- * @endcode
- */
-- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr;
-
-/*!
  * Closes the connection\n
  * does <b>not</b> release the object object itself
  */

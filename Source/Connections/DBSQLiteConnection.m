@@ -200,11 +200,6 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
         return YES;
 }
 
-- (BOOL)executeUpdate:(NSString *)sql substitutions:(id)substitutions error:(NSError **)outErr
-{
-    return [[self execute:sql substitutions:substitutions error:outErr] step:outErr] == DBResultStateAtEnd;
-}
-
 - (NSArray *)tableNames
 {
     DBResult *result = [self execute:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table'"
