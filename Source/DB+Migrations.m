@@ -25,16 +25,15 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
         DBType type = DBTypeUnknown;
         DBPropertyAttributes *keyAttrs = DBAttributesForProperty(klass, class_getProperty(klass, key.UTF8String));
         if(keyAttrs->encoding[0] == _C_ID) {
-            type = [[self.connection class] typeForClass:keyAttrs->klass];
-
-            if([keyAttrs->klass isSubclassOfClass:[DBModel class]]) {
+            BOOL pluralRelationship;
+            Class relatedKlass;
+            if([klass _attributeIsRelationship:keyAttrs isPlural:&pluralRelationship relatedClass:&relatedKlass]) {
                 [queries addObject:[[[self create]
                                     table:[klass joinTableNameForKey:key]]
                                     columns:@[
                     [DBColumnDefinition columnWithName:[[klass tableName] db_singularizedString]
                                                   type:DBTypeText
-                                           constraints:@[[DBPrimaryKeyConstraint new],
-                                                         [DBForeignKeyConstraint
+                                           constraints:@[[DBForeignKeyConstraint
                                                           foreignKeyConstraintWithTable:[klass tableName]
                                                           columnName:kDBUUIDKey
                                                           deferred:YES
@@ -44,7 +43,7 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
                     [DBColumnDefinition columnWithName:key
                                                   type:DBTypeText
                                            constraints:@[[DBForeignKeyConstraint
-                                                          foreignKeyConstraintWithTable:[keyAttrs->klass tableName]
+                                                          foreignKeyConstraintWithTable:[relatedKlass tableName]
                                                           columnName:kDBUUIDKey
                                                           deferred:YES
                                                           onDelete:DBForeignKeyActionCascade
@@ -52,8 +51,8 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
                                                          [DBNotNullConstraint new]]]
                 ]]];
                 continue;
-            } else if(type == DBTypeUnknown && [keyAttrs->klass conformsToProtocol:@protocol(NSCoding)])
-                type = DBTypeBlob;
+            } else
+                type = [[self.connection class] typeForClass:keyAttrs->klass];
         } else
             type = [[self.connection class] typeForObjCScalarEncoding:keyAttrs->encoding[0]];
         free(keyAttrs);

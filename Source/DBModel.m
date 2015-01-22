@@ -3,6 +3,7 @@
 #import "DBSelectQuery.h"
 #import "DBInsertQuery.h"
 #import "DBDeleteQuery.h"
+#import "DBBatchQuery.h"
 #import "DBTable.h"
 #import "DBQuery.h"
 #import "DBUtilities.h"
@@ -22,6 +23,33 @@ NSString * const kDBUUIDKey = @"UUID";
 }
 @dynamic saved, hasChanges;
 
++ (BOOL)_attributeIsRelationship:(DBPropertyAttributes *)attributes
+                        isPlural:(BOOL *)outIsPlural
+                    relatedClass:(Class *)outRelatedKlass
+{
+    if(!attributes->klass || ![self.savedKeys containsObject:@(attributes->name)])
+        return NO;
+    if([attributes->klass isSubclassOfClass:[DBModel class]]) {
+        if(outIsPlural)
+            *outIsPlural = NO;
+        if(outRelatedKlass)
+            *outRelatedKlass = attributes->klass;
+        return YES;
+    } else if(attributes->hasProtocolList && [attributes->klass isSubclassOfClass:[NSSet class]]) {
+        for(NSString *protocolName in DBProtocolNamesInTypeEncoding(attributes->encoding)) {
+            Class klass = NSClassFromString(protocolName);
+            if([klass isSubclassOfClass:[DBModel class]]) {
+                if(outIsPlural)
+                    *outIsPlural = YES;
+                if(outRelatedKlass)
+                    *outRelatedKlass = klass;
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
 + (void)initialize
 {
     if([NSStringFromClass(self) hasPrefix:@"NSKVONotifying"])
@@ -29,16 +57,20 @@ NSString * const kDBUUIDKey = @"UUID";
 
     for(NSString *key in self.savedKeys) {
         DBPropertyAttributes *attrs = DBAttributesForProperty(self, class_getProperty(self, [key UTF8String]));
-        if([attrs->klass isSubclassOfClass:[DBModel class]]) {
+        Class relatedKlass;
+        BOOL pluralRelationship;
+        if([self _attributeIsRelationship:attrs isPlural:&pluralRelationship relatedClass:&relatedKlass]) {
             Method getter = class_getInstanceMethod(self, attrs->getter);
             method_setImplementation(getter, imp_implementationWithBlock(^(DBModel *obj) {
                 DBModel *value = object_getIvar(obj, attrs->ivar);
                 if(!value) {
                     NSString *joinTableName = [self joinTableNameForKey:key];
-                    DBSelectQuery *q = [[obj.database[[attrs->klass tableName]]
-                                         select:@[[NSString stringWithFormat:@"`%@`.*", attrs->klass.tableName]]]
+                    DBSelectQuery *q = [[obj.database[relatedKlass.tableName]
+                                         select:@[[NSString stringWithFormat:@"`%@`.*", relatedKlass.tableName]]]
                                         innerJoin:obj.database[joinTableName] on:@"%K.%K=%@", joinTableName, [obj.class.tableName db_singularizedString], obj.UUID];
-                    value = [q firstObject];
+                    value = pluralRelationship
+                          ? [NSSet setWithArray:[q execute]]
+                          : [q firstObject];
                     object_setIvar(obj, attrs->ivar, value);
                 }
                 return value;
@@ -228,20 +260,41 @@ NSString * const kDBUUIDKey = @"UUID";
     }
     else if(![self.database[self.class.tableName].columnNames containsObject:key]) {
         DBPropertyAttributes *attrs = DBAttributesForProperty(self.class, class_getProperty(self.class, [key UTF8String]));
-        Class relatedClass = attrs->klass;
-        free(attrs);
-        if(![relatedClass isSubclassOfClass:[DBModel class]])
+        Class relatedClass;
+        BOOL pluralRelationship;
+        if(![self.class _attributeIsRelationship:attrs isPlural:&pluralRelationship relatedClass:&relatedClass]) {
+            free(attrs);
             return nil;
+        }
+        free(attrs);
 
-        DBModel *relatedObject = [self valueForKey:key];
-        if(relatedObject)
-            return [[self.database[[self.class joinTableNameForKey:key]] insert:@{
-                [self.class.tableName db_singularizedString]: _UUID,
-                key: relatedObject.UUID
-                }] or:DBInsertFallbackReplace];
-        else
-            return [[self.database[[self.class joinTableNameForKey:key]] delete]
-                    where:@"%K=%@", [self.class.tableName db_singularizedString], _UUID];
+        id relatedObject = [self valueForKey:key];
+        if(relatedObject) {
+            NSString *ownerKey = [self.class.tableName db_singularizedString];
+            DBTable *joinTable = self.database[[self.class joinTableNameForKey:key]];
+            if(!pluralRelationship)
+                return [[joinTable insert:@{
+                    ownerKey: _UUID,
+                    key: [relatedObject UUID]
+                    }] or:DBInsertFallbackReplace];
+            else if([relatedObject count] > 0) {
+                NSMutableArray *queries = [NSMutableArray new];
+                [queries addObject:[[joinTable delete]
+                                    where:@"(%K = %@) AND (NOT %K IN %@)",
+                                          ownerKey, _UUID,
+                                          key, [relatedObject valueForKey:kDBUUIDKey]]];
+                for(DBModel *object in relatedObject) {
+                    [queries addObject:[joinTable insert:@{ ownerKey: _UUID,
+                                                            key: object.UUID }]];
+                    
+                }
+                // Since saves are always executed within a transaction anyway,
+                // we can safely not use DBTransactionQuery
+                return [DBBatchQuery queryWithQueries:queries];
+            }
+        }
+        return [[self.database[[self.class joinTableNameForKey:key]] delete]
+                where:@"%K=%@", [self.class.tableName db_singularizedString], _UUID];
     } else if(!self.saved)
         return [self.query insert:@{ key: [self valueForKey:key] ?: [NSNull null] }];
     else

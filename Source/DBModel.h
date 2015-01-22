@@ -5,6 +5,13 @@ extern NSString * const kDBUUIDKey;
 @class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
 
 /*!
+ * Makes it possible to create collection relationships with `klass`
+ */
+#define DBRelatable(klass) \
+    @protocol klass @end \
+    @interface NSSet (klass) <klass> @end
+
+/*!
  * An abstract base class for objects that should model a table.\n
  * Any keys not excluded by `+excludedKeys` will be saved to the table
  * if a column with the same name is present.

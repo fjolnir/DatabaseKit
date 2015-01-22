@@ -57,7 +57,7 @@ static NSMutableArray *_ConnectionClasses;
 - (NSArray *)tableNames
 {
     DBNotImplemented();
-    return NO;
+    return nil;
 }
 
 - (BOOL)tableExists:(NSString *)tableName
@@ -177,12 +177,12 @@ static NSMutableArray *_ConnectionClasses;
 {
     if([klass isSubclassOfClass:[NSUUID class]])
         return DBTypeUUID;
-    if([klass isSubclassOfClass:[NSData class]])
-        return DBTypeBlob;
     else if([klass isSubclassOfClass:[NSString class]])
         return DBTypeText;
     else if([klass isSubclassOfClass:[NSNumber class]])
         return DBTypeReal;
+    else if([klass conformsToProtocol:@protocol(NSCoding)])
+        return DBTypeBlob;
     else
         return DBTypeUnknown;
 }

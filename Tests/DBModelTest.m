@@ -86,6 +86,35 @@
     XCTAssertEqualObjects(johnFetched.pet.name, john.pet.name);
 }
 
+- (void)testPluralRelationships
+{
+    TEPerson *john = [TEPerson new];
+    john.name = @"John Smith";
+    TEAnimal *fido = [TEAnimal new];
+    fido.name = @"Fido";
+    TEAnimal *clarus = [TEAnimal new];
+    clarus.name = @"Clarus";
+    
+    john.pets = [NSSet setWithObjects:fido, clarus, nil];
+    [db registerObject:john];
+    [db registerObject:fido];
+    [db registerObject:clarus];
+    NSError *err;
+    XCTAssert([db saveObjects:&err], @"Failed to save: %@", err);
+    
+    TEPerson *johnFetched = [[db[@"people"] where:@"name=%@", john.name] firstObject];
+    for(id x in johnFetched.pets) {
+        NSLog(@"%@ %d", x, [john.pets containsObject:x]);
+    }
+    NSLog(@"--");
+    for(id x in john.pets) {
+        NSLog(@"%@ %d", x, [johnFetched.pets containsObject:x]);
+    }
+    XCTAssertEqualObjects(johnFetched.pets, john.pets);
+    NSLog(@"%@", johnFetched);
+    NSLog(@"%@", johnFetched.pets);
+}
+
 - (void)testJSONInit
 {
     NSDictionary *JSONObject = @{ @"identifier": [[NSUUID UUID] UUIDString],
