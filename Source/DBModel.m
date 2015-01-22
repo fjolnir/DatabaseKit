@@ -381,7 +381,7 @@ NSString * const kDBUUIDKey = @"UUID";
 
 - (NSUInteger)hash
 {
-    return _database.hash ^ [_UUID hash];
+    return [_UUID hash];
 }
 - (BOOL)isEqual:(id)anObject
 {
