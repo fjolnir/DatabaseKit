@@ -13,6 +13,12 @@
 		1D362AA01A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
 		1D362AA11A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
 		1D362AA21A5F738F00B453F7 /* DBModel+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */; };
+		1DB9BA6E1A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB9BA6C1A70A3F900A6ABF6 /* DBBatchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DB9BA6F1A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB9BA6C1A70A3F900A6ABF6 /* DBBatchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DB9BA701A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DB9BA6C1A70A3F900A6ABF6 /* DBBatchQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DB9BA711A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9BA6D1A70A3F900A6ABF6 /* DBBatchQuery.m */; };
+		1DB9BA721A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9BA6D1A70A3F900A6ABF6 /* DBBatchQuery.m */; };
+		1DB9BA731A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB9BA6D1A70A3F900A6ABF6 /* DBBatchQuery.m */; };
 		C706E67A1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
 		C706E67B1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
 		C706E67C1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */; };
@@ -220,6 +226,8 @@
 /* Begin PBXFileReference section */
 		1D362A9B1A5F738F00B453F7 /* DBModel+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBModel+JSON.h"; sourceTree = "<group>"; };
 		1D362A9C1A5F738F00B453F7 /* DBModel+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBModel+JSON.m"; sourceTree = "<group>"; };
+		1DB9BA6C1A70A3F900A6ABF6 /* DBBatchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBatchQuery.h; sourceTree = "<group>"; };
+		1DB9BA6D1A70A3F900A6ABF6 /* DBBatchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBBatchQuery.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* DatabaseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DatabaseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C706E6781A595ECA006CC1FB /* DBPointerCollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPointerCollectionAdditions.h; sourceTree = "<group>"; };
@@ -473,6 +481,8 @@
 				C7D875FA1A3E67E300A490E0 /* DBQuery.m */,
 				C7D875FB1A3E67E300A490E0 /* DBSelectQuery.h */,
 				C7D875FC1A3E67E300A490E0 /* DBSelectQuery.m */,
+				1DB9BA6C1A70A3F900A6ABF6 /* DBBatchQuery.h */,
+				1DB9BA6D1A70A3F900A6ABF6 /* DBBatchQuery.m */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -538,6 +548,7 @@
 				C7D8761B1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
 				C7D876331A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767B1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
+				1DB9BA6E1A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */,
 				C7D8760F1A3E67E300A490E0 /* DBConnection.h in Headers */,
 				1D362A9D1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
 				C7D876421A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
@@ -575,6 +586,7 @@
 				C7D876111A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876441A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
 				C7D8764A1A3E67E300A490E0 /* DBIndex.h in Headers */,
+				1DB9BA701A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */,
 				C7D8763E1A3E67E300A490E0 /* DB.h in Headers */,
 				C7D876591A3E67E300A490E0 /* DBSQLRepresentable.h in Headers */,
 				C7D8765C1A3E67E300A490E0 /* DBTable.h in Headers */,
@@ -614,6 +626,7 @@
 				C7D8768B1A3E67E300A490E0 /* DBSelectQuery.h in Headers */,
 				C7D876161A3E67E300A490E0 /* DBConnectionPool.h in Headers */,
 				C7D8761C1A3E67E300A490E0 /* DBConnectionProxy.h in Headers */,
+				1DB9BA6F1A70A3F900A6ABF6 /* DBBatchQuery.h in Headers */,
 				C7D876341A3E67E300A490E0 /* DatabaseKit.h in Headers */,
 				C7D8767C1A3E67E300A490E0 /* DBInsertQuery.h in Headers */,
 				1D362A9E1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
@@ -678,8 +691,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7AED94613C1440200C47919 /* Build configuration list for PBXNativeTarget "iOS Library" */;
 			buildPhases = (
-				C7AED93B13C1440200C47919 /* Headers */,
 				C7AED93913C1440200C47919 /* Sources */,
+				C7AED93B13C1440200C47919 /* Headers */,
 				C7AED93A13C1440200C47919 /* Frameworks */,
 			);
 			buildRules = (
@@ -695,8 +708,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7E9F5251A0F48960045F226 /* Build configuration list for PBXNativeTarget "iOS Framework" */;
 			buildPhases = (
-				C7E9F50F1A0F48960045F226 /* Headers */,
 				C7E9F50D1A0F48960045F226 /* Sources */,
+				C7E9F50F1A0F48960045F226 /* Headers */,
 				C7E9F50E1A0F48960045F226 /* Frameworks */,
 				C7E9F5101A0F48960045F226 /* Resources */,
 			);
@@ -789,6 +802,7 @@
 			files = (
 				C706E67D1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876931A3E67E300A490E0 /* DBInflector.m in Sources */,
+				1DB9BA711A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */,
 				C7D876A81A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839961A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,
 				C7D876661A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */,
@@ -834,6 +848,7 @@
 			files = (
 				C706E67F1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876951A3E67E300A490E0 /* DBInflector.m in Sources */,
+				1DB9BA731A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */,
 				C7D876AA1A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839981A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,
 				C7D876681A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */,
@@ -867,6 +882,7 @@
 			files = (
 				C706E67E1A595ECA006CC1FB /* DBPointerCollectionAdditions.m in Sources */,
 				C7D876941A3E67E300A490E0 /* DBInflector.m in Sources */,
+				1DB9BA721A70A3F900A6ABF6 /* DBBatchQuery.m in Sources */,
 				C7D876A91A3E67E300A490E0 /* DBISO8601DateFormatter.m in Sources */,
 				C7D839971A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */,
 				C7D876671A3E67E300A490E0 /* DBAlterTableQuery.m in Sources */,
