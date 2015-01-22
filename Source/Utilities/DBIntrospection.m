@@ -42,11 +42,12 @@ DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t prope
     unsigned int attrCount;
     objc_property_attribute_t *rawAttrs = property_copyAttributeList(property, &attrCount);
 
-    Ivar ivar;
+    Ivar ivar = NULL;
     BOOL dynamic = NO;
     BOOL atomic  = YES;
     BOOL readOnly = NO;
     Class propKlass = nil;
+    BOOL hasProtocolList = NO;
     SEL getter = nil, setter = nil;
     DBMemoryManagementPolicy memoryManagementPolicy = DBPropertyStrong;
     size_t encodingLen = 0;
@@ -72,6 +73,14 @@ DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t prope
                         strncpy(className, classNameStart, sizeof(className)-1);
                         className[sizeof(className)-1] = '\0';
                         propKlass = objc_getClass(className);
+
+                        // Protocols are listed like "Klass<Protocol1><Protocol2>"
+                        char *protocolNames;
+                        if(!propKlass && (protocolNames = strnstr(className, "<", sizeof(className)))) {
+                            *protocolNames = '\0';
+                            propKlass = objc_getClass(className);
+                            hasProtocolList = YES;
+                        }
                     }
                 }
                 break;
@@ -80,16 +89,17 @@ DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t prope
     }
     DBPropertyAttributes *attrs = calloc(1, sizeof(DBPropertyAttributes) + encodingLen + 1);
     *attrs = (DBPropertyAttributes) {
-        .name    = property_getName(property),
-        .ivar    = dynamic ? NULL : ivar,
-        .klass   = propKlass,
-        .dynamic = dynamic,
-        .atomic  = atomic,
+        .name            = property_getName(property),
+        .ivar            = dynamic ? NULL : ivar,
+        .klass           = propKlass,
+        .hasProtocolList = hasProtocolList,
+        .dynamic         = dynamic,
+        .atomic          = atomic,
         .memoryManagementPolicy = memoryManagementPolicy,
-        .getter  = getter ?: sel_registerName(property_getName(property)),
-        .setter  = readOnly
-                 ? NULL
-                 : setter ?: DBCapitalizedSelector(@"set", @(property_getName(property)), @":")
+        .getter          = getter ?: sel_registerName(property_getName(property)),
+        .setter          = readOnly
+                         ? NULL
+                         : setter ?: DBCapitalizedSelector(@"set", @(property_getName(property)), @":")
     };
     if(encodingIdx != -1)
         strncpy(attrs->encoding, rawAttrs[encodingIdx].value, encodingLen);
@@ -110,4 +120,22 @@ void DBIteratePropertiesForClass(Class klass, void (^blk)(DBPropertyAttributes *
     }
     if(class_getSuperclass(klass))
         DBIteratePropertiesForClass(class_getSuperclass(klass), blk);
+}
+
+NSArray *DBProtocolNamesInTypeEncoding(const char *encoding)
+{
+    NSCParameterAssert(encoding[0] == '@' && encoding[1] == '"');
+    
+    NSMutableArray *protocolNames = [NSMutableArray new];
+    if((encoding = strnstr(encoding, "<", strlen(encoding)))) {
+        while(encoding[0] == '<') {
+            char protocolName[sizeof(char)*strlen(encoding)];
+            int protocolNameLen;
+            if(sscanf(encoding, "<%[^>]>%n", protocolName, &protocolNameLen) > 0) {
+                [protocolNames addObject:@(protocolName)];
+                encoding += protocolNameLen;
+            }
+        }
+    }
+    return protocolNames;
 }
