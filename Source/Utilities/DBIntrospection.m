@@ -139,3 +139,14 @@ NSArray *DBProtocolNamesInTypeEncoding(const char *encoding)
     }
     return protocolNames;
 }
+
+BOOL DBPropertyConformsToProtocol(DBPropertyAttributes *attributes, Protocol *protocol)
+{
+    if([attributes->klass conformsToProtocol:protocol])
+        return YES;
+    else if(attributes->hasProtocolList) {
+        NSString *protocolName = NSStringFromProtocol(protocol);
+        return [DBProtocolNamesInTypeEncoding(attributes->encoding) containsObject:protocolName];
+    } else
+        return NO;
+}

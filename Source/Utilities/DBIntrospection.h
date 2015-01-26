@@ -29,4 +29,5 @@ NSArray *DBClassesInheritingFrom(Class superclass);
 DBPropertyAttributes *DBAttributesForProperty(Class klass, objc_property_t property);
 void DBIteratePropertiesForClass(Class klass, void (^blk)(DBPropertyAttributes *));
 NSArray *DBProtocolNamesInTypeEncoding(const char *encoding);
+BOOL DBPropertyConformsToProtocol(DBPropertyAttributes *attributes, Protocol *protocol);
 /*! @endcond */
