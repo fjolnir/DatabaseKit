@@ -49,7 +49,7 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
 
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject
 {
-    if((self = [super init]))
+    if((self = [self init]))
         [self mergeValuesFromJSONObject:JSONObject];
     return self;
 }
