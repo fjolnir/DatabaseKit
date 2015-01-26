@@ -51,8 +51,11 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
                                                          [DBNotNullConstraint new]]]
                 ]]];
                 continue;
-            } else
+            } else {
                 type = [[self.connection class] typeForClass:keyAttrs->klass];
+                if(type == DBTypeUnknown && DBPropertyConformsToProtocol(keyAttrs, @protocol(NSCoding)))
+                    type = DBTypeBlob;
+            }
         } else
             type = [[self.connection class] typeForObjCScalarEncoding:keyAttrs->encoding[0]];
         free(keyAttrs);

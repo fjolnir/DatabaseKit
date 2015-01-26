@@ -94,14 +94,17 @@ NSString * const kDBUUIDKey = @"UUID";
 
         DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
             NSString *key = @(attrs->name);
+            
             if(!attrs->dynamic &&
                ![DBModel instancesRespondToSelector:attrs->getter] &&
-               ![excludedKeys containsObject:key] &&
-               (attrs->encoding[0] != _C_ID
-                || [attrs->klass isSubclassOfClass:[DBModel class]]
-                || [attrs->klass conformsToProtocol:@protocol(NSCoding)]
-               ))
-                [result addObject:key];
+               ![excludedKeys containsObject:key])
+            {
+                BOOL canBeSaved = attrs->encoding[0] != _C_ID
+                               || [attrs->klass isSubclassOfClass:[DBModel class]]
+                               || DBPropertyConformsToProtocol(attrs, @protocol(NSCoding));
+                if(canBeSaved)
+                    [result addObject:key];
+            }
         });
         savedKeys = result;
         objc_setAssociatedObject(self, savedKeysKey, result, OBJC_ASSOCIATION_RETAIN);
@@ -173,7 +176,7 @@ NSString * const kDBUUIDKey = @"UUID";
             if([value isKindOfClass:[NSData class]]) {
                 DBPropertyAttributes *attrs = DBAttributesForProperty(self.class,
                                                                       class_getProperty(self.class, [columns[i] UTF8String]));
-                if(attrs && attrs->encoding[0] == _C_ID && ![attrs->klass isSubclassOfClass:[NSData class]] && [attrs->klass conformsToProtocol:@protocol(NSCoding)])
+                if(attrs && DBPropertyConformsToProtocol(attrs, @protocol(NSCoding)))
                     value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
                 free(attrs);
             }
