@@ -17,3 +17,5 @@
 #import <DatabaseKit/DBAlterTableQuery.h>
 #import <DatabaseKit/DBDropTableQuery.h>
 #import <DatabaseKit/DBBatchQuery.h>
+
+#import <DatabaseKit/NSCollections+DBAdditions.h>
