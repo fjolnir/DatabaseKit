@@ -66,7 +66,7 @@ NSString * const kDBUUIDKey = @"UUID";
                 if(!value) {
                     NSString *joinTableName = [self joinTableNameForKey:key];
                     DBSelectQuery *q = [[obj.database[relatedKlass.tableName]
-                                         select:@[[NSString stringWithFormat:@"`%@`.*", relatedKlass.tableName]]]
+                                         select:@[[NSString stringWithFormat:@"%@.*", relatedKlass.tableName]]]
                                         innerJoin:obj.database[joinTableName] on:@"%K.%K=%@", joinTableName, [obj.class.tableName db_singularizedString], obj.UUID];
                     value = pluralRelationship
                           ? [NSSet setWithArray:[q execute]]

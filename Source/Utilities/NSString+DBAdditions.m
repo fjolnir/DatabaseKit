@@ -47,6 +47,11 @@
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query
                          withParameters:(NSMutableArray *)parameters
 {
-    return self;
+    if([self isEqualToString:@"*"])
+        return self;
+    if([self hasSuffix:@".*"])
+        return [NSString stringWithFormat:@"`%@`.*", [self substringToIndex:self.length-2]];
+    else
+        return [NSString stringWithFormat:@"`%@`", self];
 }
 @end
