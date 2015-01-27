@@ -131,7 +131,8 @@ NSString * const DBQueryException = @"DBQueryException";
 {
     NSMutableString *query  = [NSMutableString new];
     NSMutableArray  *params = [NSMutableArray new];
-    NSAssert([self _generateString:query parameters:params], @"Failed to generate SQL");
+    BOOL generatedString = [self _generateString:query parameters:params];
+    NSAssert(generatedString, @"Failed to generate SQL");
     return [connection execute:query substitutions:params error:outErr];
 }
 
