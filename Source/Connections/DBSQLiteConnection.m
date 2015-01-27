@@ -35,7 +35,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
                           tail:(NSString **)outTail
                          error:(NSError **)outError;
 
-- (BOOL)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr;
+- (BOOL)_finalizeResult:(DBSQLiteResult *)result error:(NSError **)outErr;
 @end
 /*! @endcond */
 
@@ -115,7 +115,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
                                       error:&prepareErr];
     if(!stmt) {
         if(outErr) *outErr = prepareErr;
-        DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, [prepareErr localizedDescription]);
+        DBLog(@"Unable to prepare bytecode for SQLite query: '%@': %@", sql, prepareErr.localizedDescription);
         return nil;
     }
 
@@ -185,7 +185,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
         return result;
 }
 
-- (BOOL)_resultWasDeallocated:(DBSQLiteResult *)result error:(NSError **)outErr
+- (BOOL)_finalizeResult:(DBSQLiteResult *)result error:(NSError **)outErr
 {
     NSParameterAssert(result);
     if(DBHashTableGet(_openStatements, result->_stmt)) {
@@ -203,22 +203,26 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 
 - (NSArray *)tableNames
 {
-    DBResult *result = [self execute:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table'"
-                       substitutions:nil
-                               error:NULL];
-    return [[result toArray:NULL] valueForKey:@"name"];
+    @autoreleasepool {
+        DBResult *result = [self execute:@"SELECT `name` FROM `sqlite_master` WHERE `type`='table'"
+                           substitutions:nil
+                                   error:NULL];
+        return [[result toArray:NULL] valueForKey:@"name"];
+    }
 }
 
 - (BOOL)tableExists:(NSString *)tableName
 {
-    DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE (`type`='table' OR `type`='view') AND `name`=$1"
-                       substitutions:@[tableName]
-                               error:NULL];
+    @autoreleasepool {
+        DBResult *result = [self execute:@"SELECT COUNT(*) FROM `sqlite_master` WHERE (`type`='table' OR `type`='view') AND `name`=$1"
+                           substitutions:@[tableName]
+                                   error:NULL];
 
-    if([result step:NULL] == DBResultStateNotAtEnd)
-        return [[result valueOfColumnAtIndex:0] unsignedIntegerValue] > 0;
-    else
-        return NO;
+        if([result step:NULL] == DBResultStateNotAtEnd)
+            return [[result valueOfColumnAtIndex:0] unsignedIntegerValue] > 0;
+        else
+            return NO;
+    }
 }
 
 - (NSDictionary *)columnsForTable:(NSString *)tableName
@@ -265,7 +269,6 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
     sqlite3_stmt *stmt = DBMapTableGet(_cachedStatements, (__bridge void *)query);
     if(stmt) {
         DBMapTableRemove(_cachedStatements, (__bridge void *)query);
-        CHK(sqlite3_reset(stmt));
         return stmt;
     }
 
@@ -374,6 +377,9 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 
 - (DBResultState)step:(NSError **)outErr
 {
+    if(_state == DBResultStateAtEnd)
+        return _state;
+    
 retry:
     switch(sqlite3_step(_stmt)) {
         case SQLITE_BUSY:
@@ -384,6 +390,7 @@ retry:
             break;
         case SQLITE_DONE:
             _state = DBResultStateAtEnd;
+            [self _finalize];
             break;
         default:
             if(outErr)
@@ -465,12 +472,21 @@ retry:
     return nil;
 }
 
-- (void)dealloc
+- (void)_finalize
 {
     if(_connection)
-        [_connection _resultWasDeallocated:self error:NULL];
+        [_connection _finalizeResult:self error:NULL];
     else
         sqlite3_finalize(_stmt);
+}
+- (void)dealloc
+{
+    if(_state != DBResultStateAtEnd)
+        [self _finalize];
+}
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ '%@'", [super description], _query ?: @""];
 }
 @end
 
