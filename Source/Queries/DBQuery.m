@@ -215,7 +215,9 @@ NSString * const DBQueryException = @"DBQueryException";
 }
 - (BOOL)executeOnConnection:(DBConnection *)connection error:(NSError **)outErr
 {
-    return [[self rawExecuteOnConnection:connection error:outErr] step:outErr] == DBResultStateAtEnd;
+    @autoreleasepool {
+        return [[self rawExecuteOnConnection:connection error:outErr] step:outErr] == DBResultStateAtEnd;
+    }
 }
 - (instancetype)copyWithZone:(NSZone *)zone
 {
