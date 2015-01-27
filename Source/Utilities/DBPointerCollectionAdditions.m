@@ -12,6 +12,10 @@ void DBMapTableInsert(NSMapTable *table, void *key, void *object)
 {
     [table setObject:(id)object forKey:key];
 }
+void DBMapTableRemove(NSMapTable *table, void *key)
+{
+    [table removeObjectForKey:(void *)key];
+}
 void DBResetMapTable(NSMapTable *table)
 {
     [table removeAllObjects];

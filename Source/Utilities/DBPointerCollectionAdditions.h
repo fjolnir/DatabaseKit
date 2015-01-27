@@ -2,6 +2,7 @@
 
 void *DBMapTableGet(NSMapTable *table, void *key);
 void DBMapTableInsert(NSMapTable *table, void *key, void *value);
+void DBMapTableRemove(NSMapTable *table, void *key);
 void DBResetMapTable(NSMapTable *table);
 
 void *DBHashTableGet(NSHashTable *table, void *key);
