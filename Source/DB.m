@@ -95,6 +95,13 @@
     object.database = self;
     [self registerDirtyObject:object];
 }
+- (void)registerObjects:(id<NSFastEnumeration>)aObjects
+{
+    for(DBModel *object in aObjects) {
+        NSParameterAssert([object isKindOfClass:[DBModel class]]);
+        [self registerObject:object];
+    }
+}
 - (void)removeObject:(DBModel *)object
 {
     NSParameterAssert(object.database == self);
