@@ -13,6 +13,6 @@
                     relatedClass:(Class *)outClass;
 
 - (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
-- (BOOL)_executePendingQueries:(NSError **)outErr;
+- (BOOL)_executePendingQueriesReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr;
 @end
 /*! @endcond */

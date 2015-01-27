@@ -64,6 +64,11 @@
 
 - (BOOL)saveObjects:(NSError **)outErr
 {
+    return [self saveObjectsReplacingExisting:NO error:outErr];
+}
+
+- (BOOL)saveObjectsReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr;
+{
     OSSpinLockLock(&_dirtyObjectLock);
     if(_dirtyObjects.count > 0) {
         NSSet *frozenDirtyObjects = [_dirtyObjects copy];
@@ -72,7 +77,7 @@
 
         return [_connection transaction:^{
             for(DBModel *obj in frozenDirtyObjects) {
-                if(![obj _executePendingQueries:outErr]) {
+                if(![obj _executePendingQueriesReplacingExisting:replaceExisting error:outErr]) {
                     OSSpinLockLock(&_dirtyObjectLock);
                     [_dirtyObjects unionSet:frozenDirtyObjects];
                     OSSpinLockUnlock(&_dirtyObjectLock);

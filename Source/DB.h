@@ -27,6 +27,11 @@
  * Saves any objects with pending changes.
  */
 - (BOOL)saveObjects:(NSError **)outErr;
+/*!
+ * Saves any objects with pending changes. 
+ * If a conflict occurs, `replaceExisting` determines whether or not to replace the original object.
+ */
+- (BOOL)saveObjectsReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr;
 
 /*!
  * Registers a DBModel object with the database

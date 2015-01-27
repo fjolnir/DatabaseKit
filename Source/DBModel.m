@@ -304,7 +304,7 @@ NSString * const kDBUUIDKey = @"UUID";
         return [self.query update:@{ key: [self valueForKey:key] ?: [NSNull null] }];
 }
 
-- (BOOL)_executePendingQueries:(NSError **)outErr
+- (BOOL)_executePendingQueriesReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr
 {
     NSAssert(_database, @"Tried to save object not in a database");
 
@@ -317,7 +317,9 @@ NSString * const kDBUUIDKey = @"UUID";
     if(_pendingQueries.count == 0)
         return YES;
     
-    for(DBWriteQuery *query in [DBQuery combineQueries:_pendingQueries.allValues]) {
+    for(__strong DBWriteQuery *query in [DBQuery combineQueries:_pendingQueries.allValues]) {
+        if(replaceExisting && [query isKindOfClass:[DBInsertQuery class]])
+            query = [(DBInsertQuery *)query or:DBInsertFallbackReplace];
         if(![query execute:outErr])
             return NO;
     }
