@@ -60,16 +60,17 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
 {
     if(!(self = [super initWithURL:URL error:outErr]))
         return nil;
-    _path = URL ? URL.path : @":memory:";
+    
+    _path = URL.host.length > 0 ? URL.host : URL.path;
+    NSMutableString *sqliteURL = [NSMutableString stringWithFormat:@"file:%@", _path];
+    if(URL.query)
+        [sqliteURL appendFormat:@"?%@", URL.query];
+    
     _cachedStatements = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsStrongMemory|NSPointerFunctionsObjectPersonality
                                               valueOptions:NSPointerFunctionsOpaqueMemory|NSPointerFunctionsOpaquePersonality];
     _openStatements   = [NSHashTable hashTableWithOptions:NSPointerFunctionsOpaqueMemory|NSPointerFunctionsOpaquePersonality];
 
-    int flags = SQLITE_OPEN_READWRITE;
-    if([URL.query rangeOfString:@"create=yes"].location != NSNotFound)
-        flags |= SQLITE_OPEN_CREATE;
-    
-    int err = sqlite3_open_v2([_path UTF8String], &_handle, flags, NULL);
+    int err = sqlite3_open([sqliteURL UTF8String], &_handle);
     if(err != SQLITE_OK) {
         if(outErr)
             *outErr = [NSError errorWithDomain:@"database.sqlite.openerror"
