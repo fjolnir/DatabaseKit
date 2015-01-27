@@ -43,7 +43,7 @@
 /*!
  * Registers  DBModel objects with the database
  *
- * @param object The object to register.
+ * @param aObjects The objects to register.
  *         Raises NSInternalInconsistencyException if any of the objects are nil, or already registered with a database.
  */
 - (void)registerObjects:(id<NSFastEnumeration>)aObjects;
