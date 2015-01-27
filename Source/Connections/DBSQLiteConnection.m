@@ -190,7 +190,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
     NSParameterAssert(result);
     if(DBHashTableGet(_openStatements, result->_stmt)) {
         DBHashTableRemove(_openStatements, result->_stmt);
-        if(result->_query) {
+        if(result->_query && !DBMapTableGet(_cachedStatements, (__bridge void *)result->_query)) {
             if(CHK(sqlite3_reset(result->_stmt)) == SQLITE_OK) {
                 DBMapTableInsert(_cachedStatements, (__bridge void *)result->_query, result->_stmt);
                 return YES;
@@ -264,6 +264,7 @@ static int _checkSQLiteStatus(int status, sqlite3 *handle, NSError **outErr);
     // Prepare the query
     sqlite3_stmt *stmt = DBMapTableGet(_cachedStatements, (__bridge void *)query);
     if(stmt) {
+        DBMapTableRemove(_cachedStatements, (__bridge void *)query);
         CHK(sqlite3_reset(stmt));
         return stmt;
     }
