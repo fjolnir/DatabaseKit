@@ -20,7 +20,7 @@
 DB *DBSQLiteDatabaseForTesting()
 {
     NSError *err = nil;
-    DBSQLiteConnection *connection = [[DBSQLiteConnection alloc] initWithURL:nil
+    DBSQLiteConnection *connection = [[DBSQLiteConnection alloc] initWithURL:[NSURL URLWithString:@"sqlite://test?mode=memory"]
                                                                        error:&err];
     DB *db = [[DB alloc] initWithConnection:connection];
 

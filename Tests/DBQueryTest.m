@@ -24,7 +24,7 @@
     
     NSArray *columns = @[@"a", @"b", @"c"];
     XCTAssertEqualObjects([[Q(Select) select:columns] stringRepresentation],
-                          @"SELECT a, b, c FROM `aTable`", @"");
+                          @"SELECT `a`, `b`, `c` FROM `aTable`", @"");
     
     NSDictionary *update = @{ @"a": @1, @"b": @2, @"c": @3 };
     XCTAssertEqualObjects([[Q(Update) update:update] stringRepresentation],

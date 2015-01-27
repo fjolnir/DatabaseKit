@@ -32,6 +32,18 @@
                  @"TEModel's table name shouldn't be: %@", [TEModel tableName]);
 }
 
+- (void)testInsert
+{
+    TEModel *model = [TEModel new];
+    model.name = @"Foo";
+    [db registerObject:model];
+    [db saveObjects:NULL];
+    
+    TEModel *retrievedModel = [[[db[@"models"] select] where:@"UUID=%@", model.UUID] firstObject];
+    XCTAssertEqualObjects(retrievedModel.UUID, model.UUID);
+    XCTAssertEqualObjects(retrievedModel.name, model.name);
+}
+
 - (void)testDestroy
 {
     TEModel *model = [[db[@"models"] select] firstObject];
