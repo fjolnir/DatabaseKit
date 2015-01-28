@@ -225,8 +225,8 @@ NSString * const kDBUUIDKey = @"UUID";
     if(_database && _pendingQueries && [self.class.savedKeys containsObject:key]) {
         [self willChangeValueForKey:@"hasChanges"];
         _pendingQueries[key] = [self saveQueryForKey:key];
-        [self didChangeValueForKey:@"hasChanges"];
         [self.database registerDirtyObject:self];
+        [self didChangeValueForKey:@"hasChanges"];
     }
     [super didChangeValueForKey:key];
 }
