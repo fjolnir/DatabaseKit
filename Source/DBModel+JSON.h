@@ -24,6 +24,11 @@ extern NSString * const DBUUIDTransformerName;
  */
 + (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray;
 /*!
+ * Takes an array of JSON Objects, and returns an array of DBModel instances inserted into `database`;
+ * if the objects already exist in `database`, the JSON data is merged into them.
+ */
++ (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray inDatabase:(DB *)database;
+/*!
  * Creates an instance and merges the values from `JSONObject`
  */
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject;

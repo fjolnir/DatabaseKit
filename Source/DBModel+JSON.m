@@ -1,6 +1,10 @@
 #import "DBModel+JSON.h"
+#import "DB.h"
+#import "DBTable.h"
+#import "DBSelectQuery.h"
 #import "DBUtilities.h"
 #import "DBIntrospection.h"
+#import "NSCollections+DBAdditions.h"
 #import "DBISO8601DateFormatter.h"
 
 NSString * const DBDateTransformerName = @"DBDateTransformer",
@@ -43,6 +47,35 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
     NSMutableArray *objects = [NSMutableArray arrayWithCapacity:JSONArray.count];
     for(NSDictionary *JSONObject in JSONArray) {
         [objects addObject:[[self alloc] initWithJSONObject:JSONObject]];
+    }
+    return objects;
+}
+
++ (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray inDatabase:(DB *)database
+{
+    NSParameterAssert(database);
+    
+    id idKey = [self JSONKeyPathsByPropertyKey][kDBUUIDKey];
+    NSValueTransformer *UUIDTransformer = [self JSONValueTransformerForKey:kDBUUIDKey];
+    NSArray * const UUIDs = [[JSONArray valueForKey:idKey] db_map:^(id identifier) {
+        return [UUIDTransformer transformedValue:identifier];
+    }];
+    NSDictionary *JSONObjectsByUUID = [NSDictionary dictionaryWithObjects:JSONArray forKeys:UUIDs];
+    NSArray *existingObjects = [[[database[self.tableName] select]
+                                 where:@"%K IN %@", kDBUUIDKey, UUIDs] execute];
+    NSDictionary *existingObjectsByUUID = [NSDictionary dictionaryWithObjects:existingObjects
+                                                                      forKeys:[existingObjects valueForKey:kDBUUIDKey]];
+    
+    NSMutableArray *objects = [NSMutableArray arrayWithCapacity:JSONArray.count];
+    for(NSUUID *UUID in UUIDs) {
+        DBModel *object = existingObjectsByUUID[UUID];
+        if(object)
+            [object mergeValuesFromJSONObject:JSONObjectsByUUID[UUID]];
+        else {
+            object = [[self alloc] initWithJSONObject:JSONObjectsByUUID[UUID]];
+            [database registerObject:object];
+        }
+        [objects addObject:object];
     }
     return objects;
 }
