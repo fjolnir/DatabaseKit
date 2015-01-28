@@ -26,6 +26,8 @@ extern NSString * const DBUUIDTransformerName;
 /*!
  * Takes an array of JSON Objects, and returns an array of DBModel instances inserted into `database`;
  * if the objects already exist in `database`, the JSON data is merged into them.
+ *
+ * NOTE: Changes are not saved. You must manually send `saveObjects:` to `database`
  */
 + (NSArray *)objectsFromJSONArray:(NSArray *)JSONArray inDatabase:(DB *)database;
 /*!
