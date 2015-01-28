@@ -136,8 +136,17 @@ NSString * const kDBUUIDKey = @"UUID";
     if([self respondsToSelector:selector]) {
         id (*imp)(id,SEL) = (void*)[self methodForSelector:selector];
         return imp(self, selector);
-    } else
-        return nil;
+    } else {
+        // Scalar properties should not be nullable
+        DBPropertyAttributes *attrs = DBAttributesForProperty(self, class_getProperty(self, key.UTF8String));
+        BOOL const isScalar = (attrs && attrs->encoding[0] != _C_ID);
+        free(attrs);
+        if(isScalar)
+            return @[[DBNotNullConstraint new],
+                     [DBDefaultConstraint defaultConstraintWithValue:@0]];
+        else
+            return nil;
+    }
 }
 
 + (NSArray *)constraintsForUUID

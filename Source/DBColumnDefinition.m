@@ -230,7 +230,7 @@
 @implementation DBDefaultConstraint
 + (instancetype)defaultConstraintWithValue:(id)value
 {
-    NSParameterAssert(value);
+    NSParameterAssert([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]);
 
     DBDefaultConstraint *constr = [self new];
     constr->_value = value;
@@ -238,7 +238,11 @@
 }
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 {
-    [parameters addObject:_value];
-    return @"DEFAULT $1";
+    NSMutableString *str = [@"DEFAULT " mutableCopy];
+    if([_value isKindOfClass:[NSString class]])
+        [str appendFormat:@"'%@'", _value];
+    else
+        [str appendFormat:@"%@", _value];
+    return str;
 }
 @end
