@@ -132,9 +132,9 @@
     if([keyPath isEqualToString:@"hasChanges"] && [object isKindOfClass:[DBModel class]]) {
         if(![object hasChanges]) {
             [object removeObserver:self forKeyPath:@"hasChanges"];
-            @synchronized(_dirtyObjects) {
-                [_dirtyObjects removeObject:object];
-            }
+            OSSpinLockLock(&_dirtyObjectLock);
+            [_dirtyObjects removeObject:object];
+            OSSpinLockUnlock(&_dirtyObjectLock);
         }
     }
 }
