@@ -71,24 +71,20 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
         DBModel *object = existingObjectsByUUID[UUID];
         if(object)
             [object mergeValuesFromJSONObject:JSONObjectsByUUID[UUID]];
-        else
-            object = [[self alloc] _initWithJSONObject:JSONObjectsByUUID[UUID] inDatabase:database];
+        else {
+            object = [[self alloc] initWithJSONObject:JSONObjectsByUUID[UUID]];
+            [database registerObject:object];
+        }
         [objects addObject:object];
     }
     return objects;
 }
 
-- (instancetype)_initWithJSONObject:(NSDictionary *)JSONObject inDatabase:(DB *)aDatabase
-{
-    if((self = [self init])) {
-        [aDatabase registerObject:self];
-        [self mergeValuesFromJSONObject:JSONObject];
-    }
-    return self;
-}
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject
 {
-    return [self _initWithJSONObject:JSONObject inDatabase:nil];
+    if((self = [self init]))
+        [self mergeValuesFromJSONObject:JSONObject];
+    return self;
 }
 
 - (void)mergeValuesFromJSONObject:(NSDictionary *)JSONObject

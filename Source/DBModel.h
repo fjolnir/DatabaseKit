@@ -19,7 +19,7 @@ extern NSString * const kDBUUIDKey;
  */
 @interface DBModel : NSObject <NSCopying>
 @property(readonly, strong) DB *database;
-@property(readwrite, copy) NSUUID *UUID;
+@property(readonly, copy) NSUUID *UUID;
 @property(readonly, getter=isSaved) BOOL saved;
 @property(readonly) BOOL hasChanges;
 

@@ -95,6 +95,7 @@ NSString * const kDBUUIDKey = @"UUID";
         DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
             NSString *key = @(attrs->name);
             
+            NSLog(@"%@: %@", self, key);
             if(!attrs->dynamic &&
                ![DBModel instancesRespondToSelector:attrs->getter] &&
                ![excludedKeys containsObject:key])
@@ -169,7 +170,7 @@ NSString * const kDBUUIDKey = @"UUID";
 {
     if((self = [super init])) {
         _dbLock = OS_SPINLOCK_INIT;
-        self.UUID = [NSUUID UUID];
+        _UUID = [NSUUID UUID];
     }
     return self;
 }
@@ -399,9 +400,10 @@ NSString * const kDBUUIDKey = @"UUID";
 }
 - (BOOL)isEqual:(id)anObject
 {
-    return [anObject isMemberOfClass:self.class]
-        && self.database == [anObject database]
-        && [_UUID isEqual:[anObject UUID]];
+    return self == anObject
+        || ([anObject isMemberOfClass:self.class]
+            && self.database == [anObject database]
+            && [_UUID isEqual:[anObject UUID]]);
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone
