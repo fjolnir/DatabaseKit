@@ -38,7 +38,7 @@
 		C7D5040B1809B1D800818DBF /* DBSQLiteConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504051809B1D800818DBF /* DBSQLiteConnectionTest.m */; };
 		C7D5040C1809B1D800818DBF /* DBUnitTestUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D504071809B1D800818DBF /* DBUnitTestUtilities.m */; };
 		C7D839931A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D839911A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h */; };
-		C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D839911A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D839911A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h */; };
 		C7D839951A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C7D839911A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h */; };
 		C7D839961A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D839921A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m */; };
 		C7D839971A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D839921A3FC9AB00FC8F44 /* NSCollections+DBAdditions.m */; };
@@ -632,7 +632,6 @@
 				1D362A9E1A5F738F00B453F7 /* DBModel+JSON.h in Headers */,
 				C7D876101A3E67E300A490E0 /* DBConnection.h in Headers */,
 				C7D876431A3E67E300A490E0 /* DBColumnDefinition.h in Headers */,
-				C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876BB1A3E67E300A490E0 /* NSString+DBAdditions.h in Headers */,
 				C7D876D91A3EA55D00A490E0 /* DBIntrospection.h in Headers */,
 				C7D8764F1A3E67E300A490E0 /* DBModel+Private.h in Headers */,
@@ -642,6 +641,7 @@
 				C7D876AC1A3E67E300A490E0 /* DBOrderedDictionary.h in Headers */,
 				C706E67B1A595ECA006CC1FB /* DBPointerCollectionAdditions.h in Headers */,
 				C7D876911A3E67E300A490E0 /* DBInflector.h in Headers */,
+				C7D839941A3FC9AB00FC8F44 /* NSCollections+DBAdditions.h in Headers */,
 				C7D876B51A3E67E300A490E0 /* NSPredicate+DBSQLRepresentable.h in Headers */,
 				C7D876B21A3E67E300A490E0 /* DBUtilities.h in Headers */,
 			);
