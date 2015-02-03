@@ -71,25 +71,29 @@ NSString * const DBDateTransformerName = @"DBDateTransformer",
         DBModel *object = existingObjectsByUUID[UUID];
         if(object)
             [object mergeValuesFromJSONObject:JSONObjectsByUUID[UUID]];
-        else {
-            object = [[self alloc] initWithJSONObject:JSONObjectsByUUID[UUID]];
-            [database registerObject:object];
-        }
+        else
+            object = [[self alloc] _initWithJSONObject:JSONObjectsByUUID[UUID] inDatabase:database];
         [objects addObject:object];
     }
     return objects;
 }
 
+- (instancetype)_initWithJSONObject:(NSDictionary *)JSONObject inDatabase:(DB *)aDatabase
+{
+    if((self = [self init])) {
+        [aDatabase registerObject:self];
+        [self mergeValuesFromJSONObject:JSONObject];
+    }
+    return self;
+}
 - (instancetype)initWithJSONObject:(NSDictionary *)JSONObject
 {
-    if((self = [self init]))
-        [self mergeValuesFromJSONObject:JSONObject];
-    return self;
+    return [self _initWithJSONObject:JSONObject inDatabase:nil];
 }
 
 - (void)mergeValuesFromJSONObject:(NSDictionary *)JSONObject
 {
-   NSDictionary *JSONKeyPaths = [self.class JSONKeyPathsByPropertyKey];
+    NSDictionary *JSONKeyPaths = [self.class JSONKeyPathsByPropertyKey];
     for(NSString *key in self.class.savedKeys) {
         NSString *JSONPath = JSONKeyPaths[key];
         if(!JSONPath)
