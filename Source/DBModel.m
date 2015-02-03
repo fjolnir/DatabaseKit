@@ -94,7 +94,6 @@ NSString * const kDBUUIDKey = @"UUID";
         DBIteratePropertiesForClass(self, ^(DBPropertyAttributes *attrs) {
             NSString *key = @(attrs->name);
             
-            NSLog(@"%@: %@", self, key);
             if(!attrs->dynamic &&
                ![DBModel instancesRespondToSelector:attrs->getter] &&
                ![excludedKeys containsObject:key])
