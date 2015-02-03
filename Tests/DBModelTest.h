@@ -8,8 +8,7 @@
 @property NSURL *url;
 @end
 
-DBRelatable(TEAnimal)
-@interface TEAnimal : DBModel
+@DBRelatable(TEAnimal) : DBModel
 @property NSString *species, *name;
 @end
 

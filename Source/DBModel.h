@@ -8,8 +8,9 @@ extern NSString * const kDBUUIDKey;
  * Makes it possible to create collection relationships with `klass`
  */
 #define DBRelatable(klass) \
-    @protocol klass @end \
-    @interface NSSet (klass) <klass> @end
+    protocol klass @end \
+    @interface NSSet (klass) <klass> @end \
+    @interface klass
 
 /*!
  * An abstract base class for objects that should model a table.\n
