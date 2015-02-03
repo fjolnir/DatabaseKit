@@ -56,7 +56,7 @@ extern NSString * const kDBUUIDKey;
 /*! Returns the table name of the record based on the class name by converting it to lowercase, pluralizing it and removing the class prefix if one is set. */
 + (NSString *)tableName;
 
-/*! Creates a query with a WHERE clause specifying the record */
+/*! Creates a query with a WHERE clause specifying the object */
 - (DBQuery *)query;
 
 /*! Returns a query object for selecting rows corresponding to a key */
