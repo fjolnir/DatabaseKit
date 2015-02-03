@@ -355,6 +355,18 @@ NSString * const kDBUUIDKey = @"UUID";
 {
     return [_database[self.class.tableName] where:@"%K = %@", kDBUUIDKey, _savedUUID ?: _UUID];
 }
+- (DBSelectQuery *)selectQueryForKey:(NSString *)key
+{
+    NSParameterAssert(key);
+    
+    DBPropertyAttributes *attrs = DBAttributesForProperty(self.class, class_getProperty(self.class, [key UTF8String]));
+    BOOL isPlural;
+    Class relatedKlass;
+    if([self.class _attributeIsRelationship:attrs isPlural:&isPlural relatedClass:&relatedKlass])
+        return [self _selectQueryForRelatedKey:key class:relatedKlass isPlural:isPlural];
+    else
+        return [self.query select:@[key]];
+}
 - (DBSelectQuery *)_selectQueryForRelatedKey:(NSString *)key class:(Class)relatedKlass isPlural:(BOOL)isPlural
 {
     NSString *joinTableName = [self.class joinTableNameForKey:key];

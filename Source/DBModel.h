@@ -2,7 +2,7 @@
 
 extern NSString * const kDBUUIDKey;
 
-@class DB, DBQuery, DBTable, DBWriteQuery, DBResult;
+@class DB, DBQuery, DBSelectQuery, DBTable, DBWriteQuery, DBResult;
 
 /*!
  * Makes it possible to create collection relationships with `klass`
@@ -59,4 +59,6 @@ extern NSString * const kDBUUIDKey;
 /*! Creates a query with a WHERE clause specifying the record */
 - (DBQuery *)query;
 
+/*! Returns a query object for selecting rows corresponding to a key */
+- (DBSelectQuery *)selectQueryForKey:(NSString *)key;
 @end
