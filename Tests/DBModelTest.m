@@ -117,6 +117,32 @@
     XCTAssertEqualObjects(johnFetched.pets, john.pets);
 }
 
+- (void)testRelationshipPredicate
+{
+    TEPerson *john = [TEPerson new];
+    john.name = @"John Smith";
+    TEAnimal *fido = [TEAnimal new];
+    fido.name = @"Fido";
+    TEAnimal *clarus = [TEAnimal new];
+    clarus.name = @"Clarus";
+    
+    john.pets = [NSSet setWithObjects:fido, clarus, nil];
+    [db registerObject:john];
+    [db registerObject:fido];
+    [db registerObject:clarus];
+    [db saveObjects:NULL];
+    
+    TEPerson *johnFetched = [[db[@"people"] where:@"name=%@", john.name] firstObject];
+    NSSet *fidoSet = [johnFetched valueForKey:@"pets"
+                            matchingPredicate:[NSPredicate predicateWithFormat:@"name=%@", fido.name]];
+    XCTAssertEqual(fidoSet.count, 1);
+    XCTAssertEqualObjects(fido, fidoSet.anyObject);
+    
+    NSArray *emptyArray = [johnFetched valueForKey:@"pets"
+                                matchingPredicate:[NSPredicate predicateWithFormat:@"name=\"Foobar\""]];
+    XCTAssertEqual(emptyArray.count, 0);
+}
+
 - (void)testJSONInit
 {
     NSDictionary *JSONObject = @{ @"identifier": [[NSUUID UUID] UUIDString],
