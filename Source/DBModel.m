@@ -64,13 +64,12 @@ NSString * const kDBUUIDKey = @"UUID";
             method_setImplementation(getter, imp_implementationWithBlock(^(DBModel *obj) {
                 DBModel *value = object_getIvar(obj, attrs->ivar);
                 if(!value) {
-                    NSString *joinTableName = [self joinTableNameForKey:key];
-                    DBSelectQuery *q = [[obj.database[relatedKlass.tableName]
-                                         select:@[[NSString stringWithFormat:@"%@.*", relatedKlass.tableName]]]
-                                        innerJoin:obj.database[joinTableName] on:@"%K.%K=%@", joinTableName, [obj.class.tableName db_singularizedString], obj.UUID];
+                    DBSelectQuery *query = [obj _selectQueryForRelatedKey:key
+                                                                    class:relatedKlass
+                                                                 isPlural:pluralRelationship];
                     value = pluralRelationship
-                          ? [NSSet setWithArray:[q execute]]
-                          : [q firstObject];
+                          ? [NSSet setWithArray:[query execute]]
+                          : [query firstObject];
                     object_setIvar(obj, attrs->ivar, value);
                 }
                 return value;
@@ -355,6 +354,15 @@ NSString * const kDBUUIDKey = @"UUID";
 - (DBQuery *)query
 {
     return [_database[self.class.tableName] where:@"%K = %@", kDBUUIDKey, _savedUUID ?: _UUID];
+}
+- (DBSelectQuery *)_selectQueryForRelatedKey:(NSString *)key class:(Class)relatedKlass isPlural:(BOOL)isPlural
+{
+    NSString *joinTableName = [self.class joinTableNameForKey:key];
+    DB *db = self.database;
+    return [[[db[relatedKlass.tableName]
+             select:@[[NSString stringWithFormat:@"%@.*", relatedKlass.tableName]]]
+            distinct:YES]
+            innerJoin:db[joinTableName] on:@"%K.%K=%@", joinTableName, [self.class.tableName db_singularizedString], _UUID];
 }
 
 #pragma mark -
