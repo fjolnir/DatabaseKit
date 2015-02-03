@@ -377,6 +377,35 @@ NSString * const kDBUUIDKey = @"UUID";
             innerJoin:db[joinTableName] on:@"%K.%K=%@", joinTableName, [self.class.tableName db_singularizedString], _UUID];
 }
 
+- (id)valueForKey:(NSString *)key matchingPredicate:(NSPredicate *)predicate
+{
+    DBPropertyAttributes * const keyAttrs = DBAttributesForProperty(self.class, class_getProperty(self.class, key.UTF8String));
+    NSAssert(keyAttrs != nil, @"%@ is not KVC compliant for '%@'", self.class, key);
+    
+    id result;
+    Class relatedClass;
+    BOOL isPlural;
+    if([self.class _attributeIsRelationship:keyAttrs isPlural:&isPlural relatedClass:&relatedClass]) {
+        if(!isPlural)
+            result = object_getIvar(self, keyAttrs->ivar)
+                  ?: [[self.database[relatedClass.tableName] select] withPredicate:predicate];
+        else {
+            result = object_getIvar(self, keyAttrs->ivar);
+            if(![predicate evaluateWithObject:result]) {
+                return [NSSet setWithArray:[[[self _selectQueryForRelatedKey:key class:relatedClass isPlural:isPlural]
+                         withPredicate:predicate]
+                        execute]];
+            }
+        }
+    } else {
+        result = object_getIvar(self, keyAttrs->ivar);
+        if(![predicate evaluateWithObject:result])
+            result = nil;
+    }
+    free(keyAttrs);
+    return result;
+}
+
 #pragma mark -
 
 + (NSString *)tableName

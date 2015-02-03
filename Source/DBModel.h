@@ -61,4 +61,7 @@ extern NSString * const kDBUUIDKey;
 
 /*! Returns a query object for selecting rows corresponding to a key */
 - (DBSelectQuery *)selectQueryForKey:(NSString *)key;
+
+/*! Returns value for key filtered by `predicate`; useful for filtering plural relationships */
+- (id)valueForKey:(NSString *)key matchingPredicate:(NSPredicate *)predicate;
 @end
