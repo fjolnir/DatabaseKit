@@ -390,7 +390,9 @@ NSString * const kDBUUIDKey = @"UUID";
                   ?: [[self.database[relatedClass.tableName] select] withPredicate:predicate];
         else {
             result = object_getIvar(self, keyAttrs->ivar);
-            if(![predicate evaluateWithObject:result]) {
+            if([result isKindOfClass:[NSSet class]])
+                return [result filteredSetUsingPredicate:predicate];
+            else {
                 return [NSSet setWithArray:[[[self _selectQueryForRelatedKey:key class:relatedClass isPlural:isPlural]
                          withPredicate:predicate]
                         execute]];
