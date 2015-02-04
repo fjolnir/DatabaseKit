@@ -63,5 +63,5 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 @interface DBDefaultConstraint : DBConstraint
 @property(readonly) id value;
 
-+ (instancetype)defaultConstraintWithValue:(id)value;
++ (instancetype)defaultConstraintWithValue:(id<NSObject, NSCoding>)value;
 @end

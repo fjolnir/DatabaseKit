@@ -54,13 +54,15 @@
 
 - (NSUInteger)hash
 {
-    return [_name hash];
+    return [_name hash] + _type;
 }
 
 - (BOOL)isEqual:(id)object
 {
     if([object isKindOfClass:self.class])
-        return [_name isEqual:[object name]];
+        return DBEqual(_name, [object name])
+            && _type == [(DBColumnDefinition *)object type]
+            && DBEqual(_constraints, [object constraints]);
     else
         return NO;
 }
@@ -90,6 +92,15 @@
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
 {
     return nil;
+}
+
+- (NSUInteger)hash
+{
+    return self.class.hash;
+}
+- (BOOL)isEqual:(id)object
+{
+    return [object class] == self.class;
 }
 @end
 
@@ -197,6 +208,27 @@
     return constr;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [self init])) {
+        _tableName    = [aDecoder decodeObjectForKey:@"tableName"];
+        _columnName   = [aDecoder decodeObjectForKey:@"columnName"];
+        _deferred     = [aDecoder decodeBoolForKey:@"deferred"];
+        _deleteAction = [aDecoder decodeIntegerForKey:@"deleteAction"];
+        _updateAction = [aDecoder decodeIntegerForKey:@"updateAction"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_tableName forKey:@"tableName"];
+    [aCoder encodeObject:_columnName forKey:@"columnName"];
+    [aCoder encodeBool:_deferred forKey:@"deferred"];
+    [aCoder encodeInteger:_deleteAction forKey:@"deleteAction"];
+    [aCoder encodeInteger:_updateAction forKey:@"updateAction"];
+}
+
 + (NSUInteger)priority
 {
     return 1;
@@ -225,10 +257,24 @@
         [sql appendString:@" DEFERRABLE INITIALLY DEFERRED"];
     return sql;
 }
+
+- (NSUInteger)hash
+{
+    return _tableName.hash ^ _columnName.hash;
+}
+- (BOOL)isEqual:(id)object
+{
+    return [object isKindOfClass:self.class]
+        && DBEqual([object tableName], _tableName)
+        && DBEqual([object columnName], _columnName)
+        && [object deferred] == _deferred
+        && [object updateAction] == _updateAction
+        && [object deleteAction] == _deleteAction;
+}
 @end
 
 @implementation DBDefaultConstraint
-+ (instancetype)defaultConstraintWithValue:(id)value
++ (instancetype)defaultConstraintWithValue:(id<NSObject, NSCoding>)value
 {
     NSParameterAssert([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]);
 
@@ -236,6 +282,19 @@
     constr->_value = value;
     return constr;
 }
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if((self = [self init])) {
+        _value = [aDecoder decodeObjectForKey:@"value"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_value forKey:@"value"];
+}
+
 - (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
 {
     NSMutableString *str = [@"DEFAULT " mutableCopy];
@@ -244,5 +303,15 @@
     else
         [str appendFormat:@"%@", _value];
     return str;
+}
+
+- (NSUInteger)hash
+{
+    return [_value hash];
+}
+- (BOOL)isEqual:(id)object
+{
+    return [object isKindOfClass:self.class]
+        && DBEqual([object value], _value);
 }
 @end
