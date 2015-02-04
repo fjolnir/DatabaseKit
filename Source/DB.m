@@ -71,19 +71,15 @@
 {
     OSSpinLockLock(&_dirtyObjectLock);
     if(_dirtyObjects.count > 0) {
-        NSSet *frozenDirtyObjects = [_dirtyObjects copy];
-        [_dirtyObjects removeAllObjects];
-        OSSpinLockUnlock(&_dirtyObjectLock);
-
         return [_connection transaction:^{
-            for(DBModel *obj in frozenDirtyObjects) {
+            for(DBModel *obj in _dirtyObjects) {
                 if(![obj _executePendingQueriesReplacingExisting:replaceExisting error:outErr]) {
-                    OSSpinLockLock(&_dirtyObjectLock);
-                    [_dirtyObjects unionSet:frozenDirtyObjects];
                     OSSpinLockUnlock(&_dirtyObjectLock);
                     return DBTransactionRollBack;
                 }
             }
+            [_dirtyObjects removeAllObjects];
+            OSSpinLockUnlock(&_dirtyObjectLock);
             return DBTransactionCommit;
         } error:outErr];
     }
