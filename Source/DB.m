@@ -70,7 +70,7 @@
 - (BOOL)saveObjectsReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr;
 {
     OSSpinLockLock(&_dirtyObjectLock);
-    if(_dirtyObjects.count > 0) {
+    if(_connection && _dirtyObjects.count > 0) {
         return [_connection transaction:^{
             for(DBModel *obj in _dirtyObjects) {
                 if(![obj _executePendingQueriesReplacingExisting:replaceExisting error:outErr]) {
