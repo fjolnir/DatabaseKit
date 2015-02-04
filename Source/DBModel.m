@@ -381,6 +381,9 @@ NSString * const kDBUUIDKey = @"UUID";
     DBPropertyAttributes * const keyAttrs = DBAttributesForProperty(self.class, class_getProperty(self.class, key.UTF8String));
     NSAssert(keyAttrs != nil, @"%@ is not KVC compliant for '%@'", self.class, key);
     
+    if(!predicate)
+        return [self valueForKey:key];
+    
     id result;
     Class relatedClass;
     BOOL isPlural;
