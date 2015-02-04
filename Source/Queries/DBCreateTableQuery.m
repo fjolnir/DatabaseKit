@@ -2,6 +2,7 @@
 #import "DBCreateTableQuery.h"
 #import "DBSelectQuery.h"
 #import "DBColumnDefinition.h"
+#import "NSCollections+DBAdditions.h"
 
 @implementation DBCreateTableQuery
 
@@ -26,7 +27,12 @@
     query->_queryToDeriveFrom = queryToDeriveFrom;
     return query;
 }
-
+- (instancetype)constraints:(NSArray *)constraints;
+{
+    DBCreateTableQuery *query = [self copy];
+    query->_constraints = constraints;
+    return query;
+}
 - (BOOL)hasColumnNamed:(NSString *)name
 {
     if(!_columns)
@@ -47,13 +53,16 @@
     [q appendString:_tableName];
     [q appendString:@"`"];
     
-    if(_columns) {
+    if(_columns.count > 0 || _constraints.count > 0) {
         [q appendString:@"("];
-        for(NSUInteger i = 0; i < _columns.count; ++i) {
-            if(i > 0)
-                [q appendString:@", "];
-            [q appendString:[_columns[i] sqlRepresentationForQuery:self withParameters:p]];
-        }
+        [q appendString:
+         [[[_columns db_map:^(DBColumnDefinition *column) {
+            return [column sqlRepresentationForQuery:self withParameters:p];
+         }]
+         arrayByAddingObjectsFromArray:
+         [_constraints db_map:^(id<DBTableConstraint> constraint) {
+            return [constraint tableConstraintSQLRepresentation];
+         }]] componentsJoinedByString:@", "]];
         [q appendString:@")"];
     } else if(_queryToDeriveFrom) {
         [q appendString:@" AS "];
@@ -66,8 +75,9 @@
 - (instancetype)copyWithZone:(NSZone *)zone
 {
     DBCreateTableQuery *copy = [super copyWithZone:zone];
-    copy->_tableName = _tableName;
-    copy->_columns   = _columns;
+    copy->_tableName   = _tableName;
+    copy->_columns     = _columns;
+    copy->_constraints = _constraints;
     return copy;
 }
 

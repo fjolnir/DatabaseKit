@@ -3,6 +3,8 @@
 #import "DBConnection.h"
 #import "DBQuery.h"
 #import "DBUtilities.h"
+#import "NSString+DBAdditions.h"
+#import "NSCollections+DBAdditions.h"
 
 @implementation DBColumnDefinition
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints
@@ -47,7 +49,7 @@
     for(NSUInteger i = 0; i < sortedConstraints.count; ++i) {
         if(i > 0)
             [sql appendString:@" "];
-        [sql appendString:[sortedConstraints[i] sqlRepresentationForQuery:query withParameters:parameters]];
+        [sql appendString:[sortedConstraints[i] columnConstraintSQLRepresentation]];
     }
     return sql;
 }
@@ -89,10 +91,6 @@
     DBNotImplemented();
     return NO;
 }
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
-{
-    return nil;
-}
 
 - (NSUInteger)hash
 {
@@ -105,20 +103,34 @@
 @end
 
 @implementation DBNotNullConstraint
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters
+- (NSString *)columnConstraintSQLRepresentation
 {
     return @"NOT NULL";
 }
 @end
 
 @implementation DBUniqueConstraint
++ (instancetype)uniqueConstraintWithColumnNames:(NSArray *)columns
+{
+    DBUniqueConstraint * const constr = [self new];
+    constr->_columnNames = columns;
+    return constr;
+}
 + (NSUInteger)priority
 {
     return 2;
 }
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
+- (NSString *)columnConstraintSQLRepresentation;
 {
     return @"UNIQUE";
+}
+- (NSString *)tableConstraintSQLRepresentation
+{
+    NSAssert(_columnNames.count > 0, @"UNIQUE constraints on tables must specify columns");
+    return [NSString stringWithFormat:@"UNIQUE(`%@`)",
+            [[_columnNames db_map:^(NSString *columnName) {
+                return columnName;
+            }] componentsJoinedByString:@"`, `"]];
 }
 @end
 
@@ -151,7 +163,7 @@
     [aCoder encodeInteger:_conflictAction forKey:@"conflictAction"];
 }
 
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
+- (NSString *)columnConstraintSQLRepresentation;
 {
     NSMutableString *sql = [NSMutableString stringWithString:@"PRIMARY KEY"];
     switch(_order) {
@@ -234,7 +246,7 @@
     return 1;
 }
 
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
+- (NSString *)columnConstraintSQLRepresentation
 {
     NSMutableString *sql = [NSMutableString stringWithFormat:@"REFERENCES %@(%@)", _tableName, _columnName];
     switch(_deleteAction) {
@@ -295,7 +307,7 @@
     [aCoder encodeObject:_value forKey:@"value"];
 }
 
-- (NSString *)sqlRepresentationForQuery:(DBQuery *)query withParameters:(NSMutableArray *)parameters;
+- (NSString *)columnConstraintSQLRepresentation;
 {
     NSMutableString *str = [@"DEFAULT " mutableCopy];
     if([_value isKindOfClass:[NSString class]])

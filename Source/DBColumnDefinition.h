@@ -27,17 +27,27 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
 + (instancetype)columnWithName:(NSString *)name type:(DBType)type constraints:(NSArray *)constraints;
 @end
 
-@interface DBConstraint : NSObject <DBSQLRepresentable, NSCoding>
+#pragma mark - Constraints
+@protocol DBColumnConstraint <NSObject>
+- (NSString *)columnConstraintSQLRepresentation;
+@end
+@protocol DBTableConstraint <NSObject>
+- (NSString *)tableConstraintSQLRepresentation;
+@end
+
+@interface DBConstraint : NSObject <NSCoding>
 + (NSUInteger)priority;
 @end
 
-@interface DBNotNullConstraint : DBConstraint
+@interface DBNotNullConstraint : DBConstraint <DBColumnConstraint>
 @end
 
-@interface DBUniqueConstraint : DBConstraint
+@interface DBUniqueConstraint : DBConstraint <DBColumnConstraint, DBTableConstraint>
+@property(readonly) NSArray *columnNames;
++ (instancetype)uniqueConstraintWithColumnNames:(NSArray *)columns;
 @end
 
-@interface DBPrimaryKeyConstraint : DBConstraint
+@interface DBPrimaryKeyConstraint : DBConstraint <DBColumnConstraint>
 @property(readonly) DBOrder order;
 @property(readonly) BOOL autoIncrement;
 @property(readonly) DBConflictAction conflictAction;
@@ -47,7 +57,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
                                    onConflict:(DBConflictAction)onConflict;
 @end
 
-@interface DBForeignKeyConstraint : DBConstraint
+@interface DBForeignKeyConstraint : DBConstraint <DBColumnConstraint>
 @property(readonly) NSString *tableName;
 @property(readonly) NSString *columnName;
 @property(readonly) BOOL deferred;
@@ -60,7 +70,7 @@ typedef NS_ENUM(NSUInteger, DBConflictAction) {
                                      onUpdate:(DBForeignKeyAction)onUpdate;
 @end
 
-@interface DBDefaultConstraint : DBConstraint
+@interface DBDefaultConstraint : DBConstraint <DBColumnConstraint>
 @property(readonly) id value;
 
 + (instancetype)defaultConstraintWithValue:(id<NSObject, NSCoding>)value;
