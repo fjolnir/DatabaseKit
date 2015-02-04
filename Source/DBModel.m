@@ -396,9 +396,11 @@ NSString * const kDBUUIDKey = @"UUID";
             if([result isKindOfClass:[NSSet class]])
                 return [result filteredSetUsingPredicate:predicate];
             else {
-                return [NSSet setWithArray:[[[self _selectQueryForRelatedKey:key class:relatedClass isPlural:isPlural]
-                         withPredicate:predicate]
-                        execute]];
+                DBSelectQuery *query = [self _selectQueryForRelatedKey:key class:relatedClass isPlural:isPlural];
+                query = query.where
+                      ? [query withPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:@[query.where, predicate]]]
+                      : [query withPredicate:predicate];
+                return [NSSet setWithArray:[query execute]];
             }
         }
     } else {
