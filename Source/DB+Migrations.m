@@ -130,7 +130,7 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
             }
         }
         return DBTransactionCommit;
-    }];
+    } error:outErr];
 }
 
 - (DBTable *)migrationTable

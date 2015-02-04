@@ -85,7 +85,7 @@
                 }
             }
             return DBTransactionCommit;
-        }];
+        } error:outErr];
     }
     else {
         OSSpinLockUnlock(&_dirtyObjectLock);

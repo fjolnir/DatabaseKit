@@ -94,7 +94,7 @@ typedef DBTransactionOperation (^DBTransactionBlock)();
 - (NSDictionary *)columnsForTable:(NSString *)tableName;
 
 /*! Executes a block wrapped in a transaction */
-- (BOOL)transaction:(DBTransactionBlock)aBlock;
+- (BOOL)transaction:(DBTransactionBlock)aBlock error:(NSError **)outErr;
 /*! Begins a transaction (in most cases, using -transaction: is preferred) */
 - (BOOL)beginTransaction:(NSError **)outErr;
 /*! Rolls back a transaction (in most cases, using -transaction: is preferred) */

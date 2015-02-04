@@ -260,7 +260,7 @@ NSString * const DBQueryException = @"DBQueryException";
                         return DBTransactionRollBack;
                 }
                 return DBTransactionCommit;
-            }];
+            } error:outErr];
     }
 }
 

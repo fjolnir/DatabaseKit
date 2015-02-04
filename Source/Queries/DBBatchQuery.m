@@ -36,13 +36,13 @@
 - (DBResult *)rawExecuteOnConnection:(DBConnection *)connection error:(NSError *__autoreleasing *)outErr
 {
     __block DBResult *result;
-    [connection transaction:^{
+    BOOL successful = [connection transaction:^{
         result = [super rawExecuteOnConnection:connection error:outErr];
         return [result step:outErr] == DBResultStateAtEnd
                ? DBTransactionCommit
                : DBTransactionRollBack;
-    }];
-    return result;
+    } error:outErr];
+    return successful ? result : nil;
 }
 @end
 

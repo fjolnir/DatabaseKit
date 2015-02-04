@@ -86,21 +86,21 @@ static NSMutableArray *_ConnectionClasses;
     return NO;
 }
 
-- (BOOL)transaction:(DBTransactionBlock)aBlock
+- (BOOL)transaction:(DBTransactionBlock)aBlock error:(NSError **)outErr
 {
     @try {
-        if(![self beginTransaction:NULL])
+        if(![self beginTransaction:outErr])
             return NO;
         switch(aBlock()) {
             case DBTransactionRollBack:
-                [self rollBack:NULL];
+                [self rollBack:outErr];
                 return NO;
             case DBTransactionCommit:
-                return [self endTransaction:NULL];
+                return [self endTransaction:outErr];
         }
     }
     @catch(NSException *e) {
-        [self rollBack:NULL];
+        [self rollBack:outErr];
         [e raise];
         return NO;
     }

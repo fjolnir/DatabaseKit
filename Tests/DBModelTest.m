@@ -68,7 +68,7 @@
     [first.database.connection transaction:^{
         first.name = newName;
         return DBTransactionCommit;
-    }];
+    } error:NULL];
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
 
