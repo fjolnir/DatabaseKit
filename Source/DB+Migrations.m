@@ -28,8 +28,9 @@ static NSString * const kDBMigrationTableName = @"DBKitSchemaInfo";
             BOOL pluralRelationship;
             Class relatedKlass;
             if([klass _attributeIsRelationship:keyAttrs isPlural:&pluralRelationship relatedClass:&relatedKlass]) {
-                [queries addObject:[[[self create]
+                [queries addObject:[[[[self create]
                                     table:[klass joinTableNameForKey:key]]
+                              constraints:@[[DBUniqueConstraint uniqueConstraintWithColumnNames:@[[[klass tableName] db_singularizedString], key]]]]
                                     columns:@[
                     [DBColumnDefinition columnWithName:[[klass tableName] db_singularizedString]
                                                   type:DBTypeText
