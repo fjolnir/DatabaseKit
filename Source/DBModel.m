@@ -173,30 +173,39 @@ NSString * const kDBUUIDKey = @"UUID";
     return self;
 }
 
-- (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result
++ (instancetype)objectInDatabase:(DB *)aDB result:(DBResult *)result
 {
-    NSParameterAssert(aDB);
+    NSUUID *UUID = [result valueOfColumnNamed:kDBUUIDKey];
+    DBModel *object = [aDB objectWithUUID:UUID ofModelClass:self];
+    object.savedUUID = UUID;
+    [object mergeValuesFromResult:result];
+    [object->_pendingQueries removeAllObjects];
+    return object;
+}
 
-    if((self = [self init])) {
-        NSArray *columns = result.columns;
-        for(NSUInteger i = 0; i < columns.count; ++i) {
-            id value = [result valueOfColumnAtIndex:i];
-            if([value isKindOfClass:[NSData class]]) {
-                DBPropertyAttributes *attrs = DBAttributesForProperty(self.class,
-                                                                      class_getProperty(self.class, [columns[i] UTF8String]));
-                if(attrs && DBPropertyConformsToProtocol(attrs, @protocol(NSCoding)))
-                    value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
-                free(attrs);
-            }
-
-            [self setValue:(value == [NSNull null]) ? nil : value
-                    forKey:columns[i]];
-        }
-        _savedUUID = _UUID;
-
-        self.database = aDB;
-    }
+- (instancetype)initWithUUID:(NSUUID *)UUID
+{
+    if((self = [self init]))
+        _UUID = UUID;
     return self;
+}
+
+- (void)mergeValuesFromResult:(DBResult *)result
+{
+    NSArray *columns = result.columns;
+    for(NSUInteger i = 0; i < columns.count; ++i) {
+        id value = [result valueOfColumnAtIndex:i];
+        if([value isKindOfClass:[NSData class]]) {
+            DBPropertyAttributes *attrs = DBAttributesForProperty(self.class,
+                                                                  class_getProperty(self.class, [columns[i] UTF8String]));
+            if(attrs && DBPropertyConformsToProtocol(attrs, @protocol(NSCoding)))
+                value = [NSKeyedUnarchiver unarchiveObjectWithData:value];
+            free(attrs);
+        }
+        
+        [self setValue:(value == [NSNull null]) ? nil : value
+                forKey:columns[i]];
+    }
 }
 
 - (DB *)database

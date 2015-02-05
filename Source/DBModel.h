@@ -18,7 +18,7 @@ extern NSString * const kDBUUIDKey;
  * if a column with the same name is present.
  */
 @interface DBModel : NSObject <NSCopying>
-@property(readonly, strong) DB *database;
+@property(readonly, weak) DB *database;
 @property(readonly, copy) NSUUID *UUID;
 @property(readonly, getter=isSaved) BOOL saved;
 @property(readonly) BOOL hasChanges;
@@ -44,6 +44,9 @@ extern NSString * const kDBUUIDKey;
  * define a method with a name like: `-constraintsForMyKey`
  */
 + (NSArray *)constraintsForKey:(NSString *)key;
+
+/*! Returns an object initialized with `UUID` */
+- (instancetype)initWithUUID:(NSUUID *)UUID;
 
 /*!
  * Returns a query to use to save a given key to the database.

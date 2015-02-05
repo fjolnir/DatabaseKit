@@ -1,5 +1,6 @@
 #import "DBModel+JSON.h"
-#import "DB.h"
+#import "DBModel+Private.h"
+#import "DB+Private.h"
 #import "DBTable.h"
 #import "DBSelectQuery.h"
 #import "DBUtilities.h"

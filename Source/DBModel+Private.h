@@ -3,7 +3,7 @@
 
 /*! @cond IGNORE */
 @interface DBModel ()
-@property(readwrite, strong) DB *database;
+@property(readwrite, weak) DB *database;
 @property(readwrite, strong) NSUUID *savedUUID;
 @property(readonly) NSDictionary *pendingQueries;
 
@@ -12,7 +12,7 @@
                         isPlural:(BOOL *)outIsPlural
                     relatedClass:(Class *)outClass;
 
-- (instancetype)initWithDatabase:(DB *)aDB result:(DBResult *)result;
++ (instancetype)objectInDatabase:(DB *)aDB result:(DBResult *)result;
 - (BOOL)_executePendingQueriesReplacingExisting:(BOOL const)replaceExisting error:(NSError **)outErr;
 @end
 /*! @endcond */

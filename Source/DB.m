@@ -10,7 +10,9 @@
     DBConnection *_connection;
     NSMutableSet *_dirtyObjects;
     NSMutableDictionary *_tables;
-    OSSpinLock _tableLock, _dirtyObjectLock;
+    NSMapTable *_liveObjects;
+    OSSpinLock _tableLock, _dirtyObjectLock, _liveObjectLock;
+    dispatch_queue_t _objectModificationQueue;
 }
 
 + (DB *)withURL:(NSURL *)URL
@@ -27,14 +29,18 @@
 {
     if((self = [super init])) {
         _tableLock       = OS_SPINLOCK_INIT;
+        _liveObjectLock  = OS_SPINLOCK_INIT;
         _dirtyObjectLock = OS_SPINLOCK_INIT;
+        
+        _objectModificationQueue = dispatch_queue_create("DB.objectModificationQueue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
 - (instancetype)initWithConnection:(DBConnection *)aConnection
 {
     if((self = [self init])) {
-        _connection = aConnection;
+        _connection   = aConnection;
+        _liveObjects  = [NSMapTable strongToWeakObjectsMapTable];
         _dirtyObjects = [NSMutableSet new];
     }
     return self && _connection ? self : nil;
@@ -93,8 +99,27 @@
 {
     NSParameterAssert(object && !object.database);
 
+    OSSpinLockLock(&_liveObjectLock);
     object.database = self;
-    [self registerDirtyObject:object];
+    [_liveObjects setObject:object forKey:object.UUID];
+    if(!object.saved || object.pendingQueries.count > 0)
+        [self registerDirtyObject:object];
+    OSSpinLockUnlock(&_liveObjectLock);
+}
+
+- (id)objectWithUUID:(NSUUID *)UUID ofModelClass:(Class)aClass
+{
+    NSParameterAssert(UUID && [aClass isSubclassOfClass:[DBModel class]]);
+    
+    OSSpinLockLock(&_liveObjectLock);
+    DBModel *obj = [_liveObjects objectForKey:UUID];
+    if(!obj) {
+        obj = [[aClass alloc] initWithUUID:UUID];
+        obj.database = self;
+        [_liveObjects setObject:obj forKey:UUID];
+    }
+    OSSpinLockUnlock(&_liveObjectLock);
+    return obj;
 }
 - (void)registerObjects:(id<NSFastEnumeration>)aObjects
 {
@@ -107,9 +132,12 @@
 {
     NSParameterAssert(object.database == self);
 
+    OSSpinLockLock(&_liveObjectLock);
     if(object.saved)
         [[object.query delete] execute:NULL];
     object.database = nil;
+    [_liveObjects removeObjectForKey:object.UUID];
+    OSSpinLockUnlock(&_liveObjectLock);
 }
 
 - (void)registerDirtyObject:(DBModel *)obj
@@ -123,14 +151,33 @@
     OSSpinLockUnlock(&_dirtyObjectLock);
 }
 
+
+- (BOOL)modify:(void (^)())modificationBlock error:(NSError **)outErr
+{
+    __block BOOL result;
+    dispatch_sync(_objectModificationQueue, ^{
+        modificationBlock();
+        result = [self saveObjects:outErr];
+    });
+    return result;
+}
+- (void)modify:(void (^)())modificationBlock
+{
+    NSError *err;
+    if(![self modify:modificationBlock error:&err])
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"Failed to save objects. (Error: '%@')", err.localizedDescription];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if([keyPath isEqualToString:@"hasChanges"] && [object isKindOfClass:[DBModel class]]) {
         if(![object hasChanges]) {
             [object removeObserver:self forKeyPath:@"hasChanges"];
-            OSSpinLockLock(&_dirtyObjectLock);
-            [_dirtyObjects removeObject:object];
-            OSSpinLockUnlock(&_dirtyObjectLock);
+            if(OSSpinLockTry(&_dirtyObjectLock)) {
+                [_dirtyObjects removeObject:object];
+                OSSpinLockUnlock(&_dirtyObjectLock);
+            }
         }
     }
 }

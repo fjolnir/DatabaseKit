@@ -55,4 +55,16 @@
  *         Raises NSInternalInconsistencyException if the object is not already in the database.
  */
 - (void)removeObject:(DBModel *)object;
+
+/*!
+ * Executes `modificationBlock` on an internal serial queue, and saves any modified objects.
+ */
+- (BOOL)modify:(void (^)())modificationBlock error:(NSError **)outErr;
+
+
+/*!
+ * Executes `modificationBlock` on an internal serial queue, and saves any modified objects.
+ * Raises an exception if saving fails.
+ */
+- (void)modify:(void (^)())modificationBlock;
 @end

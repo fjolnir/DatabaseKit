@@ -72,6 +72,13 @@
     XCTAssertEqualObjects([first name] , newName , @"The new name apparently wasn't saved");
 }
 
+- (void)testUniqing
+{
+    TEModel *firstA = [[db[@"models"] select] firstObject];
+    TEModel *firstB = [[db[@"models"] select] firstObject];
+    XCTAssertEqual(firstA, firstB);
+}
+
 - (void)testNSCoding
 {
     TEWebSite *site = [TEWebSite new];
